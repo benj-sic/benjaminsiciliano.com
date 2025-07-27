@@ -12,6 +12,7 @@ const NetworkVisualization = () => {
   const [selectedLink, setSelectedLink] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
   const [filters, setFilters] = useState({
     companies: true,
     universities: true,
@@ -23,6 +24,9 @@ const NetworkVisualization = () => {
     development: true,
     facilities: true
   });
+
+  // Store zoom behavior reference
+  const zoomBehaviorRef = useRef(null);
 
   // Real Atlanta TechBio ecosystem data
   const networkData = atlantaTechBioEcosystem;
@@ -145,6 +149,104 @@ const NetworkVisualization = () => {
     return () => clearTimeout(timer);
   }, [filters]);
 
+  // Create filter mapping
+  const filterMapping = {
+    'university': 'universities',
+    'company': 'companies',
+    'public_company': 'companies',
+    'startup': 'companies',
+    'vc': 'vcs',
+    'incubator': 'incubators',
+    'accelerator': 'incubators',
+    'facility': 'facilities',
+    'serviceProvider': 'serviceProviders',
+    'government': 'government',
+    'trade': 'trade',
+    'development': 'development'
+  };
+
+  // Center network function
+  const centerNetwork = () => {
+    if (svgRef.current && zoomBehaviorRef.current) {
+      const svg = d3.select(svgRef.current);
+      const container = containerRef.current;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      
+      // Get the current zoom group to calculate bounds
+      const zoomGroup = svg.select("g.zoom-group");
+      if (zoomGroup.empty()) return;
+      
+      // Get the bounding box of all nodes
+      const nodes = zoomGroup.selectAll("circle");
+      if (nodes.empty()) return;
+      
+      // Calculate the bounds of the network
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      nodes.each(function() {
+        const cx = parseFloat(d3.select(this).attr("cx"));
+        const cy = parseFloat(d3.select(this).attr("cy"));
+        const r = parseFloat(d3.select(this).attr("r"));
+        minX = Math.min(minX, cx - r);
+        maxX = Math.max(maxX, cx + r);
+        minY = Math.min(minY, cy - r);
+        maxY = Math.max(maxY, cy + r);
+      });
+      
+      // Calculate the center of the network
+      const networkCenterX = (minX + maxX) / 2;
+      const networkCenterY = (minY + maxY) / 2;
+      
+      // Calculate the scale to fit the network in the viewport
+      const networkWidth = maxX - minX;
+      const networkHeight = maxY - minY;
+      const scaleX = (width * 0.8) / networkWidth;
+      const scaleY = (height * 0.8) / networkHeight;
+      const scale = Math.min(scaleX, scaleY, 1); // Don't zoom in more than 100%
+      
+      // Calculate the transform to center the network
+      const transform = d3.zoomIdentity
+        .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
+        .scale(scale);
+      
+      // Apply the transform with transition
+      svg.transition()
+        .duration(750)
+        .call(zoomBehaviorRef.current.transform, transform);
+      
+      setZoomLevel(scale);
+    }
+  };
+
+  // Zoom functions
+  const zoomIn = () => {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 5) {
+      const svg = d3.select(svgRef.current);
+      const newZoomLevel = Math.min(zoomLevel * 1.5, 5);
+      
+      // Use the zoom behavior to zoom in from the current center
+      svg.transition()
+        .duration(300)
+        .call(zoomBehaviorRef.current.scaleBy, 1.5);
+      
+      setZoomLevel(newZoomLevel);
+    }
+  };
+
+  const zoomOut = () => {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.3) {
+      const svg = d3.select(svgRef.current);
+      const newZoomLevel = Math.max(zoomLevel / 1.5, 0.3);
+      
+      // Use the zoom behavior to zoom out from the current center
+      svg.transition()
+        .duration(300)
+        .call(zoomBehaviorRef.current.scaleBy, 1/1.5);
+      
+      setZoomLevel(newZoomLevel);
+    }
+  };
+
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
 
@@ -163,7 +265,7 @@ const NetworkVisualization = () => {
 
     // Filter nodes based on current filters
     const filteredNodes = networkData.nodes.filter(node => {
-      return debouncedFilters[typeMap[node.type]];
+      return debouncedFilters[filterMapping[node.type]];
     });
 
     const filteredLinks = networkData.links.filter(link => {
@@ -202,8 +304,11 @@ const NetworkVisualization = () => {
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.3)) // Cluster by type
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.3)); // Cluster by type
 
-    // Create links with enhanced styling
-    const links = svg.append("g")
+    // Create a zoom group that contains all the network elements
+    const zoomGroup = svg.append("g").attr("class", "zoom-group");
+
+    // Create links in zoom group
+    const links = zoomGroup.append("g")
       .attr("class", "links")
       .selectAll("line")
       .data(processedLinks)
@@ -228,14 +333,14 @@ const NetworkVisualization = () => {
         }
       });
 
-    // Create nodes with enhanced visibility (removed stroke)
-    const nodes = svg.append("g")
+    // Create nodes in zoom group
+    const nodes = zoomGroup.append("g")
       .attr("class", "nodes")
       .selectAll("circle")
       .data(filteredNodes)
       .enter().append("circle")
       .attr("r", d => d.size)
-      .attr("fill", d => nodeColors[d.type])
+      .attr("fill", d => nodeColors[typeMap[d.type]])
       .style("cursor", "pointer")
       .on("click", function(event, d) {
         event.stopPropagation();
@@ -246,10 +351,8 @@ const NetworkVisualization = () => {
         }
       });
 
-    console.log('Created nodes:', nodes.size());
-
-    // Enhanced node labels with better positioning
-    const labels = svg.append("g")
+    // Create labels in zoom group
+    const labels = zoomGroup.append("g")
       .attr("class", "labels")
       .selectAll("text")
       .data(filteredNodes)
@@ -260,7 +363,7 @@ const NetworkVisualization = () => {
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
       .attr("fill", theme === 'dark' ? "#fff" : "#333")
-      .attr("font-size", "9px") // Slightly smaller for more nodes
+      .attr("font-size", "9px")
       .attr("font-weight", "500")
       .style("pointer-events", "none")
       .style("text-shadow", theme === 'dark' ? "1px 1px 2px rgba(0,0,0,0.8)" : "1px 1px 2px rgba(255,255,255,0.8)")
@@ -270,10 +373,14 @@ const NetworkVisualization = () => {
     const zoom = d3.zoom()
       .scaleExtent([0.3, 5]) // Allow more zoom out for larger datasets
       .on("zoom", (event) => {
-        svg.selectAll("g.nodes, g.labels, g.links").attr("transform", event.transform);
+        zoomGroup.attr("transform", event.transform);
+        setZoomLevel(event.transform.k);
       });
 
     svg.call(zoom);
+    
+    // Store reference to zoom behavior
+    zoomBehaviorRef.current = zoom;
 
     // Update positions on simulation tick with performance optimization
     simulation.on("tick", () => {
@@ -448,6 +555,52 @@ const NetworkVisualization = () => {
           }}
         >
           <svg ref={svgRef}></svg>
+          
+          {/* Network Controls Overlay */}
+          <div className="network-controls">
+            {/* Center Button - Top Left */}
+            <button 
+              className="control-button center-button"
+              onClick={centerNetwork}
+              title="Center Network"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="3" x2="8" y2="3"/>
+                <line x1="3" y1="3" x2="3" y2="8"/>
+                <line x1="21" y1="3" x2="16" y2="3"/>
+                <line x1="21" y1="3" x2="21" y2="8"/>
+                <line x1="3" y1="21" x2="8" y2="21"/>
+                <line x1="3" y1="21" x2="3" y2="16"/>
+                <line x1="21" y1="21" x2="16" y2="21"/>
+                <line x1="21" y1="21" x2="21" y2="16"/>
+              </svg>
+            </button>
+            
+            {/* Zoom Controls - Top Right */}
+            <div className="zoom-controls">
+              <button 
+                className="control-button zoom-button"
+                onClick={zoomIn}
+                disabled={zoomLevel >= 5}
+                title="Zoom In"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
+              <button 
+                className="control-button zoom-button"
+                onClick={zoomOut}
+                disabled={zoomLevel <= 0.3}
+                title="Zoom Out"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
         
         {/* Right Sidebar - Legend */}
@@ -456,27 +609,27 @@ const NetworkVisualization = () => {
           <div className="legend-section">
             <h5>Node Types</h5>
             <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors.university}}></div>
+              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.university]}}></div>
               <span className="legend-label">Universities</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors.company}}></div>
+              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.company]}}></div>
               <span className="legend-label">Companies</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors.vc}}></div>
+              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.vc]}}></div>
               <span className="legend-label">Venture Capital</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors.incubator}}></div>
+              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.incubator]}}></div>
               <span className="legend-label">Incubators</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors.serviceProvider}}></div>
+              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.serviceProvider]}}></div>
               <span className="legend-label">Service Providers</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors.government}}></div>
+              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.government]}}></div>
               <span className="legend-label">Government</span>
             </div>
           </div>
@@ -506,6 +659,63 @@ const NetworkVisualization = () => {
               <div className="legend-line" style={{borderColor: '#dda0dd', borderStyle: 'dashed'}}></div>
               <span className="legend-label">Support</span>
             </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Network Control Panel */}
+      <div className="network-control-panel">
+        <div className="control-panel-content">
+          <div className="control-group">
+            <button 
+              className="control-panel-button"
+              onClick={centerNetwork}
+              title="Center Network"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="3" x2="8" y2="3"/>
+                <line x1="3" y1="3" x2="3" y2="8"/>
+                <line x1="21" y1="3" x2="16" y2="3"/>
+                <line x1="21" y1="3" x2="21" y2="8"/>
+                <line x1="3" y1="21" x2="8" y2="21"/>
+                <line x1="3" y1="21" x2="3" y2="16"/>
+                <line x1="21" y1="21" x2="16" y2="21"/>
+                <line x1="21" y1="21" x2="21" y2="16"/>
+              </svg>
+              <span>Center</span>
+            </button>
+          </div>
+          
+          <div className="control-group">
+            <button 
+              className="control-panel-button"
+              onClick={zoomOut}
+              disabled={zoomLevel <= 0.3}
+              title="Zoom Out"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span>Zoom Out</span>
+            </button>
+            <button 
+              className="control-panel-button"
+              onClick={zoomIn}
+              disabled={zoomLevel >= 5}
+              title="Zoom In"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span>Zoom In</span>
+            </button>
+          </div>
+          
+          <div className="control-group">
+            <span className="zoom-level-display">
+              {Math.round(zoomLevel * 100)}%
+            </span>
           </div>
         </div>
       </div>

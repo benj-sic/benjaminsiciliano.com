@@ -20,6 +20,10 @@
   --network-close-color: #666;
   --network-close-hover: #ffffff;
   --network-close-hover-bg: rgba(255, 255, 255, 0.1);
+  --network-control-bg: rgba(15, 20, 25, 0.8);
+  --network-control-border: rgba(255, 255, 255, 0.2);
+  --network-control-hover: rgba(255, 255, 255, 0.1);
+  --network-control-disabled: rgba(255, 255, 255, 0.3);
 }
 
 /* Light theme */
@@ -43,6 +47,10 @@
   --network-close-color: #666;
   --network-close-hover: #1a202c;
   --network-close-hover-bg: rgba(0, 0, 0, 0.1);
+  --network-control-bg: rgba(255, 255, 255, 0.9);
+  --network-control-border: rgba(0, 0, 0, 0.2);
+  --network-control-hover: rgba(0, 0, 0, 0.05);
+  --network-control-disabled: rgba(0, 0, 0, 0.3);
 }
 
 .network-visualization {
@@ -574,7 +582,76 @@
   }
 }
 
-/* Mobile Responsive */
+/* Network Controls */
+.network-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.control-button {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--network-control-border);
+  border-radius: 8px;
+  background: var(--network-control-bg);
+  backdrop-filter: blur(10px);
+  color: var(--network-text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  pointer-events: all;
+  box-shadow: 0 2px 8px var(--network-shadow);
+}
+
+.control-button:hover:not(:disabled) {
+  background: var(--network-control-hover);
+  border-color: var(--network-border-secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--network-shadow);
+}
+
+.control-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--network-control-disabled);
+}
+
+.control-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px var(--network-shadow);
+}
+
+/* Center Button - Top Left */
+.center-button {
+  top: 20px;
+  left: 20px;
+}
+
+/* Zoom Controls - Top Right */
+.zoom-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zoom-button {
+  position: static;
+  width: 36px;
+  height: 36px;
+}
+
+/* Mobile Responsive for Controls */
 @media (max-width: 768px) {
   .network-visualization {
     height: auto;
@@ -627,5 +704,121 @@
   .link-tooltip {
     right: 20px;
     max-width: calc(100vw - 40px);
+  }
+
+  .center-button {
+    top: 10px;
+    left: 10px;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .zoom-controls {
+    top: 10px;
+    right: 10px;
+    gap: 6px;
+  }
+  
+  .zoom-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .control-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Network Control Panel */
+.network-control-panel {
+  background: var(--network-bg-primary);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--network-border-primary);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.control-panel-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-panel-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--network-control-border);
+  border-radius: 6px;
+  background: var(--network-control-bg);
+  color: var(--network-text-primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.control-panel-button:hover:not(:disabled) {
+  background: var(--network-control-hover);
+  border-color: var(--network-border-secondary);
+  transform: translateY(-1px);
+}
+
+.control-panel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--network-control-disabled);
+}
+
+.control-panel-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.control-panel-button svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.zoom-level-display {
+  color: var(--network-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Mobile Responsive for Control Panel */
+@media (max-width: 768px) {
+  .network-control-panel {
+    padding: 10px 15px;
+  }
+  
+  .control-panel-content {
+    gap: 15px;
+  }
+  
+  .control-panel-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .control-panel-button svg {
+    width: 12px;
+    height: 12px;
   }
 } 

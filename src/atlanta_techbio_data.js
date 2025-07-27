@@ -442,8 +442,8 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 13,
       description: "Boutique preclinical CRO providing grant writing and project management services to startups.",
-      website: "https://radyus.com",
-      keyPersonnel: ["Phil Ashurst"],
+      website: "https://radyusresearch.com",
+      keyPersonnel: ["Marta New"],
       funding: "Private (Consulting)",
       recentNews: "Helped local biotechs win multiple SBIR/STTR grants in 2023."
     },
