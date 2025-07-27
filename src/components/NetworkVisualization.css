@@ -76,10 +76,14 @@
 .network-header h2 {
   color: var(--network-text-accent);
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 12px;
   margin-top: 0;
   transition: color 0.3s ease;
+  text-align: center;
+  text-transform: capitalize;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
 }
 
 .network-header p {

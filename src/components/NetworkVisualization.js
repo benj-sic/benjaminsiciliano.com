@@ -12,18 +12,44 @@ const NetworkVisualization = () => {
   const [selectedLink, setSelectedLink] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [filters, setFilters] = useState({
-    companies: true,
-    universities: true,
-    incubators: true,
-    vcs: true,
-    serviceProviders: true,
-    government: true,
-    trade: true,
-    development: true,
-    facilities: true
-  });
+  // Initialize zoom level from URL parameters
+  const getInitialZoomLevel = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const zoomParam = urlParams.get('zoom');
+    return zoomParam ? parseFloat(zoomParam) : 1;
+  };
+
+  const [zoomLevel, setZoomLevel] = useState(getInitialZoomLevel);
+  // Initialize filters from URL parameters or defaults
+  const getInitialFilters = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParams = urlParams.getAll('filter');
+    
+    const defaultFilters = {
+      companies: true,
+      universities: true,
+      incubators: true,
+      vcs: true,
+      serviceProviders: true,
+      government: true,
+      trade: true,
+      development: true,
+      facilities: true
+    };
+    
+    // If URL has filter parameters, only enable those
+    if (filterParams.length > 0) {
+      const enabledFilters = {};
+      Object.keys(defaultFilters).forEach(key => {
+        enabledFilters[key] = filterParams.includes(key);
+      });
+      return enabledFilters;
+    }
+    
+    return defaultFilters;
+  };
+
+  const [filters, setFilters] = useState(getInitialFilters);
 
   // Store zoom behavior reference
   const zoomBehaviorRef = useRef(null);
@@ -422,6 +448,32 @@ const NetworkVisualization = () => {
       simulation.stop();
     };
   }, [debouncedFilters, networkData, typeMap, theme, selectedNode, selectedLink, filterMapping]);
+
+  // Handle URL parameters for focusing on a specific node
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const focusNodeId = urlParams.get('focus');
+    
+    if (focusNodeId && !isLoading && networkData.nodes) {
+      const focusNode = networkData.nodes.find(node => node.id === focusNodeId);
+      if (focusNode) {
+        setSelectedNode(focusNode);
+        // Center on the focused node
+        setTimeout(() => {
+          centerNetwork();
+        }, 200);
+      }
+    }
+  }, [isLoading, networkData.nodes]);
+
+  // Expose network state to global window object for share functionality
+  useEffect(() => {
+    window.networkState = {
+      filters,
+      zoomLevel,
+      selectedNode: selectedNode?.id || null
+    };
+  }, [filters, zoomLevel, selectedNode]);
 
   const toggleFilter = (filterType) => {
     setFilters(prev => ({
