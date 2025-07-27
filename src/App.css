@@ -583,31 +583,36 @@ noscript .submit-error {
 
 .contact-links {
   margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.contact-link {
-  display: inline-flex;
+.contact-link-icon {
+  display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   color: var(--text-accent);
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 12px 20px;
+  width: 48px;
+  height: 48px;
   border: 1px solid var(--link-border);
-  border-radius: 8px;
+  border-radius: 50%;
   transition: all 0.3s ease;
+  background: transparent;
 }
 
-.contact-link:hover {
+.contact-link-icon:hover {
   background: var(--link-hover-bg);
   border-color: var(--text-accent);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .contact-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .container {
@@ -731,5 +736,19 @@ noscript .submit-error {
   .motivation-section,
   .contact-section {
     padding: 3rem 0;
+  }
+  
+  .contact-links {
+    gap: 1rem;
+  }
+  
+  .contact-link-icon {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .contact-icon {
+    width: 20px;
+    height: 20px;
   }
 } 
