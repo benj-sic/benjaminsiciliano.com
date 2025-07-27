@@ -292,7 +292,7 @@ main {
 .about-image-container {
   float: left;
   margin-right: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .about-headshot {
