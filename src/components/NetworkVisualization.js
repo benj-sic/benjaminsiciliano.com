@@ -16,6 +16,7 @@ const NetworkVisualization = () => {
   const [showControls, setShowControls] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [showLegend, setShowLegend] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   
@@ -23,7 +24,7 @@ const NetworkVisualization = () => {
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const zoomParam = urlParams.get('zoom');
-    return zoomParam ? parseFloat(zoomParam) : 0.8; // Start at 80% zoom for better initial view
+    return zoomParam ? parseFloat(zoomParam) : 0.30; // Start at 30% zoom for better initial view
   };
 
   const [zoomLevel, setZoomLevel] = useState(getInitialZoomLevel);
@@ -73,49 +74,49 @@ const NetworkVisualization = () => {
       case 'spinout':
         return {
           stroke: '#ff6b6b',
-          strokeWidth: 4,
+          strokeWidth: 6,
           strokeDasharray: 'none',
           opacity: 0.8
         };
       case 'investment':
         return {
           stroke: '#4ecdc4',
-          strokeWidth: 3,
+          strokeWidth: 6,
           strokeDasharray: '8,4',
           opacity: 0.7
         };
       case 'collaboration':
         return {
           stroke: '#45b7d1',
-          strokeWidth: 2,
+          strokeWidth: 6,
           strokeDasharray: 'none',
           opacity: 0.6
         };
       case 'partnership':
         return {
           stroke: '#96ceb4',
-          strokeWidth: 2,
+          strokeWidth: 6,
           strokeDasharray: '2,2',
           opacity: 0.6
         };
       case 'service':
         return {
           stroke: '#ffeaa7',
-          strokeWidth: 1,
+          strokeWidth: 6,
           strokeDasharray: '3,3',
           opacity: 0.5
         };
       case 'support':
         return {
           stroke: '#dda0dd',
-          strokeWidth: 2,
+          strokeWidth: 6,
           strokeDasharray: '8,4',
           opacity: 0.6
         };
       default:
         return {
           stroke: '#a0a0a0',
-          strokeWidth: 1,
+          strokeWidth: 6,
           strokeDasharray: 'none',
           opacity: 0.4
         };
@@ -205,7 +206,7 @@ const NetworkVisualization = () => {
       const padding = 80; // Increased padding for better visibility
       const scaleX = (width - padding * 2) / networkWidth;
       const scaleY = (height - padding * 2) / networkHeight;
-      const scale = Math.max(Math.min(scaleX, scaleY, 0.25), 0.25); // Force 25% zoom for centering
+      const scale = Math.max(Math.min(scaleX, scaleY, 0.30), 0.25); // Default to 30% but allow down to 25%
       
       // Calculate the transform to center the network in a balanced position
       const transform = d3.zoomIdentity
@@ -288,24 +289,26 @@ const NetworkVisualization = () => {
     const nodeTypes = ['university', 'company', 'vc', 'incubator', 'serviceProvider', 'government', 'trade', 'development', 'facility'];
     const clusterPositions = {};
     
-          // Calculate cluster positions in a circle with larger radius for better spacing
+          // Calculate cluster positions in an elliptical layout for better use of horizontal space
       nodeTypes.forEach((type, index) => {
         const angle = (index / nodeTypes.length) * 2 * Math.PI;
-        const radius = Math.min(width, height) * 0.4; // Increased radius from 0.35 to 0.4 for better spacing
+        // Use elliptical layout - wider horizontally, shorter vertically
+        const radiusX = width * 0.6; // Use more horizontal space
+        const radiusY = height * 0.3; // Moderate vertical space
         clusterPositions[type] = {
-          x: width / 2 + radius * Math.cos(angle),
-          y: height / 2 + radius * Math.sin(angle)
+          x: width / 2 + radiusX * Math.cos(angle),
+          y: height / 2 + radiusY * Math.sin(angle)
         };
       });
 
     // Enhanced force simulation for 80+ nodes with clustering and better spacing
     const simulation = d3.forceSimulation(filteredNodes)
-      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(150)) // Increased link distance from 120 to 150
-      .force("charge", d3.forceManyBody().strength(-300)) // Increased repulsion from -200 to -300 for better spacing
+      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(280)) // Moderate link distance for natural spacing
+      .force("charge", d3.forceManyBody().strength(-500)) // Moderate repulsion for natural spacing
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * 1.5, 8) + 50)) // Increased collision radius for larger nodes and labels
-      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.15)) // Reduced clustering strength from 0.2 to 0.15
-      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.15)); // Reduced clustering strength from 0.2 to 0.15
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * 3.5, 16) + 60)) // Moderate collision radius
+      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1)) // Balanced clustering strength
+      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1)); // Balanced clustering strength
 
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
@@ -334,10 +337,10 @@ const NetworkVisualization = () => {
       .selectAll("circle")
       .data(filteredNodes)
       .enter().append("circle")
-      .attr("r", d => Math.max(d.size * 1.5, 8)) // Increase node size by 50% with minimum of 8px
+      .attr("r", d => Math.max(d.size * 3.5, 16)) // Increase node size by 250% with minimum of 16px
       .attr("fill", d => nodeColors[typeMap[d.type]])
       .style("cursor", "pointer")
-      .style("filter", theme === 'dark' ? "drop-shadow(0 0 4px rgba(255,255,255,0.3))" : "drop-shadow(0 0 4px rgba(0,0,0,0.2))")
+      .style("filter", theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")
       .on("click", function(event, d) {
         event.stopPropagation();
         handleNodeClick(d);
@@ -357,10 +360,10 @@ const NetworkVisualization = () => {
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
       .attr("fill", theme === 'dark' ? "#fff" : "#333")
-      .attr("font-size", "16px") // Increased from 14px to 16px
+      .attr("font-size", "28px") // Increased from 22px to 28px
       .attr("font-weight", "700") // Increased from 600 to 700 for better visibility
       .style("pointer-events", "none")
-      .style("text-shadow", theme === 'dark' ? "2px 2px 4px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.7), 0px 0px 8px rgba(0,0,0,0.5)" : "2px 2px 4px rgba(255,255,255,0.9), 1px 1px 2px rgba(255,255,255,0.7), 0px 0px 8px rgba(255,255,255,0.5)")
+      .style("text-shadow", theme === 'dark' ? "5px 5px 10px rgba(0,0,0,0.9), 4px 4px 8px rgba(0,0,0,0.7), 0px 0px 20px rgba(0,0,0,0.5)" : "5px 5px 10px rgba(255,255,255,0.9), 4px 4px 8px rgba(255,255,255,0.7), 0px 0px 20px rgba(255,255,255,0.5)")
       .style("font-family", "system-ui, -apple-system, sans-serif");
 
     // Add zoom behavior with enhanced controls
@@ -387,8 +390,6 @@ const NetworkVisualization = () => {
       nodes
         .attr("cx", d => d.x)
         .attr("cy", d => d.y);
-
-
 
       labels
         .attr("x", d => d.x)
@@ -465,6 +466,7 @@ const NetworkVisualization = () => {
     setSelectedNode(node);
     setSearchQuery('');
     setSearchResults([]);
+    setShowSearch(true); // Auto-open the search & details dropdown
   };
 
   return (
@@ -536,7 +538,7 @@ const NetworkVisualization = () => {
                   <button 
                     className="control-button zoom-button"
                     onClick={zoomOut}
-                    disabled={zoomLevel <= 0.4}
+                    disabled={zoomLevel <= 0.25}
                     title="Zoom Out"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -719,6 +721,105 @@ const NetworkVisualization = () => {
               </div>
             )}
           </div>
+          
+          {/* Search & Details Section */}
+          <div className="dropdown-container">
+            <button className="dropdown-button" onClick={() => setShowSearch(!showSearch)}>
+              <span>Search & Details</span>
+              <svg className={`dropdown-arrow ${showSearch ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="6,9 12,15 18,9"></polyline>
+              </svg>
+            </button>
+            {showSearch && (
+              <div className="dropdown-content search-dropdown">
+                {/* Search Input */}
+                <div className="search-container">
+                  <input
+                    type="text"
+                    placeholder="Search companies, universities..."
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="search-input"
+                  />
+                </div>
+                
+                {/* Search Results */}
+                {searchResults.length > 0 && (
+                  <div className="search-results">
+                    <h5>Search Results</h5>
+                    <div className="search-results-list">
+                      {searchResults.map((node, index) => (
+                        <div 
+                          key={node.id} 
+                          className="search-result-item"
+                          onClick={() => handleNodeClick(node)}
+                        >
+                          <div className="result-node-color" style={{backgroundColor: nodeColors[typeMap[node.type]]}}></div>
+                          <div className="result-content">
+                            <div className="result-name">{node.name}</div>
+                            <div className="result-type">{typeMap[node.type] || node.type}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Selected Node Details */}
+                {selectedNode && (
+                  <div className="node-details">
+                    <div className="details-header">
+                      <h3>{selectedNode.name}</h3>
+                      <button 
+                        className="details-close"
+                        onClick={() => setSelectedNode(null)}
+                        title="Close"
+                      >
+                        ×
+                      </button>
+                    </div>
+                    
+                    <div className="details-content">
+                      <p className="node-type">{typeMap[selectedNode.type] || selectedNode.type}</p>
+                      <p className="node-description">{selectedNode.description}</p>
+                      
+                      {selectedNode.website && (
+                        <div className="details-section">
+                          <h4>Website</h4>
+                          <a 
+                            href={selectedNode.website} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="website-link"
+                          >
+                            {selectedNode.website.replace(/^https?:\/\//, '')}
+                          </a>
+                        </div>
+                      )}
+                      
+                      {selectedNode.keyPersonnel && selectedNode.keyPersonnel.length > 0 && (
+                        <div className="details-section">
+                          <h4>Key Personnel</h4>
+                          <ul className="personnel-list">
+                            {selectedNode.keyPersonnel.map((person, index) => (
+                              <li key={index}>{person}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {selectedNode.recentNews && (
+                        <div className="details-section">
+                          <h4>Recent Developments</h4>
+                          <p className="recent-news">{selectedNode.recentNews}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Main Network Canvas */}
@@ -751,98 +852,7 @@ const NetworkVisualization = () => {
           </div>
         </div>
 
-        {/* Right Sidebar - Node Details & Search */}
-        <div className="network-sidebar-right">
-          <div className="sidebar-section">
-            <h4>Search & Details</h4>
-            
-            {/* Search Input */}
-            <div className="search-container">
-              <input
-                type="text"
-                placeholder="Search companies, universities..."
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                className="search-input"
-              />
-            </div>
-            
-            {/* Search Results */}
-            {searchResults.length > 0 && (
-              <div className="search-results">
-                <h5>Search Results</h5>
-                <div className="search-results-list">
-                  {searchResults.map((node, index) => (
-                    <div 
-                      key={node.id} 
-                      className="search-result-item"
-                      onClick={() => handleNodeClick(node)}
-                    >
-                      <div className="result-node-color" style={{backgroundColor: nodeColors[typeMap[node.type]]}}></div>
-                      <div className="result-content">
-                        <div className="result-name">{node.name}</div>
-                        <div className="result-type">{typeMap[node.type] || node.type}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {/* Selected Node Details */}
-            {selectedNode && (
-              <div className="node-details">
-                <div className="details-header">
-                  <h3>{selectedNode.name}</h3>
-                  <button 
-                    className="details-close"
-                    onClick={() => setSelectedNode(null)}
-                    title="Close"
-                  >
-                    ×
-                  </button>
-                </div>
-                
-                <div className="details-content">
-                  <p className="node-type">{typeMap[selectedNode.type] || selectedNode.type}</p>
-                  <p className="node-description">{selectedNode.description}</p>
-                  
-                  {selectedNode.website && (
-                    <div className="details-section">
-                      <h4>Website</h4>
-                      <a 
-                        href={selectedNode.website} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="website-link"
-                      >
-                        {selectedNode.website.replace(/^https?:\/\//, '')}
-                      </a>
-                    </div>
-                  )}
-                  
-                  {selectedNode.keyPersonnel && selectedNode.keyPersonnel.length > 0 && (
-                    <div className="details-section">
-                      <h4>Key Personnel</h4>
-                      <ul className="personnel-list">
-                        {selectedNode.keyPersonnel.map((person, index) => (
-                          <li key={index}>{person}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {selectedNode.recentNews && (
-                    <div className="details-section">
-                      <h4>Recent Developments</h4>
-                      <p className="recent-news">{selectedNode.recentNews}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+
       </div>
       
 
