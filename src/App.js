@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NetworkVisualization from './components/NetworkVisualization';
 import ThemeToggle from './components/ThemeToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -70,6 +70,30 @@ function App() {
     window.location.reload();
   };
 
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    const animatedElements = document.querySelectorAll('.animate-on-scroll, .animate-on-scroll-delayed, .animate-scale, .animate-fade');
+    animatedElements.forEach(el => observer.observe(el));
+
+    return () => {
+      animatedElements.forEach(el => observer.unobserve(el));
+    };
+  }, []);
+
   return (
     <ThemeProvider>
       <div className="App">
@@ -88,14 +112,14 @@ function App() {
 
         <main>
           {/* Welcome Message */}
-          <section className="welcome-section">
+          <section id="welcome" className="welcome-section">
             <div className="container">
               <div className="welcome-content">
-                <p>
+                <p className="animate-on-scroll-delayed">
                   Hi, I'm Ben — a neuropharmacologist and computational biologist working at the intersection of science, strategy, and systems to accelerate biotech innovation. I built this interactive network to help shine a light on Atlanta's fast-growing but often under-recognized biotech ecosystem.
                 </p>
                 <div className="welcome-cta">
-                  <p>
+                  <p className="animate-fade">
                     Explore the map below to discover key organizations, partnerships, and investment relationships driving the region's life sciences momentum — and uncover opportunities to collaborate, invest, or get involved.
                   </p>
                 </div>
@@ -104,32 +128,32 @@ function App() {
           </section>
 
           {/* Network Visualization - Front and Center */}
-          <section className="network-section">
+          <section id="network" className="network-section">
             <div className="container">
-              <div className="network-main">
+              <div className="network-main animate-on-scroll-delayed">
                 <NetworkVisualization />
               </div>
             </div>
           </section>
 
           {/* About Section */}
-          <section className="about-section">
+          <section id="about" className="about-section">
             <div className="container">
               <div className="about-content">
                 <div className="about-main-content">
-                  <h2>About Me</h2>
+                  <h2 id="about" className="animate-on-scroll-delayed">About Me</h2>
                   <div className="about-text">
-                    <div className="about-image-container">
+                    <div className="about-image-container animate-fade">
                       <img 
                         src="/BS_headshot.jpeg" 
                         alt="Benjamin Siciliano" 
                         className="about-headshot"
                       />
                     </div>
-                    <p>
-                      I'm a PhD-trained neuropharmacologist specializing in bioinformatics, computational biology, and systems pharmacology to advance therapeutic development for neuropsychiatric and neurodegenerative diseases. With experience managing drug development programs and a focus on applying computational approaches to drive strategic decision-making and innovation in biotech, I have a strong background in technology transfer and early-stage development that enables the de-risking and acceleration of research-to-commercialization processes. I'm focused on leveraging my scientific expertise to bridge the gap between cutting-edge research and business strategy, with a commitment to driving the next wave of impactful therapeutics. I'm eager to lead and collaborate on projects that push the boundaries of biotech innovation and accelerate the delivery of solutions to market, and I'm open to connecting with investors and entrepreneurs focused on leveraging technology and data to de-risk and scale the next-generation of biotech solutions.
+                    <p className="animate-on-scroll-delayed">
+                      I'm a PhD-trained neuropharmacologist specializing in bioinformatics, computational biology, and systems pharmacology to advance therapeutics for neuropsychiatric and neurodegenerative diseases. With experience managing drug development programs and applying computational tools to drive strategic decision-making, I bring a strong background in technology transfer and early-stage development to help de-risk and accelerate research-to-commercialization efforts. I focus on bridging cutting-edge science and business strategy to drive the next wave of impactful therapeutics. I'm eager to lead and collaborate on projects that push biotech forward and connect with investors and entrepreneurs leveraging technology and data to scale the next generation of solutions.
                     </p>
-                    <p className="about-tldr">
+                    <p className="about-tldr animate-scale">
                       <strong>TL;DR:</strong> I combine deep scientific expertise with product strategy and tech implementation to accelerate biotech innovation.
                     </p>
                   </div>
@@ -139,11 +163,11 @@ function App() {
           </section>
 
           {/* Why I Built This Network Section */}
-          <section className="motivation-section">
+          <section id="why-built" className="motivation-section">
             <div className="container">
               <div className="motivation-content">
-                <h3>Why I Built This Network</h3>
-                <p>
+                <h3 id="why-built" className="animate-on-scroll-delayed">Why I Built This Network</h3>
+                <p className="animate-fade">
                   Atlanta's biotech ecosystem is growing fast — but often flies under the radar. I created this interactive network to visualize the key players, partnerships, and innovation hubs fueling Georgia's life sciences revolution. By mapping these relationships, we can identify collaboration, investment, and commercialization opportunities that drive next-gen therapeutic development and translational success.
                 </p>
               </div>
@@ -151,11 +175,11 @@ function App() {
           </section>
 
           {/* Contact Section */}
-          <section className="contact-section">
+          <section id="contact" className="contact-section">
             <div className="container">
               <div className="contact-content">
-                <h2>Get in Touch</h2>
-                <p className="contact-intro">
+                <h2 id="contact" className="animate-on-scroll-delayed">Get in Touch</h2>
+                <p className="contact-intro animate-fade">
                   Have suggestions, corrections, or want your organization added to the network? 
                   I'm always looking to improve this visualization and expand the ecosystem mapping.
                 </p>

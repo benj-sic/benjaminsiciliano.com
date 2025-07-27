@@ -200,10 +200,10 @@ const NetworkVisualization = () => {
       // Calculate the scale to fit the network in the viewport with padding
       const networkWidth = maxX - minX;
       const networkHeight = maxY - minY;
-      const padding = 60; // Reduced padding for less zoom out
+      const padding = 80; // Increased padding for better spacing
       const scaleX = (width - padding * 2) / networkWidth;
       const scaleY = (height - padding * 2) / networkHeight;
-      const scale = Math.min(scaleX, scaleY, 0.95); // Zoom in slightly more (max 95% instead of 90%)
+      const scale = Math.min(scaleX, scaleY, 0.9); // Slightly more zoom out to accommodate larger labels
       
       // Calculate the transform to center the network with smaller offset
       const offsetX = 10; // Move right less
@@ -288,10 +288,10 @@ const NetworkVisualization = () => {
     const nodeTypes = ['university', 'company', 'vc', 'incubator', 'serviceProvider', 'government', 'trade', 'development', 'facility'];
     const clusterPositions = {};
     
-    // Calculate cluster positions in a circle
+    // Calculate cluster positions in a circle with larger radius
     nodeTypes.forEach((type, index) => {
       const angle = (index / nodeTypes.length) * 2 * Math.PI;
-      const radius = Math.min(width, height) * 0.3;
+      const radius = Math.min(width, height) * 0.35; // Increased radius for better spacing
       clusterPositions[type] = {
         x: width / 2 + radius * Math.cos(angle),
         y: height / 2 + radius * Math.sin(angle)
@@ -300,12 +300,12 @@ const NetworkVisualization = () => {
 
     // Enhanced force simulation for 80+ nodes with clustering
     const simulation = d3.forceSimulation(filteredNodes)
-      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(80))
-      .force("charge", d3.forceManyBody().strength(-150)) // Reduced strength for better clustering
+      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(120)) // Increased link distance
+      .force("charge", d3.forceManyBody().strength(-200)) // Increased repulsion for better spacing
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => d.size + 12)) // Increased collision radius
-      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.3)) // Cluster by type
-      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.3)); // Cluster by type
+      .force("collision", d3.forceCollide().radius(d => d.size + 25)) // Increased collision radius for labels
+      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.2)) // Reduced clustering strength
+      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.2)); // Reduced clustering strength
 
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
@@ -354,6 +354,8 @@ const NetworkVisualization = () => {
         }
       });
 
+
+
     // Create labels in zoom group
     const labels = zoomGroup.append("g")
       .attr("class", "labels")
@@ -366,10 +368,10 @@ const NetworkVisualization = () => {
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
       .attr("fill", theme === 'dark' ? "#fff" : "#333")
-      .attr("font-size", "9px")
-      .attr("font-weight", "500")
+      .attr("font-size", "12px")
+      .attr("font-weight", "600")
       .style("pointer-events", "none")
-      .style("text-shadow", theme === 'dark' ? "1px 1px 2px rgba(0,0,0,0.8)" : "1px 1px 2px rgba(255,255,255,0.8)")
+      .style("text-shadow", theme === 'dark' ? "1px 1px 3px rgba(0,0,0,0.8), 0px 0px 6px rgba(0,0,0,0.6)" : "1px 1px 3px rgba(255,255,255,0.8), 0px 0px 6px rgba(255,255,255,0.6)")
       .style("font-family", "system-ui, -apple-system, sans-serif");
 
     // Add zoom behavior with enhanced controls
@@ -396,6 +398,8 @@ const NetworkVisualization = () => {
       nodes
         .attr("cx", d => d.x)
         .attr("cy", d => d.y);
+
+
 
       labels
         .attr("x", d => d.x)
@@ -430,7 +434,7 @@ const NetworkVisualization = () => {
     <div className="network-visualization">
       {/* Title and Description */}
       <div className="network-header">
-        <h2>Atlanta Biotech Ecosystem Network</h2>
+        <h2>Atlanta Biotech Network</h2>
         <p>
           An interactive visualization of the organizations powering innovation in Georgia biotech — including startups, academic institutions, VCs, incubators, and service providers. Use the filters to focus on 
           specific organization types. Click on nodes and connections for detailed information and website links.
