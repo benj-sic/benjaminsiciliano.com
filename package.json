@@ -2,6 +2,7 @@
   "name": "benjaminsiciliano-website",
   "version": "1.0.0",
   "description": "Personal website featuring Atlanta TechBio Network visualization",
+  "homepage": "https://benjaminsiciliano.com",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",

@@ -44,7 +44,7 @@ export const ThemeProvider = ({ children }) => {
     const initialTheme = getInitialTheme();
     setTheme(initialTheme);
     applyTheme(initialTheme);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Listen for system preference changes
   useEffect(() => {
