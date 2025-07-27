@@ -68,6 +68,7 @@
   align-items: center;
   transition: all 0.3s ease;
   position: relative;
+  min-height: 80px;
 }
 
 .header-content {
@@ -83,8 +84,8 @@
 }
 
 .share-button {
-  background: rgba(16, 185, 129, 0.05);
-  border: none;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
   color: var(--text-accent);
   cursor: pointer;
   padding: 8px;
@@ -96,13 +97,15 @@
   width: 40px;
   height: 40px;
   position: relative;
-  z-index: 11;
+  z-index: 1001;
   pointer-events: auto;
+  backdrop-filter: blur(10px);
 }
 
 .share-button:hover {
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(16, 185, 129, 0.2);
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .share-button:focus {
@@ -127,35 +130,92 @@
   top: 50%;
   transform: translateY(-50%);
   display: inline-block;
-  z-index: 10;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.share-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 99998;
+  cursor: pointer;
   pointer-events: auto;
 }
 
 .share-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #0f1419;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-secondary);
   border: 1px solid var(--border-secondary);
-  border-radius: 8px;
-  padding: 8px 0;
-  min-width: 180px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 0;
+  min-width: 280px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(20px);
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
   transition: all 0.3s ease;
-  z-index: 99999;
-  margin-top: 8px;
+  z-index: 100000;
+  pointer-events: auto;
+}
+
+.share-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.share-dropdown-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.share-dropdown-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-dropdown-close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.share-dropdown-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.share-dropdown-content {
+  padding: 16px 0;
 }
 
 .share-option {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
-  padding: 8px 16px;
+  padding: 12px 20px;
   background: none;
   border: none;
   color: var(--text-primary);
@@ -166,6 +226,8 @@
   pointer-events: auto;
   z-index: 100000;
   position: relative;
+  text-align: left;
+  user-select: none;
 }
 
 .share-option:hover {
@@ -752,14 +814,16 @@ noscript .submit-error {
   }
   
   .share-button-container {
-    position: static;
-    transform: none;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
   }
   
   .share-button {
     width: 36px;
     height: 36px;
-    transform: none;
   }
   
   .share-button:hover {
@@ -782,6 +846,7 @@ noscript .submit-error {
     left: 50%;
     transform: translate(-50%, -50%);
     min-width: 200px;
+    max-width: 90vw;
   }
   
   .about-main-content {

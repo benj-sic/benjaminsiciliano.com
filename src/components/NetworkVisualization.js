@@ -9,9 +9,16 @@ const NetworkVisualization = () => {
   const svgRef = useRef();
   const containerRef = useRef();
   const [selectedNode, setSelectedNode] = useState(null);
-  const [selectedLink, setSelectedLink] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
+  
+  // Sidebar state
+  const [showControls, setShowControls] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
+  const [showLegend, setShowLegend] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  
   // Initialize zoom level from URL parameters
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -102,64 +109,15 @@ const NetworkVisualization = () => {
         return {
           stroke: '#dda0dd',
           strokeWidth: 2,
-          strokeDasharray: '6,3',
+          strokeDasharray: '8,4',
           opacity: 0.6
-        };
-      case 'funding':
-        return {
-          stroke: '#feca57',
-          strokeWidth: 3,
-          strokeDasharray: 'none',
-          opacity: 0.7
-        };
-      case 'tenant':
-        return {
-          stroke: '#ff9ff3',
-          strokeWidth: 2,
-          strokeDasharray: '4,2',
-          opacity: 0.6
-        };
-      case 'affiliation':
-        return {
-          stroke: '#54a0ff',
-          strokeWidth: 2,
-          strokeDasharray: 'none',
-          opacity: 0.6
-        };
-      case 'industry':
-        return {
-          stroke: '#ff9f43',
-          strokeWidth: 2,
-          strokeDasharray: 'none',
-          opacity: 0.5
-        };
-      case 'technology':
-        return {
-          stroke: '#a55eea',
-          strokeWidth: 2,
-          strokeDasharray: '2,4',
-          opacity: 0.5
-        };
-      case 'membership':
-        return {
-          stroke: '#26de81',
-          strokeWidth: 2,
-          strokeDasharray: '1,2',
-          opacity: 0.5
-        };
-      case 'development':
-        return {
-          stroke: '#778ca3',
-          strokeWidth: 2,
-          strokeDasharray: 'none',
-          opacity: 0.5
         };
       default:
         return {
-          stroke: '#666',
-          strokeWidth: 2,
+          stroke: '#a0a0a0',
+          strokeWidth: 1,
           strokeDasharray: 'none',
-          opacity: 0.6
+          opacity: 0.4
         };
     }
   };
@@ -226,10 +184,10 @@ const NetworkVisualization = () => {
       // Calculate the scale to fit the network in the viewport with padding
       const networkWidth = maxX - minX;
       const networkHeight = maxY - minY;
-      const padding = 80; // Increased padding for better spacing
+      const padding = 60; // Reduced padding for more zoomed in view
       const scaleX = (width - padding * 2) / networkWidth;
       const scaleY = (height - padding * 2) / networkHeight;
-      const scale = Math.min(scaleX, scaleY, 0.9); // Slightly more zoom out to accommodate larger labels
+      const scale = Math.max(Math.min(scaleX, scaleY, 1.8), 0.4); // Ensure minimum zoom level of 0.4
       
       // Calculate the transform to center the network with smaller offset
       const offsetX = 10; // Move right less
@@ -263,9 +221,9 @@ const NetworkVisualization = () => {
   };
 
   const zoomOut = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.3) {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.4) {
       const svg = d3.select(svgRef.current);
-      const newZoomLevel = Math.max(zoomLevel / 1.5, 0.3);
+      const newZoomLevel = Math.max(zoomLevel / 1.5, 0.4);
       
       // Use the zoom behavior to zoom out from the current center
       svg.transition()
@@ -329,7 +287,7 @@ const NetworkVisualization = () => {
       .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(120)) // Increased link distance
       .force("charge", d3.forceManyBody().strength(-200)) // Increased repulsion for better spacing
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => d.size + 25)) // Increased collision radius for labels
+      .force("collision", d3.forceCollide().radius(d => d.size + 30)) // Increased collision radius for larger labels
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.2)) // Reduced clustering strength
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.2)); // Reduced clustering strength
 
@@ -352,15 +310,7 @@ const NetworkVisualization = () => {
           .style("pointer-events", "all")
           .style("z-index", "1");
       })
-      .style("cursor", "pointer")
-      .on("click", function(event, d) {
-        event.stopPropagation();
-        if (selectedLink && selectedLink.source.id === d.source.id && selectedLink.target.id === d.target.id) {
-          setSelectedLink(null);
-        } else {
-          setSelectedLink(d);
-        }
-      });
+      .style("cursor", "pointer");
 
     // Create nodes in zoom group
     const nodes = zoomGroup.append("g")
@@ -373,11 +323,7 @@ const NetworkVisualization = () => {
       .style("cursor", "pointer")
       .on("click", function(event, d) {
         event.stopPropagation();
-        if (selectedNode && selectedNode.id === d.id) {
-          setSelectedNode(null);
-        } else {
-          setSelectedNode(d);
-        }
+        handleNodeClick(d);
       });
 
 
@@ -394,15 +340,15 @@ const NetworkVisualization = () => {
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
       .attr("fill", theme === 'dark' ? "#fff" : "#333")
-      .attr("font-size", "12px")
+      .attr("font-size", "14px")
       .attr("font-weight", "600")
       .style("pointer-events", "none")
-      .style("text-shadow", theme === 'dark' ? "1px 1px 3px rgba(0,0,0,0.8), 0px 0px 6px rgba(0,0,0,0.6)" : "1px 1px 3px rgba(255,255,255,0.8), 0px 0px 6px rgba(255,255,255,0.6)")
+      .style("text-shadow", theme === 'dark' ? "2px 2px 4px rgba(0,0,0,0.9), 0px 0px 8px rgba(0,0,0,0.7)" : "2px 2px 4px rgba(255,255,255,0.9), 0px 0px 8px rgba(255,255,255,0.7)")
       .style("font-family", "system-ui, -apple-system, sans-serif");
 
     // Add zoom behavior with enhanced controls
     const zoom = d3.zoom()
-      .scaleExtent([0.3, 5]) // Allow more zoom out for larger datasets
+      .scaleExtent([0.4, 5]) // Allow more zoom out for larger datasets
       .on("zoom", (event) => {
         zoomGroup.attr("transform", event.transform);
         setZoomLevel(event.transform.k);
@@ -447,7 +393,7 @@ const NetworkVisualization = () => {
     return () => {
       simulation.stop();
     };
-  }, [debouncedFilters, networkData, typeMap, theme, selectedNode, selectedLink, filterMapping]);
+  }, [debouncedFilters, networkData, typeMap, theme, filterMapping]);
 
   // Handle URL parameters for focusing on a specific node
   useEffect(() => {
@@ -482,6 +428,28 @@ const NetworkVisualization = () => {
     }));
   };
 
+  // Search functionality
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    const results = networkData.nodes.filter(node => 
+      node.name.toLowerCase().includes(query.toLowerCase()) ||
+      (typeMap[node.type] && typeMap[node.type].toLowerCase().includes(query.toLowerCase())) ||
+      (node.description && node.description.toLowerCase().includes(query.toLowerCase()))
+    );
+    setSearchResults(results);
+  };
+
+  const handleNodeClick = (node) => {
+    setSelectedNode(node);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
+
   return (
     <div className="network-visualization">
       {/* Title and Description */}
@@ -496,363 +464,371 @@ const NetworkVisualization = () => {
         </p>
       </div>
 
-      {/* Main Network Container */}
-      <div className="network-main">
-        {/* Loading Overlay */}
-        {isLoading && (
-          <div className="loading-overlay">
-            <div className="loading-spinner"></div>
-            <p>Loading network data...</p>
+      {/* Main Layout with Sidebars */}
+      <div className="network-layout">
+        {/* Left Sidebar - Controls */}
+        <div className="network-sidebar-left">
+          {/* Controls Section */}
+          <div className="dropdown-container">
+            <button className="dropdown-button" onClick={() => setShowControls(!showControls)}>
+              <span>Controls</span>
+              <svg className={`dropdown-arrow ${showControls ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="6,9 12,15 18,9"></polyline>
+              </svg>
+            </button>
+            {showControls && (
+              <div className="dropdown-content control-dropdown">
+                {/* All Controls in One Row */}
+                <div className="control-group">
+                  <button 
+                    className="control-button center-button"
+                    onClick={centerNetwork}
+                    title="Center Network"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="3" y1="3" x2="8" y2="3"/>
+                      <line x1="3" y1="3" x2="3" y2="8"/>
+                      <line x1="21" y1="3" x2="16" y2="3"/>
+                      <line x1="21" y1="3" x2="21" y2="8"/>
+                      <line x1="3" y1="21" x2="8" y2="21"/>
+                      <line x1="3" y1="21" x2="3" y2="16"/>
+                      <line x1="21" y1="21" x2="21" y2="16"/>
+                      <line x1="21" y1="21" x2="16" y2="21"/>
+                      <line x1="21" y1="21" x2="21" y2="16"/>
+                    </svg>
+                  </button>
+                  
+                  <div className="control-spacer"></div>
+                  
+                  <button 
+                    className="control-button zoom-button"
+                    onClick={zoomIn}
+                    disabled={zoomLevel >= 5}
+                    title="Zoom In"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="12" y1="5" x2="12" y2="19"/>
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                  </button>
+                  
+                                <span className="zoom-level-display">
+                {Math.round(zoomLevel * 100)}%
+              </span>
+                  
+                  <button 
+                    className="control-button zoom-button"
+                    onClick={zoomOut}
+                    disabled={zoomLevel <= 0.4}
+                    title="Zoom Out"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-        
-        {/* Processing Indicator */}
-        {isProcessing && !isLoading && (
-          <div className="processing-indicator">
-            <div className="processing-spinner"></div>
-            <span>Processing...</span>
+          
+          {/* Filters Section */}
+          <div className="dropdown-container">
+            <button className="dropdown-button" onClick={() => setShowFilters(!showFilters)}>
+              <span>Filters</span>
+              <svg className={`dropdown-arrow ${showFilters ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="6,9 12,15 18,9"></polyline>
+              </svg>
+            </button>
+            {showFilters && (
+              <div className="dropdown-content filter-dropdown">
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.companies}
+                  onChange={() => toggleFilter('companies')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Companies</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.universities}
+                  onChange={() => toggleFilter('universities')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Universities</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.incubators}
+                  onChange={() => toggleFilter('incubators')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Incubators</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.vcs}
+                  onChange={() => toggleFilter('vcs')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Venture Capital</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.serviceProviders}
+                  onChange={() => toggleFilter('serviceProviders')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Service Providers</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.government}
+                  onChange={() => toggleFilter('government')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Government</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.trade}
+                  onChange={() => toggleFilter('trade')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Trade Organizations</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.development}
+                  onChange={() => toggleFilter('development')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Development</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.facilities}
+                  onChange={() => toggleFilter('facilities')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Facilities</span>
+              </label>
+            </div>
+            )}
           </div>
-        )}
-        
-        {/* Left Sidebar - Filters */}
-        <div className="network-filters">
-          <h4>Filter by Type</h4>
-          <div className="filter-checkboxes">
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.companies}
-                onChange={() => toggleFilter('companies')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Companies</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.universities}
-                onChange={() => toggleFilter('universities')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Universities</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.incubators}
-                onChange={() => toggleFilter('incubators')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Incubators</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.vcs}
-                onChange={() => toggleFilter('vcs')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Venture Capital</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.serviceProviders}
-                onChange={() => toggleFilter('serviceProviders')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Service Providers</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.government}
-                onChange={() => toggleFilter('government')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Government</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.trade}
-                onChange={() => toggleFilter('trade')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Trade Organizations</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.development}
-                onChange={() => toggleFilter('development')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Development</span>
-            </label>
-            
-            <label className="filter-checkbox">
-              <input 
-                type="checkbox" 
-                checked={filters.facilities}
-                onChange={() => toggleFilter('facilities')}
-              />
-              <span className="checkbox-custom"></span>
-              <span className="checkbox-label">Facilities</span>
-            </label>
+          
+          {/* Legend Section */}
+          <div className="dropdown-container">
+            <button className="dropdown-button" onClick={() => setShowLegend(!showLegend)}>
+              <span>Legend</span>
+              <svg className={`dropdown-arrow ${showLegend ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="6,9 12,15 18,9"></polyline>
+              </svg>
+            </button>
+            {showLegend && (
+              <div className="dropdown-content legend-dropdown">
+                <div className="legend-section">
+                  <h5>Node Types</h5>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.university]}}></div>
+                    <span className="legend-label">Universities</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.company]}}></div>
+                    <span className="legend-label">Companies</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.vc]}}></div>
+                    <span className="legend-label">Venture Capital</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.incubator]}}></div>
+                    <span className="legend-label">Incubators</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.serviceProvider]}}></div>
+                    <span className="legend-label">Service Providers</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.government]}}></div>
+                    <span className="legend-label">Government</span>
+                  </div>
+                </div>
+                
+                <div className="legend-section">
+                  <h5>Relationship Types</h5>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#ff6b6b', borderWidth: '4px'}}></div>
+                    <span className="legend-label">Spinout</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#4ecdc4', borderStyle: 'dashed'}}></div>
+                    <span className="legend-label">Investment</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#45b7d1'}}></div>
+                    <span className="legend-label">Collaboration</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#96ceb4', borderStyle: 'dotted'}}></div>
+                    <span className="legend-label">Partnership</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#ffeaa7', borderWidth: '1px'}}></div>
+                    <span className="legend-label">Service</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#dda0dd', borderStyle: 'dashed'}}></div>
+                    <span className="legend-label">Support</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        
+
         {/* Main Network Canvas */}
-        <div 
-          className="network-canvas" 
-          ref={containerRef}
-          onClick={() => {
-            setSelectedNode(null);
-            setSelectedLink(null);
-          }}
-        >
-          <svg ref={svgRef}></svg>
+        <div className="network-main">
+          {/* Loading Overlay */}
+          {isLoading && (
+            <div className="loading-overlay">
+              <div className="loading-spinner"></div>
+              <p>Loading network data...</p>
+            </div>
+          )}
           
-          {/* Network Controls Overlay */}
-          <div className="network-controls">
-            {/* Center Button - Top Left */}
-            <button 
-              className="control-button center-button"
-              onClick={centerNetwork}
-              title="Center Network"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="3" y1="3" x2="8" y2="3"/>
-                <line x1="3" y1="3" x2="3" y2="8"/>
-                <line x1="21" y1="3" x2="16" y2="3"/>
-                <line x1="21" y1="3" x2="21" y2="8"/>
-                <line x1="3" y1="21" x2="8" y2="21"/>
-                <line x1="3" y1="21" x2="3" y2="16"/>
-                <line x1="21" y1="21" x2="16" y2="21"/>
-                <line x1="21" y1="21" x2="21" y2="16"/>
-              </svg>
-            </button>
+          {/* Processing Indicator */}
+          {isProcessing && !isLoading && (
+            <div className="processing-indicator">
+              <div className="processing-spinner"></div>
+              <span>Processing...</span>
+            </div>
+          )}
+          
+          {/* Network Canvas */}
+          <div 
+            className="network-canvas" 
+            ref={containerRef}
+                                        onClick={() => {
+                              setSelectedNode(null);
+                            }}
+          >
+            <svg ref={svgRef}></svg>
+          </div>
+        </div>
+
+        {/* Right Sidebar - Node Details & Search */}
+        <div className="network-sidebar-right">
+          <div className="sidebar-section">
+            <h4>Search & Details</h4>
             
-            {/* Zoom Controls - Top Right */}
-            <div className="zoom-controls">
-              <button 
-                className="control-button zoom-button"
-                onClick={zoomIn}
-                disabled={zoomLevel >= 5}
-                title="Zoom In"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="12" y1="5" x2="12" y2="19"/>
-                  <line x1="5" y1="12" x2="19" y2="12"/>
-                </svg>
-              </button>
-              <button 
-                className="control-button zoom-button"
-                onClick={zoomOut}
-                disabled={zoomLevel <= 0.3}
-                title="Zoom Out"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="5" y1="12" x2="19" y2="12"/>
-                </svg>
-              </button>
+            {/* Search Input */}
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search companies, universities..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="search-input"
+              />
             </div>
-          </div>
-        </div>
-        
-        {/* Right Sidebar - Legend */}
-        <div className="network-legend">
-          <h4>Network Legend</h4>
-          <div className="legend-section">
-            <h5>Node Types</h5>
-            <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.university]}}></div>
-              <span className="legend-label">Universities</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.company]}}></div>
-              <span className="legend-label">Companies</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.vc]}}></div>
-              <span className="legend-label">Venture Capital</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.incubator]}}></div>
-              <span className="legend-label">Incubators</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.serviceProvider]}}></div>
-              <span className="legend-label">Service Providers</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.government]}}></div>
-              <span className="legend-label">Government</span>
-            </div>
-          </div>
-          <div className="legend-section">
-            <h5>Relationship Types</h5>
-            <div className="legend-item">
-              <div className="legend-line" style={{borderColor: '#ff6b6b', borderWidth: '4px'}}></div>
-              <span className="legend-label">Spinout</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-line" style={{borderColor: '#4ecdc4', borderStyle: 'dashed'}}></div>
-              <span className="legend-label">Investment</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-line" style={{borderColor: '#45b7d1'}}></div>
-              <span className="legend-label">Collaboration</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-line" style={{borderColor: '#96ceb4', borderStyle: 'dotted'}}></div>
-              <span className="legend-label">Partnership</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-line" style={{borderColor: '#ffeaa7', borderWidth: '1px'}}></div>
-              <span className="legend-label">Service</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-line" style={{borderColor: '#dda0dd', borderStyle: 'dashed'}}></div>
-              <span className="legend-label">Support</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Network Control Panel */}
-      <div className="network-control-panel">
-        <div className="control-panel-content">
-          <div className="control-group">
-            <button 
-              className="control-panel-button"
-              onClick={centerNetwork}
-              title="Center Network"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="3" y1="3" x2="8" y2="3"/>
-                <line x1="3" y1="3" x2="3" y2="8"/>
-                <line x1="21" y1="3" x2="16" y2="3"/>
-                <line x1="21" y1="3" x2="21" y2="8"/>
-                <line x1="3" y1="21" x2="8" y2="21"/>
-                <line x1="3" y1="21" x2="3" y2="16"/>
-                <line x1="21" y1="21" x2="16" y2="21"/>
-                <line x1="21" y1="21" x2="21" y2="16"/>
-              </svg>
-              <span>Center</span>
-            </button>
-          </div>
-          
-          <div className="control-group">
-            <button 
-              className="control-panel-button"
-              onClick={zoomOut}
-              disabled={zoomLevel <= 0.3}
-              title="Zoom Out"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-              <span>Zoom Out</span>
-            </button>
-            <button 
-              className="control-panel-button"
-              onClick={zoomIn}
-              disabled={zoomLevel >= 5}
-              title="Zoom In"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="12" y1="5" x2="12" y2="19"/>
-                <line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-              <span>Zoom In</span>
-            </button>
-          </div>
-          
-          <div className="control-group">
-            <span className="zoom-level-display">
-              {Math.round(zoomLevel * 100)}%
-            </span>
+            
+            {/* Search Results */}
+            {searchResults.length > 0 && (
+              <div className="search-results">
+                <h5>Search Results</h5>
+                <div className="search-results-list">
+                  {searchResults.map((node, index) => (
+                    <div 
+                      key={node.id} 
+                      className="search-result-item"
+                      onClick={() => handleNodeClick(node)}
+                    >
+                      <div className="result-node-color" style={{backgroundColor: nodeColors[typeMap[node.type]]}}></div>
+                      <div className="result-content">
+                        <div className="result-name">{node.name}</div>
+                        <div className="result-type">{typeMap[node.type] || node.type}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Selected Node Details */}
+            {selectedNode && (
+              <div className="node-details">
+                <div className="details-header">
+                  <h3>{selectedNode.name}</h3>
+                  <button 
+                    className="details-close"
+                    onClick={() => setSelectedNode(null)}
+                    title="Close"
+                  >
+                    ×
+                  </button>
+                </div>
+                
+                <div className="details-content">
+                  <p className="node-type">{typeMap[selectedNode.type] || selectedNode.type}</p>
+                  <p className="node-description">{selectedNode.description}</p>
+                  
+                  {selectedNode.website && (
+                    <div className="details-section">
+                      <h4>Website</h4>
+                      <a 
+                        href={selectedNode.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="website-link"
+                      >
+                        {selectedNode.website.replace(/^https?:\/\//, '')}
+                      </a>
+                    </div>
+                  )}
+                  
+                  {selectedNode.keyPersonnel && selectedNode.keyPersonnel.length > 0 && (
+                    <div className="details-section">
+                      <h4>Key Personnel</h4>
+                      <ul className="personnel-list">
+                        {selectedNode.keyPersonnel.map((person, index) => (
+                          <li key={index}>{person}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {selectedNode.recentNews && (
+                    <div className="details-section">
+                      <h4>Recent Developments</h4>
+                      <p className="recent-news">{selectedNode.recentNews}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
       
-      {selectedNode && (
-        <div className="node-tooltip">
-          <div className="tooltip-header">
-            <h3>{selectedNode.name}</h3>
-            <button 
-              className="tooltip-close"
-              onClick={() => setSelectedNode(null)}
-              title="Close"
-            >
-              ×
-            </button>
-          </div>
-          <p className="node-type">{selectedNode.type}</p>
-          <p className="node-description">{selectedNode.description}</p>
-          
-          {selectedNode.website && (
-            <div className="tooltip-section">
-              <h4>Website</h4>
-              <a 
-                href={selectedNode.website} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="website-link"
-              >
-                {selectedNode.website.replace(/^https?:\/\//, '')}
-              </a>
-            </div>
-          )}
-          
-          {selectedNode.keyPersonnel && selectedNode.keyPersonnel.length > 0 && (
-            <div className="tooltip-section">
-              <h4>Key Personnel</h4>
-              <ul className="personnel-list">
-                {selectedNode.keyPersonnel.map((person, index) => (
-                  <li key={index}>{person}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          
 
-          
-          {selectedNode.recentNews && (
-            <div className="tooltip-section">
-              <h4>Recent Developments</h4>
-              <p className="recent-news">{selectedNode.recentNews}</p>
-            </div>
-          )}
-        </div>
-      )}
-      
-      {selectedLink && (
-        <div className="link-tooltip">
-          <div className="tooltip-header">
-            <h4>Relationship</h4>
-            <button 
-              className="tooltip-close"
-              onClick={() => setSelectedLink(null)}
-              title="Close"
-            >
-              ×
-            </button>
-          </div>
-          <p className="link-type">{selectedLink.type}</p>
-          <p className="link-description">{selectedLink.description}</p>
-
-        </div>
-      )}
     </div>
   );
 };

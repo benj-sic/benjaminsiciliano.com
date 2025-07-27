@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import NetworkVisualization from './components/NetworkVisualization';
 import ThemeToggle from './components/ThemeToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -15,6 +14,7 @@ function App() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [showShareToast, setShowShareToast] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
+  const shareDropdownRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,8 +24,63 @@ function App() {
     }));
   };
 
-  const handleShare = async () => {
-    console.log('Share button clicked!');
+
+
+  const handleSocialShare = (platform) => {
+    console.log('Social share clicked for platform:', platform);
+    
+    const networkState = window.networkState || {};
+    const { filters = {}, zoomLevel = 1, selectedNode = null } = networkState;
+    
+    // Build URL with network state parameters
+    const urlParams = new URLSearchParams();
+    
+    // Add filter states
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        urlParams.append('filter', key);
+      }
+    });
+    
+    // Add zoom level if not default
+    if (zoomLevel !== 1) {
+      urlParams.append('zoom', zoomLevel.toString());
+    }
+    
+    // Add selected node if any
+    if (selectedNode) {
+      urlParams.append('focus', selectedNode);
+    }
+    
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = urlParams.toString() ? `${baseUrl}?${urlParams.toString()}` : baseUrl;
+    
+    // For LinkedIn, use a public URL if we're on localhost
+    const linkedInUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? 'https://benjaminsiciliano.com' 
+      : shareUrl;
+    
+    const twitterShareText = "Explore this interactive map of Atlanta's biotech ecosystem — built by @benjsiciliano — featuring startups, spinouts, VCs, and research hubs driving innovation in Georgia.";
+    
+    let socialUrl;
+    
+    switch (platform) {
+      case 'twitter':
+        socialUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterShareText)}&url=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'linkedin':
+        socialUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(linkedInUrl)}`;
+        break;
+      default:
+        return;
+    }
+    
+    console.log('Opening social URL:', socialUrl);
+    window.open(socialUrl, '_blank', 'width=600,height=400');
+  };
+
+  const handleCopyLink = async () => {
+    console.log('Copy link clicked!');
     
     // Get current network state from the NetworkVisualization component
     const networkState = window.networkState || {};
@@ -58,99 +113,21 @@ function App() {
     
     console.log('Share URL:', shareUrl);
     
-    const shareText = "Check out this interactive map of Atlanta's biotech ecosystem! Discover key organizations, partnerships, and investment relationships driving innovation in Georgia's life sciences sector.";
-    
-    // Try Web Share API first
-    if (navigator.share) {
-      try {
-        console.log('Using Web Share API');
-        await navigator.share({
-          title: "Atlanta Biotech Network Map",
-          text: shareText,
-          url: shareUrl
-        });
-        return;
-      } catch (error) {
-        // User cancelled or share failed, fall back to clipboard
-        console.log('Web Share API failed, falling back to clipboard:', error);
-      }
-    }
-    
-    // Fallback to clipboard
     try {
-      console.log('Using clipboard fallback');
       await navigator.clipboard.writeText(shareUrl);
       setShowShareToast(true);
       setTimeout(() => setShowShareToast(false), 3000);
+      setShowShareDropdown(false);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
       // Final fallback - show URL in alert
       alert(`Share this link: ${shareUrl}`);
-    }
-  };
-
-  const handleSocialShare = (platform) => {
-    console.log('Social share clicked for platform:', platform);
-    
-    const networkState = window.networkState || {};
-    const { filters = {}, zoomLevel = 1, selectedNode = null } = networkState;
-    
-    // Build URL with network state parameters
-    const urlParams = new URLSearchParams();
-    
-    // Add filter states
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
-        urlParams.append('filter', key);
-      }
-    });
-    
-    // Add zoom level if not default
-    if (zoomLevel !== 1) {
-      urlParams.append('zoom', zoomLevel.toString());
-    }
-    
-    // Add selected node if any
-    if (selectedNode) {
-      urlParams.append('focus', selectedNode);
-    }
-    
-    const baseUrl = window.location.origin + window.location.pathname;
-    const shareUrl = urlParams.toString() ? `${baseUrl}?${urlParams.toString()}` : baseUrl;
-    
-    const shareText = "Check out this interactive map of Atlanta's biotech ecosystem! Discover key organizations, partnerships, and investment relationships driving innovation in Georgia's life sciences sector.";
-    
-    let socialUrl;
-    
-    switch (platform) {
-      case 'twitter':
-        socialUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-        break;
-      case 'linkedin':
-        socialUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-        break;
-      default:
-        return;
-    }
-    
-    console.log('Opening social URL:', socialUrl);
-    window.open(socialUrl, '_blank', 'width=600,height=400');
-  };
-
-  const handleCopyLink = async () => {
-    console.log('Copy link clicked!');
-    alert('Copy link button clicked!'); // Temporary test
-    try {
-      await handleShare();
       setShowShareDropdown(false);
-    } catch (error) {
-      console.error('Error in handleCopyLink:', error);
     }
   };
 
   const handleTwitterShare = () => {
     console.log('Twitter share clicked!');
-    alert('Twitter share button clicked!'); // Temporary test
     try {
       handleSocialShare('twitter');
       setShowShareDropdown(false);
@@ -161,7 +138,6 @@ function App() {
 
   const handleLinkedInShare = () => {
     console.log('LinkedIn share clicked!');
-    alert('LinkedIn share button clicked!'); // Temporary test
     try {
       handleSocialShare('linkedin');
       setShowShareDropdown(false);
@@ -239,19 +215,9 @@ function App() {
     };
   }, []);
 
-  // Handle clicking outside dropdown to close it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showShareDropdown && !event.target.closest('.share-button-container')) {
-        setShowShareDropdown(false);
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showShareDropdown]);
+
+
 
   return (
     <ThemeProvider>
@@ -267,14 +233,45 @@ function App() {
                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
               </svg>
             </button>
-            {showShareDropdown && (
-              <div className="share-dropdown">
+            
+          </div>
+          <div className="header-content">
+            <h1>Benjamin Siciliano, PhD</h1>
+            <p className="header-tagline">Bridging science, software, and strategy to accelerate biotech innovation</p>
+          </div>
+          <ThemeToggle />
+        </header>
+
+        {/* Share Dropdown - Positioned outside header for proper centering */}
+        {showShareDropdown && (
+          <>
+            <div className="share-backdrop"></div>
+            <div 
+              ref={shareDropdownRef}
+              className="share-dropdown" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="share-dropdown-header">
+                <h3 className="share-dropdown-title">Share</h3>
+                <button 
+                  className="share-dropdown-close" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowShareDropdown(false);
+                  }}
+                  title="Close"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  </svg>
+                </button>
+              </div>
+              <div className="share-dropdown-content">
                 <button 
                   className="share-option" 
                   onClick={(e) => {
-                    console.log('Copy button clicked!');
-                    e.preventDefault();
                     e.stopPropagation();
+                    console.log('Copy button clicked!');
                     handleCopyLink();
                   }}
                 >
@@ -286,9 +283,8 @@ function App() {
                 <button 
                   className="share-option" 
                   onClick={(e) => {
-                    console.log('Twitter button clicked!');
-                    e.preventDefault();
                     e.stopPropagation();
+                    console.log('Twitter button clicked!');
                     handleTwitterShare();
                   }}
                 >
@@ -300,9 +296,8 @@ function App() {
                 <button 
                   className="share-option" 
                   onClick={(e) => {
-                    console.log('LinkedIn button clicked!');
-                    e.preventDefault();
                     e.stopPropagation();
+                    console.log('LinkedIn button clicked!');
                     handleLinkedInShare();
                   }}
                 >
@@ -312,14 +307,9 @@ function App() {
                   Share on LinkedIn
                 </button>
               </div>
-            )}
-          </div>
-          <div className="header-content">
-            <h1>Benjamin Siciliano, PhD</h1>
-            <p className="header-tagline">Bridging science, software, and strategy to accelerate biotech innovation</p>
-          </div>
-          <ThemeToggle />
-        </header>
+            </div>
+            </>
+          )}
 
         {/* Share Toast */}
         {showShareToast && (
@@ -328,7 +318,7 @@ function App() {
               <svg className="share-toast-icon" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
-              <span>Link copied! Share this map with founders, investors, or collaborators.</span>
+              <span>Link copied!</span>
             </div>
           </div>
         )}
