@@ -163,21 +163,34 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  letter-spacing: 0.2px;
 }
 
 /* Improved node visibility with enhanced shadows */
 .network-canvas circle {
-  filter: drop-shadow(0 2px 6px var(--network-shadow));
-  transition: filter 0.2s ease;
+  filter: drop-shadow(0 3px 8px var(--network-shadow));
+  transition: all 0.2s ease;
 }
 
 .network-canvas circle:hover {
-  filter: drop-shadow(0 4px 12px var(--network-shadow));
+  filter: drop-shadow(0 5px 15px var(--network-shadow));
 }
 
 /* Enhanced link visibility */
 .network-canvas line {
   transition: stroke-opacity 0.2s ease;
+}
+
+/* Add background highlight for better node visibility */
+.network-canvas circle::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 

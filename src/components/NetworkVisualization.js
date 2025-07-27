@@ -23,7 +23,7 @@ const NetworkVisualization = () => {
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const zoomParam = urlParams.get('zoom');
-    return zoomParam ? parseFloat(zoomParam) : 1;
+    return zoomParam ? parseFloat(zoomParam) : 0.8; // Start at 80% zoom for better initial view
   };
 
   const [zoomLevel, setZoomLevel] = useState(getInitialZoomLevel);
@@ -149,7 +149,7 @@ const NetworkVisualization = () => {
     'development': 'development'
   }), []);
 
-  // Center network function
+  // Center network function with improved visibility
   const centerNetwork = () => {
     if (svgRef.current && zoomBehaviorRef.current) {
       const svg = d3.select(svgRef.current);
@@ -161,12 +161,15 @@ const NetworkVisualization = () => {
       const zoomGroup = svg.select("g.zoom-group");
       if (zoomGroup.empty()) return;
       
-      // Get the bounding box of all nodes
+      // Get the bounding box of all nodes and labels
       const nodes = zoomGroup.selectAll("circle");
+      const labels = zoomGroup.selectAll("text");
       if (nodes.empty()) return;
       
-      // Calculate the bounds of the network
+      // Calculate the bounds of the network including labels
       let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      
+      // Check nodes
       nodes.each(function() {
         const cx = parseFloat(d3.select(this).attr("cx"));
         const cy = parseFloat(d3.select(this).attr("cy"));
@@ -177,6 +180,21 @@ const NetworkVisualization = () => {
         maxY = Math.max(maxY, cy + r);
       });
       
+      // Check labels for additional bounds
+      labels.each(function() {
+        const x = parseFloat(d3.select(this).attr("x"));
+        const y = parseFloat(d3.select(this).attr("y"));
+        const textLength = this.getComputedTextLength();
+        const fontSize = parseFloat(d3.select(this).attr("font-size"));
+        const labelWidth = textLength + 20; // Add padding for label width
+        const labelHeight = fontSize + 10; // Add padding for label height
+        
+        minX = Math.min(minX, x - labelWidth / 2);
+        maxX = Math.max(maxX, x + labelWidth / 2);
+        minY = Math.min(minY, y - labelHeight / 2);
+        maxY = Math.max(maxY, y + labelHeight / 2);
+      });
+      
       // Calculate the center of the network
       const networkCenterX = (minX + maxX) / 2;
       const networkCenterY = (minY + maxY) / 2;
@@ -184,16 +202,14 @@ const NetworkVisualization = () => {
       // Calculate the scale to fit the network in the viewport with padding
       const networkWidth = maxX - minX;
       const networkHeight = maxY - minY;
-      const padding = 60; // Reduced padding for more zoomed in view
+      const padding = 80; // Increased padding for better visibility
       const scaleX = (width - padding * 2) / networkWidth;
       const scaleY = (height - padding * 2) / networkHeight;
-      const scale = Math.max(Math.min(scaleX, scaleY, 1.8), 0.4); // Ensure minimum zoom level of 0.4
+      const scale = Math.max(Math.min(scaleX, scaleY, 0.25), 0.25); // Force 25% zoom for centering
       
-      // Calculate the transform to center the network with smaller offset
-      const offsetX = 10; // Move right less
-      const offsetY = -50; // Move down (negative Y moves down in SVG coordinates)
+      // Calculate the transform to center the network in a balanced position
       const transform = d3.zoomIdentity
-        .translate(width / 2 - networkCenterX * scale + offsetX, height / 2 - networkCenterY * scale + offsetY)
+        .translate(width / 2 - networkCenterX * scale, height / 2.5 - networkCenterY * scale) // Position at 40% of height for better balance
         .scale(scale);
       
       // Apply the transform with transition
@@ -207,28 +223,28 @@ const NetworkVisualization = () => {
 
   // Zoom functions
   const zoomIn = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 5) {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 2.5) {
       const svg = d3.select(svgRef.current);
-      const newZoomLevel = Math.min(zoomLevel * 1.5, 5);
+      const newZoomLevel = Math.min(zoomLevel + 0.1, 2.5); // Increase by 10%
       
       // Use the zoom behavior to zoom in from the current center
       svg.transition()
         .duration(300)
-        .call(zoomBehaviorRef.current.scaleBy, 1.5);
+        .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
       
       setZoomLevel(newZoomLevel);
     }
   };
 
   const zoomOut = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.4) {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.25) {
       const svg = d3.select(svgRef.current);
-      const newZoomLevel = Math.max(zoomLevel / 1.5, 0.4);
+      const newZoomLevel = Math.max(zoomLevel - 0.1, 0.25); // Decrease by 10%
       
       // Use the zoom behavior to zoom out from the current center
       svg.transition()
         .duration(300)
-        .call(zoomBehaviorRef.current.scaleBy, 1/1.5);
+        .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
       
       setZoomLevel(newZoomLevel);
     }
@@ -272,24 +288,24 @@ const NetworkVisualization = () => {
     const nodeTypes = ['university', 'company', 'vc', 'incubator', 'serviceProvider', 'government', 'trade', 'development', 'facility'];
     const clusterPositions = {};
     
-    // Calculate cluster positions in a circle with larger radius
-    nodeTypes.forEach((type, index) => {
-      const angle = (index / nodeTypes.length) * 2 * Math.PI;
-      const radius = Math.min(width, height) * 0.35; // Increased radius for better spacing
-      clusterPositions[type] = {
-        x: width / 2 + radius * Math.cos(angle),
-        y: height / 2 + radius * Math.sin(angle)
-      };
-    });
+          // Calculate cluster positions in a circle with larger radius for better spacing
+      nodeTypes.forEach((type, index) => {
+        const angle = (index / nodeTypes.length) * 2 * Math.PI;
+        const radius = Math.min(width, height) * 0.4; // Increased radius from 0.35 to 0.4 for better spacing
+        clusterPositions[type] = {
+          x: width / 2 + radius * Math.cos(angle),
+          y: height / 2 + radius * Math.sin(angle)
+        };
+      });
 
-    // Enhanced force simulation for 80+ nodes with clustering
+    // Enhanced force simulation for 80+ nodes with clustering and better spacing
     const simulation = d3.forceSimulation(filteredNodes)
-      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(120)) // Increased link distance
-      .force("charge", d3.forceManyBody().strength(-200)) // Increased repulsion for better spacing
+      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(150)) // Increased link distance from 120 to 150
+      .force("charge", d3.forceManyBody().strength(-300)) // Increased repulsion from -200 to -300 for better spacing
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => d.size + 30)) // Increased collision radius for larger labels
-      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.2)) // Reduced clustering strength
-      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.2)); // Reduced clustering strength
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * 1.5, 8) + 50)) // Increased collision radius for larger nodes and labels
+      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.15)) // Reduced clustering strength from 0.2 to 0.15
+      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.15)); // Reduced clustering strength from 0.2 to 0.15
 
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
@@ -312,15 +328,16 @@ const NetworkVisualization = () => {
       })
       .style("cursor", "pointer");
 
-    // Create nodes in zoom group
+    // Create nodes in zoom group with larger sizes
     const nodes = zoomGroup.append("g")
       .attr("class", "nodes")
       .selectAll("circle")
       .data(filteredNodes)
       .enter().append("circle")
-      .attr("r", d => d.size)
+      .attr("r", d => Math.max(d.size * 1.5, 8)) // Increase node size by 50% with minimum of 8px
       .attr("fill", d => nodeColors[typeMap[d.type]])
       .style("cursor", "pointer")
+      .style("filter", theme === 'dark' ? "drop-shadow(0 0 4px rgba(255,255,255,0.3))" : "drop-shadow(0 0 4px rgba(0,0,0,0.2))")
       .on("click", function(event, d) {
         event.stopPropagation();
         handleNodeClick(d);
@@ -328,7 +345,7 @@ const NetworkVisualization = () => {
 
 
 
-    // Create labels in zoom group
+    // Create labels in zoom group with larger, more readable text
     const labels = zoomGroup.append("g")
       .attr("class", "labels")
       .selectAll("text")
@@ -340,15 +357,15 @@ const NetworkVisualization = () => {
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
       .attr("fill", theme === 'dark' ? "#fff" : "#333")
-      .attr("font-size", "14px")
-      .attr("font-weight", "600")
+      .attr("font-size", "16px") // Increased from 14px to 16px
+      .attr("font-weight", "700") // Increased from 600 to 700 for better visibility
       .style("pointer-events", "none")
-      .style("text-shadow", theme === 'dark' ? "2px 2px 4px rgba(0,0,0,0.9), 0px 0px 8px rgba(0,0,0,0.7)" : "2px 2px 4px rgba(255,255,255,0.9), 0px 0px 8px rgba(255,255,255,0.7)")
+      .style("text-shadow", theme === 'dark' ? "2px 2px 4px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.7), 0px 0px 8px rgba(0,0,0,0.5)" : "2px 2px 4px rgba(255,255,255,0.9), 1px 1px 2px rgba(255,255,255,0.7), 0px 0px 8px rgba(255,255,255,0.5)")
       .style("font-family", "system-ui, -apple-system, sans-serif");
 
     // Add zoom behavior with enhanced controls
     const zoom = d3.zoom()
-      .scaleExtent([0.4, 5]) // Allow more zoom out for larger datasets
+      .scaleExtent([0.25, 2.5]) // Zoom range from 25% to 250%
       .on("zoom", (event) => {
         zoomGroup.attr("transform", event.transform);
         setZoomLevel(event.transform.k);
