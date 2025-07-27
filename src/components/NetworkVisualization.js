@@ -417,7 +417,7 @@ const NetworkVisualization = () => {
     return () => {
       simulation.stop();
     };
-  }, [debouncedFilters, networkData, typeMap, theme, selectedNode, selectedLink]);
+  }, [debouncedFilters, networkData, typeMap, theme, selectedNode, selectedLink, filterMapping]);
 
   const toggleFilter = (filterType) => {
     setFilters(prev => ({
