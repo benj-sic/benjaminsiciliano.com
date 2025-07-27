@@ -281,7 +281,7 @@ main {
   border-left: 4px solid var(--text-accent);
   padding: 1rem 1.5rem;
   margin-top: 2rem;
-  margin-bottom: 2rem !important;
+  margin-bottom: 1rem !important;
   border-radius: 0 8px 8px 0;
   font-size: 1.1rem;
   line-height: 1.6;

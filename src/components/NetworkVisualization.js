@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import * as d3 from 'd3';
 import { atlantaTechBioEcosystem, nodeTypeMap, nodeColors } from '../atlanta_techbio_data.js';
 import { useTheme } from '../contexts/ThemeContext';
@@ -150,7 +150,7 @@ const NetworkVisualization = () => {
   }, [filters]);
 
   // Create filter mapping
-  const filterMapping = {
+  const filterMapping = useMemo(() => ({
     'university': 'universities',
     'company': 'companies',
     'public_company': 'companies',
@@ -163,7 +163,7 @@ const NetworkVisualization = () => {
     'government': 'government',
     'trade': 'trade',
     'development': 'development'
-  };
+  }), []);
 
   // Center network function
   const centerNetwork = () => {
