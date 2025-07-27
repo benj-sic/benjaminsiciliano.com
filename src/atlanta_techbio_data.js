@@ -116,7 +116,7 @@ export const atlantaTechBioEcosystem = {
       description: "Clinical-stage CNS drug developer. A spinout from research at Emory and Duke University.",
       website: "https://neuropinc.com/",
       keyPersonnel: ["James McNamara", "Raymond Dingledine"],
-      recentNews: "Lead compound for stroke-related brain injury entered Phase 1 trials."
+      recentNews: "Phase 1 clinical trials completed with positive safety and tolerability results. Company announced plans for Phase 2 trials in subarachnoid hemorrhage (SAH) starting 2023. FDA granted Orphan Drug Designation for NP10679 in December 2021."
     },
     {
       id: "antios",
@@ -311,8 +311,8 @@ export const atlantaTechBioEcosystem = {
       size: 14,
       description: "Global Center for Medical Innovation. A non-profit providing medtech design, prototyping, and preclinical testing services (T3 Labs).",
       website: "https://devices.net",
-      keyPersonnel: ["Interim Leadership"],
-      recentNews: "Partnered with FDA on COVID-19 device acceleration programs."
+      keyPersonnel: ["Saylan Lukas"],
+      recentNews: "Saylan Lukas serves as Interim Executive Director following Sherry Farrugia's departure in November 2023. T3 Labs subsidiary was acquired by Veranex. GCMI will operationally close on June 30, 2025."
     },
 
     // GOVERNMENT & TRADE ORGANIZATIONS
@@ -323,8 +323,8 @@ export const atlantaTechBioEcosystem = {
       size: 17,
       description: "Public-private partnership that helps recruit top scientists and fund university research commercialization in Georgia.",
       website: "https://gra.org",
-      keyPersonnel: ["Susan Shows"],
-      recentNews: "Has helped create over $2.3B in equity value from university spinouts since 1990."
+      keyPersonnel: ["Timothy Denning"],
+      recentNews: "Tim Denning became GRA's fifth president and CEO in November 2023, after serving as vice president for research and economic development at Georgia State University."
     },
     {
       id: "georgia_bio",
@@ -334,7 +334,7 @@ export const atlantaTechBioEcosystem = {
       description: "The state's life sciences trade association (formerly Georgia Bio), with over 500 members. Hosts the annual Golden Helix Awards.",
       website: "https://georgialifesciences.org",
       keyPersonnel: ["Maria Thacker-Goethe"],
-      recentNews: "Advocating for more lab space, citing an 'inflection point' for Atlanta biotech in 2024."
+      recentNews: "Organization rebranded from Georgia Bio to Georgia Life Sciences in January 2025 to reflect expanded membership and scope."
     },
     {
       id: "rowen",
