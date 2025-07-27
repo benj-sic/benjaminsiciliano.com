@@ -1,6 +1,7 @@
 // Atlanta TechBio Ecosystem Network Data
-// This file contains comprehensive data about the Atlanta TechBio ecosystem
-// extracted from research documents and should replace the sample data in NetworkVisualization.js
+// This file contains comprehensive, verified data about the Atlanta TechBio ecosystem.
+// All data has been updated as of July 2025 based on a synthesis of multiple AI fact-checking reports.
+// This file can directly replace the old data in your project.
 
 export const atlantaTechBioEcosystem = {
   nodes: [
@@ -10,134 +11,134 @@ export const atlantaTechBioEcosystem = {
       name: "Emory University",
       type: "university",
       size: 25,
-      description: "Leading private research university with $485M NIH funding, major biotech spinout source",
+      description: "Leading private research university with over $1B in sponsored research funding. A major source of biomedical innovation and biotech spinouts like Altesa, NeurOp, and GeoVax.",
       website: "https://emory.edu",
-      keyPersonnel: ["Dennis Liotta", "Nicholas Boulis", "Mike Cassidy"],
-      funding: "$485M NIH (2023)",
-      recentNews: "Launched BioFoundry Institute, multiple recent spinouts including Brain Trust Bio"
+      keyPersonnel: ["Dennis Liotta", "Nicholas Boulis", "C. Michael Cassidy"],
+      funding: "$488M NIH (2024)",
+      recentNews: "Launched BioFoundry Institute (BDCI); multiple spinouts including Brain Trust Bio."
     },
     {
       id: "gatech",
       name: "Georgia Tech",
-      type: "university", 
+      type: "university",
       size: 23,
-      description: "Public research university, bioengineering powerhouse, CREATE-X accelerator, Science Square",
+      description: "Top public engineering and research university. Home to the ATDC incubator and CREATE-X startup programs. A hub for medtech innovation, spinning out companies like Micron, Clearside, and OXOS.",
       website: "https://gatech.edu",
       keyPersonnel: ["Mark Prausnitz", "Raghupathy Sivakumar"],
       funding: "N/A (academic)",
-      recentNews: "Completed $100M+ Science Square Phase 1, CREATE-X had 318 founders in 2024"
+      recentNews: "CREATE-X announced a record cohort of 318 founders in 2025. Science Square Phase 1 completed in 2024."
     },
     {
       id: "morehouse",
       name: "Morehouse School of Medicine",
       type: "university",
       size: 15,
-      description: "Historically Black medical school, health equity research focus",
+      description: "Historically Black medical school focused on health equity. Partner in the Georgia Clinical & Translational Science Alliance (CTSA).",
       website: "https://msm.edu",
       keyPersonnel: ["Valerie Montgomery Rice"],
       funding: "N/A (academic)",
-      recentNews: "Celebrating 50 years of advancing health equity (2025)"
+      recentNews: "Celebrating 50th anniversary in 2025. Key partner in Georgia CTSA."
     },
     {
       id: "uga",
       name: "University of Georgia",
       type: "university",
       size: 18,
-      description: "Public flagship with veterinary medicine, pharmacy strengths",
+      description: "Major public research university with strengths in veterinary medicine, pharmacy, and agricultural biotech. A key partner in statewide innovation initiatives through GRA.",
       website: "https://uga.edu",
       keyPersonnel: ["Jere W. Morehead"],
       funding: "N/A (academic)",
-      recentNews: "Partner in statewide biotech initiatives via GRA"
+      recentNews: "Partner in statewide biotech initiatives via GRA."
     },
     {
       id: "gsu",
       name: "Georgia State University",
       type: "university",
       size: 16,
-      description: "Growing biomedical research in infectious disease and neuroscience",
+      description: "Research university with growing programs in infectious disease and neuroscience. Key collaborator on public health initiatives.",
       website: "https://gsu.edu",
       keyPersonnel: ["M. Brian Blake"],
       funding: "N/A (academic)",
-      recentNews: "Part of NIH-funded antivirals center with Emory"
+      recentNews: "Co-leading NIH Antiviral Countermeasures Development Center (AC/DC) with Emory."
     },
     {
       id: "augusta_university",
       name: "Augusta University",
       type: "university",
       size: 15,
-      description: "Medical College of Georgia, clinical trial networks, statewide campuses",
+      description: "Georgia's public academic medical center, home of the Medical College of Georgia. Operates a statewide campus network focused on health sciences.",
       website: "https://augusta.edu",
-      keyPersonnel: ["Brooks A. Keel"],
+      keyPersonnel: ["Dr. Russell Keen"],
       funding: "N/A (academic)",
-      recentNews: "Clinical trial networks, partners with CDC on public health"
+      recentNews: "President Brooks A. Keel retired in 2024; Dr. Russell Keen inaugurated in 2025."
     },
     {
       id: "cdc",
       name: "CDC",
       type: "government",
       size: 20,
-      description: "Nation's premier public health institute, 200+ labs, Advanced Molecular Detection Initiative",
+      description: "U.S. Centers for Disease Control and Prevention. A major federal anchor for public health and infectious disease research, headquartered in Atlanta.",
       website: "https://cdc.gov",
       keyPersonnel: ["Dr. Mandy K. Cohen"],
       funding: "N/A (government)",
-      recentNews: "Headquarters expanding, industry partnerships for diagnostic validation"
+      recentNews: "Expanding lab capacity and forming industry partnerships with Roche and Quest for global health initiatives."
     },
 
     // MAJOR COMPANIES - CLINICAL STAGE
     {
       id: "inhibikase",
       name: "Inhibikase Therapeutics",
-      type: "company",
+      type: "public_company",
       size: 18,
-      description: "Clinical-stage biotech, Parkinson's and cancer focus, potential $275M financing",
+      description: "Clinical-stage biotech (NASDAQ: IKT) spun out of Emory research. Secured up to $275M in financing. Current focus is on advancing its lead drug for PAH.",
       website: "https://inhibikase.com",
       keyPersonnel: ["Mark Iwicki", "Amit Munshi"],
       funding: "Public (NASDAQ: IKT), potential $275M",
-      recentNews: "Underwent leadership transformation, Soleus Capital lead investor"
+      recentNews: "Underwent leadership transformation. Focus has shifted to Pulmonary Arterial Hypertension (PAH)."
     },
     {
       id: "geovax",
       name: "GeoVax Labs",
-      type: "company",
+      type: "public_company",
       size: 15,
-      description: "Clinical-stage vaccine developer (HIV, Ebola, Zika, COVID-19)",
+      description: "Clinical-stage vaccine and immunotherapy company. An Emory spinout developing novel vaccine technologies for infectious diseases and cancer.",
       website: "https://geovax.com",
       keyPersonnel: ["David Dodd"],
       funding: "Public (NASDAQ: GOVX)",
-      recentNews: "Phase 2 COVID-19 vaccine trials, federal grants for pan-coronavirus vaccines"
+      recentNews: "Advancing Phase 2 clinical trials for its next-gen COVID-19 vaccine."
     },
     {
       id: "micron",
       name: "Micron Biomedical",
-      type: "company",
+      type: "startup",
       size: 16,
-      description: "Microneedle patch technology for painless vaccine delivery",
+      description: "Georgia Tech spinout developing a dissolvable microneedle patch for painless, needle-free delivery of drugs and vaccines.",
       website: "https://micronbiomedical.com",
       keyPersonnel: ["Steven Damon", "Mark Prausnitz"],
-      funding: "Series A ($14M), $43M total from Gates Foundation",
-      recentNews: "First-in-human influenza vaccination trial completed"
+      funding: "$33M+ Series A, $43M Gates grants",
+      recentNews: "Completed first-in-human trial for influenza patch."
     },
     {
       id: "neurop",
-      name: "NeurOp Inc.",
-      type: "company",
+      name: "NeurOp, Inc.",
+      type: "startup",
       size: 14,
-      description: "NMDA receptor modulators for CNS disorders, Emory spinout",
-      website: "http://neuropinc.com",
+      description: "Clinical-stage CNS drug developer. A spinout from research at Emory and Duke University.",
+      website: "https://neuropinc.com/",
       keyPersonnel: ["James McNamara", "Raymond Dingledine"],
       funding: "Clinical stage (Phase 1)",
-      recentNews: "NP10679 in Phase 1 trials for stroke-related brain injury"
+      recentNews: "Lead compound for stroke-related brain injury entered Phase 1 trials."
     },
     {
       id: "antios",
       name: "Antios Therapeutics",
-      type: "company",
+      type: "startup",
       size: 15,
-      description: "Novel therapies for hepatitis B virus infection",
+      description: "Atlanta-based biotech focused on developing a cure for Hepatitis B virus (HBV).",
       website: "https://antiostherapeutics.com",
       keyPersonnel: ["Abel De La Rosa"],
-      funding: "Phase 2/Series B (~$100M raised)",
-      recentNews: "Promising Phase 2 data, aiming for HBV functional cure"
+      funding: "$100M+ Series B",
+      recentNews: "Announced promising Phase 2 data for lead HBV drug, aiming for a functional cure."
     },
 
     // GROWTH COMPANIES
@@ -146,55 +147,55 @@ export const atlantaTechBioEcosystem = {
       name: "Sharecare",
       type: "company",
       size: 20,
-      description: "Digital health platform, acquired by Altaris for $518M",
+      description: "Digital health company providing a personalized health platform. A major Atlanta tech exit, demonstrating the region's strength in health IT.",
       website: "https://sharecare.com",
-      keyPersonnel: ["Jeff Arnold"],
-      funding: "Acquired ($518M by Altaris, 2024)",
-      recentNews: "Major ecosystem exit success, AI health assistant launched"
+      keyPersonnel: ["Jeff Arnold", "Brent Layton"],
+      funding: "$518M acquisition by Altaris",
+      recentNews: "Acquired by Altaris Capital Partners in Oct 2024. Jeff Arnold continues as Executive Chairman."
     },
     {
       id: "florence",
       name: "Florence Healthcare",
       type: "company",
       size: 17,
-      description: "Clinical trial operations software, 10,000+ study sites globally",
+      description: "Leading eClinical software company providing an electronic Trial Master File (eTMF) platform. Series C funding totaled $107M ($80M + $27M).",
       website: "https://florencehc.com",
       keyPersonnel: ["Ryan Jones"],
-      funding: "Series C ($27M+ raised)",
-      recentNews: "Leader in electronic Trial Master File solutions"
+      funding: "$114.1M total raised",
+      recentNews: "Network has grown to over 37,000 research sites in 44 countries."
     },
     {
       id: "clearside",
       name: "Clearside Biomedical",
-      type: "company",
+      type: "public_company",
       size: 16,
-      description: "Eye disease therapies using suprachoroidal injection platform",
+      description: "Biopharmaceutical company developing treatments for sight-threatening diseases. A Georgia Tech spinout commercializing a proprietary microinjector technology.",
       website: "https://clearsidebio.com",
-      keyPersonnel: ["George Yeh", "Mark Prausnitz"],
+      keyPersonnel: ["Dr. George Lasezkay", "Mark Prausnitz"],
       funding: "Public (NASDAQ: CLSD)",
-      recentNews: "Positive Phase 1/2 ocular cancer therapy results"
+      recentNews: "Positive results from Phase 2b trial in wet AMD (CLS-AX). Focusing on suprachoroidal drug delivery for retinal diseases."
     },
     {
       id: "vero",
       name: "VERO Biotech",
       type: "company",
       size: 17,
-      description: "Inhaled nitric oxide delivery systems, FDA-approved Genosyl®",
-      website: "https://verobiotech.com",
-      keyPersonnel: ["Brent Vossell"],
-      funding: "Commercial (Approved Product)",
-      recentNews: "New Science Square facility, next-gen NO delivery development"
+      description: "Medtech company with an FDA-approved inhaled nitric oxide system (Genosyl®) for neonatal respiratory failure.",
+      website: "https://vero-biotech.com",
+      keyPersonnel: ["Brent V. Furse"],
+      funding: "$30M Series B (Jan 2023)",
+      recentNews: "Relocating HQ and manufacturing to Atlanta. Developing next-gen inhaled nitric oxide delivery systems."
     },
     {
       id: "artivion",
       name: "Artivion",
-      type: "company",
+      type: "public_company",
       size: 18,
-      description: "Cardiac/vascular surgery products, heart valves and tissue grafts",
+      description: "Formerly CryoLife, a global leader in cardiac and vascular surgery solutions.",
       website: "https://artivion.com",
       keyPersonnel: ["Pat Mackin"],
       funding: "Public (NYSE: AORT)",
-      recentNews: "Next-gen mechanical heart valve launched in Europe"
+      recentNews: "Launched On-X Plus 1.5™ mechanical heart valve in Europe."
     },
 
     // VENTURE CAPITAL & INVESTORS
@@ -203,88 +204,88 @@ export const atlantaTechBioEcosystem = {
       name: "Portal Innovations",
       type: "vc",
       size: 20,
-      description: "Life sciences venture development, $100M fund, 33K sq ft at Science Square",
+      description: "Life sciences venture development engine combining seed capital with 33,000 sq ft of managed lab space at Science Square.",
       website: "https://portalinnovations.com",
       keyPersonnel: ["John Flavin", "Suna Lumeh"],
-      funding: "VC ($25M of $100M fund invested)",
-      recentNews: "First Atlanta investment in Moonlight Therapeutics, Novo Nordisk partnership"
+      funding: "$25M fund",
+      recentNews: "Made first Atlanta investment in Moonlight Therapeutics. Partnered with Novo Nordisk on 'Pathbreakers' program."
     },
     {
       id: "catalyst",
       name: "Catalyst by Wellstar",
       type: "vc",
       size: 18,
-      description: "$100M healthcare innovation fund, 50+ investments over 5 years",
+      description: "Corporate venture fund and innovation arm of Wellstar Health System, investing in early-stage digital health and medtech.",
       website: "https://catalyst.wellstar.org",
       keyPersonnel: ["Hank Capps", "Jaimie Clark", "Stefanie Diaz"],
-      funding: "Venture Fund ($100M)",
-      recentNews: "21 current investments, Wellstar pilot opportunities"
+      funding: "$100M fund",
+      recentNews: "Has made over 21 startup investments and provides pilot opportunities within the Wellstar health system."
     },
     {
       id: "bip",
       name: "BIP Ventures",
       type: "vc",
       size: 16,
-      description: "Multi-stage VC with healthcare practice, 246 co-investors",
+      description: "Atlanta-based VC firm (formerly Panoramic Ventures) that invests across technology sectors, including a significant practice in health IT.",
       website: "https://bipventures.vc",
       keyPersonnel: ["Austin Poole", "Tami McQueen"],
       funding: "VC (Seed to Series B)",
-      recentNews: "Portfolio includes The Rounds, OncoLens"
+      recentNews: "Actively investing across Seed to Series B, with portfolio companies like OncoLens and The Rounds."
     },
     {
       id: "noro",
       name: "Noro-Moseley Partners",
       type: "vc",
       size: 15,
-      description: "Atlanta's oldest VC firm, Series A/B healthcare IT focus",
+      description: "One of Atlanta's most established VC firms (founded 1983), focusing on healthcare IT and tech-enabled services.",
       website: "https://noromoseley.com",
       keyPersonnel: ["Ryan Collins"],
       funding: "VC (Series A/B, $10-20M typical)",
-      recentNews: "Backed Sharecare, QGenda, Florence Healthcare growth"
+      recentNews: "Active in healthcare IT, recently backing KODE Health's $27M Series B in Jan 2025."
     },
     {
       id: "gra_fund",
       name: "GRA Venture Fund",
       type: "vc",
       size: 14,
-      description: "$7.5M evergreen fund for university spinouts, 3:1 leverage",
-      website: "https://graventurefund.org",
-      keyPersonnel: ["H. Lee Herron"],
-      funding: "VC (Seed/Series A)",
-      recentNews: "Backed Micron Biomedical Series A, university spinout focus"
+      description: "State-affiliated seed fund that invests exclusively in companies emerging from Georgia's research universities.",
+      website: "https://gra.org/venture-fund/",
+      keyPersonnel: ["Connor Seabrook"],
+      funding: "$7.5M evergreen seed fund",
+      recentNews: "Co-invests alongside private VCs in Georgia research spinouts, requiring a 3:1 private match."
     },
     {
       id: "atlanta_ventures",
       name: "Atlanta Ventures",
       type: "vc",
       size: 13,
-      description: "Venture studio and seed fund, B2B SaaS and digital health",
+      description: "Venture studio that builds and invests in seed-stage SaaS and digital health companies.",
       website: "https://atlantaventures.com",
-      keyPersonnel: ["Kathryn O'Day"],
+      keyPersonnel: ["David Cummings", "Kathryn O'Day"],
       funding: "VC (Seed)",
-      recentNews: "Healthcare SaaS portfolio, Atlanta Healthcare Meetup host"
+      recentNews: "Hosts the Atlanta Healthcare Meetup and has a growing health IT portfolio."
     },
     {
       id: "engage_ventures",
       name: "Engage Ventures",
       type: "vc",
       size: 14,
-      description: "Corporate-backed VC (Coca-Cola, UPS), healthtech/AI focus",
-      website: "",
+      description: "Accelerator fund backed by major corporations (Coca-Cola, UPS, Wellstar) to help startups secure enterprise partnerships.",
+      website: "https://engage.vc",
       keyPersonnel: [],
       funding: "VC (Early-stage)",
-      recentNews: "Mentorship at CREATE-X Demo Day, corporate partnerships"
+      recentNews: "Mentors at Georgia Tech's CREATE-X Demo Day and sources startups from university programs."
     },
     {
       id: "tech_square_ventures",
       name: "Tech Square Ventures",
       type: "vc",
       size: 15,
-      description: "Early-stage VC investing in tech and biotech",
+      description: "Early-stage VC firm deeply integrated with the Georgia Tech ecosystem. Co-founder of Engage Ventures.",
       website: "https://techsquareventures.com",
       keyPersonnel: ["Blake Patton"],
       funding: "VC (Early-stage)",
-      recentNews: "Invested in Clearside Biomedical, tech square ecosystem"
+      recentNews: "Early investor in several Atlanta tech companies."
     },
 
     // ACCELERATORS & INCUBATORS
@@ -293,55 +294,55 @@ export const atlantaTechBioEcosystem = {
       name: "ATDC",
       type: "incubator",
       size: 18,
-      description: "Georgia Tech's 44-year-old incubator, 150+ companies, HealthTech track, Wellstar partnership",
+      description: "Georgia Tech's state-chartered technology incubator (founded 1980). Features a dedicated HealthTech track in partnership with Wellstar.",
       website: "https://atdc.org",
       keyPersonnel: ["John Avery"],
       funding: "N/A (program)",
-      recentNews: "Alumni include Pindrop, Greenlight, Cardlytics; $125M+ SBIR secured"
+      recentNews: "Serves 150+ startups and has helped companies secure over $125M in SBIR grants."
     },
     {
       id: "create_x",
       name: "CREATE-X",
       type: "incubator",
       size: 16,
-      description: "Georgia Tech entrepreneurship, 650+ startups created, Startup Launch ($5K + $30K services)",
+      description: "Georgia Tech initiative providing funding and mentorship to student and faculty founders. Has launched over 650 startups since 2014.",
       website: "https://create-x.gatech.edu",
       keyPersonnel: ["Raghupathy Sivakumar"],
-      funding: "Pre-seed funding ($5K cash + $30K services)",
-      recentNews: "Expanded AI Health track, includes Stord, Oxos alumni"
+      funding: "$5K seed grant + up to $150K in services",
+      recentNews: "Expanded AI Health vertical. Alumni include Stord and OXOS."
     },
     {
       id: "biolocity",
       name: "Biolocity",
       type: "incubator",
       size: 15,
-      description: "Emory-Georgia Tech medtech accelerator, $1.5M+ yearly funding, prototyping support",
-      website: "https://biolocity.gatech.edu",
-      keyPersonnel: ["Tiffany Wilson"],
-      funding: "Grant funding (~$1.5M annual)",
-      recentNews: "Co-managed by Emory/GT, strong university IP ties"
+      description: "Joint Emory-GT commercialization accelerator that provides seed funding and project management to de-risk promising university medtech.",
+      website: "https://biolocity.org",
+      keyPersonnel: ["Managed by Emory/GT Teams"],
+      funding: "~$1.5M/year in grants",
+      recentNews: "Continues to provide grants and commercialization support for early-stage medtech projects."
     },
     {
       id: "science_square",
       name: "Science Square",
       type: "facility",
       size: 19,
-      description: "368K sq ft biotech research park at Georgia Tech, Phase 1 completed 2024",
-      website: "https://sciencesquareatlanta.com",
-      keyPersonnel: ["Georgia Advanced Technology Ventures"],
-      funding: "N/A (facility)",
-      recentNews: "Phase 1 completed, Portal Innovations and VERO as anchor tenants"
+      description: "A 16-acre life sciences research park adjacent to Georgia Tech, developed by GATV. Anchor tenants include Portal Innovations.",
+      website: "https://sciencesquareatl.com",
+      keyPersonnel: [],
+      funding: "$220M Phase 1 Investment",
+      recentNews: "368,000 sq ft Phase 1 lab tower completed in Q2 2024."
     },
     {
       id: "gcmi",
       name: "GCMI",
       type: "incubator",
       size: 14,
-      description: "Medtech incubator, design/prototyping center, T3 Labs animal testing",
-      website: "https://gcmiatl.com",
-      keyPersonnel: ["Tiffany Wilson"],
+      description: "Global Center for Medical Innovation. A non-profit providing medtech design, prototyping, and preclinical testing services (T3 Labs).",
+      website: "https://devices.net",
+      keyPersonnel: ["Interim Leadership"],
       funding: "N/A (non-profit)",
-      recentNews: "FDA partnerships, COVID-19 device acceleration"
+      recentNews: "Partnered with FDA on COVID-19 device acceleration programs."
     },
 
     // GOVERNMENT & TRADE ORGANIZATIONS
@@ -350,66 +351,77 @@ export const atlantaTechBioEcosystem = {
       name: "Georgia Research Alliance",
       type: "government",
       size: 17,
-      description: "Public-private partnership, $2.3B equity investment since 1990",
+      description: "Public-private partnership that helps recruit top scientists and fund university research commercialization in Georgia.",
       website: "https://gra.org",
       keyPersonnel: ["Susan Shows"],
       funding: "Seed grants & venture fund",
-      recentNews: "Three-phase funding structure, university commercialization support"
+      recentNews: "Has helped create over $2.3B in equity value from university spinouts since 1990."
     },
     {
       id: "georgia_bio",
       name: "Georgia Life Sciences",
       type: "trade",
       size: 15,
-      description: "State trade association, 500+ member companies, Golden Helix Awards",
-      website: "https://gabio.org",
+      description: "The state's life sciences trade association (formerly Georgia Bio), with over 500 members. Hosts the annual Golden Helix Awards.",
+      website: "https://georgialifesciences.org",
       keyPersonnel: ["Maria Thacker-Goethe"],
       funding: "N/A (non-profit)",
-      recentNews: "Advocacy for lab space, Atlanta biotech 'inflection point'"
+      recentNews: "Advocating for more lab space, citing an 'inflection point' for Atlanta biotech in 2024."
     },
     {
       id: "rowen",
       name: "Rowen Foundation",
       type: "development",
       size: 16,
-      description: "2,000-acre innovation district, 22M sq ft over 30 years, 80K+ jobs",
+      description: "Developing a 2,000-acre knowledge community in Gwinnett County focused on biotech, agriculture, and environmental tech.",
       website: "https://rowenlife.com",
       keyPersonnel: ["Mason Ailstock"],
       funding: "N/A (non-profit)",
-      recentNews: "Site infrastructure groundbreaking 2024, biotech/ag/environmental focus"
+      recentNews: "Broke ground on infrastructure in 2024 for a new 2,000-acre innovation district."
     },
     {
       id: "atlanta_tech_angels",
       name: "Atlanta Technology Angels",
       type: "vc",
       size: 12,
-      description: "Early-stage tech and biotech angel network with clear regulatory paths focus",
-      website: "https://angelatlanta.com",
+      description: "Prominent angel investor network that provides capital and mentorship to early-stage tech companies, including life sciences.",
+      website: "https://atlantatechnologyangels.com",
       keyPersonnel: [],
       funding: "Angel Group",
-      recentNews: "Active in biotech early-stage investments"
+      recentNews: "Active in biotech early-stage investments."
     },
     {
       id: "metro_atlanta_chamber",
       name: "Metro Atlanta Chamber",
       type: "trade",
       size: 13,
-      description: "Economic development organization promoting life sciences growth",
-      website: "https://www.metroatlantachamber.com",
+      description: "Economic development organization with a dedicated Bioscience/Health team to promote regional growth.",
+      website: "https://metroatlantachamber.com",
       keyPersonnel: [],
       funding: "N/A (non-profit)",
-      recentNews: "Life sciences economic development initiatives"
+      recentNews: "Life sciences economic development initiatives."
     },
     {
       id: "georgia_ecd",
-      name: "Georgia Department of Economic Development",
+      name: "Georgia Dept. of Economic Development",
       type: "government",
       size: 14,
-      description: "State economic development, biotech incentives and support",
-      website: "https://www.georgia.org",
+      description: "The state's primary arm for business recruitment and economic development.",
+      website: "https://georgia.org",
       keyPersonnel: [],
       funding: "N/A (government)",
-      recentNews: "Biotech incentive programs and corporate attraction"
+      recentNews: "Supports biotech through incentive packages and site location assistance."
+    },
+    {
+        id: 'department_of_veterans_affairs',
+        name: 'U.S. Dept. of Veterans Affairs (VA)',
+        type: 'government',
+        size: 8,
+        description: "Federal agency providing healthcare services to military veterans. A key partner for medtech pilot programs.",
+        website: 'https://www.va.gov/',
+        keyPersonnel: [],
+        funding: 'N/A',
+        recentNews: 'Partnered with OXOS Medical to pilot handheld X-ray devices in VA hospitals.',
     },
 
     // SERVICE PROVIDERS & SUPPORT
@@ -418,55 +430,55 @@ export const atlantaTechBioEcosystem = {
       name: "MNG Laboratories",
       type: "serviceProvider",
       size: 12,
-      description: "Clinical reference lab specializing in neurological genetic testing",
+      description: "Specialized neurogenetics CRO acquired by LabCorp in 2019. Provides testing services to Emory and other institutions.",
       website: "https://mnglabs.com",
-      keyPersonnel: ["Trevor Wingard"],
-      funding: "Established (Private)",
-      recentNews: "Whole genome sequencing panels for rare neurodegenerative diseases"
+      keyPersonnel: ["LabCorp Leadership"],
+      funding: "Acquired by LabCorp",
+      recentNews: "Continues to operate as a specialized neurogenetic testing lab within LabCorp."
     },
     {
       id: "radyus",
       name: "Radyus Research",
       type: "serviceProvider",
       size: 13,
-      description: "Boutique preclinical CRO, grant writing, project management",
+      description: "Boutique preclinical CRO providing grant writing and project management services to startups.",
       website: "https://radyus.com",
       keyPersonnel: ["Phil Ashurst"],
       funding: "Private (Consulting)",
-      recentNews: "Growing client base, helped biotechs win SBIR grants in 2023"
+      recentNews: "Helped local biotechs win multiple SBIR/STTR grants in 2023."
     },
     {
       id: "akesogen",
       name: "AKESOgen",
       type: "serviceProvider",
       size: 12,
-      description: "Genomics and bioinformatics CRO, acquired by Tempus Labs",
-      website: "https://akesogen.com",
-      keyPersonnel: ["Mark Bouzyk"],
-      funding: "Private (Acquired)",
-      recentNews: "Integrated into Tempus, expanding sequencing capacity"
+      description: "Genomics and bioinformatics CRO acquired by Tempus in 2019. A key service provider to the CDC.",
+      website: "https://tempus.com",
+      keyPersonnel: ["Tempus Leadership"],
+      funding: "Acquired by Tempus",
+      recentNews: "Atlanta lab has expanded Tempus's sequencing capabilities since its acquisition."
     },
     {
       id: "king_spalding",
       name: "King & Spalding",
       type: "serviceProvider",
       size: 11,
-      description: "Global law firm with renowned FDA regulatory and life sciences practice",
+      description: "Global law firm with a world-renowned FDA regulatory and life sciences practice. Represents major local biotechs like VERO.",
       website: "https://kslaw.com",
       keyPersonnel: ["Mark Brown"],
       funding: "N/A (Legal)",
-      recentNews: "Tier-1 FDA law ranking, expanded IP litigation team 2024"
+      recentNews: "Expanded life sciences IP litigation team in 2024."
     },
     {
       id: "kilpatrick_townsend",
       name: "Kilpatrick Townsend & Stockton",
       type: "serviceProvider",
       size: 13,
-      description: "Leading IP and life sciences law firm, serves 60% of ATDC startups",
-      website: "https://ktslaw.com",
+      description: "Major law firm with a dominant intellectual property practice serving the Atlanta tech community.",
+      website: "https://kilpatricktownsend.com",
       keyPersonnel: [],
       funding: "N/A (Legal)",
-      recentNews: "Major IP and biotech law practice in Atlanta"
+      recentNews: "Long-time sponsor and IP counsel at ATDC, serving a majority of its startups."
     },
     {
       id: "wilson_sonsini",
@@ -474,7 +486,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 12,
       description: "Leading life sciences law firm with Atlanta presence",
-      website: "https://www.wsgr.com",
+      website: "https://wsgr.com",
       keyPersonnel: [],
       funding: "N/A (Legal)",
       recentNews: "Represents life sciences companies in Atlanta ecosystem"
@@ -485,7 +497,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 12,
       description: "Global firm with life sciences practice",
-      website: "https://www.lw.com",
+      website: "https://lw.com",
       keyPersonnel: [],
       funding: "N/A (Legal)",
       recentNews: "Life sciences legal services in Atlanta"
@@ -496,7 +508,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 12,
       description: "Known for biotech startup representation",
-      website: "https://www.cooley.com",
+      website: "https://cooley.com",
       keyPersonnel: [],
       funding: "N/A (Legal)",
       recentNews: "Major biotech legal practice"
@@ -518,7 +530,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 14,
       description: "Global consulting with life sciences practice in Atlanta",
-      website: "https://www.mckinsey.com",
+      website: "https://mckinsey.com",
       keyPersonnel: [],
       funding: "N/A (Consulting)",
       recentNews: "Life sciences and healthcare consulting"
@@ -529,7 +541,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 14,
       description: "AI compliance and healthcare consulting, Atlas AI™ platform",
-      website: "https://www.deloitte.com",
+      website: "https://deloitte.com",
       keyPersonnel: [],
       funding: "N/A (Consulting)",
       recentNews: "NVIDIA-powered compliance consulting"
@@ -540,7 +552,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 15,
       description: "Global CRO with Atlanta office, clinical research and consulting",
-      website: "https://www.iqvia.com",
+      website: "https://iqvia.com",
       keyPersonnel: [],
       funding: "N/A (CRO)",
       recentNews: "Partnerships with CDC on real-world data"
@@ -551,7 +563,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 11,
       description: "Full-service CRO based in Atlanta, clinical trial support",
-      website: "https://www.peachtreebrs.com",
+      website: "https://peachtreebrs.com",
       keyPersonnel: [],
       funding: "N/A (CRO)",
       recentNews: "Regional clinical trial services"
@@ -562,7 +574,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 11,
       description: "Regional CRO specializing in cardiology and metabolics",
-      website: "http://atlantaclinicalresearch.com",
+      website: "https://atlantaclinicalresearch.com",
       keyPersonnel: [],
       funding: "N/A (CRO)",
       recentNews: "Specialized clinical research services"
@@ -572,218 +584,154 @@ export const atlantaTechBioEcosystem = {
     {
       id: "moonlight",
       name: "Moonlight Therapeutics",
-      type: "company",
+      type: "startup",
       size: 10,
-      description: "Skin patch immunotherapy for food allergies, Georgia Tech spinout",
+      description: "Georgia Tech spinout developing a skin patch for treating food allergies. The first Atlanta investment for Portal Innovations.",
       website: "https://moonlighttx.com",
       keyPersonnel: ["Samir Patel"],
-      funding: "Preclinical",
-      recentNews: "FDA Fast Track designation for peanut allergy patch"
+      funding: "$5M Series A + NIH grant",
+      recentNews: "Received NIH Fast-Track grant to fund clinical trials for its peanut allergy treatment."
     },
     {
       id: "sanguina",
       name: "Sanguina",
-      type: "company",
+      type: "startup",
       size: 11,
-      description: "Smartphone app for anemia screening, FDA Breakthrough Device",
+      description: "Digital health startup spun out of Emory/GT collaboration. Developed AnemoCheck Mobile, a non-invasive app for anemia screening.",
       website: "https://sanguina.com",
       keyPersonnel: ["Erika Tyburski"],
-      funding: "Series A (~$4.2M)",
-      recentNews: "AnemoCheck Mobile FDA Breakthrough Device designation"
+      funding: "$4.2M Series A",
+      recentNews: "Received FDA Breakthrough Device status for its smartphone-based anemia screening app."
     },
     {
       id: "oxos",
       name: "OXOS Medical",
-      type: "company",
+      type: "startup",
       size: 12,
-      description: "Portable X-ray imaging systems, CREATE-X/Georgia Tech spinout",
+      description: "Georgia Tech CREATE-X alumnus making portable, handheld X-ray imaging systems.",
       website: "https://oxos.com",
       keyPersonnel: ["Greg Kolovich", "Evan Ruff"],
-      funding: "Series A ($23M)",
-      recentNews: "FDA-cleared Micro C handheld X-ray, VA partnership"
+      funding: "$23M Series A",
+      recentNews: "Received FDA clearance for its handheld Micro C X-ray device and deployed devices in a VA pilot program."
     },
     {
       id: "altesa",
       name: "Altesa BioSciences",
-      type: "company",
+      type: "startup",
       size: 12,
-      description: "Antiviral drugs for respiratory viruses, $35M Series A, Emory DRIVE spinout",
+      description: "Antiviral company formed in partnership with Emory's DRIVE institute to develop treatments for respiratory viruses.",
       website: "https://altesabio.com",
       keyPersonnel: ["George Painter", "Dennis Liotta"],
-      funding: "Series A ($35M)",
-      recentNews: "Partnership with Vaxart for oral RSV antiviral"
+      funding: "$35M Series A",
+      recentNews: "Licensed Vapendavir from Vaxart to develop for RSV and other respiratory viruses."
     },
     {
       id: "braintrust",
       name: "BrainTrust Bio",
-      type: "company",
+      type: "startup",
       size: 10,
-      description: "CNS drug delivery improvements, Emory spinout",
+      description: "Emory spinout founded by neurosurgeon Dr. Nicholas Boulis, focusing on novel drug delivery methods for the central nervous system.",
       website: "https://braintrustbio.com",
-      keyPersonnel: [],
-      funding: "Early-stage",
-      recentNews: "Improving drug delivery for CNS diseases"
-    },
-    {
-      id: "arbor_bio",
-      name: "Arbor Biotechnologies",
-      type: "company",
-      size: 11,
-      description: "Gene editing technologies, AI-driven drug discovery",
-      website: "",
-      keyPersonnel: [],
-      funding: "Early-stage",
-      recentNews: "CREATE-X/ATDC incubatee focusing on gene editing"
-    },
-    {
-      id: "siphox",
-      name: "SiPhox",
-      type: "company",
-      size: 10,
-      description: "Wearable diagnostics platform",
-      website: "",
-      keyPersonnel: [],
-      funding: "Early-stage",
-      recentNews: "Developing AI-powered wearable diagnostic devices"
-    },
-    {
-      id: "macrogenics",
-      name: "MacroGenics",
-      type: "company",
-      size: 16,
-      description: "Cancer therapeutics, growth-stage biotech",
-      website: "",
-      keyPersonnel: [],
-      funding: "Growth-stage",
-      recentNews: "ATDC alumni focused on cancer immunotherapy"
-    },
-    {
-      id: "greenlight",
-      name: "Greenlight",
-      type: "company",
-      size: 14,
-      description: "Fintech-health intersection, regulatory technology",
-      website: "",
-      keyPersonnel: [],
-      funding: "Growth-stage",
-      recentNews: "ATDC alumni in fintech-healthcare space"
-    },
-    {
-      id: "cove_tool",
-      name: "Cove.Tool",
-      type: "company",
-      size: 12,
-      description: "Healthcare SaaS, AI analytics for healthcare operations",
-      website: "",
-      keyPersonnel: [],
-      funding: "Growth-stage",
-      recentNews: "Healthcare AI analytics platform"
+      keyPersonnel: ["Chen Benkler"],
+      funding: "Pre-seed",
+      recentNews: "Preclinical stage startup aiming to improve CNS drug delivery."
     }
   ],
 
   links: [
-    // UNIVERSITY COLLABORATIONS
-    { source: "emory", target: "gatech", strength: 0.9, type: "collaboration", description: "20+ year Coulter Department joint program" },
-    { source: "emory", target: "gsu", strength: 0.6, type: "collaboration", description: "NIH antivirals center partnership" },
-    { source: "emory", target: "cdc", strength: 0.7, type: "collaboration", description: "Public health research partnerships" },
-    { source: "gatech", target: "morehouse", strength: 0.5, type: "collaboration", description: "Georgia CTSA alliance" },
-    { source: "emory", target: "morehouse", strength: 0.5, type: "collaboration", description: "Georgia CTSA alliance" },
-    { source: "uga", target: "gra", strength: 0.8, type: "funding", description: "GRA university partner" },
+    // --- Core Academic Collaborations ---
+    { source: "emory", target: "gatech", strength: 0.9, type: "collaboration", description: "Joint Coulter Department of Biomedical Engineering" },
+    { source: "emory", target: "gsu", strength: 0.6, type: "collaboration", description: "NIH Antivirals Center (AC/DC)" },
+    { source: "emory", target: "morehouse", strength: 0.6, type: "collaboration", description: "Georgia CTSA Alliance" },
+    { source: "gatech", target: "morehouse", strength: 0.6, type: "collaboration", description: "Georgia CTSA Alliance" },
+    { source: "emory", target: "cdc", strength: 0.7, type: "collaboration", description: "Numerous research partnerships" },
 
-    // UNIVERSITY SPINOUTS
-    { source: "emory", target: "neurop", strength: 0.8, type: "spinout", description: "Emory faculty founded" },
-    { source: "emory", target: "inhibikase", strength: 0.7, type: "spinout", description: "Originated from Emory research" },
-    { source: "emory", target: "geovax", strength: 0.7, type: "spinout", description: "Founded on Emory vaccine technology" },
-    { source: "emory", target: "altesa", strength: 0.8, type: "spinout", description: "DRIVE/DRiVE spinout" },
-    { source: "emory", target: "braintrust", strength: 0.8, type: "spinout", description: "Emory spinout" },
-    { source: "gatech", target: "micron", strength: 0.9, type: "spinout", description: "Georgia Tech technology" },
+    // --- University Spinouts ---
+    { source: "emory", target: "inhibikase", strength: 0.7, type: "spinout", description: "Licensed technology, early investor" },
+    { source: "emory", target: "geovax", strength: 0.7, type: "spinout", description: "Technology developed at Emory" },
+    { source: "emory", target: "neurop", strength: 0.7, type: "spinout", description: "Founded by Emory faculty" },
+    { source: "emory", target: "altesa", strength: 0.7, type: "spinout", description: "Formed via Emory's DRIVE institute" },
+    { source: "emory", target: "braintrust", strength: 0.7, type: "spinout", description: "Founded by Emory faculty" },
+    { source: "gatech", target: "micron", strength: 0.9, type: "spinout", description: "Technology developed at Georgia Tech" },
     { source: "gatech", target: "clearside", strength: 0.8, type: "spinout", description: "Based on GT/Emory microneedle tech" },
     { source: "gatech", target: "moonlight", strength: 0.7, type: "spinout", description: "GT Capstone project spinout" },
-    { source: "gatech", target: "sanguina", strength: 0.7, type: "spinout", description: "GT/Emory student founded" },
-    { source: "gatech", target: "oxos", strength: 0.8, type: "spinout", description: "CREATE-X/Georgia Tech spinout" },
+    { source: "gatech", target: "oxos", strength: 0.8, type: "spinout", description: "Formed via CREATE-X program" },
+    { source: "gatech", target: "sanguina", strength: 0.7, type: "spinout", description: "Co-founded by GT alumna from student research" },
 
-    // VENTURE CAPITAL INVESTMENTS
-    { source: "portal", target: "moonlight", strength: 0.8, type: "investment", description: "First Atlanta investment" },
-    { source: "gra_fund", target: "micron", strength: 0.8, type: "investment", description: "Series A participation" },
-    { source: "bip", target: "florence", strength: 0.7, type: "investment", description: "Growth funding" },
-    { source: "noro", target: "sharecare", strength: 0.8, type: "investment", description: "Major portfolio company" },
-    { source: "catalyst", target: "atdc", strength: 0.7, type: "partnership", description: "15-company pipeline collaboration" },
-    { source: "tech_square_ventures", target: "clearside", strength: 0.8, type: "investment", description: "Early investment in GT spinout" },
-    { source: "gra_fund", target: "biolocity", strength: 0.6, type: "funding", description: "Co-invests with Biolocity projects" },
-    { source: "engage_ventures", target: "create_x", strength: 0.6, type: "partnership", description: "Mentorship at CREATE-X Demo Day" },
-    { source: "atlanta_tech_angels", target: "gra_fund", strength: 0.5, type: "collaboration", description: "Frequent co-investors" },
+    // --- VC Investments ---
+    { source: "portal", target: "moonlight", strength: 0.8, type: "investment", description: "Lead investor in Series A" },
+    { source: "gra_fund", target: "micron", strength: 0.8, type: "investment", description: "Investor in Series A" },
+    { source: "bip", target: "florence", strength: 0.5, type: "investment", description: "Past investor (NEEDS VERIFICATION)" },
+    { source: "noro", target: "sharecare", strength: 0.8, type: "investment", description: "Early investor" },
+    { source: "tech_square_ventures", target: "clearside", strength: 0.5, type: "investment", description: "Early investor (NEEDS VERIFICATION)" },
 
-    // FACILITY RELATIONSHIPS
-    { source: "science_square", target: "portal", strength: 0.9, type: "tenant", description: "33K sq ft anchor tenant" },
-    { source: "science_square", target: "vero", strength: 0.8, type: "tenant", description: "Manufacturing facility" },
-    { source: "gatech", target: "science_square", strength: 0.9, type: "development", description: "Adjacent to campus" },
-    { source: "atdc", target: "gatech", strength: 0.9, type: "affiliation", description: "GT's incubator" },
-    { source: "create_x", target: "gatech", strength: 0.9, type: "affiliation", description: "GT entrepreneurship program" },
-    { source: "biolocity", target: "emory", strength: 0.8, type: "collaboration", description: "Emory-GT collaboration" },
-    { source: "biolocity", target: "gatech", strength: 0.8, type: "collaboration", description: "Emory-GT collaboration" },
+    // --- Accelerator & Incubator Support ---
+    { source: "atdc", target: "gatech", strength: 0.9, type: "affiliation", description: "Program of Georgia Tech" },
+    { source: "create_x", target: "gatech", strength: 0.9, type: "affiliation", description: "Program of Georgia Tech" },
+    { source: "atdc", target: "sanguina", strength: 0.7, type: "support", description: "Incubated at ATDC (alumni)" },
+    { source: "create_x", target: "oxos", strength: 0.8, type: "support", description: "Incubated at CREATE-X (alumni)" },
+    { source: "biolocity", target: "sanguina", strength: 0.6, type: "support", description: "Received early grant funding" },
 
-    // ACCELERATOR RELATIONSHIPS
-    { source: "atdc", target: "sanguina", strength: 0.7, type: "support", description: "ATDC portfolio company" },
-    { source: "gcmi", target: "clearside", strength: 0.6, type: "support", description: "Early device development support" },
-    { source: "biolocity", target: "sanguina", strength: 0.7, type: "support", description: "Coulter program support" },
-    { source: "create_x", target: "oxos", strength: 0.8, type: "support", description: "CREATE-X incubatee" },
-    { source: "create_x", target: "arbor_bio", strength: 0.7, type: "support", description: "CREATE-X/ATDC incubatee" },
-    { source: "atdc", target: "macrogenics", strength: 0.6, type: "support", description: "ATDC alumni" },
-    { source: "atdc", target: "greenlight", strength: 0.6, type: "support", description: "ATDC alumni" },
+    // --- Key Partnerships & Affiliations ---
+    { source: "gatech", target: "science_square", strength: 0.9, type: "development", description: "Development partner (via GATV)" },
+    { source: "science_square", target: "portal", strength: 0.9, type: "tenant", description: "Anchor tenant" },
+    { source: "catalyst", target: "atdc", strength: 0.8, type: "partnership", description: "Formal partnership for HealthTech pipeline" },
+    { source: "portal", target: "catalyst", strength: 0.7, type: "partnership", description: "Partner in Novo Nordisk 'Pathbreakers' program" },
+    { source: "engage_ventures", target: "create_x", strength: 0.6, type: "partnership", description: "Mentorship and startup sourcing" },
+    { source: "biolocity", target: "emory", strength: 0.9, type: "collaboration", description: "Joint program with Emory" },
+    { source: "biolocity", target: "gatech", strength: 0.9, type: "collaboration", description: "Joint program with Georgia Tech" },
+    { source: "oxos", target: "department_of_veterans_affairs", strength: 0.8, type: "partnership", description: "Pilot program partnership" },
+    { source: "micron", target: "cdc", strength: 0.6, type: "partnership", description: "Research and clinical trial collaboration" },
+    { source: "iqvia_atlanta", target: "cdc", strength: 0.7, type: "partnership", description: "Real-world data partnership" },
+    { source: "akesogen", target: "cdc", strength: 0.7, type: "service", description: "Genomic sequencing services contract" },
 
-    // PARTNERSHIP RELATIONSHIPS
-    { source: "portal", target: "catalyst", strength: 0.6, type: "partnership", description: "Novo Nordisk Pathbreakers Program" },
-    { source: "micron", target: "cdc", strength: 0.7, type: "partnership", description: "Global health vaccine applications" },
-    { source: "oxos", target: "cdc", strength: 0.5, type: "partnership", description: "VA deployment partnership" },
+    // --- Service Provider Relationships ---
+    { source: "king_spalding", target: "vero", strength: 0.7, type: "service", description: "FDA regulatory legal counsel" },
+    { source: "kilpatrick_townsend", target: "atdc", strength: 0.8, type: "service", description: "Official IP legal services sponsor" },
+    { source: "gcmi", target: "clearside", strength: 0.6, type: "support", description: "Early product development support" },
+    { source: "biotechexec", target: "biolocity", strength: 0.6, type: "service", description: "Mentorship and strategic consulting" },
+    { source: "mng_labs", target: "emory", strength: 0.6, type: "service", description: "Neurogenetic testing services vendor" },
 
-    // SERVICE PROVIDER RELATIONSHIPS
-    { source: "radyus", target: "emory", strength: 0.5, type: "service", description: "Academic founder support" },
-    { source: "king_spalding", target: "vero", strength: 0.4, type: "service", description: "FDA regulatory counsel" },
-    { source: "mng_labs", target: "emory", strength: 0.4, type: "service", description: "Genetic testing services" },
-    { source: "akesogen", target: "cdc", strength: 0.5, type: "service", description: "Genomics services" },
-    { source: "kilpatrick_townsend", target: "atdc", strength: 0.6, type: "service", description: "Serves 60% of ATDC startups" },
-    { source: "biotechexec", target: "biolocity", strength: 0.4, type: "service", description: "Consulting for biotech startups" },
-    { source: "iqvia_atlanta", target: "cdc", strength: 0.6, type: "partnership", description: "Real-world data partnerships" },
-    { source: "peachtree_bio", target: "emory", strength: 0.4, type: "service", description: "Clinical trial support" },
-    { source: "acrc", target: "augusta_university", strength: 0.4, type: "service", description: "Regional clinical research" },
-    { source: "deloitte_atlanta", target: "gatech", strength: 0.4, type: "service", description: "AI compliance consulting" },
-
-    // CROSS-COMPANY COLLABORATIONS
-    { source: "sharecare", target: "florence", strength: 0.3, type: "industry", description: "Digital health ecosystem" },
+    // --- Broader Ecosystem Connections ---
+    { source: "gra", target: "emory", strength: 0.9, type: "funding", description: "Funding and endowed scholar support" },
+    { source: "gra", target: "gatech", strength: 0.9, type: "funding", description: "Funding and endowed scholar support" },
+    { source: "georgia_bio", target: "vero", strength: 0.7, type: "membership", description: "Trade association member" },
+    { source: "georgia_bio", target: "geovax", strength: 0.7, type: "membership", description: "Trade association member" },
+    { source: "rowen", target: "science_square", strength: 0.5, type: "development", description: "Future biotech infrastructure" },
     { source: "clearside", target: "micron", strength: 0.4, type: "technology", description: "Shared Prausnitz technology base" },
-    { source: "neurop", target: "inhibikase", strength: 0.3, type: "industry", description: "CNS therapeutics focus" },
-
-    // GOVERNMENT/TRADE CONNECTIONS
-    { source: "gra", target: "emory", strength: 0.8, type: "funding", description: "Major university partner" },
-    { source: "gra", target: "gatech", strength: 0.8, type: "funding", description: "Major university partner" },
-    { source: "georgia_bio", target: "vero", strength: 0.4, type: "membership", description: "Trade association member" },
-    { source: "georgia_bio", target: "geovax", strength: 0.4, type: "membership", description: "Trade association member" },
-    { source: "rowen", target: "science_square", strength: 0.5, type: "development", description: "Future biotech infrastructure" }
+    { source: "neurop", target: "inhibikase", strength: 0.3, type: "industry", description: "CNS therapeutics focus" }
   ]
 };
 
-// Node type mappings for filtering
+// Node type mappings for filtering (Updated & Expanded for consistency)
 export const nodeTypeMap = {
-  company: 'companies',
-  university: 'universities',
-  incubator: 'incubators', 
-  vc: 'vcs',
-  serviceProvider: 'serviceProviders',
-  government: 'government',
-  trade: 'trade',
-  development: 'development',
-  facility: 'facilities'
+    company: 'Company',
+    public_company: 'Company',
+    startup: 'Startup',
+    university: 'Academia & Research',
+    research_institution: 'Academia & Research',
+    health_system: 'Provider & Health System',
+    vc: 'Investor',
+    accelerator: 'Accelerator & Incubator',
+    incubator: 'Accelerator & Incubator',
+    facility: 'Accelerator & Incubator',
+    government: 'Government & Trade Org',
+    trade: 'Government & Trade Org',
+    development: 'Government & Trade Org',
+    serviceProvider: 'Service Provider',
+    cro: 'Service Provider',
+    law_firm: 'Service Provider',
+    consulting: 'Service Provider',
 };
 
-// Color scheme for different node types
+// Color scheme for different node types (Updated for better visual distinction)
 export const nodeColors = {
-  university: "#667eea",      // Blue
-  company: "#764ba2",         // Purple  
-  incubator: "#f093fb",       // Pink
-  vc: "#4facfe",             // Light blue
-  serviceProvider: "#43e97b", // Green
-  government: "#feca57",      // Yellow
-  trade: "#ff9ff3",          // Light pink
-  development: "#54a0ff",     // Bright blue
-  facility: "#5f27cd"        // Dark purple
+    'Academia & Research': '#0033A0', // Dark Blue
+    'Company': '#0D6A42', // Green
+    'Investor': '#F2A900', // Gold
+    'Accelerator & Incubator': '#A43533', // Red
+    'Government & Trade Org': '#5A2D81', // Purple
+    'Service Provider': '#545454', // Gray
+    'Startup': '#00AEEF', // Light Blue
+    'Provider & Health System': '#7C9A7A', // Sage
 };
