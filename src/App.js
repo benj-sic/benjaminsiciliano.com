@@ -29,36 +29,14 @@ function App() {
   const handleSocialShare = (platform) => {
     console.log('Social share clicked for platform:', platform);
     
-    const networkState = window.networkState || {};
-    const { filters = {}, zoomLevel = 1, selectedNode = null } = networkState;
-    
-    // Build URL with network state parameters
-    const urlParams = new URLSearchParams();
-    
-    // Add filter states
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
-        urlParams.append('filter', key);
-      }
-    });
-    
-    // Add zoom level if not default
-    if (zoomLevel !== 1) {
-      urlParams.append('zoom', zoomLevel.toString());
-    }
-    
-    // Add selected node if any
-    if (selectedNode) {
-      urlParams.append('focus', selectedNode);
-    }
-    
+    // Use clean base URL for sharing (without filter parameters)
     const baseUrl = window.location.origin + window.location.pathname;
-    const shareUrl = urlParams.toString() ? `${baseUrl}?${urlParams.toString()}` : baseUrl;
+    const cleanShareUrl = baseUrl;
     
     // For LinkedIn, use a public URL if we're on localhost
     const linkedInUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
       ? 'https://benjaminsiciliano.com' 
-      : shareUrl;
+      : cleanShareUrl;
     
     const twitterShareText = "Explore this interactive map of Atlanta's biotech ecosystem — built by @benjsiciliano — featuring startups, spinouts, VCs, and research hubs driving innovation in Georgia.";
     
@@ -66,7 +44,7 @@ function App() {
     
     switch (platform) {
       case 'twitter':
-        socialUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterShareText)}&url=${encodeURIComponent(shareUrl)}`;
+        socialUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterShareText)}&url=${encodeURIComponent(cleanShareUrl)}`;
         break;
       case 'linkedin':
         socialUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(linkedInUrl)}`;
@@ -82,46 +60,21 @@ function App() {
   const handleCopyLink = async () => {
     console.log('Copy link clicked!');
     
-    // Get current network state from the NetworkVisualization component
-    const networkState = window.networkState || {};
-    console.log('Network state:', networkState);
-    
-    const { filters = {}, zoomLevel = 1, selectedNode = null } = networkState;
-    
-    // Build URL with network state parameters
-    const urlParams = new URLSearchParams();
-    
-    // Add filter states
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
-        urlParams.append('filter', key);
-      }
-    });
-    
-    // Add zoom level if not default
-    if (zoomLevel !== 1) {
-      urlParams.append('zoom', zoomLevel.toString());
-    }
-    
-    // Add selected node if any
-    if (selectedNode) {
-      urlParams.append('focus', selectedNode);
-    }
-    
+    // Use clean base URL for sharing (without filter parameters)
     const baseUrl = window.location.origin + window.location.pathname;
-    const shareUrl = urlParams.toString() ? `${baseUrl}?${urlParams.toString()}` : baseUrl;
+    const cleanShareUrl = baseUrl;
     
-    console.log('Share URL:', shareUrl);
+    console.log('Share URL:', cleanShareUrl);
     
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(cleanShareUrl);
       setShowShareToast(true);
       setTimeout(() => setShowShareToast(false), 3000);
       setShowShareDropdown(false);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
       // Final fallback - show URL in alert
-      alert(`Share this link: ${shareUrl}`);
+      alert(`Share this link: ${cleanShareUrl}`);
       setShowShareDropdown(false);
     }
   };
