@@ -432,8 +432,7 @@ const NetworkVisualization = () => {
       <div className="network-header">
         <h2>Atlanta Biotech Ecosystem Network</h2>
         <p>
-          Interactive visualization of Atlanta's growing biotech ecosystem. Explore connections between universities, 
-          companies, investors, and service providers driving innovation in the region. Use the filters to focus on 
+          An interactive visualization of the organizations powering innovation in Georgia biotech — including startups, academic institutions, VCs, incubators, and service providers. Use the filters to focus on 
           specific organization types. Click on nodes and connections for detailed information and website links.
         </p>
         <p className="last-updated">
@@ -461,7 +460,7 @@ const NetworkVisualization = () => {
         
         {/* Left Sidebar - Filters */}
         <div className="network-filters">
-          <h4>Filter by Organization Type</h4>
+          <h4>Filter by Type</h4>
           <div className="filter-checkboxes">
             <label className="filter-checkbox">
               <input 

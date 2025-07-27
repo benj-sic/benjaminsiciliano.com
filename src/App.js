@@ -56,6 +56,7 @@ function App() {
           </button>
           <div className="header-content">
             <h1>Benjamin Siciliano, PhD</h1>
+            <p className="header-tagline">Bridging science, software, and strategy to accelerate biotech innovation</p>
           </div>
           <ThemeToggle />
         </header>
@@ -66,13 +67,11 @@ function App() {
             <div className="container">
               <div className="welcome-content">
                 <p>
-                  Hi! I'm Ben, a PhD neuropharmacologist passionate about accelerating Atlanta's biotech ecosystem. 
-                  Below you'll find an interactive visualization of the organizations, partnerships, and relationships 
-                  driving the region's life sciences growth.
+                  Hi, I'm Ben — a neuropharmacologist and computational biologist working at the intersection of science, strategy, and systems to accelerate biotech innovation. I built this interactive network to help shine a light on Atlanta's fast-growing but often under-recognized biotech ecosystem.
                 </p>
                 <div className="welcome-cta">
                   <p>
-                    <strong>Explore the network below</strong> to discover Atlanta's biotech ecosystem and potential collaboration opportunities.
+                    Explore the map below to discover key organizations, partnerships, and investment relationships driving the region's life sciences momentum — and uncover opportunities to collaborate, invest, or get involved.
                   </p>
                 </div>
               </div>
@@ -120,10 +119,7 @@ function App() {
               <div className="motivation-content">
                 <h3>Why I Built This Network</h3>
                 <p>
-                  Atlanta's biotech ecosystem is rapidly growing but often overlooked. This interactive network visualization 
-                  showcases the connections, partnerships, and innovation hubs driving the region's biotech revolution. 
-                  By mapping these relationships, we can identify collaboration, investment, and strategic partnership 
-                  opportunities that accelerate next-generation therapeutic development.
+                  Atlanta's biotech ecosystem is growing fast — but often flies under the radar. I created this interactive network to visualize the key players, partnerships, and innovation hubs fueling Georgia's life sciences revolution. By mapping these relationships, we can identify collaboration, investment, and commercialization opportunities that drive next-gen therapeutic development and translational success.
                 </p>
               </div>
             </div>

@@ -103,6 +103,32 @@
   opacity: 0.8;
 }
 
+.network-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: left;
+}
+
+.network-features li {
+  color: var(--network-text-secondary);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.network-features li:before {
+  content: "•";
+  color: var(--network-text-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 /* Main Container */
 .network-main {
   display: flex;
