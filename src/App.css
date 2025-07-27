@@ -261,6 +261,41 @@ main {
   transition: color 0.3s ease;
 }
 
+.about-text p:not(.about-tldr) {
+  margin-bottom: 2rem;
+}
+
+.about-tldr {
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--text-accent);
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem !important;
+  border-radius: 0 8px 8px 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-primary) !important;
+  font-weight: 500;
+}
+
+.about-image-container {
+  float: left;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-headshot {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  border: 3px solid var(--border-primary);
+  transition: all 0.3s ease;
+}
+
+
+
 /* Motivation Section */
 .motivation-section {
   padding: 3rem 0;
@@ -515,6 +550,18 @@ main {
   
   .about-text p {
     text-align: justify;
+  }
+  
+  .about-image-container {
+    float: none;
+    text-align: center;
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+  
+  .about-headshot {
+    width: 150px;
+    height: 150px;
   }
   
   .motivation-content p {

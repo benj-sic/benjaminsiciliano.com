@@ -197,16 +197,19 @@ const NetworkVisualization = () => {
       const networkCenterX = (minX + maxX) / 2;
       const networkCenterY = (minY + maxY) / 2;
       
-      // Calculate the scale to fit the network in the viewport
+      // Calculate the scale to fit the network in the viewport with padding
       const networkWidth = maxX - minX;
       const networkHeight = maxY - minY;
-      const scaleX = (width * 0.8) / networkWidth;
-      const scaleY = (height * 0.8) / networkHeight;
-      const scale = Math.min(scaleX, scaleY, 1); // Don't zoom in more than 100%
+      const padding = 60; // Reduced padding for less zoom out
+      const scaleX = (width - padding * 2) / networkWidth;
+      const scaleY = (height - padding * 2) / networkHeight;
+      const scale = Math.min(scaleX, scaleY, 0.95); // Zoom in slightly more (max 95% instead of 90%)
       
-      // Calculate the transform to center the network
+      // Calculate the transform to center the network with smaller offset
+      const offsetX = 10; // Move right less
+      const offsetY = -50; // Move down (negative Y moves down in SVG coordinates)
       const transform = d3.zoomIdentity
-        .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
+        .translate(width / 2 - networkCenterX * scale + offsetX, height / 2 - networkCenterY * scale + offsetY)
         .scale(scale);
       
       // Apply the transform with transition
@@ -404,6 +407,10 @@ const NetworkVisualization = () => {
       setTimeout(() => {
         setIsLoading(false);
         setIsProcessing(false);
+        // Auto-center the network after it loads
+        setTimeout(() => {
+          centerNetwork();
+        }, 100); // Small delay to ensure everything is rendered
       }, 500); // Give extra time for 80+ nodes to settle
     });
 
@@ -428,6 +435,9 @@ const NetworkVisualization = () => {
           Interactive visualization of Atlanta's growing biotech ecosystem. Explore connections between universities, 
           companies, investors, and service providers driving innovation in the region. Use the filters to focus on 
           specific organization types. Click on nodes and connections for detailed information and website links.
+        </p>
+        <p className="last-updated">
+          Last updated: July 2025
         </p>
       </div>
 
@@ -760,12 +770,7 @@ const NetworkVisualization = () => {
             </div>
           )}
           
-          {selectedNode.funding && (
-            <div className="tooltip-section">
-              <h4>Funding</h4>
-              <p className="funding-info">{selectedNode.funding}</p>
-            </div>
-          )}
+
           
           {selectedNode.recentNews && (
             <div className="tooltip-section">
@@ -790,9 +795,7 @@ const NetworkVisualization = () => {
           </div>
           <p className="link-type">{selectedLink.type}</p>
           <p className="link-description">{selectedLink.description}</p>
-          <div className="link-strength">
-            <span>Strength: {Math.round(selectedLink.strength * 100)}%</span>
-          </div>
+
         </div>
       )}
     </div>

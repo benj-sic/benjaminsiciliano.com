@@ -55,7 +55,7 @@ function App() {
             </svg>
           </button>
           <div className="header-content">
-            <h1>Benjamin Siciliano</h1>
+            <h1>Benjamin Siciliano, PhD</h1>
           </div>
           <ThemeToggle />
         </header>
@@ -66,13 +66,13 @@ function App() {
             <div className="container">
               <div className="welcome-content">
                 <p>
-                  Hello! My name is Ben and I'm passionate about building connections and accelerating innovation in Atlanta's biotech ecosystem. 
+                  Hi! I'm Ben, a PhD neuropharmacologist passionate about accelerating Atlanta's biotech ecosystem. 
                   Below you'll find an interactive visualization of the organizations, partnerships, and relationships 
-                  that are driving the region's life sciences growth.
+                  driving the region's life sciences growth.
                 </p>
                 <div className="welcome-cta">
                   <p>
-                    <strong>Explore the network below</strong> to discover Atlanta's biotech ecosystem and see how we can collaborate to accelerate innovation together.
+                    <strong>Explore the network below</strong> to discover Atlanta's biotech ecosystem and potential collaboration opportunities.
                   </p>
                 </div>
               </div>
@@ -95,8 +95,18 @@ function App() {
                 <div className="about-main-content">
                   <h2>About Me</h2>
                   <div className="about-text">
+                    <div className="about-image-container">
+                      <img 
+                        src="/BS_headshot.jpeg" 
+                        alt="Benjamin Siciliano" 
+                        className="about-headshot"
+                      />
+                    </div>
                     <p>
                       I'm a PhD-trained neuropharmacologist specializing in bioinformatics, computational biology, and systems pharmacology to advance therapeutic development for neuropsychiatric and neurodegenerative diseases. With experience managing drug development programs and a focus on applying computational approaches to drive strategic decision-making and innovation in biotech, I have a strong background in technology transfer and early-stage development that enables the de-risking and acceleration of research-to-commercialization processes. I'm focused on leveraging my scientific expertise to bridge the gap between cutting-edge research and business strategy, with a commitment to driving the next wave of impactful therapeutics. I'm eager to lead and collaborate on projects that push the boundaries of biotech innovation and accelerate the delivery of solutions to market, and I'm open to connecting with investors and entrepreneurs focused on leveraging technology and data to de-risk and scale the next-generation of biotech solutions.
+                    </p>
+                    <p className="about-tldr">
+                      <strong>TL;DR:</strong> I combine deep scientific expertise with product strategy and tech implementation to accelerate biotech innovation.
                     </p>
                   </div>
                 </div>
@@ -112,8 +122,8 @@ function App() {
                 <p>
                   Atlanta's biotech ecosystem is rapidly growing but often overlooked. This interactive network visualization 
                   showcases the connections, partnerships, and innovation hubs driving the region's biotech revolution. 
-                  By mapping these relationships, we can identify opportunities for collaboration, investment, and strategic 
-                  partnerships that accelerate the development of next-generation therapeutics.
+                  By mapping these relationships, we can identify collaboration, investment, and strategic partnership 
+                  opportunities that accelerate next-generation therapeutic development.
                 </p>
               </div>
             </div>

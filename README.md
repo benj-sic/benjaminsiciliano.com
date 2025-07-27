@@ -20,7 +20,7 @@ A modern, interactive personal website featuring an Atlanta TechBio Network visu
 ### Site Sections
 - **Hero Section**: Compelling headline with ecosystem statistics
 - **Network Visualization**: Main interactive feature
-- **Submission Form**: "Request to Join" functionality for new organizations
+- **Contact Form**: Professional contact information and opportunities
 - **About Section**: Benjamin's background, achievements, and positioning
 - **Contact Section**: Professional contact information and opportunities
 
@@ -77,8 +77,7 @@ src/
 │   ├── About.css                  # About styles
 │   ├── Contact.js                 # Contact information
 │   ├── Contact.css                # Contact styles
-│   ├── SubmissionForm.js          # Organization submission form
-│   └── SubmissionForm.css         # Form styles
+
 ├── App.js                         # Main app component
 ├── App.css                        # App-specific styles
 ├── index.js                       # React entry point
@@ -138,7 +137,8 @@ const networkData = {
     {
       source: "source-node-id",
       target: "target-node-id",
-      strength: 0.5 // Connection strength (0-1)
+      type: "collaboration|investment|spinout|partnership",
+      description: "Relationship description"
     }
   ]
 }

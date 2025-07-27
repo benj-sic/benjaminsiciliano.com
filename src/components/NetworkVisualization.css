@@ -93,6 +93,16 @@
   transition: color 0.3s ease;
 }
 
+.network-header .last-updated {
+  color: var(--network-text-tertiary);
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 0;
+  opacity: 0.8;
+}
+
 /* Main Container */
 .network-main {
   display: flex;
