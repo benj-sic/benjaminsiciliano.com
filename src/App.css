@@ -154,7 +154,7 @@ main {
   margin: 0;
   max-width: 1000px;
   margin: 0 auto;
-  text-align: justify;
+  text-align: left;
   transition: color 0.3s ease;
 }
 
@@ -169,7 +169,7 @@ main {
   font-weight: 500;
   max-width: 1000px;
   margin: 0 auto;
-  text-align: justify;
+  text-align: left;
   transition: color 0.3s ease;
 }
 
@@ -268,7 +268,7 @@ main {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  text-align: justify;
+  text-align: left;
   transition: color 0.3s ease;
 }
 
@@ -334,7 +334,7 @@ main {
   color: var(--text-secondary);
   max-width: 1000px;
   margin: 0 auto;
-  text-align: justify;
+  text-align: left;
   transition: color 0.3s ease;
 }
 
@@ -364,7 +364,7 @@ main {
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: 2rem;
-  text-align: justify;
+  text-align: left;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
@@ -482,6 +482,14 @@ main {
   transition: all 0.3s ease;
 }
 
+/* Style for noscript fallback message */
+noscript .submit-error {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid #ffc107;
+  color: #ffc107;
+  margin-top: 1rem;
+}
+
 .contact-links {
   margin-top: 2rem;
 }
@@ -560,7 +568,7 @@ main {
   }
   
   .about-text p {
-    text-align: justify;
+    text-align: left;
   }
   
   .about-image-container {
@@ -576,19 +584,19 @@ main {
   }
   
   .motivation-content p {
-    text-align: justify;
+    text-align: left;
   }
   
   .welcome-content p {
-    text-align: justify;
+    text-align: left;
   }
   
   .welcome-cta p {
-    text-align: justify;
+    text-align: left;
   }
   
   .contact-intro {
-    text-align: justify;
+    text-align: left;
   }
   
   .about-main-content h2 {

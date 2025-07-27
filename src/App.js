@@ -27,15 +27,40 @@ function App() {
     setSubmitStatus(null);
 
     try {
-      // For now, we'll use a simple mailto link since this is a static site
-      // In a production environment, you'd want to use a backend service or email service
-      const mailtoLink = `mailto:ben.siciliano@gmail.com?subject=Website Contact from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
-      
-      window.location.href = mailtoLink;
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
+      // Use Formspree for form submission with cross-browser compatibility
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('_next', window.location.href);
+      formDataToSend.append('_subject', 'New message from benjaminsiciliano.com');
+
+      const response = await fetch('https://formspree.io/f/mgvzkbny', {
+        method: 'POST',
+        body: formDataToSend,
+        // Remove Accept header for better cross-browser compatibility
+        // Formspree handles the response format automatically
+      });
+
+      // Check if the response is ok (status 200-299)
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        console.error('Formspree error:', response.status, response.statusText);
+        // If fetch fails, fall back to traditional form submission
+        console.log('Falling back to traditional form submission...');
+        const form = e.target;
+        form.submit();
+        return; // Don't set error status since we're falling back
+      }
     } catch (error) {
-      setSubmitStatus('error');
+      console.error('Form submission error:', error);
+      // If fetch completely fails, fall back to traditional form submission
+      console.log('Fetch failed, falling back to traditional form submission...');
+      const form = e.target;
+      form.submit();
+      return; // Don't set error status since we're falling back
     } finally {
       setIsSubmitting(false);
     }
@@ -135,7 +160,12 @@ function App() {
                   I'm always looking to improve this visualization and expand the ecosystem mapping.
                 </p>
                 <div className="contact-form-container">
-                  <form className="contact-form" onSubmit={handleSubmit}>
+                  <form 
+                    className="contact-form" 
+                    onSubmit={handleSubmit}
+                    action="https://formspree.io/f/mgvzkbny"
+                    method="POST"
+                  >
                     <div className="form-group">
                       <label htmlFor="name">Name</label>
                       <input 
@@ -148,6 +178,9 @@ function App() {
                         placeholder="Your name"
                       />
                     </div>
+                    {/* Hidden input for Formspree compatibility */}
+                    <input type="hidden" name="_next" value={window.location.href} />
+                    <input type="hidden" name="_subject" value="New message from benjaminsiciliano.com" />
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input 
@@ -181,7 +214,7 @@ function App() {
                     </button>
                     {submitStatus === 'success' && (
                       <div className="submit-success">
-                        Message sent! Check your email client to complete the email.
+                        Message sent successfully! I'll get back to you soon.
                       </div>
                     )}
                     {submitStatus === 'error' && (
@@ -189,6 +222,12 @@ function App() {
                         There was an error sending your message. Please try again.
                       </div>
                     )}
+                    {/* Fallback for users with JavaScript disabled */}
+                    <noscript>
+                      <div className="submit-error">
+                        JavaScript is required for the best experience. If you're having trouble, you can email me directly at ben.siciliano@gmail.com
+                      </div>
+                    </noscript>
                   </form>
                   
                   <div className="contact-links">
