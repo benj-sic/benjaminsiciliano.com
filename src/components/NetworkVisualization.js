@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { atlantaTechBioEcosystem, nodeTypeMap, nodeColors } from '../atlanta_techbio_data.js';
+import { useTheme } from '../contexts/ThemeContext';
 import './NetworkVisualization.css';
 
 const NetworkVisualization = () => {
+  const { theme } = useTheme();
   const svgRef = useRef();
   const containerRef = useRef();
   const [selectedNode, setSelectedNode] = useState(null);
@@ -153,15 +155,11 @@ const NetworkVisualization = () => {
     const width = container.clientWidth;
     const height = container.clientHeight;
 
-
-
     // Clear previous content
     svg.selectAll("*").remove();
 
     // Update SVG dimensions to match container
     svg.attr("width", width).attr("height", height);
-    
-
 
     // Filter nodes based on current filters
     const filteredNodes = networkData.nodes.filter(node => {
@@ -180,8 +178,6 @@ const NetworkVisualization = () => {
       source: filteredNodes.find(n => n.id === link.source),
       target: filteredNodes.find(n => n.id === link.target)
     }));
-
-
 
     // Create clustering by node type
     const nodeTypes = ['university', 'company', 'vc', 'incubator', 'serviceProvider', 'government', 'trade', 'development', 'facility'];
@@ -205,8 +201,6 @@ const NetworkVisualization = () => {
       .force("collision", d3.forceCollide().radius(d => d.size + 12)) // Increased collision radius
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.3)) // Cluster by type
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.3)); // Cluster by type
-
-
 
     // Create links with enhanced styling
     const links = svg.append("g")
@@ -234,9 +228,7 @@ const NetworkVisualization = () => {
         }
       });
 
-
-
-    // Create nodes with enhanced visibility
+    // Create nodes with enhanced visibility (removed stroke)
     const nodes = svg.append("g")
       .attr("class", "nodes")
       .selectAll("circle")
@@ -244,8 +236,6 @@ const NetworkVisualization = () => {
       .enter().append("circle")
       .attr("r", d => d.size)
       .attr("fill", d => nodeColors[d.type])
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 2)
       .style("cursor", "pointer")
       .on("click", function(event, d) {
         event.stopPropagation();
@@ -269,11 +259,11 @@ const NetworkVisualization = () => {
       .attr("y", 0)
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
-      .attr("fill", "#fff")
+      .attr("fill", theme === 'dark' ? "#fff" : "#333")
       .attr("font-size", "9px") // Slightly smaller for more nodes
       .attr("font-weight", "500")
       .style("pointer-events", "none")
-      .style("text-shadow", "1px 1px 2px rgba(0,0,0,0.8)")
+      .style("text-shadow", theme === 'dark' ? "1px 1px 2px rgba(0,0,0,0.8)" : "1px 1px 2px rgba(255,255,255,0.8)")
       .style("font-family", "system-ui, -apple-system, sans-serif");
 
     // Add zoom behavior with enhanced controls
@@ -300,8 +290,6 @@ const NetworkVisualization = () => {
       labels
         .attr("x", d => d.x)
         .attr("y", d => d.y);
-      
-
     });
 
     // Set loading states with longer timeout for larger dataset
@@ -315,7 +303,7 @@ const NetworkVisualization = () => {
     return () => {
       simulation.stop();
     };
-  }, [debouncedFilters, networkData, typeMap]);
+  }, [debouncedFilters, networkData, typeMap, theme, selectedNode, selectedLink]);
 
   const toggleFilter = (filterType) => {
     setFilters(prev => ({

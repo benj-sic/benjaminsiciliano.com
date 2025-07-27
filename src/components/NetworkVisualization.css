@@ -1,3 +1,50 @@
+/* CSS Custom Properties for theming */
+:root {
+  /* Dark theme (default) */
+  --network-bg-primary: rgba(15, 20, 25, 0.95);
+  --network-bg-secondary: rgba(255, 255, 255, 0.02);
+  --network-bg-tertiary: rgba(15, 20, 25, 0.9);
+  --network-text-primary: #ffffff;
+  --network-text-secondary: #b0b0b0;
+  --network-text-tertiary: #a0a0a0;
+  --network-text-accent: #10b981;
+  --network-border-primary: rgba(255, 255, 255, 0.1);
+  --network-border-secondary: rgba(255, 255, 255, 0.3);
+  --network-shadow: rgba(0, 0, 0, 0.3);
+  --network-hover-bg: rgba(255, 255, 255, 0.05);
+  --network-node-stroke: #ffffff;
+  --network-text-shadow: rgba(0, 0, 0, 0.8);
+  --network-link-color: #4ade80;
+  --network-link-hover: #22c55e;
+  --network-funding-color: #fbbf24;
+  --network-close-color: #666;
+  --network-close-hover: #ffffff;
+  --network-close-hover-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --network-bg-primary: rgba(255, 255, 255, 0.95);
+  --network-bg-secondary: rgba(0, 0, 0, 0.02);
+  --network-bg-tertiary: rgba(255, 255, 255, 0.9);
+  --network-text-primary: #1a202c;
+  --network-text-secondary: #4a5568;
+  --network-text-tertiary: #718096;
+  --network-text-accent: #059669;
+  --network-border-primary: rgba(0, 0, 0, 0.1);
+  --network-border-secondary: rgba(0, 0, 0, 0.3);
+  --network-shadow: rgba(0, 0, 0, 0.1);
+  --network-hover-bg: rgba(0, 0, 0, 0.05);
+  --network-node-stroke: #333333;
+  --network-text-shadow: rgba(255, 255, 255, 0.8);
+  --network-link-color: #059669;
+  --network-link-hover: #047857;
+  --network-funding-color: #d97706;
+  --network-close-color: #666;
+  --network-close-hover: #1a202c;
+  --network-close-hover-bg: rgba(0, 0, 0, 0.1);
+}
+
 .network-visualization {
   position: relative;
   width: 100vw;
@@ -9,30 +56,33 @@
 
 /* Network Header */
 .network-header {
-  background: rgba(15, 20, 25, 0.95);
+  background: var(--network-bg-primary);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--network-border-primary);
   padding: 20px;
   text-align: center;
   z-index: 20;
+  transition: all 0.3s ease;
 }
 
 .network-header h2 {
-  color: #10b981;
+  color: var(--network-text-accent);
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 12px;
   margin-top: 0;
+  transition: color 0.3s ease;
 }
 
 .network-header p {
-  color: #b0b0b0;
+  color: var(--network-text-secondary);
   font-size: 1.1rem;
   line-height: 1.5;
   margin: 0;
   max-width: 1000px;
   margin: 0 auto;
   text-align: justify;
+  transition: color 0.3s ease;
 }
 
 /* Main Container */
@@ -47,20 +97,22 @@
   position: relative;
   width: 250px;
   height: 100%;
-  background: rgba(15, 20, 25, 0.95);
+  background: var(--network-bg-primary);
   backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid var(--network-border-primary);
   padding: 20px;
   z-index: 10;
   overflow-y: auto;
+  transition: all 0.3s ease;
 }
 
 .network-filters h4 {
-  color: #ffffff;
+  color: var(--network-text-primary);
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 16px;
   margin-top: 0;
+  transition: color 0.3s ease;
 }
 
 .filter-checkboxes {
@@ -79,7 +131,7 @@
 }
 
 .filter-checkbox:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--network-hover-bg);
   border-radius: 6px;
   padding: 8px 8px;
   margin: 0 -8px;
@@ -92,7 +144,7 @@
 .checkbox-custom {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid var(--network-border-secondary);
   border-radius: 4px;
   background: transparent;
   position: relative;
@@ -101,8 +153,8 @@
 }
 
 .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom {
-  background: #10b981;
-  border-color: #10b981;
+  background: var(--network-text-accent);
+  border-color: var(--network-text-accent);
 }
 
 .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
@@ -117,18 +169,18 @@
 }
 
 .checkbox-label {
-  color: #a0a0a0;
+  color: var(--network-text-tertiary);
   font-size: 0.9rem;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .filter-checkbox:hover .checkbox-label {
-  color: #ffffff;
+  color: var(--network-text-primary);
 }
 
 .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom + .checkbox-label {
-  color: #10b981;
+  color: var(--network-text-accent);
   font-weight: 600;
 }
 
@@ -137,8 +189,9 @@
   flex: 1;
   height: 100%;
   position: relative;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--network-bg-secondary);
   overflow: hidden;
+  transition: background 0.3s ease;
 }
 
 .network-canvas svg {
@@ -157,12 +210,12 @@
 
 /* Improved node visibility with enhanced shadows */
 .network-canvas circle {
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 2px 6px var(--network-shadow));
   transition: filter 0.2s ease;
 }
 
 .network-canvas circle:hover {
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 4px 12px var(--network-shadow));
 }
 
 /* Enhanced link visibility */
@@ -175,21 +228,23 @@
   position: relative;
   width: 280px;
   height: 100%;
-  background: rgba(15, 20, 25, 0.95);
+  background: var(--network-bg-primary);
   backdrop-filter: blur(10px);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid var(--network-border-primary);
   padding: 20px;
   z-index: 10;
   overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px var(--network-shadow);
+  transition: all 0.3s ease;
 }
 
 .network-legend h4 {
-  color: #ffffff;
+  color: var(--network-text-primary);
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 16px;
   margin-top: 0;
+  transition: color 0.3s ease;
 }
 
 .legend-section {
@@ -197,12 +252,13 @@
 }
 
 .legend-section h5 {
-  color: #10b981;
+  color: var(--network-text-accent);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 10px;
   font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .legend-item {
@@ -216,8 +272,9 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--network-text-primary);
   flex-shrink: 0;
+  transition: border-color 0.3s ease;
 }
 
 .legend-line {
@@ -228,9 +285,10 @@
 }
 
 .legend-label {
-  color: #a0a0a0;
+  color: var(--network-text-tertiary);
   font-size: 0.9rem;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 /* Loading and Performance States */
@@ -240,30 +298,33 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 20, 25, 0.9);
+  background: var(--network-bg-tertiary);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 100;
+  transition: background 0.3s ease;
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top: 3px solid #10b981;
+  border-top: 3px solid var(--network-text-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 16px;
+  transition: border-top-color 0.3s ease;
 }
 
 .loading-overlay p {
-  color: #ffffff;
+  color: var(--network-text-primary);
   font-size: 1.1rem;
   font-weight: 500;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .processing-indicator {
@@ -271,30 +332,33 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(15, 20, 25, 0.9);
+  background: var(--network-bg-tertiary);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--network-border-primary);
   border-radius: 8px;
   padding: 8px 12px;
   display: flex;
   align-items: center;
   gap: 8px;
   z-index: 50;
+  transition: all 0.3s ease;
 }
 
 .processing-spinner {
   width: 16px;
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-top: 2px solid #10b981;
+  border-top: 2px solid var(--network-text-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  transition: border-top-color 0.3s ease;
 }
 
 .processing-indicator span {
-  color: #ffffff;
+  color: var(--network-text-primary);
   font-size: 1.1rem;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 @keyframes spin {
@@ -307,18 +371,17 @@
   position: absolute;
   bottom: 20px;
   left: 270px; /* Positioned after left sidebar */
-  background: rgba(15, 20, 25, 0.95);
+  background: var(--network-bg-tertiary);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--network-border-primary);
   border-radius: 8px;
   padding: 16px;
   max-width: 350px;
   z-index: 100;
   animation: fadeIn 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px var(--network-shadow);
+  transition: all 0.3s ease;
 }
-
-
 
 .tooltip-header {
   display: flex;
@@ -336,7 +399,7 @@
 .tooltip-close {
   background: none;
   border: none;
-  color: #666;
+  color: var(--network-close-color);
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -352,57 +415,62 @@
 }
 
 .tooltip-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: var(--network-close-hover-bg);
+  color: var(--network-close-hover);
 }
 
 .node-tooltip h3 {
-  color: #ffffff;
-  font-size: 1.5rem;
+  color: var(--network-text-primary);
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 .node-type {
-  color: #10b981;
-  font-size: 1.1rem;
+  color: var(--network-text-accent);
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 8px;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .node-description {
-  color: #b0b0b0;
-  font-size: 1.1rem;
+  color: var(--network-text-secondary);
+  font-size: 0.9rem;
   line-height: 1.4;
+  transition: color 0.3s ease;
 }
 
 .tooltip-section {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--network-border-primary);
+  transition: border-color 0.3s ease;
 }
 
 .tooltip-section h4 {
-  color: #10b981;
-  font-size: 1.1rem;
+  color: var(--network-text-accent);
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 6px;
   font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .website-link {
-  color: #4ade80;
+  color: var(--network-link-color);
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   word-break: break-all;
   transition: color 0.2s ease;
 }
 
 .website-link:hover {
-  color: #22c55e;
+  color: var(--network-link-hover);
   text-decoration: underline;
 }
 
@@ -413,79 +481,86 @@
 }
 
 .personnel-list li {
-  color: #d1d5db;
-  font-size: 1.1rem;
+  color: var(--network-text-secondary);
+  font-size: 0.9rem;
   padding: 2px 0;
   position: relative;
   padding-left: 12px;
+  transition: color 0.3s ease;
 }
 
 .personnel-list li:before {
   content: "•";
-  color: #10b981;
+  color: var(--network-text-accent);
   position: absolute;
   left: 0;
+  transition: color 0.3s ease;
 }
 
 .funding-info {
-  color: #fbbf24;
-  font-size: 1.1rem;
+  color: var(--network-funding-color);
+  font-size: 0.9rem;
   font-weight: 500;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .recent-news {
-  color: #b0b0b0;
-  font-size: 1.1rem;
+  color: var(--network-text-secondary);
+  font-size: 0.9rem;
   line-height: 1.4;
   margin: 0;
   font-style: italic;
+  transition: color 0.3s ease;
 }
 
 .link-tooltip {
   position: absolute;
   bottom: 20px;
   right: 300px; /* Positioned before right sidebar */
-  background: rgba(15, 20, 25, 0.95);
+  background: var(--network-bg-tertiary);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--network-border-primary);
   border-radius: 8px;
   padding: 16px;
   max-width: 350px;
   z-index: 100;
   animation: fadeIn 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px var(--network-shadow);
+  transition: all 0.3s ease;
 }
 
-
-
 .link-tooltip h4 {
-  color: #ffffff;
-  font-size: 1.5rem;
+  color: var(--network-text-primary);
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 .link-type {
-  color: #10b981;
-  font-size: 1.1rem;
+  color: var(--network-text-accent);
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 8px;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .link-description {
-  color: #b0b0b0;
-  font-size: 1.1rem;
+  color: var(--network-text-secondary);
+  font-size: 0.9rem;
   line-height: 1.4;
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 .link-strength {
-  color: #fbbf24;
-  font-size: 1.1rem;
+  color: var(--network-funding-color);
+  font-size: 0.9rem;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -525,7 +600,7 @@
     width: 100%;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--network-border-primary);
   }
   
   .network-canvas {
@@ -536,7 +611,7 @@
     width: 100%;
     height: auto;
     border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--network-border-primary);
   }
   
   .processing-indicator {
