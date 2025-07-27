@@ -106,39 +106,39 @@ function App() {
 
     try {
       // Use Formspree for form submission with cross-browser compatibility
-      const formDataToSend = new FormData();
+      const formDataToSend = new URLSearchParams();
       formDataToSend.append('name', formData.name);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('message', formData.message);
-      formDataToSend.append('_next', window.location.href);
       formDataToSend.append('_subject', 'New message from benjaminsiciliano.com');
 
       const response = await fetch('https://formspree.io/f/mgvzkbny', {
         method: 'POST',
         body: formDataToSend,
-        // Remove Accept header for better cross-browser compatibility
-        // Formspree handles the response format automatically
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
       });
 
       // Check if the response is ok (status 200-299)
       if (response.ok) {
+        console.log('Form submission successful!');
         setSubmitStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus(null);
+        }, 5000);
       } else {
         console.error('Formspree error:', response.status, response.statusText);
-        // If fetch fails, fall back to traditional form submission
-        console.log('Falling back to traditional form submission...');
-        const form = e.target;
-        form.submit();
-        return; // Don't set error status since we're falling back
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        setSubmitStatus('error');
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      // If fetch completely fails, fall back to traditional form submission
-      console.log('Fetch failed, falling back to traditional form submission...');
-      const form = e.target;
-      form.submit();
-      return; // Don't set error status since we're falling back
+      setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
@@ -353,8 +353,6 @@ function App() {
                   <form 
                     className="contact-form" 
                     onSubmit={handleSubmit}
-                    action="https://formspree.io/f/mgvzkbny"
-                    method="POST"
                   >
                     <div className="form-group">
                       <label htmlFor="name">Name</label>
@@ -369,7 +367,6 @@ function App() {
                       />
                     </div>
                     {/* Hidden input for Formspree compatibility */}
-                    <input type="hidden" name="_next" value={window.location.href} />
                     <input type="hidden" name="_subject" value="New message from benjaminsiciliano.com" />
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
@@ -404,12 +401,23 @@ function App() {
                     </button>
                     {submitStatus === 'success' && (
                       <div className="submit-success">
-                        Message sent successfully! I'll get back to you soon.
+                        <svg className="submit-success-icon" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                        <span>Message sent! I'll get back to you soon.</span>
                       </div>
                     )}
                     {submitStatus === 'error' && (
                       <div className="submit-error">
-                        There was an error sending your message. Please try again.
+                        <svg className="submit-error-icon" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                        <span>
+                          There was an error sending your message. 
+                          <a href="mailto:ben.siciliano@gmail.com?subject=Message from benjaminsiciliano.com" className="error-email-link">
+                            Click here to email me directly
+                          </a>
+                        </span>
                       </div>
                     )}
                     {/* Fallback for users with JavaScript disabled */}
