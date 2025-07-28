@@ -86,6 +86,16 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: [],
       recentNews: "Ongoing pediatric research partnerships with Emory, Georgia Tech, and Marcus Autism Center; active in rare disease and neurodevelopmental clinical trials."
     },
+    {
+      id: "emory_healthcare",
+      name: "Emory Healthcare",
+      type: "health_system",
+      size: 19,
+      description: "Emory's clinical enterprise and the largest health system in Georgia. Operates the Emory Healthcare Innovation Hub (EHIH), which partners with startups and global firms to validate digital health and AI solutions in clinical settings.",
+      website: "https://www.emoryhealthcare.org/",
+      keyPersonnel: [],
+      recentNews: "EHIH has partnered with Verily, Stryker, and others to pilot new healthcare technologies. Supports Emory's biotech and digital health spinouts via clinical research access and implementation studies."
+    },
 
     // MAJOR COMPANIES - CLINICAL STAGE
     {
@@ -405,7 +415,14 @@ export const atlantaTechBioEcosystem = {
       size: 13,
       description: "Boutique preclinical CRO providing grant writing and project management services to startups.",
       website: "https://radyusresearch.com",
-      keyPersonnel: ["Marta New"],
+      keyPersonnel: [
+        "Marta New",
+        "Kamyra Edokpolor",
+        "Benjamin Siciliano",
+        "Anthony Chilton",
+        "Caitlin J. Couch",
+        "Dave Edwards"
+      ],
       recentNews: "Helped local biotechs win multiple SBIR/STTR grants in 2023."
     },
     {
@@ -530,6 +547,16 @@ export const atlantaTechBioEcosystem = {
       website: "https://atlantaclinicalresearch.com",
       keyPersonnel: [],
       recentNews: "Specialized clinical research services"
+    },
+    {
+      id: "11ten",
+      name: "11TEN Innovation Partners",
+      type: "serviceProvider",
+      size: 13,
+      description: "Atlanta-based innovation consultancy focused on healthcare commercialization and clinical validation. Operates a 5G-enabled living lab and partners with systems like Emory Healthcare to prototype and pilot digital health and medtech solutions in real-world settings.",
+      website: "https://11ten.com",
+      keyPersonnel: ["James Lewis", "Caleb Szubski", "Steve Gertz"],
+      recentNews: "Supports the Emory Healthcare Innovation Hub with UX research and pilot design for digital health deployments. Acquired by ClinicalMind in 2024."
     },
 
     // EMERGING STARTUPS
@@ -672,6 +699,24 @@ export const atlantaTechBioEcosystem = {
       website: "https://cambiumoncology.com",
       keyPersonnel: ["Ned Waller", "Gary Altman"],
       recentNews: "Received NIH Fast‑Track grant and a $5M strategic equity investment from OEP Innovations to advance ANT308 into IND stage."
+    },
+    {
+      id: "switchboard_md",
+      name: "Switchboard, MD",
+      type: "startup",
+      size: 12,
+      description: "Atlanta-based digital health startup using physician-built AI to streamline care team workflows. Offers solutions for inbox management, disease escalation, and revenue cycle through real-time prioritization and routing of clinical and admin tasks.",
+      website: "https://www.switchboardmd.com",
+      keyPersonnel: [
+        "Blake Anderson, MD",
+        "Bradley Gallaher",
+        "Ankit Tiwari",
+        "Will Akers",
+        "Kelly Luckasevic",
+        "Ashley Badgett",
+        "Yuanda Zhu, PhD"
+      ],
+      recentNews: "Continues to grow adoption of its AI-powered platform across provider networks. Built by clinicians with deep healthcare system expertise."
     }
   ],
 
@@ -684,6 +729,8 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "cdc", type: "collaboration", description: "Numerous research partnerships" },
     { source: "emory", target: "choa", type: "collaboration", description: "Academic partner in pediatric research and clinical training" },
     { source: "gatech", target: "choa", type: "research_collaboration", description: "Collaborates on pediatric medtech and translational research" },
+    { source: "emory", target: "emory_healthcare", type: "affiliation", description: "Clinical enterprise of Emory University; partner for translational and digital health research" },
+    { source: "emory_healthcare", target: "florence", type: "pilot", description: "Florence's eClinical tools validated in Emory Healthcare Innovation Hub pilot programs" },
 
     // --- University Spinouts ---
     { source: "emory", target: "inhibikase", type: "spinout", description: "Licensed technology, early investor" },
@@ -745,6 +792,7 @@ export const atlantaTechBioEcosystem = {
     { source: "biotechexec", target: "biolocity", type: "service", description: "Mentorship and strategic consulting" },
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
+    { source: "11ten", target: "emory_healthcare", type: "collaboration", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
 
     // --- Broader Ecosystem Connections ---
     { source: "gra", target: "emory", type: "funding", description: "Funding and endowed scholar support" },

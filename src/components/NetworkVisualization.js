@@ -429,7 +429,7 @@ const NetworkVisualization = () => {
       // Clean up D3 selections to prevent memory leaks
       svg.selectAll("*").remove();
     };
-  }, [debouncedFilters, networkData, typeMap, theme, filterMapping]);
+  }, [debouncedFilters, networkData, typeMap, theme, filterMapping, selectedNode]);
 
   // Update node highlighting when selectedNode changes
   useEffect(() => {
