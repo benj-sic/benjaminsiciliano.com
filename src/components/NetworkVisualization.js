@@ -10,11 +10,12 @@ const NetworkVisualization = () => {
   const containerRef = useRef();
   const simulationRef = useRef();
   const [selectedNode, setSelectedNode] = useState(null);
+  const [connectedNodes, setConnectedNodes] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const selectedNodeRef = useRef(null);
   
   // Sidebar state
-  const [showControls, setShowControls] = useState(false); // Collapsed by default
+  const [showControls, setShowControls] = useState(true); // Controls open by default
   const [showFilters, setShowFilters] = useState(false); // Collapsed by default
   const [showLegend, setShowLegend] = useState(false); // Collapsed by default
   const [showSearch, setShowSearch] = useState(false); // Collapsed by default
@@ -50,15 +51,15 @@ const NetworkVisualization = () => {
     setShowFilters(false);
     setShowLegend(false);
     setShowSearch(false);
-    setShowControls(false);
-    console.log('Controls collapsed by default on all screen sizes');
+    // Note: showControls is now open by default, so we don't set it to false here
+    console.log('Controls open by default on all screen sizes');
   }, [isMobile]);
 
   // Initialize zoom level from URL parameters
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const zoomParam = urlParams.get('zoom');
-    return zoomParam ? parseFloat(zoomParam) : 0.30; // Start at 30% zoom for better initial view
+    return zoomParam ? parseFloat(zoomParam) : 0.20; // Start at 20% zoom for better initial view
   };
 
   const [zoomLevel, setZoomLevel] = useState(getInitialZoomLevel);
@@ -265,6 +266,15 @@ const NetworkVisualization = () => {
 
   // Center network function with improved visibility
   const centerNetwork = useCallback(() => {
+    // Hide the plot immediately when centering starts
+    setIsLoading(true);
+    
+    // Also hide the SVG immediately for instant effect
+    if (svgRef.current) {
+      const svg = d3.select(svgRef.current);
+      svg.style("opacity", "0");
+    }
+    
     if (svgRef.current && zoomBehaviorRef.current) {
       const svg = d3.select(svgRef.current);
       const width = svg.node().getBoundingClientRect().width;
@@ -290,7 +300,7 @@ const NetworkVisualization = () => {
         const padding = 20; // Minimal padding
         const scaleX = (width - padding * 2) / networkWidth;
         const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY, 0.9); // Cap at 90% zoom
+        const scale = Math.min(scaleX, scaleY, 0.2); // Cap at 20% zoom
         
         // Calculate the transform to center the network in the viewport
         // Adjust the Y translation to center properly
@@ -315,10 +325,62 @@ const NetworkVisualization = () => {
     }
   }, []);
 
+  // Manual center network function (doesn't hide the plot)
+  const manualCenterNetwork = useCallback(() => {
+    if (svgRef.current && zoomBehaviorRef.current) {
+      const svg = d3.select(svgRef.current);
+      const width = svg.node().getBoundingClientRect().width;
+      const height = svg.node().getBoundingClientRect().height;
+      
+      // Get the actual bounds of the network nodes
+      const nodes = svg.selectAll(".node").nodes();
+      if (nodes.length > 0) {
+        const xCoords = nodes.map(n => n.cx.baseVal.value);
+        const yCoords = nodes.map(n => n.cy.baseVal.value);
+        const minX = Math.min(...xCoords);
+        const maxX = Math.max(...xCoords);
+        const minY = Math.min(...yCoords);
+        const maxY = Math.max(...yCoords);
+        
+        // Calculate the center of the network
+        const networkCenterX = (minX + maxX) / 2;
+        const networkCenterY = (minY + maxY) / 2;
+        
+        // Calculate the scale to fit the network in the viewport with minimal padding
+        const networkWidth = maxX - minX;
+        const networkHeight = maxY - minY;
+        const padding = 20; // Minimal padding
+        const scaleX = (width - padding * 2) / networkWidth;
+        const scaleY = (height - padding * 2) / networkHeight;
+        const scale = Math.min(scaleX, scaleY, 0.2); // Cap at 20% zoom
+        
+        // Calculate the transform to center the network in the viewport
+        // Adjust the Y translation to center properly
+        const transform = d3.zoomIdentity
+          .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
+          .scale(scale);
+        
+        // Apply the transform with a smooth transition
+        svg.transition()
+          .duration(500)
+          .call(zoomBehaviorRef.current.transform, transform);
+      } else {
+        // Fallback to simple centering if no nodes
+        const transform = d3.zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(0.2); // 20% zoom fallback
+        
+        svg.transition()
+          .duration(500)
+          .call(zoomBehaviorRef.current.transform, transform);
+      }
+    }
+  }, []);
+
   // Zoom functions
   const zoomIn = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 2.5 && !isMobile) {
-      const newZoomLevel = Math.min(zoomLevel * 1.2, 2.5);
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 1.0 && !isMobile) {
+      const newZoomLevel = Math.min(zoomLevel + 0.1, 1.0); // 10% step, max 100%
       setZoomLevel(newZoomLevel);
       d3.select(svgRef.current)
         .transition()
@@ -328,8 +390,8 @@ const NetworkVisualization = () => {
   };
 
   const zoomOut = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.25 && !isMobile) {
-      const newZoomLevel = Math.max(zoomLevel / 1.2, 0.25);
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.1 && !isMobile) {
+      const newZoomLevel = Math.max(zoomLevel - 0.1, 0.1); // 10% step, minimum 10%
       setZoomLevel(newZoomLevel);
       d3.select(svgRef.current)
         .transition()
@@ -341,9 +403,11 @@ const NetworkVisualization = () => {
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
 
-    setIsProcessing(true);
+    setIsLoading(true);
     
+    // Hide SVG immediately for instant effect
     const svg = d3.select(svgRef.current);
+    svg.style("opacity", "0");
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -429,6 +493,8 @@ const NetworkVisualization = () => {
       .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")) // Remove shadows on mobile
       .attr("class", d => `node ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
       .on("click", function(event, d) {
+        event.stopPropagation(); // Prevent bubbling to container
+        console.log('D3 node click event:', d.id);
         handleNodeClick(d, event);
       });
 
@@ -459,7 +525,7 @@ const NetworkVisualization = () => {
 
     // Add zoom behavior with enhanced controls and mobile optimization
     const zoom = d3.zoom()
-      .scaleExtent([0.25, 2.5]) // Zoom range from 25% to 250%
+      .scaleExtent([0.1, 1.0]) // Zoom range from 10% to 100%
       .on("zoom", (event) => {
         // Use requestAnimationFrame for smoother zoom on mobile
         requestAnimationFrame(() => {
@@ -515,11 +581,18 @@ const NetworkVisualization = () => {
     simulation.on("end", () => {
       const timeout = isMobile ? 300 : 500; // Faster loading on mobile
       setTimeout(() => {
-        setIsLoading(false);
-        setIsProcessing(false);
         // Auto-center the network after it loads
         setTimeout(() => {
           centerNetwork();
+          // Show the plot again after centering is complete
+          setTimeout(() => {
+            setIsLoading(false);
+            // Restore SVG opacity
+            if (svgRef.current) {
+              const svg = d3.select(svgRef.current);
+              svg.style("opacity", "1");
+            }
+          }, 550); // Wait for centering transition to complete
         }, 200); // Give more time for the simulation to settle
       }, timeout);
     });
@@ -538,18 +611,29 @@ const NetworkVisualization = () => {
       const svg = d3.select(containerRef.current).select("svg");
       const nodes = svg.selectAll(".node");
       const labels = svg.selectAll(".label");
+      const links = svg.selectAll(".links line");
       
-      // Remove all highlighting first
+      // Remove all highlighting and dimming first
       nodes.classed("node-highlighted", false);
+      nodes.classed("node-dimmed", false);
       labels.classed("label-highlighted", false);
+      labels.classed("label-dimmed", false);
+      links.classed("link-highlighted", false);
+      links.classed("link-dimmed", false);
       
-      // Add highlighting to selected node only
       if (selectedNode) {
+        // Highlight only the selected node
         nodes.filter(d => d.id === selectedNode.id).classed("node-highlighted", true);
         labels.filter(d => d.id === selectedNode.id).classed("label-highlighted", true);
+        
+        // Dim nodes that are not connected to the selected node
+        nodes.filter(d => !connectedNodes.has(d.id)).classed("node-dimmed", true);
+        labels.filter(d => !connectedNodes.has(d.id)).classed("label-dimmed", true);
+        links.filter(d => d.source.id !== selectedNode.id && d.target.id !== selectedNode.id)
+          .classed("link-dimmed", true);
       }
     }
-  }, [selectedNode, isLoading]);
+  }, [selectedNode, connectedNodes, isLoading]);
 
   // Handle URL parameters for focusing on a specific node
   useEffect(() => {
@@ -606,6 +690,20 @@ const NetworkVisualization = () => {
     event?.preventDefault();
     event?.stopPropagation();
     
+    console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
+    
+    // Toggle selection: if clicking the same node, deselect it
+    if (selectedNodeRef.current && selectedNodeRef.current.id === node.id) {
+      console.log('Deselecting node:', node.id);
+      setSelectedNode(null);
+      selectedNodeRef.current = null;
+      setConnectedNodes(new Set());
+      setSearchQuery('');
+      setSearchResults([]);
+      setShowSearch(false);
+      return;
+    }
+    
     // On mobile, completely prevent any network movement
     if (isMobile) {
       // Force the network to stay in place
@@ -635,11 +733,25 @@ const NetworkVisualization = () => {
       }
     }
     
+    // Find connected nodes for dimming logic
+    const connected = new Set();
+    connected.add(node.id);
+    
+    // Find all links connected to this node
+    networkData.links.forEach(link => {
+      if (link.source === node.id || link.target === node.id) {
+        connected.add(link.source);
+        connected.add(link.target);
+      }
+    });
+    
     setSelectedNode(node);
+    selectedNodeRef.current = node;
+    setConnectedNodes(connected);
     setSearchQuery('');
     setSearchResults([]);
     setShowSearch(true); // Auto-open the search & details dropdown
-  }, [isMobile]);
+  }, [isMobile, selectedNode, networkData.links]);
 
   return (
     <div className="network-visualization">
@@ -672,7 +784,7 @@ const NetworkVisualization = () => {
                 <div className="control-group">
                   <button 
                     className="control-button center-button"
-                    onClick={centerNetwork}
+                    onClick={manualCenterNetwork}
                     title="Center Network"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -693,7 +805,7 @@ const NetworkVisualization = () => {
                   <button 
                     className="control-button zoom-button"
                     onClick={zoomIn}
-                    disabled={zoomLevel >= 5}
+                    disabled={zoomLevel >= 1.0}
                     title="Zoom In"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -709,7 +821,7 @@ const NetworkVisualization = () => {
                   <button 
                     className="control-button zoom-button"
                     onClick={zoomOut}
-                    disabled={zoomLevel <= 0.25}
+                    disabled={zoomLevel <= 0.1}
                     title="Zoom Out"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -981,7 +1093,19 @@ const NetworkVisualization = () => {
                           <h4>Key Personnel</h4>
                           <ul className="personnel-list">
                             {selectedNode.keyPersonnel.map((person, index) => (
-                              <li key={index}>{person}</li>
+                              <li key={index}>
+                                {typeof person === 'string' ? person : person.name}
+                                {typeof person === 'object' && person.linkedin && (
+                                  <a 
+                                    href={person.linkedin} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="linkedin-link"
+                                  >
+                                    LinkedIn
+                                  </a>
+                                )}
+                              </li>
                             ))}
                           </ul>
                         </div>
@@ -1007,25 +1131,21 @@ const NetworkVisualization = () => {
           {isLoading && (
             <div className="loading-overlay">
               <div className="loading-spinner"></div>
-              <p>Loading network data...</p>
-            </div>
-          )}
-          
-          {/* Processing Indicator */}
-          {isProcessing && !isLoading && (
-            <div className="processing-indicator">
-              <div className="processing-spinner"></div>
-              <span>Processing...</span>
+              <p>Loading network...</p>
             </div>
           )}
           
           {/* Network Canvas */}
           <div 
-            className="network-canvas" 
+            className={`network-canvas ${isLoading ? 'repositioning' : ''}`}
             ref={containerRef}
-                                        onClick={() => {
-                              setSelectedNode(null);
-                            }}
+            onClick={(e) => {
+              // Only clear selection if clicking on the container itself, not on nodes
+              if (e.target === e.currentTarget) {
+                setSelectedNode(null);
+                selectedNodeRef.current = null;
+              }
+            }}
           >
             <svg ref={svgRef}></svg>
           </div>

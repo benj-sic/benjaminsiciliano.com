@@ -6,16 +6,22 @@ A modern, interactive personal website featuring an Atlanta TechBio Network visu
 
 ### Interactive Network Visualization
 - **Biological Network Styling**: Inspired by STRING/BioGRID protein interaction networks
-- **Interactive Nodes**: Clickable organizations with detailed tooltips
+- **Interactive Nodes**: Clickable organizations with detailed information panels
+- **Smart Highlighting**: Click a node to highlight it and dim non-connected nodes
+- **Toggle Selection**: Click the same node again to deselect it
 - **Filtering System**: Filter by organization type (companies, universities, incubators, VCs, service providers)
-- **Zoom & Pan**: Full D3.js-powered interaction
+- **Zoom & Pan**: Natural zoom range from 10% to 100% with smooth transitions
+- **Auto-Centering**: Network automatically re-centers on filter changes
 - **Force-Directed Layout**: Dynamic positioning with physics simulation
+- **Mobile Optimized**: Touch-friendly interactions on mobile devices
 
 ### Network Data
 - **50+ Organizations**: Atlanta's biotech/healthtech ecosystem
 - **200+ Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
 - **Major Hubs**: Emory, Georgia Tech, Portal Innovations, ATDC prominently featured
 - **Color-Coded Types**: Visual distinction between organization categories
+- **Rich Metadata**: Detailed descriptions, websites, key personnel, and recent news
+- **LinkedIn Integration**: Direct links to key personnel profiles where available
 
 ### Site Sections
 - **Hero Section**: Compelling headline with ecosystem statistics
@@ -184,6 +190,17 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Email**: ben.siciliano@gmail.com
 - **LinkedIn**: [linkedin.com/in/benjaminsiciliano](https://linkedin.com/in/benjaminsiciliano)
 - **Location**: Atlanta, Georgia
+
+## 🎯 Recent Updates
+
+### v1.1.0 - Enhanced Network Interaction
+- ✅ **Smart Node Highlighting**: Click a node to highlight it and dim non-connected nodes
+- ✅ **Toggle Selection**: Click the same node again to deselect it
+- ✅ **Natural Zoom Range**: Reduced max zoom from 250% to 100% for more realistic interaction
+- ✅ **Auto-Centering**: Network automatically re-centers before reappearing on filter changes
+- ✅ **LinkedIn Integration**: Direct links to key personnel profiles
+- ✅ **Improved Loading**: Consolidated loading states with "Loading network..." messaging
+- ✅ **Mobile Optimization**: Enhanced touch interactions and performance on mobile devices
 
 ## 🎯 Future Enhancements
 

@@ -309,10 +309,15 @@ export const atlantaTechBioEcosystem = {
       name: "Biolocity",
       type: "incubator",
       size: 15,
-      description: "Joint Emory-GT commercialization accelerator that provides seed funding and project management to de-risk promising university medtech.",
+      description: "Joint Emory-GT commercialization accelerator that provides seed funding, project management, and technical guidance to advance promising university medical technologies toward market readiness.",
       website: "https://biolocity.org",
-      keyPersonnel: ["Managed by Emory/GT Teams"],
-      recentNews: "Continues to provide grants and commercialization support for early-stage medtech projects."
+      keyPersonnel: [
+        "Angela Gill Nelms",
+        "Rifat Pamukcu",
+        "Brian Walsh",
+        "Manuel Kingsley"
+      ],
+      recentNews: "Supports translational research through strategic grants and mentorship. Operates in collaboration with Emory and Georgia Tech to de-risk early-stage medtech projects."
     },
     {
       id: "science_square",
@@ -456,36 +461,6 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Long-time sponsor and IP counsel at ATDC, serving a majority of its startups."
     },
     {
-      id: "wilson_sonsini",
-      name: "Wilson Sonsini",
-      type: "serviceProvider",
-      size: 12,
-      description: "Leading life sciences law firm with Atlanta presence",
-      website: "https://wsgr.com",
-      keyPersonnel: [],
-      recentNews: "Represents life sciences companies in Atlanta ecosystem"
-    },
-    {
-      id: "latham_watkins",
-      name: "Latham & Watkins",
-      type: "serviceProvider",
-      size: 12,
-      description: "Global firm with life sciences practice",
-      website: "https://lw.com",
-      keyPersonnel: [],
-      recentNews: "Life sciences legal services in Atlanta"
-    },
-    {
-      id: "cooley",
-      name: "Cooley",
-      type: "serviceProvider",
-      size: 12,
-      description: "Known for biotech startup representation",
-      website: "https://cooley.com",
-      keyPersonnel: [],
-      recentNews: "Major biotech legal practice"
-    },
-    {
       id: "biotechexec",
       name: "BiotechExec",
       type: "serviceProvider",
@@ -557,6 +532,16 @@ export const atlantaTechBioEcosystem = {
       website: "https://11ten.com",
       keyPersonnel: ["James Lewis", "Caleb Szubski", "Steve Gertz"],
       recentNews: "Supports the Emory Healthcare Innovation Hub with UX research and pilot design for digital health deployments. Acquired by ClinicalMind in 2024."
+    },
+    {
+      id: "jpmorgan_chase",
+      name: "J.P. Morgan Chase & Co.",
+      type: "serviceProvider",
+      size: 18,
+      description: "Global financial services firm with a strong presence in Atlanta (Buckhead), supporting life sciences banking, commercial banking, wealth management, and technology operations.",
+      website: "https://www.jpmorganchase.com",
+      keyPersonnel: ["Courtney J. Law"],
+      recentNews: "Expanding Atlanta office by 40,000 sq ft; designated as one of JPMorgan's 23 global technology centers; active in life sciences startup banking and biotech client services."
     },
 
     // EMERGING STARTUPS

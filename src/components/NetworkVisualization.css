@@ -122,7 +122,7 @@
   text-align: center;
   margin-top: 20px;
   margin-bottom: 0;
-  padding: 0 20px 20px 20px; /* Fixed padding to include bottom padding */
+  padding: 0;
   opacity: 0.8;
   position: relative;
   z-index: 1;
@@ -174,6 +174,10 @@
   min-height: 0;
   height: 100%; /* Full height of layout */
   background: var(--network-bg-secondary);
+  border: 1px solid #666;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  margin-left: 0;
 }
 
 /* Sidebar - Separate from network, smaller on desktop */
@@ -185,6 +189,10 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+  border: 1px solid #666;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  margin-right: 0;
 }
 
 /* Main Network Canvas - Enhanced to use more space */
@@ -195,7 +203,25 @@
   overflow: hidden;
   transition: background 0.3s ease;
   min-width: 0; /* Allow canvas to shrink if needed */
+  background: var(--network-bg-secondary);
 }
+
+/* Ensure network canvas background is properly themed immediately */
+[data-theme="light"] .network-canvas {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .network-canvas {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Hide plot during repositioning */
+.network-canvas.repositioning {
+  opacity: 0;
+  transition: none;
+}
+
+
 
 .network-canvas svg {
   background: transparent;
@@ -245,6 +271,30 @@
   stroke-width: 1px !important;
   filter: drop-shadow(0 0 8px var(--shadow-color)) !important;
   animation: pulse 2s infinite;
+}
+
+/* Node dimming styles */
+.node-dimmed {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+.label-dimmed {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Link highlighting and dimming styles */
+.link-highlighted {
+  stroke-width: 8px !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 8px var(--shadow-color)) !important;
+  transition: all 0.3s ease;
+}
+
+.link-dimmed {
+  opacity: 0.1 !important;
+  transition: opacity 0.3s ease;
 }
 
 @keyframes pulse {
@@ -383,6 +433,24 @@
   position: relative;
   padding-left: 12px;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.linkedin-link {
+  font-size: 12px;
+  color: var(--network-text-accent);
+  text-decoration: none;
+  padding: 2px 6px;
+  border: 1px solid var(--network-text-accent);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.linkedin-link:hover {
+  background: var(--network-text-accent);
+  color: var(--network-bg-primary);
 }
 
 .personnel-list li:before {
@@ -1017,6 +1085,9 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-left: 0;
   }
   
   .network-canvas {
@@ -1037,8 +1108,8 @@
     height: auto;
     min-height: auto;
     max-height: none;
-    border-right: none;
-    border-bottom: 1px solid var(--network-border-primary);
+    border: 1px solid #666;
+    border-radius: 8px;
     order: 2;
     background: var(--network-bg-primary);
     backdrop-filter: blur(10px);
@@ -1047,7 +1118,8 @@
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-right: 0;
     flex-shrink: 1;
     overflow: visible;
   }
@@ -1151,6 +1223,9 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-left: 0;
   }
   
   .network-canvas {
@@ -1163,13 +1238,15 @@
     height: auto;
     min-height: auto;
     max-height: none;
-    border-right: none;
+    border: 1px solid #666;
+    border-radius: 8px;
     order: 2;
     display: flex !important;
     flex-direction: column;
     gap: 16px;
     padding: 20px;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-right: 0;
     flex-shrink: 1;
     overflow: visible;
   }
@@ -1287,6 +1364,9 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-left: 0;
   }
   
   .network-canvas {
@@ -1315,6 +1395,10 @@
   .network-sidebar-left {
     padding: 16px;
     gap: 12px;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-right: 0;
   }
   
   /* Extra small screen controls */
