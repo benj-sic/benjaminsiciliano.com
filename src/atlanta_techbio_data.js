@@ -13,7 +13,7 @@ export const atlantaTechBioEcosystem = {
       size: 25,
       description: "Leading private research university with over $1B in sponsored research funding. A major source of biomedical innovation and biotech spinouts like Altesa, NeurOp, and GeoVax.",
       website: "https://emory.edu",
-      keyPersonnel: ["Dennis Liotta", "Nicholas Boulis", "C. Michael Cassidy"],
+      keyPersonnel: ["Wilbur Lam", "Morgan Greenleaf", "C. Michael Cassidy", "Todd Polley"],
       recentNews: "Launched BioFoundry Institute (BDCI); multiple spinouts including Brain Trust Bio."
     },
     {
@@ -75,6 +75,16 @@ export const atlantaTechBioEcosystem = {
       website: "https://cdc.gov",
       keyPersonnel: ["Dr. Mandy K. Cohen"],
       recentNews: "Expanding lab capacity and forming industry partnerships with Roche and Quest for global health initiatives."
+    },
+    {
+      id: "choa",
+      name: "CHOA",
+      type: "health_system",
+      size: 20,
+      description: "One of the largest pediatric healthcare systems in the U.S., CHOA is a leading site for pediatric clinical trials, translational research, and academic partnerships with Emory and Georgia Tech. Hosts the Marcus Autism Center and Children's Center for Clinical and Translational Research.",
+      website: "https://www.choa.org/",
+      keyPersonnel: [],
+      recentNews: "Ongoing pediatric research partnerships with Emory, Georgia Tech, and Marcus Autism Center; active in rare disease and neurodevelopmental clinical trials."
     },
 
     // MAJOR COMPANIES - CLINICAL STAGE
@@ -318,7 +328,7 @@ export const atlantaTechBioEcosystem = {
     // GOVERNMENT & TRADE ORGANIZATIONS
     {
       id: "gra",
-      name: "Georgia Research Alliance",
+      name: "GRA",
       type: "government",
       size: 17,
       description: "Public-private partnership that helps recruit top scientists and fund university research commercialization in Georgia.",
@@ -378,7 +388,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
         id: 'department_of_veterans_affairs',
-        name: 'U.S. Dept. of Veterans Affairs (VA)',
+        name: 'VA',
         type: 'government',
         size: 8,
         description: "Federal agency providing healthcare services to military veterans. A key partner for medtech pilot programs.",
@@ -474,10 +484,13 @@ export const atlantaTechBioEcosystem = {
       name: "BiotechExec",
       type: "serviceProvider",
       size: 10,
-      description: "Biotech and medtech consulting firm",
+      description: "Boutique consulting firm focused on biotech and medtech startups. Provides interim executive leadership, commercialization strategy, and capital planning support.",
       website: "https://biotechexec.com",
-      keyPersonnel: ["Richard Otto"],
-      recentNews: "Strategic consulting for biotech startups"
+      keyPersonnel: [
+        { name: "Robert Allen", linkedin: "https://www.linkedin.com/in/rallen/" },
+        { name: "William Dull", linkedin: "https://www.linkedin.com/in/william-dull/" }
+      ],
+      recentNews: "Supports startups emerging from academic accelerators and translational research programs."
     },
     {
       id: "mckinsey_atlanta",
@@ -536,10 +549,10 @@ export const atlantaTechBioEcosystem = {
       name: "Moonlight Therapeutics",
       type: "startup",
       size: 10,
-      description: "Georgia Tech spinout developing a skin patch for treating food allergies. The first Atlanta investment for Portal Innovations.",
+      description: "Developing a microneedle-based immunotherapy platform (TASIS) for food allergies. Portal Innovations' first Atlanta investment. Advancing lead program into Phase I trials.",
       website: "https://moonlighttx.com",
       keyPersonnel: ["Samir Patel"],
-      recentNews: "Received NIH Fast-Track grant to fund clinical trials for its peanut allergy treatment."
+      recentNews: "Received multiple NIH grants and raised Series A co-led by Portal Innovations."
     },
     {
       id: "sanguina",
@@ -580,6 +593,96 @@ export const atlantaTechBioEcosystem = {
       website: "https://braintrustbio.com",
       keyPersonnel: ["Chen Benkler"],
       recentNews: "Preclinical stage startup aiming to improve CNS drug delivery."
+    },
+    {
+      id: "synaptrix",
+      name: "Synaptrix",
+      type: "startup",
+      size: 10,
+      description: "Atlanta-based startup developing a non-invasive, drug-free pain management system (NOVABLOC™) for post-operative knee pain. Clinical-stage therapy delivering novel electrical stimulation to extend pain relief while preserving sensory function.",
+      website: "https://www.linkedin.com/company/novabloc-pain-free-knee/",
+      keyPersonnel: ["Shyamy Sastry"],
+      recentNews: "Backed by Portal Innovations. Completed feasibility studies showing >20 days of relief after one treatment."
+    },
+    {
+      id: "topodx",
+      name: "TopoDx",
+      type: "startup",
+      size: 10,
+      description: "Diagnostic startup developing the Cosmos Platform for rapid, culture-free pathogen identification and antibiotic susceptibility testing using interferometry and AI. A spinout from Georgia Tech and Emory University.",
+      website: "https://www.portalinnovations.com/portfolio/",
+      keyPersonnel: ["Yogi Patel"],
+      recentNews: "Backed by Portal Innovations. Developed a platform delivering microbial ID and resistance data in under 4 hours."
+    },
+    {
+      id: "avanos",
+      name: "Avanos Medical",
+      type: "company",
+      size: 14,
+      description: "Medtech company headquartered in Alpharetta, GA. Focuses on chronic care and pain management solutions, including nerve block and respiratory health technologies.",
+      website: "https://avanos.com",
+      keyPersonnel: [],
+      recentNews: "Serves as the origin for Synaptrix technology via spinout."
+    },
+    {
+      id: "drive",
+      name: "DRIVE",
+      type: "incubator",
+      size: 13,
+      description: "Non-profit bioventure entity established by Emory to accelerate the development of antiviral therapeutics. Operates with an entrepreneurial biotech model to translate early-stage discoveries into global treatments.",
+      website: "https://driveinnovations.org/",
+      keyPersonnel: [],
+      recentNews: "Enabled the development and licensing of molnupiravir (Lagevrio) to Merck. Supports Emory antiviral drug discovery efforts."
+    },
+    {
+      id: "ebfi",
+      name: "EBFI",
+      type: "incubator",
+      size: 12,
+      description: "Venture support institute based at Emory. Identifies and supports high-potential life science innovations with investment, mentorship, and commercialization strategy to bridge academia and industry.",
+      website: "https://www.ebfi.org/",
+      keyPersonnel: [],
+      recentNews: "Supports Emory-affiliated startups across medtech, diagnostics, and therapeutics."
+    },
+    {
+      id: "eddf",
+      name: "EDDF",
+      type: "vc",
+      size: 12,
+      description: "Early-stage investment fund under Emory Innovations, Inc. Established in 2023 using royalties from Merck's LEGEVRIO™ (molnupiravir). Funds Emory-discovered therapeutics to IND/clinical milestones.",
+      website: "https://innovate.emory.edu/ecosystem/emory-drug-development-fund.html",
+      keyPersonnel: ["Doug Gooding"],
+      recentNews: "Backed Emory-based projects in IBD, seizure disorders, and respiratory disease."
+    },
+    {
+      id: "allonix",
+      name: "Allonix Therapeutics",
+      type: "startup",
+      size: 10,
+      description: "Emory spinout developing small molecule agonists targeting inflammation and cholesterol pathways for the treatment of inflammatory bowel disease (IBD). Co-founded with Orange Grove Bio.",
+      website: "https://gra.org/company/324/Allonix.html",
+      keyPersonnel: ["Eric Ortlund", "John Calvert"],
+      recentNews: "EDDF portfolio company focused on IBD therapeutics."
+    },
+    {
+      id: "agrithera",
+      name: "AgriThera",
+      type: "startup",
+      size: 10,
+      description: "Emory spinout developing cannabinoid pro-drug therapeutics for seizure disorders, chronic pain, and anxiety.",
+      website: "https://agrithera.com",
+      keyPersonnel: ["Dennis Liotta", "Stephen Traynelis"],
+      recentNews: "Part of EDDF portfolio targeting neurotherapeutics."
+    },
+    {
+      id: "cambium_oncology",
+      name: "Cambium Oncology",
+      type: "startup",
+      size: 5,
+      description: "Immuno‑oncology startup headquartered in Atlanta, GA developing first‑in‑class VIP receptor antagonists (e.g. ANT308) to restore anti‑cancer T‑cell activity in tumors with elevated VIP/VPAC signaling.",
+      website: "https://cambiumoncology.com",
+      keyPersonnel: ["Ned Waller", "Gary Altman"],
+      recentNews: "Received NIH Fast‑Track grant and a $5M strategic equity investment from OEP Innovations to advance ANT308 into IND stage."
     }
   ],
 
@@ -590,6 +693,8 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "morehouse", type: "collaboration", description: "Georgia CTSA Alliance" },
     { source: "gatech", target: "morehouse", type: "collaboration", description: "Georgia CTSA Alliance" },
     { source: "emory", target: "cdc", type: "collaboration", description: "Numerous research partnerships" },
+    { source: "emory", target: "choa", type: "collaboration", description: "Academic partner in pediatric research and clinical training" },
+    { source: "gatech", target: "choa", type: "research_collaboration", description: "Collaborates on pediatric medtech and translational research" },
 
     // --- University Spinouts ---
     { source: "emory", target: "inhibikase", type: "spinout", description: "Licensed technology, early investor" },
@@ -597,18 +702,24 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "neurop", type: "spinout", description: "Founded by Emory faculty" },
     { source: "emory", target: "altesa", type: "spinout", description: "Formed via Emory's DRIVE institute" },
     { source: "emory", target: "braintrust", type: "spinout", description: "Founded by Emory faculty" },
+    { source: "emory", target: "topodx", type: "spinout", description: "Co-founded by Emory and GT researchers" },
+    { source: "emory", target: "cambium_oncology", type: "spinout", description: "Founded on IP licensed from Emory University; works closely with Winship Cancer Institute" },
     { source: "gatech", target: "micron", type: "spinout", description: "Technology developed at Georgia Tech" },
     { source: "gatech", target: "clearside", type: "spinout", description: "Based on GT/Emory microneedle tech" },
     { source: "gatech", target: "moonlight", type: "spinout", description: "GT Capstone project spinout" },
     { source: "gatech", target: "oxos", type: "spinout", description: "Formed via CREATE-X program" },
     { source: "gatech", target: "sanguina", type: "spinout", description: "Co-founded by GT alumna from student research" },
+    { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
+    { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
     // --- VC Investments ---
-    { source: "portal", target: "moonlight", type: "investment", description: "Lead investor in Series A" },
+    { source: "portal", target: "moonlight", type: "investment", description: "Co-led Series A for peanut allergy immunotherapy platform" },
+    { source: "portal", target: "synaptrix", type: "investment", description: "Portfolio company focused on post-surgical pain management" },
+    { source: "portal", target: "topodx", type: "investment", description: "Portfolio company advancing AI-driven AST diagnostics" },
+    { source: "eddf", target: "allonix", type: "investment", description: "EDDF portfolio investment in IBD therapeutics" },
+    { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
-    { source: "bip", target: "florence", type: "investment", description: "Past investor (NEEDS VERIFICATION)" },
     { source: "noro", target: "sharecare", type: "investment", description: "Early investor" },
-    { source: "tech_square_ventures", target: "clearside", type: "investment", description: "Early investor (NEEDS VERIFICATION)" },
 
     // --- Accelerator & Incubator Support ---
     { source: "atdc", target: "gatech", type: "affiliation", description: "Program of Georgia Tech" },
@@ -616,6 +727,8 @@ export const atlantaTechBioEcosystem = {
     { source: "atdc", target: "sanguina", type: "support", description: "Incubated at ATDC (alumni)" },
     { source: "create_x", target: "oxos", type: "support", description: "Incubated at CREATE-X (alumni)" },
     { source: "biolocity", target: "sanguina", type: "support", description: "Received early grant funding" },
+    { source: "emory", target: "ebfi", type: "affiliation", description: "Hosted and operated by Emory University" },
+    { source: "emory", target: "eddf", type: "affiliation", description: "Part of Emory Innovations, Inc." },
 
     // --- Key Partnerships & Affiliations ---
     { source: "gatech", target: "science_square", type: "development", description: "Development partner (via GATV)" },
@@ -625,6 +738,7 @@ export const atlantaTechBioEcosystem = {
     { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
     { source: "biolocity", target: "gatech", type: "collaboration", description: "Joint program with Georgia Tech" },
+    { source: "gatech", target: "cambium_oncology", type: "research_collaboration", description: "Georgia Tech bioengineering and drug manufacturing support" },
     { source: "oxos", target: "department_of_veterans_affairs", type: "partnership", description: "Pilot program partnership" },
     { source: "micron", target: "cdc", type: "partnership", description: "Research and clinical trial collaboration" },
     { source: "iqvia_atlanta", target: "cdc", type: "partnership", description: "Real-world data partnership" },
@@ -636,10 +750,13 @@ export const atlantaTechBioEcosystem = {
     { source: "gcmi", target: "clearside", type: "support", description: "Early product development support" },
     { source: "biotechexec", target: "biolocity", type: "service", description: "Mentorship and strategic consulting" },
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
+    { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
 
     // --- Broader Ecosystem Connections ---
     { source: "gra", target: "emory", type: "funding", description: "Funding and endowed scholar support" },
     { source: "gra", target: "gatech", type: "funding", description: "Funding and endowed scholar support" },
+    { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported by Georgia Research Alliance for early research programs" },
+    { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
     { source: "georgia_bio", target: "vero", type: "membership", description: "Trade association member" },
     { source: "georgia_bio", target: "geovax", type: "membership", description: "Trade association member" },
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" },
