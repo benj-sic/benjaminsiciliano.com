@@ -56,12 +56,12 @@
 .network-visualization {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: auto;
   width: 100%;
   color: var(--network-text-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  min-height: 100vh;
-  overflow: hidden;
+  min-height: 80vh;
+  overflow: visible;
 }
 
 /* Network Header */
@@ -120,7 +120,7 @@
   font-size: 0.8rem;
   font-style: italic;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 0;
   padding: 0;
   opacity: 0.8;
@@ -158,9 +158,11 @@
 .network-layout {
   display: flex;
   flex: 1;
-  height: calc(100vh - 100px); /* Reduced from 120px to 100px to give more space to network */
+  height: auto;
+  min-height: 80vh;
   width: 100%;
   position: relative;
+  overflow: visible;
 }
 
 /* Network Container - Takes most of the space */
@@ -168,11 +170,11 @@
   flex: 1;
   display: flex;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   min-width: 0;
-  min-height: 0;
-  height: 100%; /* Full height of layout */
+  min-height: 80vh;
+  height: auto; /* Allow height to expand */
   background: var(--network-bg-secondary);
   border: 1px solid #666;
   border-left: none;
@@ -183,7 +185,7 @@
 /* Sidebar - Separate from network, smaller on desktop */
 .network-sidebar-left {
   width: 280px;
-  height: 100%;
+  min-height: 80vh;
   overflow-y: auto;
   flex-shrink: 0;
   display: flex;
@@ -204,6 +206,13 @@
   transition: background 0.3s ease;
   min-width: 0; /* Allow canvas to shrink if needed */
   background: var(--network-bg-secondary);
+  /* Touch interaction improvements */
+  touch-action: pan-x pan-y pinch-zoom;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Ensure network canvas background is properly themed immediately */
@@ -230,6 +239,13 @@
   /* Performance optimizations for mobile */
   will-change: transform;
   transform: translateZ(0);
+  /* Touch interaction improvements */
+  touch-action: pan-x pan-y pinch-zoom;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Enhanced label styling for better readability */
@@ -310,6 +326,13 @@
 .network-canvas circle {
   filter: drop-shadow(0 3px 8px var(--network-shadow));
   transition: all 0.2s ease;
+  /* Touch interaction improvements */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .network-canvas circle:hover {
@@ -677,79 +700,7 @@
   flex-direction: column;
 }
 
-/* Ensure controls are always visible on smaller screens */
-@media (max-width: 1024px) {
-  .network-visualization {
-    height: auto !important;
-    min-height: 100vh !important;
-    overflow: visible !important;
-  }
-  
-  .network-layout {
-    flex-direction: column !important;
-    height: auto !important;
-    min-height: 100vh !important;
-    overflow: visible !important;
-  }
-  
-  .network-sidebar-left {
-    width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    border-right: none !important;
-    border-bottom: 1px solid var(--network-border-primary) !important;
-    order: 2 !important;
-    background: var(--network-bg-primary) !important;
-    backdrop-filter: blur(10px) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 16px !important;
-    padding: 20px !important;
-    margin-top: 0 !important;
-    flex-shrink: 0 !important;
-    overflow: visible !important;
-  }
-  
-  .dropdown-container {
-    width: 100% !important;
-    margin-bottom: 0 !important;
-    display: block !important;
-  }
-  
-  .dropdown-button {
-    width: 100% !important;
-    justify-content: space-between !important;
-    padding: 12px 16px !important;
-    background: var(--network-bg-secondary) !important;
-    border: 1px solid var(--network-border-primary) !important;
-    border-radius: 8px !important;
-    display: flex !important;
-  }
-  
-  .dropdown-content {
-    position: static !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    box-shadow: none !important;
-    border: 1px solid var(--network-border-primary) !important;
-    border-top: none !important;
-    border-radius: 0 0 8px 8px !important;
-    margin-top: -1px !important;
-    display: block !important;
-  }
-  
-  /* Force all dropdowns to be visible on smaller screens */
-  .dropdown-content.control-dropdown,
-  .dropdown-content.filter-dropdown,
-  .dropdown-content.legend-dropdown,
-  .dropdown-content.search-dropdown {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-}
+
 
 .sidebar-section {
   padding: 20px;
@@ -1064,21 +1015,22 @@
 /* Tablet and Mobile Layout - Controls move below network */
 @media (max-width: 1024px) {
   .network-visualization {
-    min-height: 100vh;
-    overflow: hidden;
+    min-height: auto;
+    overflow: visible;
   }
   
   .network-layout {
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     display: flex;
+    min-height: auto;
   }
   
   .network-main {
     flex: 1;
     height: auto;
-    min-height: 0;
+    min-height: 50vh;
     order: 1;
     flex-shrink: 0;
     display: flex;
@@ -1086,25 +1038,18 @@
     border: 1px solid #666;
     border-radius: 8px;
     margin-left: 0;
+    overflow: visible;
   }
   
   .network-canvas {
     flex: 1;
-    min-height: 0;
-  }
-  
-  .network-main {
-    flex: 1;
-    height: auto;
-    min-height: 0;
-    order: 1;
-    flex-shrink: 0;
+    min-height: 40vh;
   }
   
   .network-sidebar-left {
     width: 100%;
     height: auto;
-    min-height: auto;
+    min-height: 50vh;
     max-height: none;
     border: 1px solid #666;
     border-radius: 8px;
@@ -1118,7 +1063,8 @@
     padding: 20px;
     margin-top: 10px;
     margin-right: 0;
-    flex-shrink: 1;
+    margin-bottom: 0;
+    flex-shrink: 0;
     overflow: visible;
   }
   
@@ -1193,30 +1139,52 @@
     padding: 12px;
   }
   
-  /* Search layout for tablet */
-  .search-dropdown {
-    padding: 12px;
-    max-height: 300px;
-  }
+  /* Search layout for tablet - Increased max height and better spacing */
+.search-dropdown {
+  padding: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure search results don't overflow */
+.search-results-list {
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure node details don't overflow */
+.node-details {
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* When search dropdown is open, ensure proper spacing */
+.search-dropdown.expanded {
+  margin-bottom: 20px;
+}
 }
 
 @media (max-width: 768px) {
   .network-visualization {
-    min-height: 100vh;
-    overflow: hidden;
+    min-height: auto;
+    overflow: visible;
   }
   
   .network-layout {
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     display: flex;
+    min-height: auto;
   }
   
   .network-main {
     flex: 1;
     height: auto;
-    min-height: 0;
+    min-height: 60vh;
     order: 1;
     flex-shrink: 0;
     display: flex;
@@ -1224,17 +1192,18 @@
     border: 1px solid #666;
     border-radius: 8px;
     margin-left: 0;
+    overflow: visible;
   }
   
   .network-canvas {
     flex: 1;
-    min-height: 0;
+    min-height: 50vh;
   }
   
   .network-sidebar-left {
     width: 100%;
     height: auto;
-    min-height: auto;
+    min-height: 60vh;
     max-height: none;
     border: 1px solid #666;
     border-radius: 8px;
@@ -1245,7 +1214,8 @@
     padding: 20px;
     margin-top: 10px;
     margin-right: 0;
-    flex-shrink: 1;
+    margin-bottom: 0;
+    flex-shrink: 0;
     overflow: visible;
   }
   
@@ -1319,11 +1289,27 @@
     padding: 16px;
   }
   
-  /* Mobile search layout */
-  .search-dropdown {
-    padding: 16px;
-    max-height: 250px;
-  }
+  /* Mobile search layout - Increased height and better spacing */
+.search-dropdown {
+  padding: 16px;
+  max-height: 350px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile-specific search results scrolling */
+.search-results-list {
+  max-height: 150px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile-specific node details scrolling */
+.node-details {
+  max-height: 250px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
   
   .search-input {
     width: 100%;
@@ -1343,21 +1329,22 @@
 
 @media (max-width: 480px) {
   .network-visualization {
-    min-height: 100vh;
-    overflow: hidden;
+    min-height: auto;
+    overflow: visible;
   }
   
   .network-layout {
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     display: flex;
+    min-height: auto;
   }
   
   .network-main {
     flex: 1;
     height: auto;
-    min-height: 0;
+    min-height: 50vh;
     order: 1;
     flex-shrink: 0;
     display: flex;
@@ -1365,11 +1352,14 @@
     border: 1px solid #666;
     border-radius: 8px;
     margin-left: 0;
+    overflow: visible;
   }
   
   .network-canvas {
     flex: 1;
-    min-height: 0;
+    min-height: 40vh;
+    /* Touch interaction improvements for extra small screens */
+    touch-action: manipulation;
   }
   
   .network-header {
@@ -1384,12 +1374,6 @@
     font-size: 0.8rem;
   }
   
-  .network-main {
-    flex: 1;
-    height: auto;
-    min-height: 0;
-  }
-  
   .network-sidebar-left {
     padding: 16px;
     gap: 12px;
@@ -1397,6 +1381,8 @@
     border-radius: 8px;
     margin-top: 10px;
     margin-right: 0;
+    margin-bottom: 0;
+    min-height: 50vh;
   }
   
   /* Extra small screen controls */
@@ -1431,11 +1417,27 @@
     font-size: 12px;
   }
   
-  /* Extra small screen search */
-  .search-dropdown {
-    padding: 12px;
-    max-height: 200px;
-  }
+  /* Extra small screen search - Increased height for better usability */
+.search-dropdown {
+  padding: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Extra small screen search results scrolling */
+.search-results-list {
+  max-height: 120px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Extra small screen node details scrolling */
+.node-details {
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
   
   .search-input {
     font-size: 14px;

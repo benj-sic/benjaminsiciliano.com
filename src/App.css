@@ -405,11 +405,20 @@ main {
 
 /* Network Section - Front and Center */
 .network-section {
-  padding: 3rem 0;
-  min-height: 100vh;
+  padding: 1rem 0;
+  min-height: auto;
   display: flex;
   align-items: stretch;
   width: 100%;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Reduce container padding for network section */
+.network-section .container {
+  padding: 0;
 }
 
 /* About Section */
@@ -419,6 +428,9 @@ main {
   border-top: 1px solid var(--border-primary);
   transition: all 0.3s ease;
   width: 100%;
+  position: relative;
+  z-index: 0;
+  margin-top: 3rem;
 }
 
 .about-content {
@@ -823,6 +835,17 @@ noscript .submit-error {
     min-height: auto;
   }
   
+  .network-section {
+    padding: 1rem 0;
+    min-height: auto;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+  
+  .network-section .container {
+    padding: 0;
+  }
+  
   .header h1 {
     font-size: 1.4rem;
     letter-spacing: 0.3px;
@@ -962,12 +985,17 @@ noscript .submit-error {
   .network-section {
     padding: 3rem 0;
     min-height: 100vh;
+    margin-bottom: 3rem;
   }
   
   .about-section,
   .motivation-section,
   .contact-section {
     padding: 3rem 0;
+  }
+  
+  .about-section {
+    margin-top: 5rem;
   }
   
   .contact-links {
@@ -989,6 +1017,21 @@ noscript .submit-error {
 @media (max-width: 480px) {
   .container {
     padding: 0 0.75rem;
+  }
+  
+  .network-section {
+    padding: 0.5rem 0;
+    min-height: auto;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+  
+  .network-section .container {
+    padding: 0;
+  }
+  
+  .about-section {
+    margin-top: 6rem;
   }
   
   .header-content {
