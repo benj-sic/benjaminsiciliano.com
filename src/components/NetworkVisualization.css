@@ -54,60 +54,78 @@
 }
 
 .network-visualization {
-  position: relative;
-  width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  color: var(--network-text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
   overflow: hidden;
-  max-width: 100vw;
 }
 
 /* Network Header */
 .network-header {
-  background: var(--network-bg-primary);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--network-border-primary);
-  padding: 20px;
+  padding: 2px 20px; /* Reduced padding from 3px to 2px */
   text-align: center;
   z-index: 20;
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .network-header h2 {
-  color: var(--network-text-accent);
   font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text-accent);
   transition: color 0.3s ease;
-  text-align: center;
-  text-transform: capitalize;
+  font-variant: small-caps;
+  text-transform: uppercase;
   opacity: 0.9;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .network-header p {
-  color: var(--network-text-secondary);
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.8;
+  color: var(--text-secondary);
   margin: 0;
   max-width: 1000px;
   margin: 0 auto;
-  text-align: justify;
+  text-align: left;
   transition: color 0.3s ease;
 }
 
 .network-header .last-updated {
   color: var(--network-text-tertiary);
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Reduced from 0.9rem */
   font-style: italic;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 8px; /* Reduced from 12px */
   margin-bottom: 0;
   opacity: 0.8;
+}
+
+/* Header spacer to maintain separation */
+.header-spacer {
+  height: 12px;
+  width: 100%;
+}
+
+/* Last updated line positioned below network */
+.last-updated-line {
+  color: var(--network-text-tertiary);
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding: 0 20px 20px 20px; /* Fixed padding to include bottom padding */
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
 }
 
 .network-features {
@@ -136,22 +154,44 @@
   top: 0;
 }
 
-/* Main Container */
+/* Main Layout - Improved to use more space */
+.network-layout {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 100px); /* Reduced from 120px to 100px to give more space to network */
+  width: 100%;
+  position: relative;
+}
+
+/* Network Container - Takes most of the space */
 .network-main {
   flex: 1;
   display: flex;
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-width: 0; /* Allow flex item to shrink */
+  min-width: 0;
+  min-height: 0;
+  height: 100%; /* Full height of layout */
+  background: var(--network-bg-secondary);
 }
 
-/* Main Network Canvas */
+/* Sidebar - Separate from network, smaller on desktop */
+.network-sidebar-left {
+  width: 280px;
+  height: 100%;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* Main Network Canvas - Enhanced to use more space */
 .network-canvas {
   flex: 1;
   height: 100%;
   position: relative;
-  background: var(--network-bg-secondary);
   overflow: hidden;
   transition: background 0.3s ease;
   min-width: 0; /* Allow canvas to shrink if needed */
@@ -191,19 +231,19 @@
 
 /* Node highlighting styles */
 .node-highlighted {
-  stroke: #ff6b35 !important;
+  stroke: var(--text-accent) !important;
   stroke-width: 3px !important;
-  filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.8)) !important;
+  filter: drop-shadow(0 0 12px var(--shadow-color)) !important;
   animation: pulse 2s infinite;
 }
 
 .label-highlighted {
   font-weight: 900 !important;
   font-size: 32px !important;
-  fill: #ff6b35 !important;
-  stroke: #ff6b35 !important;
+  fill: var(--text-accent) !important;
+  stroke: var(--text-accent) !important;
   stroke-width: 1px !important;
-  filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.6)) !important;
+  filter: drop-shadow(0 0 8px var(--shadow-color)) !important;
   animation: pulse 2s infinite;
 }
 
@@ -241,8 +281,6 @@
   border-radius: 50%;
   pointer-events: none;
 }
-
-
 
 /* Loading and Performance States */
 .loading-overlay {
@@ -319,14 +357,6 @@
   100% { transform: rotate(360deg); }
 }
 
-
-
-
-
-
-
-
-
 .website-link {
   color: var(--network-link-color);
   text-decoration: none;
@@ -380,10 +410,6 @@
   transition: color 0.3s ease;
 }
 
-
-
-
-
 /* Network Controls */
 .network-controls {
   position: absolute;
@@ -394,112 +420,6 @@
   pointer-events: none;
   z-index: 50;
 }
-
-/* Removed conflicting control button styles */
-
-/* Mobile Responsive for Controls */
-@media (max-width: 768px) {
-  .network-visualization {
-    height: auto;
-    min-height: 80vh;
-  }
-  
-  .network-header {
-    padding: 15px;
-  }
-  
-  .network-header h2 {
-    font-size: 1.4rem;
-  }
-  
-  .network-header p {
-    font-size: 0.85rem;
-  }
-  
-  .network-main {
-    flex-direction: column;
-  }
-  
-  .network-filters {
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--network-border-primary);
-  }
-  
-  .network-canvas {
-    height: 60vh;
-    min-height: 400px;
-    /* Mobile performance optimizations */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  
-  .network-legend {
-    width: 100%;
-    height: auto;
-    border-left: none;
-    border-top: 1px solid var(--network-border-primary);
-  }
-  
-  .processing-indicator {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .zoom-controls {
-    top: 10px;
-    right: 10px;
-    gap: 6px;
-  }
-  
-  .zoom-button {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .control-button svg {
-    width: 12px;
-    height: 12px;
-  }
-  
-  /* Disable expensive effects on mobile */
-  .network-canvas circle {
-    filter: none !important;
-  }
-  
-  .network-canvas text {
-    text-shadow: none !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .network-visualization {
-    min-height: 70vh;
-  }
-  
-  .network-header {
-    padding: 12px;
-  }
-  
-  .network-header h2 {
-    font-size: 1.2rem;
-  }
-  
-  .network-header p {
-    font-size: 0.8rem;
-  }
-  
-  .network-canvas {
-    height: 50vh;
-    min-height: 300px;
-  }
-}
-
- 
-
-
 
 /* Filter Grid */
 .filter-grid {
@@ -616,8 +536,6 @@
   color: var(--network-text-secondary);
 }
 
-
-
 .zoom-level-display {
   font-size: 12px;
   font-weight: 600;
@@ -671,52 +589,17 @@
   border: 1px solid var(--network-border-primary);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .control-bar-content {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-  }
-  
-  .control-section {
-    justify-content: center;
-  }
-  
-  .control-section-content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90vw;
-    max-width: 400px;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
-  
-  .filter-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .legend-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .zoom-controls {
-    justify-content: center;
-  }
-} 
-
 /* Network Layout with Sidebars */
 .network-layout {
   display: flex;
-  height: calc(100vh - 200px); /* Account for header */
+  flex: 1;
+  height: 100%;
   overflow: hidden;
 }
 
 /* Left Sidebar - Controls */
 .network-sidebar-left {
-  width: 300px;
+  width: 280px;
   background: var(--network-bg-primary);
   backdrop-filter: blur(10px);
   border-right: 1px solid var(--network-border-primary);
@@ -724,6 +607,80 @@
   z-index: 10;
   display: flex;
   flex-direction: column;
+}
+
+/* Ensure controls are always visible on smaller screens */
+@media (max-width: 1024px) {
+  .network-visualization {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow: visible !important;
+  }
+  
+  .network-layout {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow: visible !important;
+  }
+  
+  .network-sidebar-left {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--network-border-primary) !important;
+    order: 2 !important;
+    background: var(--network-bg-primary) !important;
+    backdrop-filter: blur(10px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 20px !important;
+    margin-top: 0 !important;
+    flex-shrink: 0 !important;
+    overflow: visible !important;
+  }
+  
+  .dropdown-container {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    display: block !important;
+  }
+  
+  .dropdown-button {
+    width: 100% !important;
+    justify-content: space-between !important;
+    padding: 12px 16px !important;
+    background: var(--network-bg-secondary) !important;
+    border: 1px solid var(--network-border-primary) !important;
+    border-radius: 8px !important;
+    display: flex !important;
+  }
+  
+  .dropdown-content {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: 1px solid var(--network-border-primary) !important;
+    border-top: none !important;
+    border-radius: 0 0 8px 8px !important;
+    margin-top: -1px !important;
+    display: block !important;
+  }
+  
+  /* Force all dropdowns to be visible on smaller screens */
+  .dropdown-content.control-dropdown,
+  .dropdown-content.filter-dropdown,
+  .dropdown-content.legend-dropdown,
+  .dropdown-content.search-dropdown {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 }
 
 .sidebar-section {
@@ -862,8 +819,6 @@
   font-size: 12px;
   color: var(--network-text-secondary);
 }
-
-
 
 /* Search Container */
 .search-container {
@@ -1033,30 +988,380 @@
   background: var(--network-bg-secondary);
 }
 
-
-
-/* Responsive Design */
+/* Responsive Design - Completely restructured */
 @media (max-width: 1200px) {
   .network-sidebar-left {
-    width: 280px;
+    width: 260px;
   }
 }
 
-@media (max-width: 768px) {
+/* Tablet and Mobile Layout - Controls move below network */
+@media (max-width: 1024px) {
+  .network-visualization {
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
   .network-layout {
     flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .network-main {
+    flex: 1;
     height: auto;
+    min-height: 0;
+    order: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .network-canvas {
+    flex: 1;
+    min-height: 0;
+  }
+  
+  .network-main {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    order: 1;
+    flex-shrink: 0;
   }
   
   .network-sidebar-left {
     width: 100%;
     height: auto;
-    max-height: 400px;
+    min-height: auto;
+    max-height: none;
     border-right: none;
     border-bottom: 1px solid var(--network-border-primary);
+    order: 2;
+    background: var(--network-bg-primary);
+    backdrop-filter: blur(10px);
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 0;
+    flex-shrink: 1;
+    overflow: visible;
+  }
+  
+  /* Make all dropdowns always visible and in a row */
+  .dropdown-container {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 0;
+    display: block !important;
+  }
+  
+  .dropdown-button {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--network-bg-secondary);
+    border: 1px solid var(--network-border-primary);
+    border-radius: 8px;
+    display: flex !important;
+  }
+  
+  .dropdown-content {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none;
+    border: 1px solid var(--network-border-primary);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px;
+    display: block !important;
+  }
+  
+  /* Force all dropdowns to be visible on smaller screens */
+  .dropdown-content.control-dropdown,
+  .dropdown-content.filter-dropdown,
+  .dropdown-content.legend-dropdown,
+  .dropdown-content.search-dropdown {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* Control group layout for tablet */
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .control-button {
+    flex: 0 0 auto;
+    min-width: 44px;
+    height: 44px;
+  }
+  
+  /* Filter layout for tablet */
+  .filter-dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 12px;
+  }
+  
+  /* Legend layout for tablet */
+  .legend-dropdown {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+  
+  /* Search layout for tablet */
+  .search-dropdown {
+    padding: 12px;
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .network-visualization {
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .network-layout {
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
   }
   
   .network-main {
-    height: 60vh;
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    order: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .network-canvas {
+    flex: 1;
+    min-height: 0;
+  }
+  
+  .network-sidebar-left {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    border-right: none;
+    order: 2;
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    margin-top: 0;
+    flex-shrink: 1;
+    overflow: visible;
+  }
+  
+  /* Make all dropdowns always visible */
+  .dropdown-container {
+    width: 100%;
+    margin-bottom: 0;
+    display: block !important;
+  }
+  
+  .dropdown-button {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    display: flex !important;
+  }
+  
+  .dropdown-content {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none;
+    border: 1px solid var(--border-primary);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px;
+    display: block !important;
+  }
+  
+  /* Force all dropdowns to be visible on mobile screens */
+  .dropdown-content.control-dropdown,
+  .dropdown-content.filter-dropdown,
+  .dropdown-content.legend-dropdown,
+  .dropdown-content.search-dropdown {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* Mobile-specific layout for controls */
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .control-button {
+    flex: 1;
+    min-width: 44px;
+    height: 44px;
+  }
+  
+  /* Mobile filter grid */
+  .filter-dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  /* Mobile legend layout */
+  .legend-dropdown {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  /* Mobile search layout */
+  .search-dropdown {
+    padding: 16px;
+    max-height: 250px;
+  }
+  
+  .search-input {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  
+  /* Ensure network canvas is touch-friendly */
+  .network-canvas {
+    touch-action: manipulation;
+  }
+  
+  .network-canvas circle {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-visualization {
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .network-layout {
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .network-main {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    order: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .network-canvas {
+    flex: 1;
+    min-height: 0;
+  }
+  
+  .network-header {
+    padding: 16px;
+  }
+  
+  .network-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .network-header p {
+    font-size: 0.8rem;
+  }
+  
+  .network-main {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+  
+  .network-sidebar-left {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  /* Extra small screen controls */
+  .control-group {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  
+  .control-button {
+    min-width: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
+  
+  /* Extra small screen filters */
+  .filter-dropdown {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+  
+  .filter-checkbox {
+    font-size: 12px;
+  }
+  
+  /* Extra small screen legend */
+  .legend-dropdown {
+    padding: 12px;
+  }
+  
+  .legend-item {
+    font-size: 12px;
+  }
+  
+  /* Extra small screen search */
+  .search-dropdown {
+    padding: 12px;
+    max-height: 200px;
+  }
+  
+  .search-input {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  .search-result-item {
+    padding: 8px 12px;
+    font-size: 12px;
   }
 } 

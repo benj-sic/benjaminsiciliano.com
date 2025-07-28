@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import * as d3 from 'd3';
 import { atlantaTechBioEcosystem, nodeTypeMap, nodeColors } from '../atlanta_techbio_data.js';
 import { useTheme } from '../contexts/ThemeContext';
@@ -8,18 +8,52 @@ const NetworkVisualization = () => {
   const { theme } = useTheme();
   const svgRef = useRef();
   const containerRef = useRef();
+  const simulationRef = useRef();
   const [selectedNode, setSelectedNode] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Sidebar state
-  const [showControls, setShowControls] = useState(true);
-  const [showFilters, setShowFilters] = useState(false);
-  const [showLegend, setShowLegend] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showControls, setShowControls] = useState(false); // Collapsed by default
+  const [showFilters, setShowFilters] = useState(false); // Collapsed by default
+  const [showLegend, setShowLegend] = useState(false); // Collapsed by default
+  const [showSearch, setShowSearch] = useState(false); // Collapsed by default
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   
+  // Detect mobile device
+  const isMobile = useMemo(() => {
+    const mobile = window.innerWidth <= 768;
+    console.log('Mobile detection:', mobile, 'Window width:', window.innerWidth);
+    return mobile;
+  }, []);
+
+  // Add window resize listener
+  useEffect(() => {
+    const handleResize = () => {
+      const newMobile = window.innerWidth <= 768;
+      console.log('Window resized - new mobile state:', newMobile, 'Window width:', window.innerWidth);
+      
+      // Don't automatically change control states on resize
+      // Let users manually expand the controls they need
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Set mobile states when isMobile changes
+  useEffect(() => {
+    console.log('isMobile changed to:', isMobile);
+    // Keep controls collapsed by default on both mobile and desktop
+    // Users can manually expand the controls they need
+    setShowFilters(false);
+    setShowLegend(false);
+    setShowSearch(false);
+    setShowControls(false);
+    console.log('Controls collapsed by default on all screen sizes');
+  }, [isMobile]);
+
   // Initialize zoom level from URL parameters
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -93,6 +127,13 @@ const NetworkVisualization = () => {
           strokeDasharray: 'none',
           opacity: 0.6
         };
+      case 'research_collaboration':
+        return {
+          stroke: '#45b7d1',
+          strokeWidth: 6,
+          strokeDasharray: 'none',
+          opacity: 0.6
+        };
       case 'partnership':
         return {
           stroke: '#96ceb4',
@@ -113,6 +154,76 @@ const NetworkVisualization = () => {
           strokeWidth: 6,
           strokeDasharray: '8,4',
           opacity: 0.6
+        };
+      case 'affiliation':
+        return {
+          stroke: '#a8e6cf',
+          strokeWidth: 4,
+          strokeDasharray: 'none',
+          opacity: 0.5
+        };
+      case 'pilot':
+        return {
+          stroke: '#ffd93d',
+          strokeWidth: 6,
+          strokeDasharray: '4,4',
+          opacity: 0.7
+        };
+      case 'funding':
+        return {
+          stroke: '#6c5ce7',
+          strokeWidth: 6,
+          strokeDasharray: '6,3',
+          opacity: 0.7
+        };
+      case 'membership':
+        return {
+          stroke: '#fd79a8',
+          strokeWidth: 4,
+          strokeDasharray: '2,2',
+          opacity: 0.5
+        };
+      case 'development':
+        return {
+          stroke: '#00b894',
+          strokeWidth: 6,
+          strokeDasharray: 'none',
+          opacity: 0.6
+        };
+      case 'technology':
+        return {
+          stroke: '#fdcb6e',
+          strokeWidth: 6,
+          strokeDasharray: '3,3',
+          opacity: 0.7
+        };
+      case 'industry':
+        return {
+          stroke: '#e17055',
+          strokeWidth: 6,
+          strokeDasharray: 'none',
+          opacity: 0.6
+        };
+      case 'tenant':
+        return {
+          stroke: '#74b9ff',
+          strokeWidth: 4,
+          strokeDasharray: 'none',
+          opacity: 0.5
+        };
+      case 'origin':
+        return {
+          stroke: '#a29bfe',
+          strokeWidth: 6,
+          strokeDasharray: '8,4',
+          opacity: 0.7
+        };
+      case 'founding_support':
+        return {
+          stroke: '#fd79a8',
+          strokeWidth: 6,
+          strokeDasharray: '4,4',
+          opacity: 0.7
         };
       default:
         return {
@@ -153,103 +264,77 @@ const NetworkVisualization = () => {
   }), []);
 
   // Center network function with improved visibility
-  const centerNetwork = () => {
+  const centerNetwork = useCallback(() => {
     if (svgRef.current && zoomBehaviorRef.current) {
       const svg = d3.select(svgRef.current);
-      const container = containerRef.current;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
+      const width = svg.node().getBoundingClientRect().width;
+      const height = svg.node().getBoundingClientRect().height;
       
-      // Get the current zoom group to calculate bounds
-      const zoomGroup = svg.select("g.zoom-group");
-      if (zoomGroup.empty()) return;
-      
-      // Get the bounding box of all nodes and labels
-      const nodes = zoomGroup.selectAll("circle");
-      const labels = zoomGroup.selectAll("text");
-      if (nodes.empty()) return;
-      
-      // Calculate the bounds of the network including labels
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-      
-      // Check nodes
-      nodes.each(function() {
-        const cx = parseFloat(d3.select(this).attr("cx"));
-        const cy = parseFloat(d3.select(this).attr("cy"));
-        const r = parseFloat(d3.select(this).attr("r"));
-        minX = Math.min(minX, cx - r);
-        maxX = Math.max(maxX, cx + r);
-        minY = Math.min(minY, cy - r);
-        maxY = Math.max(maxY, cy + r);
-      });
-      
-      // Check labels for additional bounds
-      labels.each(function() {
-        const x = parseFloat(d3.select(this).attr("x"));
-        const y = parseFloat(d3.select(this).attr("y"));
-        const textLength = this.getComputedTextLength();
-        const fontSize = parseFloat(d3.select(this).attr("font-size"));
-        const labelWidth = textLength + 20; // Add padding for label width
-        const labelHeight = fontSize + 10; // Add padding for label height
+      // Get the actual bounds of the network nodes
+      const nodes = svg.selectAll(".node").nodes();
+      if (nodes.length > 0) {
+        const xCoords = nodes.map(n => n.cx.baseVal.value);
+        const yCoords = nodes.map(n => n.cy.baseVal.value);
+        const minX = Math.min(...xCoords);
+        const maxX = Math.max(...xCoords);
+        const minY = Math.min(...yCoords);
+        const maxY = Math.max(...yCoords);
         
-        minX = Math.min(minX, x - labelWidth / 2);
-        maxX = Math.max(maxX, x + labelWidth / 2);
-        minY = Math.min(minY, y - labelHeight / 2);
-        maxY = Math.max(maxY, y + labelHeight / 2);
-      });
-      
-      // Calculate the center of the network
-      const networkCenterX = (minX + maxX) / 2;
-      const networkCenterY = (minY + maxY) / 2;
-      
-      // Calculate the scale to fit the network in the viewport with padding
-      const networkWidth = maxX - minX;
-      const networkHeight = maxY - minY;
-      const padding = 80; // Increased padding for better visibility
-      const scaleX = (width - padding * 2) / networkWidth;
-      const scaleY = (height - padding * 2) / networkHeight;
-      const scale = Math.max(Math.min(scaleX, scaleY, 0.30), 0.25); // Default to 30% but allow down to 25%
-      
-      // Calculate the transform to center the network in a balanced position
-      const transform = d3.zoomIdentity
-        .translate(width / 2 - networkCenterX * scale, height / 2.5 - networkCenterY * scale) // Position at 40% of height for better balance
-        .scale(scale);
-      
-      // Apply the transform with transition
-      svg.transition()
-        .duration(750)
-        .call(zoomBehaviorRef.current.transform, transform);
-      
-      setZoomLevel(scale);
+        // Calculate the center of the network
+        const networkCenterX = (minX + maxX) / 2;
+        const networkCenterY = (minY + maxY) / 2;
+        
+        // Calculate the scale to fit the network in the viewport with minimal padding
+        const networkWidth = maxX - minX;
+        const networkHeight = maxY - minY;
+        const padding = 20; // Minimal padding
+        const scaleX = (width - padding * 2) / networkWidth;
+        const scaleY = (height - padding * 2) / networkHeight;
+        const scale = Math.min(scaleX, scaleY, 0.9); // Cap at 90% zoom
+        
+        // Calculate the transform to center the network in the viewport
+        // Adjust the Y translation to center properly
+        const transform = d3.zoomIdentity
+          .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
+          .scale(scale);
+        
+        // Apply the transform with a smooth transition
+        svg.transition()
+          .duration(500)
+          .call(zoomBehaviorRef.current.transform, transform);
+      } else {
+        // Fallback to simple centering if no nodes
+        const transform = d3.zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(0.7); // Moderate zoom fallback
+        
+        svg.transition()
+          .duration(500)
+          .call(zoomBehaviorRef.current.transform, transform);
+      }
     }
-  };
+  }, []);
 
   // Zoom functions
   const zoomIn = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 2.5) {
-      const svg = d3.select(svgRef.current);
-      const newZoomLevel = Math.min(zoomLevel + 0.1, 2.5); // Increase by 10%
-      
-      // Use the zoom behavior to zoom in from the current center
-      svg.transition()
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 2.5 && !isMobile) {
+      const newZoomLevel = Math.min(zoomLevel * 1.2, 2.5);
+      setZoomLevel(newZoomLevel);
+      d3.select(svgRef.current)
+        .transition()
         .duration(300)
         .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
-      
-      setZoomLevel(newZoomLevel);
     }
   };
 
   const zoomOut = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.25) {
-      const svg = d3.select(svgRef.current);
-      const newZoomLevel = Math.max(zoomLevel - 0.1, 0.25); // Decrease by 10%
-      
-      // Use the zoom behavior to zoom out from the current center
-      svg.transition()
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.25 && !isMobile) {
+      const newZoomLevel = Math.max(zoomLevel / 1.2, 0.25);
+      setZoomLevel(newZoomLevel);
+      d3.select(svgRef.current)
+        .transition()
         .duration(300)
         .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
-      
-      setZoomLevel(newZoomLevel);
     }
   };
 
@@ -262,7 +347,6 @@ const NetworkVisualization = () => {
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
-    const isMobile = window.innerWidth <= 768;
 
     // Clear previous content
     svg.selectAll("*").remove();
@@ -281,37 +365,42 @@ const NetworkVisualization = () => {
       return sourceNode && targetNode;
     });
 
-    // Ensure links have proper source and target objects for D3
-    const processedLinks = filteredLinks.map(link => ({
-      ...link,
-      source: filteredNodes.find(n => n.id === link.source),
-      target: filteredNodes.find(n => n.id === link.target)
-    }));
+    // Process links to ensure they reference valid nodes
+    const processedLinks = filteredLinks.map(link => {
+      const sourceNode = filteredNodes.find(n => n.id === link.source);
+      const targetNode = filteredNodes.find(n => n.id === link.target);
+      return {
+        ...link,
+        source: sourceNode,
+        target: targetNode
+      };
+    }).filter(link => link.source && link.target);
 
-    // Create clustering by node type
-    const nodeTypes = ['university', 'company', 'vc', 'incubator', 'serviceProvider', 'government', 'trade', 'development', 'facility'];
+    // Calculate cluster positions for better organization
     const clusterPositions = {};
+    const nodeTypes = [...new Set(filteredNodes.map(n => n.type))];
+    const clustersPerRow = Math.ceil(Math.sqrt(nodeTypes.length));
     
-          // Calculate cluster positions in an elliptical layout for better use of horizontal space
-      nodeTypes.forEach((type, index) => {
-        const angle = (index / nodeTypes.length) * 2 * Math.PI;
-        // Use elliptical layout - wider horizontally, shorter vertically
-        const radiusX = width * 0.6; // Use more horizontal space
-        const radiusY = height * 0.3; // Moderate vertical space
-        clusterPositions[type] = {
-          x: width / 2 + radiusX * Math.cos(angle),
-          y: height / 2 + radiusY * Math.sin(angle)
-        };
-      });
+    nodeTypes.forEach((type, index) => {
+      const row = Math.floor(index / clustersPerRow);
+      const col = index % clustersPerRow;
+      clusterPositions[type] = {
+        x: (col + 0.5) * (width / clustersPerRow),
+        y: (row + 0.5) * (height / Math.ceil(nodeTypes.length / clustersPerRow))
+      };
+    });
 
-    // Enhanced force simulation optimized for mobile performance
+    // Create force simulation
     const simulation = d3.forceSimulation(filteredNodes)
-      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280)) // Reduced distance on mobile
-      .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500)) // Reduced repulsion on mobile
+      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280))
+      .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 40 : 60))) // Smaller collision radius on mobile
-      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(isMobile ? 0.15 : 0.1)) // Stronger clustering on mobile
-      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(isMobile ? 0.15 : 0.1)); // Stronger clustering on mobile
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 40 : 60)))
+      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1))
+      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1));
+    
+    // Store simulation reference
+    simulationRef.current = simulation;
 
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
@@ -322,17 +411,11 @@ const NetworkVisualization = () => {
       .selectAll("line")
       .data(processedLinks)
       .enter().append("line")
-      .each(function(d) {
-        const style = getLinkStyle(d.type);
-        d3.select(this)
-          .attr("stroke", style.stroke)
-          .attr("stroke-width", style.strokeWidth)
-          .attr("stroke-dasharray", style.strokeDasharray)
-          .attr("stroke-opacity", style.opacity)
-          .style("pointer-events", "all")
-          .style("z-index", "1");
-      })
-      .style("cursor", "pointer");
+      .attr("stroke", d => getLinkStyle(d.type).stroke)
+      .attr("stroke-width", d => getLinkStyle(d.type).strokeWidth)
+      .attr("stroke-dasharray", d => getLinkStyle(d.type).strokeDasharray)
+      .attr("opacity", d => getLinkStyle(d.type).opacity)
+      .style("pointer-events", "none");
 
     // Create nodes in zoom group with mobile-optimized sizes
     const nodes = zoomGroup.append("g")
@@ -346,8 +429,7 @@ const NetworkVisualization = () => {
       .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")) // Remove shadows on mobile
       .attr("class", d => `node ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
       .on("click", function(event, d) {
-        event.stopPropagation();
-        handleNodeClick(d);
+        handleNodeClick(d, event);
       });
 
 
@@ -386,7 +468,25 @@ const NetworkVisualization = () => {
         });
       });
 
-    svg.call(zoom);
+    // Only enable zoom on desktop - completely disable on mobile
+    if (!isMobile) {
+      svg.call(zoom);
+    } else {
+      // On mobile, prevent any zoom/pan interactions but still allow programmatic transforms
+      svg.on("wheel.zoom", null);
+      svg.on("mousedown.zoom", null);
+      svg.on("dblclick.zoom", null);
+      svg.on("touchstart.zoom", null);
+      svg.on("touchmove.zoom", null);
+      svg.on("touchend.zoom", null);
+      
+      // Still call zoom to set up the behavior for programmatic use
+      svg.call(zoom);
+      
+      // Also prevent any transform changes from user interaction
+      svg.style("pointer-events", "none");
+      svg.selectAll("*").style("pointer-events", "auto");
+    }
     
     // Store reference to zoom behavior
     zoomBehaviorRef.current = zoom;
@@ -420,7 +520,7 @@ const NetworkVisualization = () => {
         // Auto-center the network after it loads
         setTimeout(() => {
           centerNetwork();
-        }, isMobile ? 50 : 100); // Faster centering on mobile
+        }, 200); // Give more time for the simulation to settle
       }, timeout);
     });
 
@@ -429,7 +529,8 @@ const NetworkVisualization = () => {
       // Clean up D3 selections to prevent memory leaks
       svg.selectAll("*").remove();
     };
-  }, [debouncedFilters, networkData, typeMap, theme, filterMapping, selectedNode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedFilters, networkData, typeMap, theme, filterMapping, isMobile]);
 
   // Update node highlighting when selectedNode changes
   useEffect(() => {
@@ -438,8 +539,15 @@ const NetworkVisualization = () => {
       const nodes = svg.selectAll(".node");
       const labels = svg.selectAll(".label");
       
-      nodes.classed("node-highlighted", d => selectedNode && selectedNode.id === d.id);
-      labels.classed("label-highlighted", d => selectedNode && selectedNode.id === d.id);
+      // Remove all highlighting first
+      nodes.classed("node-highlighted", false);
+      labels.classed("label-highlighted", false);
+      
+      // Add highlighting to selected node only
+      if (selectedNode) {
+        nodes.filter(d => d.id === selectedNode.id).classed("node-highlighted", true);
+        labels.filter(d => d.id === selectedNode.id).classed("label-highlighted", true);
+      }
     }
   }, [selectedNode, isLoading]);
 
@@ -458,7 +566,8 @@ const NetworkVisualization = () => {
         }, 200);
       }
     }
-  }, [isLoading, networkData.nodes]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, networkData.nodes, centerNetwork]);
 
   // Expose network state to global window object for share functionality
   useEffect(() => {
@@ -492,12 +601,45 @@ const NetworkVisualization = () => {
     setSearchResults(results);
   };
 
-  const handleNodeClick = (node) => {
+  const handleNodeClick = useCallback((node, event) => {
+    // Prevent any default behaviors that might cause animations
+    event?.preventDefault();
+    event?.stopPropagation();
+    
+    // On mobile, completely prevent any network movement
+    if (isMobile) {
+      // Force the network to stay in place
+      if (svgRef.current) {
+        const svg = d3.select(svgRef.current);
+        const zoomGroup = svg.select("g.zoom-group");
+        
+        // Lock the current transform
+        const currentTransform = zoomGroup.attr("transform");
+        zoomGroup.attr("transform", currentTransform);
+        
+        // Disable all zoom/pan events
+        svg.on("wheel.zoom", null);
+        svg.on("mousedown.zoom", null);
+        svg.on("dblclick.zoom", null);
+        svg.on("touchstart.zoom", null);
+        svg.on("touchmove.zoom", null);
+        svg.on("touchend.zoom", null);
+        svg.on("click.zoom", null);
+        svg.on("dblclick.zoom", null);
+        
+        // Stop simulation updates temporarily to prevent movement
+        if (simulationRef.current) {
+          simulationRef.current.alpha(0);
+          simulationRef.current.alphaDecay(0);
+        }
+      }
+    }
+    
     setSelectedNode(node);
     setSearchQuery('');
     setSearchResults([]);
     setShowSearch(true); // Auto-open the search & details dropdown
-  };
+  }, [isMobile]);
 
   return (
     <div className="network-visualization">
@@ -508,13 +650,12 @@ const NetworkVisualization = () => {
           An interactive visualization of the organizations powering innovation in Georgia biotech — including startups, academic institutions, VCs, incubators, and service providers. Use the filters to focus on 
           specific organization types. Click on nodes and connections for detailed information and website links.
         </p>
-        <p className="last-updated">
-          Last updated: July 2025
-        </p>
+        <div className="header-spacer"></div>
       </div>
 
       {/* Main Layout with Sidebars */}
       <div className="network-layout">
+        
         {/* Left Sidebar - Controls */}
         <div className="network-sidebar-left">
           {/* Controls Section */}
@@ -890,9 +1031,12 @@ const NetworkVisualization = () => {
           </div>
         </div>
 
-
       </div>
       
+      {/* Last Updated Line - positioned below the entire network layout */}
+      <div className="last-updated-line">
+        Last updated: July 2025
+      </div>
 
     </div>
   );

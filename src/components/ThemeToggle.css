@@ -49,7 +49,14 @@
 }
 
 @media (max-width: 768px) {
+  /* Hide desktop theme toggle on mobile */
   .theme-toggle {
+    display: none;
+  }
+  
+  /* Show mobile theme toggle in header buttons */
+  .header-buttons .theme-toggle {
+    display: flex;
     position: static;
     width: 36px;
     height: 36px;
@@ -58,7 +65,7 @@
     pointer-events: auto;
   }
   
-  .theme-toggle:hover {
+  .header-buttons .theme-toggle:hover {
     background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.3);
     transform: scale(1.1);
@@ -66,19 +73,19 @@
     backdrop-filter: blur(10px);
   }
   
-  .theme-icon {
+  .header-buttons .theme-icon {
     width: 18px;
     height: 18px;
   }
 }
 
 @media (max-width: 480px) {
-  .theme-toggle {
+  .header-buttons .theme-toggle {
     width: 32px;
     height: 32px;
   }
   
-  .theme-icon {
+  .header-buttons .theme-icon {
     width: 16px;
     height: 16px;
   }

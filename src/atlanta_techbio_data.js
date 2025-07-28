@@ -731,6 +731,8 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "choa", type: "research_collaboration", description: "Collaborates on pediatric medtech and translational research" },
     { source: "emory", target: "emory_healthcare", type: "affiliation", description: "Clinical enterprise of Emory University; partner for translational and digital health research" },
     { source: "emory_healthcare", target: "florence", type: "pilot", description: "Florence's eClinical tools validated in Emory Healthcare Innovation Hub pilot programs" },
+    { source: "switchboard_md", target: "emory_healthcare", type: "pilot", description: "Partnered with Emory Healthcare to implement and validate clinical operations and AI workflow tools" },
+    { source: "switchboard_md", target: "emory", type: "collaboration", description: "Founded by Emory-affiliated physicians and collaborates on applied AI and clinical operations research" },
 
     // --- University Spinouts ---
     { source: "emory", target: "inhibikase", type: "spinout", description: "Licensed technology, early investor" },
