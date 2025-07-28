@@ -144,29 +144,7 @@ function App() {
     }
   };
 
-  // Intersection Observer for scroll animations
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    // Observe all animated elements
-    const animatedElements = document.querySelectorAll('.animate-on-scroll, .animate-on-scroll-delayed, .animate-scale, .animate-fade');
-    animatedElements.forEach(el => observer.observe(el));
-
-    return () => {
-      animatedElements.forEach(el => observer.unobserve(el));
-    };
-  }, []);
 
 
 
@@ -281,11 +259,11 @@ function App() {
           <section id="welcome" className="welcome-section">
             <div className="container">
               <div className="welcome-content">
-                <p className="animate-on-scroll-delayed">
+                <p>
                   Hi, I'm Ben — a neuropharmacologist and computational biologist working at the intersection of science, strategy, and systems to accelerate biotech innovation. I built this interactive network to help shine a light on Atlanta's fast-growing but often under-recognized biotech ecosystem.
                 </p>
                 <div className="welcome-cta">
-                  <p className="animate-fade">
+                  <p>
                     Explore the map below to discover key organizations, partnerships, and investment relationships driving the region's life sciences momentum — and uncover opportunities to collaborate, invest, or get involved.
                   </p>
                 </div>
@@ -296,7 +274,7 @@ function App() {
           {/* Network Visualization - Front and Center */}
           <section id="network" className="network-section">
             <div className="container">
-              <div className="network-main animate-on-scroll-delayed">
+              <div className="network-main">
                 <NetworkVisualization />
               </div>
             </div>
@@ -307,19 +285,19 @@ function App() {
             <div className="container">
               <div className="about-content">
                 <div className="about-main-content">
-                  <h2 id="about" className="animate-on-scroll-delayed">About Me</h2>
+                  <h2 id="about">About Me</h2>
                   <div className="about-text">
-                    <div className="about-image-container animate-fade">
+                    <div className="about-image-container">
                       <img 
                         src="/BS_headshot.jpeg" 
                         alt="Benjamin Siciliano" 
                         className="about-headshot"
                       />
                     </div>
-                    <p className="animate-on-scroll-delayed">
+                    <p>
                       I'm a PhD-trained neuropharmacologist specializing in bioinformatics, computational biology, and systems pharmacology to advance therapeutics for neuropsychiatric and neurodegenerative diseases. With experience managing drug development programs and applying computational tools to drive strategic decision-making, I bring a strong background in technology transfer and early-stage development to help de-risk and accelerate research-to-commercialization efforts. I focus on bridging cutting-edge science and business strategy to drive the next wave of impactful therapeutics. I'm eager to lead and collaborate on projects that push biotech forward and connect with investors and entrepreneurs leveraging technology and data to scale the next generation of solutions.
                     </p>
-                    <p className="about-tldr animate-scale">
+                    <p className="about-tldr">
                       <strong>TL;DR:</strong> I combine deep scientific expertise with product strategy and tech implementation to accelerate biotech innovation.
                     </p>
                   </div>
@@ -332,8 +310,8 @@ function App() {
           <section id="why-built" className="motivation-section">
             <div className="container">
               <div className="motivation-content">
-                <h3 id="why-built" className="animate-on-scroll-delayed">Why I Built This Network</h3>
-                <p className="animate-fade">
+                <h3 id="why-built">Why I Built This Network</h3>
+                <p>
                   Atlanta's biotech ecosystem is growing fast — but often flies under the radar. I created this interactive network to visualize the key players, partnerships, and innovation hubs fueling Georgia's life sciences revolution. By mapping these relationships, we can identify collaboration, investment, and commercialization opportunities that drive next-gen therapeutic development and translational success.
                 </p>
               </div>
@@ -344,8 +322,8 @@ function App() {
           <section id="contact" className="contact-section">
             <div className="container">
               <div className="contact-content">
-                <h2 id="contact" className="animate-on-scroll-delayed">Get in Touch</h2>
-                <p className="contact-intro animate-fade">
+                <h2 id="contact">Get in Touch</h2>
+                <p className="contact-intro">
                   Have suggestions, corrections, or want your organization added to the network? 
                   I'm always looking to improve this visualization and expand the ecosystem mapping.
                 </p>

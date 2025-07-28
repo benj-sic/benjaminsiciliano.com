@@ -120,7 +120,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "neurop",
-      name: "NeurOp, Inc.",
+      name: "NeurOp",
       type: "startup",
       size: 14,
       description: "Clinical-stage CNS drug developer. A spinout from research at Emory and Duke University.",
@@ -314,17 +314,6 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: [],
       recentNews: "368,000 sq ft Phase 1 lab tower completed in Q2 2024."
     },
-    {
-      id: "gcmi",
-      name: "GCMI",
-      type: "incubator",
-      size: 14,
-      description: "Global Center for Medical Innovation. A non-profit providing medtech design, prototyping, and preclinical testing services (T3 Labs).",
-      website: "https://devices.net",
-      keyPersonnel: ["Saylan Lukas"],
-      recentNews: "Saylan Lukas serves as Interim Executive Director following Sherry Farrugia's departure in November 2023. T3 Labs subsidiary was acquired by Veranex. GCMI will operationally close on June 30, 2025."
-    },
-
     // GOVERNMENT & TRADE ORGANIZATIONS
     {
       id: "gra",
@@ -730,6 +719,12 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "ebfi", type: "affiliation", description: "Hosted and operated by Emory University" },
     { source: "emory", target: "eddf", type: "affiliation", description: "Part of Emory Innovations, Inc." },
 
+    // --- DRIVE Relationships ---
+    { source: "emory", target: "drive", type: "affiliation", description: "Emory-formed drug development accelerator for antiviral therapeutics" },
+    { source: "drive", target: "eddf", type: "origin", description: "Established EDDF using royalties from DRIVE-licensed drug molnupiravir (LAGEVRIO)" },
+    { source: "drive", target: "altesa", type: "spinout", description: "Antiviral spinout formed via DRIVE to develop Vapendavir and other respiratory virus therapies" },
+    { source: "drive", target: "agrithera", type: "founding_support", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
+
     // --- Key Partnerships & Affiliations ---
     { source: "gatech", target: "science_square", type: "development", description: "Development partner (via GATV)" },
     { source: "science_square", target: "portal", type: "tenant", description: "Anchor tenant" },
@@ -747,7 +742,6 @@ export const atlantaTechBioEcosystem = {
     // --- Service Provider Relationships ---
     { source: "king_spalding", target: "vero", type: "service", description: "FDA regulatory legal counsel" },
     { source: "kilpatrick_townsend", target: "atdc", type: "service", description: "Official IP legal services sponsor" },
-    { source: "gcmi", target: "clearside", type: "support", description: "Early product development support" },
     { source: "biotechexec", target: "biolocity", type: "service", description: "Mentorship and strategic consulting" },
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },

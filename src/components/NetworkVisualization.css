@@ -55,11 +55,12 @@
 
 .network-visualization {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  max-width: 100vw;
 }
 
 /* Network Header */
@@ -71,6 +72,8 @@
   text-align: center;
   z-index: 20;
   transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .network-header h2 {
@@ -139,6 +142,8 @@
   display: flex;
   position: relative;
   overflow: hidden;
+  width: 100%;
+  min-width: 0; /* Allow flex item to shrink */
 }
 
 /* Main Network Canvas */
@@ -156,6 +161,9 @@
   background: transparent;
   width: 100%;
   height: 100%;
+  /* Performance optimizations for mobile */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Enhanced label styling for better readability */
@@ -164,8 +172,48 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 700;
-  letter-spacing: 0.2px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Enhanced contrast for better readability */
+  paint-order: stroke fill;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Light theme specific label improvements */
+[data-theme="light"] .network-canvas text {
+  filter: drop-shadow(0 0px 1px rgba(255,255,255,0.9)) 
+          drop-shadow(0 0px 2px rgba(255,255,255,0.7));
+}
+
+/* Node highlighting styles */
+.node-highlighted {
+  stroke: #ff6b35 !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 0 12px rgba(255, 107, 53, 0.8)) !important;
+  animation: pulse 2s infinite;
+}
+
+.label-highlighted {
+  font-weight: 900 !important;
+  font-size: 32px !important;
+  fill: #ff6b35 !important;
+  stroke: #ff6b35 !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.6)) !important;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 /* Improved node visibility with enhanced shadows */
@@ -334,16 +382,7 @@
 
 
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
 
 /* Network Controls */
 .network-controls {
@@ -362,6 +401,7 @@
 @media (max-width: 768px) {
   .network-visualization {
     height: auto;
+    min-height: 80vh;
   }
   
   .network-header {
@@ -389,6 +429,11 @@
   
   .network-canvas {
     height: 60vh;
+    min-height: 400px;
+    /* Mobile performance optimizations */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
   }
   
   .network-legend {
@@ -402,10 +447,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
-
-
-
   
   .zoom-controls {
     top: 10px;
@@ -421,6 +462,38 @@
   .control-button svg {
     width: 12px;
     height: 12px;
+  }
+  
+  /* Disable expensive effects on mobile */
+  .network-canvas circle {
+    filter: none !important;
+  }
+  
+  .network-canvas text {
+    text-shadow: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-visualization {
+    min-height: 70vh;
+  }
+  
+  .network-header {
+    padding: 12px;
+  }
+  
+  .network-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .network-header p {
+    font-size: 0.8rem;
+  }
+  
+  .network-canvas {
+    height: 50vh;
+    min-height: 300px;
   }
 }
 
@@ -708,7 +781,6 @@
   background: var(--network-bg-secondary);
   border: 1px solid var(--network-border-primary);
   border-radius: 6px;
-  animation: fadeIn 0.3s ease;
 }
 
 /* Control Groups */

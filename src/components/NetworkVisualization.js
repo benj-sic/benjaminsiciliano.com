@@ -39,6 +39,7 @@ const NetworkVisualization = () => {
       incubators: true,
       vcs: true,
       serviceProviders: true,
+      healthSystems: true,
       government: true,
       trade: true,
       development: true,
@@ -101,10 +102,10 @@ const NetworkVisualization = () => {
         };
       case 'service':
         return {
-          stroke: '#ffeaa7',
+          stroke: '#ff8c42',
           strokeWidth: 6,
           strokeDasharray: '3,3',
-          opacity: 0.5
+          opacity: 0.7
         };
       case 'support':
         return {
@@ -144,6 +145,7 @@ const NetworkVisualization = () => {
     'incubator': 'incubators',
     'accelerator': 'incubators',
     'facility': 'facilities',
+    'health_system': 'healthSystems',
     'serviceProvider': 'serviceProviders',
     'government': 'government',
     'trade': 'trade',
@@ -260,6 +262,7 @@ const NetworkVisualization = () => {
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
+    const isMobile = window.innerWidth <= 768;
 
     // Clear previous content
     svg.selectAll("*").remove();
@@ -301,14 +304,14 @@ const NetworkVisualization = () => {
         };
       });
 
-    // Enhanced force simulation for 80+ nodes with clustering and better spacing
+    // Enhanced force simulation optimized for mobile performance
     const simulation = d3.forceSimulation(filteredNodes)
-      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(280)) // Moderate link distance for natural spacing
-      .force("charge", d3.forceManyBody().strength(-500)) // Moderate repulsion for natural spacing
+      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280)) // Reduced distance on mobile
+      .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500)) // Reduced repulsion on mobile
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * 3.5, 16) + 60)) // Moderate collision radius
-      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1)) // Balanced clustering strength
-      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1)); // Balanced clustering strength
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 40 : 60))) // Smaller collision radius on mobile
+      .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(isMobile ? 0.15 : 0.1)) // Stronger clustering on mobile
+      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(isMobile ? 0.15 : 0.1)); // Stronger clustering on mobile
 
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
@@ -331,16 +334,17 @@ const NetworkVisualization = () => {
       })
       .style("cursor", "pointer");
 
-    // Create nodes in zoom group with larger sizes
+    // Create nodes in zoom group with mobile-optimized sizes
     const nodes = zoomGroup.append("g")
       .attr("class", "nodes")
       .selectAll("circle")
       .data(filteredNodes)
       .enter().append("circle")
-      .attr("r", d => Math.max(d.size * 3.5, 16)) // Increase node size by 250% with minimum of 16px
+      .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16)) // Smaller nodes on mobile
       .attr("fill", d => nodeColors[typeMap[d.type]])
       .style("cursor", "pointer")
-      .style("filter", theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")
+      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")) // Remove shadows on mobile
+      .attr("class", d => `node ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
       .on("click", function(event, d) {
         event.stopPropagation();
         handleNodeClick(d);
@@ -348,7 +352,7 @@ const NetworkVisualization = () => {
 
 
 
-    // Create labels in zoom group with larger, more readable text
+    // Create labels in zoom group with enhanced readability
     const labels = zoomGroup.append("g")
       .attr("class", "labels")
       .selectAll("text")
@@ -359,19 +363,27 @@ const NetworkVisualization = () => {
       .attr("y", 0)
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
-      .attr("fill", theme === 'dark' ? "#fff" : "#333")
-      .attr("font-size", "28px") // Increased from 22px to 28px
-      .attr("font-weight", "700") // Increased from 600 to 700 for better visibility
+      .attr("fill", theme === 'dark' ? "#fff" : "#1a1a1a") // Darker text for light theme
+      .attr("font-size", isMobile ? "20px" : "28px") // Smaller font on mobile
+      .attr("font-weight", "800") // Bolder font weight
       .style("pointer-events", "none")
-      .style("text-shadow", theme === 'dark' ? "5px 5px 10px rgba(0,0,0,0.9), 4px 4px 8px rgba(0,0,0,0.7), 0px 0px 20px rgba(0,0,0,0.5)" : "5px 5px 10px rgba(255,255,255,0.9), 4px 4px 8px rgba(255,255,255,0.7), 0px 0px 20px rgba(255,255,255,0.5)")
-      .style("font-family", "system-ui, -apple-system, sans-serif");
+      .style("text-shadow", isMobile ? "none" : (theme === 'dark' ? 
+        "2px 2px 4px rgba(0,0,0,0.8), 1px 1px 2px rgba(0,0,0,0.6)" : 
+        "2px 2px 4px rgba(255,255,255,0.95), 1px 1px 2px rgba(255,255,255,0.8), 0px 0px 8px rgba(255,255,255,0.6)")) // Enhanced text shadows
+      .style("font-family", "system-ui, -apple-system, sans-serif")
+      .style("stroke", theme === 'dark' ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.8)") // Text outline
+      .style("stroke-width", "0.5px") // Thin outline for better contrast
+      .attr("class", d => `label ${selectedNode && selectedNode.id === d.id ? 'label-highlighted' : ''}`);
 
-    // Add zoom behavior with enhanced controls
+    // Add zoom behavior with enhanced controls and mobile optimization
     const zoom = d3.zoom()
       .scaleExtent([0.25, 2.5]) // Zoom range from 25% to 250%
       .on("zoom", (event) => {
-        zoomGroup.attr("transform", event.transform);
-        setZoomLevel(event.transform.k);
+        // Use requestAnimationFrame for smoother zoom on mobile
+        requestAnimationFrame(() => {
+          zoomGroup.attr("transform", event.transform);
+          setZoomLevel(event.transform.k);
+        });
       });
 
     svg.call(zoom);
@@ -381,37 +393,55 @@ const NetworkVisualization = () => {
 
     // Update positions on simulation tick with performance optimization
     simulation.on("tick", () => {
-      links
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+      // Use requestAnimationFrame for smoother updates on mobile
+      requestAnimationFrame(() => {
+        links
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
 
-      nodes
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
+        nodes
+          .attr("cx", d => d.x)
+          .attr("cy", d => d.y);
 
-      labels
-        .attr("x", d => d.x)
-        .attr("y", d => d.y);
+        labels
+          .attr("x", d => d.x)
+          .attr("y", d => d.y);
+      });
     });
 
-    // Set loading states with longer timeout for larger dataset
+    // Set loading states with mobile-optimized timeouts
     simulation.on("end", () => {
+      const timeout = isMobile ? 300 : 500; // Faster loading on mobile
       setTimeout(() => {
         setIsLoading(false);
         setIsProcessing(false);
         // Auto-center the network after it loads
         setTimeout(() => {
           centerNetwork();
-        }, 100); // Small delay to ensure everything is rendered
-      }, 500); // Give extra time for 80+ nodes to settle
+        }, isMobile ? 50 : 100); // Faster centering on mobile
+      }, timeout);
     });
 
     return () => {
       simulation.stop();
+      // Clean up D3 selections to prevent memory leaks
+      svg.selectAll("*").remove();
     };
   }, [debouncedFilters, networkData, typeMap, theme, filterMapping]);
+
+  // Update node highlighting when selectedNode changes
+  useEffect(() => {
+    if (!isLoading && containerRef.current) {
+      const svg = d3.select(containerRef.current).select("svg");
+      const nodes = svg.selectAll(".node");
+      const labels = svg.selectAll(".label");
+      
+      nodes.classed("node-highlighted", d => selectedNode && selectedNode.id === d.id);
+      labels.classed("label-highlighted", d => selectedNode && selectedNode.id === d.id);
+    }
+  }, [selectedNode, isLoading]);
 
   // Handle URL parameters for focusing on a specific node
   useEffect(() => {
@@ -772,7 +802,15 @@ const NetworkVisualization = () => {
                       <h3>{selectedNode.name}</h3>
                       <button 
                         className="details-close"
-                        onClick={() => setSelectedNode(null)}
+                        onClick={() => {
+                          setSelectedNode(null);
+                          // Clear highlighting
+                          if (containerRef.current) {
+                            const svg = d3.select(containerRef.current).select("svg");
+                            svg.selectAll(".node").classed("node-highlighted", false);
+                            svg.selectAll(".label").classed("label-highlighted", false);
+                          }
+                        }}
                         title="Close"
                       >
                         ×
