@@ -404,10 +404,10 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "georgia_ecd",
-      name: "Georgia Dept. of Economic Development",
+      name: "GDEcD",
       type: "government",
       size: 14,
-      description: "The state's primary arm for business recruitment and economic development.",
+      description: "Georgia Department of Economic Development - the state's primary arm for business recruitment and economic development.",
       website: "https://georgia.org",
       keyPersonnel: [],
       recentNews: "Supports biotech through incentive packages and site location assistance."
