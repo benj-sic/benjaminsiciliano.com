@@ -55,7 +55,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "morehouse",
-      name: "Morehouse School of Medicine",
+      name: "MSM",
       type: "university",
       size: 15,
       description: "Historically Black medical school focused on health equity. Partner in the Georgia Clinical & Translational Science Alliance (CTSA).",
@@ -872,11 +872,11 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Regional clinical trial services"
     },
     {
-      id: "11ten",
-      name: "11TEN Innovation Partners",
+      id: "woven_health_collective",
+      name: "Woven Health Collective",
       type: "serviceProvider",
       size: 13,
-      description: "Atlanta-based innovation consultancy focused on healthcare commercialization and clinical validation. Operates a 5G-enabled living lab and partners with systems like Emory Healthcare to prototype and pilot digital health and medtech solutions in real-world settings.",
+      description: "Healthcare commercialization consultancy formerly known as 11TEN Innovation Partners. Offers co-design, real-world piloting, and strategic support via its Innovation Lab in Atlanta.",
       website: "https://11ten.com",
       keyPersonnel: [
       {
@@ -892,7 +892,7 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/steve-gertz-bb0a3721/"
       }
     ],
-      recentNews: "Supports the Emory Healthcare Innovation Hub with UX research and pilot design for digital health deployments. Acquired by ClinicalMind in 2024."
+      recentNews: "Rebranded to Woven Health Collective after 2024 acquisition by ClinicalMind. Continues to lead Emory Healthcare's innovation hub."
     },
     {
       id: "jpmorgan_chase",
@@ -1552,7 +1552,7 @@ export const atlantaTechBioEcosystem = {
     { source: "biotechexec", target: "biolocity", type: "service", description: "Mentorship and strategic consulting" },
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
-    { source: "11ten", target: "emory_healthcare", type: "collaboration", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
+    { source: "woven_health_collective", target: "emory_healthcare", type: "collaboration", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
     { source: "vizzia", target: "choa", type: "service", description: "Selected by CHOA to deploy RTLS and asset tracking for Arthur M. Blank Hospital (2025)." },
     { source: "vizzia", target: "piedmont_healthcare", type: "service", description: "Deployed RTLS platform at Marcus Tower (16-story, $603M hospital project)." },
     { source: "vizzia", target: "grady", type: "service", description: "Implemented RTLS and environmental monitoring system at Correll Pavilion (10-story surgical center)." },
