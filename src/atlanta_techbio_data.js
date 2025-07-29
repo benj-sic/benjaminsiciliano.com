@@ -1007,6 +1007,22 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Received multiple NIH grants and raised Series A co-led by Portal Innovations."
     },
     {
+      id: "andson_biotech",
+      name: "Andson Biotech",
+      type: "startup",
+      size: 8,
+      description: "Georgia Tech spinout building the DynaChip™ X1 platform to automate and miniaturize mass spectrometry sample prep for biologics and advanced therapeutics. Enables faster, cheaper, and more scalable bioanalysis.",
+      website: "http://www.andsonbiotech.com",
+      keyPersonnel: [
+      {
+        "name": "Mason Chilmonczyk",
+        "role": "CEO & Co‑Founder",
+        "linkedin": "https://www.linkedin.com/in/mason-chil/"
+      }
+    ],
+      recentNews: "Raised $3.6M in seed funding (April 2024) backed by Y Combinator, Merck Digital Studio, and GRA. Biolocity and Georgia Tech-supported technology."
+    },
+    {
       id: "sanguina",
       name: "Sanguina",
       type: "startup",
@@ -1432,6 +1448,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "sanguina", type: "spinout", description: "Co-founded by GT alumna from student research" },
     { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
     { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
+    { source: "gatech", target: "andson_biotech", type: "spinout", description: "Georgia Tech spinout commercializing DynaChip™ microfluidic technology." },
     { source: "emory", target: "metaclipse", type: "collaboration", description: "Emory-affiliated advisors and founders contribute scientific expertise to VLP platform development." },
     { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
@@ -1452,6 +1469,7 @@ export const atlantaTechBioEcosystem = {
     { source: "atdc", target: "sanguina", type: "support", description: "Incubated at ATDC (alumni)" },
     { source: "create_x", target: "oxos", type: "support", description: "Incubated at CREATE-X (alumni)" },
     { source: "biolocity", target: "sanguina", type: "support", description: "Received early grant funding" },
+    { source: "biolocity", target: "andson_biotech", type: "support", description: "Received translational funding and startup support from Biolocity." },
     { source: "emory", target: "ebfi", type: "affiliation", description: "Hosted and operated by Emory University" },
     { source: "emory", target: "eddf", type: "affiliation", description: "Part of Emory Innovations, Inc." },
 
@@ -1519,6 +1537,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "altesa", type: "funding", description: "GRA supported Emory DRIVE institute underlying Altesa's antiviral research." },
     { source: "gra", target: "allonix", type: "funding", description: "Backed Emory IP and early preclinical studies through GRA-sponsored programs." },
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported foundational cancer research programs at Emory that seeded Cambium." },
+    { source: "gra", target: "andson_biotech", type: "funding", description: "Received early translational support from Georgia Research Alliance." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
 
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" }
