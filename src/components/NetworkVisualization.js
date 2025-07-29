@@ -70,6 +70,7 @@ const NetworkVisualization = () => {
     
     const defaultFilters = {
       companies: true,
+      startups: true,  // Added startups filter
       universities: true,
       incubators: true,
       vcs: true,
@@ -283,7 +284,7 @@ const NetworkVisualization = () => {
     'university': 'universities',
     'company': 'companies',
     'public_company': 'companies',
-    'startup': 'companies',
+    'startup': 'startups',  // Changed from 'companies' to 'startups'
     'vc': 'vcs',
     'incubator': 'incubators',
     'accelerator': 'incubators',
@@ -903,6 +904,16 @@ const NetworkVisualization = () => {
               <label className="filter-checkbox">
                 <input 
                   type="checkbox" 
+                  checked={filters.startups}
+                  onChange={() => toggleFilter('startups')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Startups</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
                   checked={filters.universities}
                   onChange={() => toggleFilter('universities')}
                 />
@@ -1022,6 +1033,10 @@ const NetworkVisualization = () => {
                   <div className="legend-item">
                     <div className="legend-color" style={{backgroundColor: getNodeColor('company')}}></div>
                     <span className="legend-label">Companies</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('startup')}}></div>
+                    <span className="legend-label">Startups</span>
                   </div>
                   <div className="legend-item">
                     <div className="legend-color" style={{backgroundColor: getNodeColor('vc')}}></div>

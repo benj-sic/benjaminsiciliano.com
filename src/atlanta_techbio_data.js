@@ -156,7 +156,6 @@ export const atlantaTechBioEcosystem = {
       description: "One of the largest health systems in Georgia, operating hospitals, urgent care, and specialty centers. Parent organization of Catalyst by Wellstar, the system's innovation and venture arm.",
       website: "https://www.wellstar.org",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Wellstar continues to expand its footprint through new clinical sites and innovation initiatives via Catalyst."
     },
     {
@@ -167,7 +166,6 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta's largest safety-net hospital and trauma center. Key clinical research site and community health partner for Emory, Morehouse, and Georgia CTSA programs.",
       website: "https://www.gradyhealth.org",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Grady remains central to Emory and Morehouse clinical research and care access for underserved populations."
     },
     {
@@ -178,7 +176,6 @@ export const atlantaTechBioEcosystem = {
       description: "Value-based primary care provider with multiple clinics across Atlanta serving Medicare and elderly populations. Often partners with digital health and aging-focused innovators.",
       website: "https://www.oakstreethealth.com",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Oak Street continues to grow its clinic network in Georgia and expand partnerships with health tech innovators."
     },
     {
@@ -189,7 +186,6 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-headquartered national leader in pediatric and adult home health, hospice, and private‑duty nursing. Supports aging‑care pilots and partnerships with healthtech innovators.",
       website: "https://www.aveanna.com",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Corporate HQ based in Atlanta; serves over 300 locations across 33 states; active in home‑based healthcare innovation and population health partnership pilots."
     },
     {
@@ -200,7 +196,6 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-based health system operating hospitals and clinics across Georgia. Known for major construction projects including Marcus Tower and partnerships with healthtech providers.",
       website: "https://www.piedmont.org",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Completed Marcus Tower (16-story, $603M hospital project) with advanced RTLS and monitoring systems."
     },
 
@@ -232,10 +227,6 @@ export const atlantaTechBioEcosystem = {
       {
         "name": "Steven Damon",
         "linkedin": "https://www.linkedin.com/in/steven-damon-a1966a5/"
-      },
-      {
-        "name": "Mark Prausnitz",
-        "linkedin": "https://www.linkedin.com/in/mark-prausnitz-61a46423/"
       }
     ],
       recentNews: "Completed first-in-human trial for influenza patch."
@@ -278,7 +269,6 @@ export const atlantaTechBioEcosystem = {
       description: "Digital health company providing a personalized health platform. A major Atlanta tech exit, demonstrating the region's strength in health IT.",
       website: "https://sharecare.com",
       keyPersonnel: [
-      "Jeff Arnold",
       {
         "name": "Brent Layton",
         "linkedin": "https://www.linkedin.com/in/brent-layton-514091157/"
@@ -312,10 +302,6 @@ export const atlantaTechBioEcosystem = {
       {
         "name": "Dr. George Lasezkay",
         "linkedin": "https://www.linkedin.com/in/george-lasezkay-1848679/"
-      },
-      {
-        "name": "Mark Prausnitz",
-        "linkedin": "https://www.linkedin.com/in/mark-prausnitz-61a46423/"
       }
     ],
       recentNews: "Positive results from Phase 2b trial in wet AMD (CLS-AX). Focusing on suprachoroidal drug delivery for retinal diseases."
@@ -558,8 +544,7 @@ export const atlantaTechBioEcosystem = {
         "name": "Morgan Greenleaf",
         "linkedin": "https://www.linkedin.com/in/morgan-greenleaf/"
       }
-    ],
-      atlantaPresence: true,
+          ],
       recentNews: "Opened in early 2023; residents benefit from Biolocity network and core facility access."
     },
     {
@@ -594,8 +579,7 @@ export const atlantaTechBioEcosystem = {
         "name": "Paul Joseph",
         "linkedin": "https://www.linkedin.com/in/paul-j-joseph-266015240/"
       }
-    ],
-      atlantaPresence: true,
+          ],
       recentNews: "Launched as Georgia Tech's commercialization powerhouse in 2025. Partners with Technology Licensing to vet and launch startups across medtech, biotech, engineering, and diagnostics. Supports Biolocity teams and collaborates with GT VentureLab and EIR networks."
     },
     {
@@ -616,8 +600,7 @@ export const atlantaTechBioEcosystem = {
         "role": "Associate Director",
         "linkedin": "https://www.linkedin.com/in/sara-martin-henderson/"
       }
-    ],
-      atlantaPresence: true,
+          ],
       recentNews: "Leads Georgia Tech's NSF I-Corps Node and early-stage founder support programs. Works closely with Quadrant-i, CREATE-X, and Biolocity to support translational research commercialization."
     },
     {
@@ -628,7 +611,6 @@ export const atlantaTechBioEcosystem = {
       description: "Emory's central technology transfer office, advising researchers on IP, licensing, commercialization, and supporting translational startups.",
       website: "https://ott.emory.edu",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Enabled 231 invention disclosures, 35 licenses, and launched Entrepreneurship Clinic and Bench2Market programs in FY2024."
     },
     {
@@ -805,7 +787,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/christoff-coetzee-7673291/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Acquired AKESOgen in 2019; maintains Atlanta operations as part of its national genomics infrastructure for precision medicine and clinical trials."
     },
     {
@@ -842,7 +823,7 @@ export const atlantaTechBioEcosystem = {
       website: "https://biotechexec.com",
       keyPersonnel: [
       {
-        "name": "Robert Allen",
+        "name": "Russell Allen",
         "linkedin": "https://www.linkedin.com/in/rallen/"
       },
       {
@@ -943,7 +924,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/dave-wiedman-b821881/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Selected by CHOA for $1.5B Arthur M. Blank Hospital RTLS system; deployed solutions at Marcus Tower (Piedmont) and Correll Pavilion (Grady). Named Top 40 healthtech company by TAG."
     },
     {
@@ -962,8 +942,7 @@ export const atlantaTechBioEcosystem = {
         "name": "Katie Vest",
         "linkedin": "https://www.linkedin.com/in/katievest/"
       }
-    ],
-      atlantaPresence: true,
+          ],
       recentNews: "Hosts legal educational series 'Brewed & Briefed' in Atlanta. Bill and Katie provide counsel to Georgia life sciences startups and investors."
     },
     {
@@ -1108,6 +1087,10 @@ export const atlantaTechBioEcosystem = {
       {
         "name": "Chen Benkler",
         "linkedin": "https://www.linkedin.com/in/chen-benkler/"
+      },
+      {
+        "name": "Nicholas Boulis",
+        "linkedin": "https://www.linkedin.com/in/nicholas-boulis-73124b39/"
       }
     ],
       recentNews: "Preclinical stage startup aiming to improve CNS drug delivery."
@@ -1297,7 +1280,6 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-based medtech startup developing Maternal aRMOR, a wearable for early detection of postpartum hemorrhage.",
       website: "https://armormedical.us",
       keyPersonnel: [],
-      atlantaPresence: true,
       recentNews: "Received strategic investment from Catalyst by Wellstar in June 2025; selected for MedTech Innovator 2025 showcase."
     },
     {
@@ -1313,7 +1295,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/lucienneide/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Partnered with Emory Healthcare to launch patient-centered treatment apps; continues to expand remote monitoring capabilities."
     },
     {
@@ -1321,7 +1302,7 @@ export const atlantaTechBioEcosystem = {
       name: "Metaclipse Therapeutics",
       type: "startup",
       size: 10,
-      description: "Atlanta-based immuno-oncology startup developing virus-like particle (VLP)-based personalized cancer vaccines using patient tumor neoantigen profiling and AI-powered peptide selection.",
+      description: "Atlanta-based immuno-oncology startup developing virus-like particle (VLP)-based personalized cancer vaccines using patient tumor neoantigen profiling and AI-powered peptide selection. Founded by Georgia Tech researchers with Emory-affiliated scientific advisors.",
       website: "https://metaclipse.com/",
       keyPersonnel: [
       {
@@ -1333,7 +1314,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/sampath-ramachandiran-714ab918/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Emerging from stealth in 2024 with preclinical data on personalized VLP vaccine platform targeting solid tumors; affiliated with Georgia Tech and backed by seed-stage venture capital."
     },
     {
@@ -1349,7 +1329,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/mark-b-8a42648/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Launched in 2023 by serial genomics entrepreneur Mark Bouzyk. Builds upon clinical genomics platforms developed through AKESOgen and other ventures."
     },
     {
@@ -1373,7 +1352,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/hungjenwu/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Launched Atlanta chapter in 2023. Supports cohorts of academic biotech teams with support from national partners like BMS, RA Capital, and Y Combinator Bio."
     },
     {
@@ -1393,7 +1371,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/bettylouanderson/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Supports early-stage and growth healthtech firms in navigating regulatory and commercial milestones; frequently involved in regional biotech events and venture readiness programs."
     },
     {
@@ -1417,7 +1394,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/barun-brahma-b5b9247/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Awarded NIH Fast‑Track Phase I/II SBIR in 2024. First‑in‑human trials initiated for GBM device in partnership with academic medical centers."
     },
     {
@@ -1433,7 +1409,6 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/nick-housley/"
       }
     ],
-      atlantaPresence: true,
       recentNews: "Selected in 2025‑26 Biolocity cohort for ovarian cancer drug delivery platform – receiving mentorship and non‑dilutive funding."
     }
   ],
@@ -1474,12 +1449,14 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "sanguina", type: "spinout", description: "Co-founded by GT alumna from student research" },
     { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
     { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
+    { source: "emory", target: "metaclipse", type: "collaboration", description: "Emory-affiliated advisors and founders contribute scientific expertise to VLP platform development." },
     { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
     // --- VC Investments ---
     { source: "portal", target: "moonlight", type: "investment", description: "Co-led Series A for peanut allergy immunotherapy platform" },
     { source: "portal", target: "synaptrix", type: "investment", description: "Portfolio company focused on post-surgical pain management" },
     { source: "portal", target: "topodx", type: "investment", description: "Portfolio company advancing AI-driven AST diagnostics" },
+    { source: "portal", target: "armor_medical", type: "membership", description: "Portal member company with access to lab space and resources" },
     { source: "eddf", target: "allonix", type: "investment", description: "EDDF portfolio investment in IBD therapeutics" },
     { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
@@ -1499,7 +1476,7 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "drive", type: "affiliation", description: "Emory-formed drug development accelerator for antiviral therapeutics" },
     { source: "drive", target: "eddf", type: "origin", description: "Established EDDF using royalties from DRIVE-licensed drug molnupiravir (LAGEVRIO)" },
     { source: "drive", target: "altesa", type: "spinout", description: "Antiviral spinout formed via DRIVE to develop Vapendavir and other respiratory virus therapies" },
-    { source: "drive", target: "agrithera", type: "founding_support", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
+    { source: "drive", target: "agrithera", type: "research_funding", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
 
     // --- Key Partnerships & Affiliations ---
     { source: "gatech", target: "science_square", type: "development", description: "Development partner (via GATV)" },
@@ -1560,8 +1537,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported foundational cancer research programs at Emory that seeded Cambium." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
 
-    { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" },
-    { source: "clearside", target: "micron", type: "technology", description: "Shared Prausnitz technology base" }
+    { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" }
   ]
 };
 
