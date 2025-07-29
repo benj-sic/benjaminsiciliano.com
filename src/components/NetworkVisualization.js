@@ -941,6 +941,16 @@ const NetworkVisualization = () => {
               <label className="filter-checkbox">
                 <input 
                   type="checkbox" 
+                  checked={filters.healthSystems}
+                  onChange={() => toggleFilter('healthSystems')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Health Systems</span>
+              </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
                   checked={filters.government}
                   onChange={() => toggleFilter('government')}
                 />
