@@ -880,7 +880,10 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-based provider of real-time location systems (RTLS) and environmental monitoring software for hospitals. Selected by CHOA, Grady, and Piedmont to support Georgia's largest healthcare construction projects.",
       website: "https://www.vizziatech.com",
       keyPersonnel: [
-      "Dave Wiedman"
+      {
+        "name": "Dave Wiedman",
+        "linkedin": "https://www.linkedin.com/in/dave-wiedman-b821881/"
+      }
     ],
       atlantaPresence: true,
       recentNews: "Selected by CHOA for $1.5B Arthur M. Blank Hospital RTLS system; deployed solutions at Marcus Tower (Piedmont) and Correll Pavilion (Grady). Named Top 40 healthtech company by TAG."
@@ -1197,13 +1200,34 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-based digital health startup using physician-built AI to streamline care team workflows. Offers solutions for inbox management, disease escalation, and revenue cycle through real-time prioritization and routing of clinical and admin tasks.",
       website: "https://www.switchboardmd.com",
       keyPersonnel: [
-      "Blake Anderson, MD",
-      "Bradley Gallaher",
-      "Ankit Tiwari",
-      "Will Akers",
-      "Kelly Luckasevic",
-      "Ashley Badgett",
-      "Yuanda Zhu, PhD"
+      {
+        "name": "Blake Anderson, MD",
+        "linkedin": "https://www.linkedin.com/in/blake-anderson-md-176339a2/"
+      },
+      {
+        "name": "Bradley Gallaher",
+        "linkedin": "https://www.linkedin.com/in/bradleygallaher/"
+      },
+      {
+        "name": "Ankit Tiwari",
+        "linkedin": "https://www.linkedin.com/in/ankitrtiwari/"
+      },
+      {
+        "name": "Will Akers",
+        "linkedin": "https://www.linkedin.com/in/williamakers1177/"
+      },
+      {
+        "name": "Kelly Luckasevic",
+        "linkedin": "https://www.linkedin.com/in/kellyluckasevic/"
+      },
+      {
+        "name": "Ashley Badgett",
+        "linkedin": "https://www.linkedin.com/in/ashley-badgett/"
+      },
+      {
+        "name": "Yuanda Zhu, PhD",
+        "linkedin": "https://www.linkedin.com/in/yuanda-zhu/"
+      }
     ],
       recentNews: "Continues to grow adoption of its AI-powered platform across provider networks. Built by clinicians with deep healthcare system expertise."
     },
@@ -1226,10 +1250,73 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-based digital health company offering software platforms for chronic disease management, patient engagement, and clinical decision support. Works with health systems to integrate into EHRs and personalize patient treatment.",
       website: "https://rimidi.com",
       keyPersonnel: [
-      "Lucienne Ide"
+      {
+        "name": "Lucienne Ide",
+        "linkedin": "https://www.linkedin.com/in/lucienneide/"
+      }
     ],
       atlantaPresence: true,
       recentNews: "Partnered with Emory Healthcare to launch patient-centered treatment apps; continues to expand remote monitoring capabilities."
+    },
+    {
+      id: "metaclipse",
+      name: "MetaClipse Therapeutics",
+      type: "startup",
+      size: 10,
+      description: "Atlanta-based immuno-oncology startup developing virus-like particle (VLP)-based personalized cancer vaccines using patient tumor neoantigen profiling and AI-powered peptide selection.",
+      website: "https://metaclipse.com/",
+      keyPersonnel: [
+      {
+        "name": "Hemanth Singuluri",
+        "linkedin": "https://www.linkedin.com/in/hemanth-singuluri/"
+      },
+      {
+        "name": "Sampath Ramachandiran",
+        "linkedin": "https://www.linkedin.com/in/sampath-ramachandiran-714ab918/"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Emerging from stealth in 2024 with preclinical data on personalized VLP vaccine platform targeting solid tumors; affiliated with Georgia Tech and backed by seed-stage venture capital."
+    },
+    {
+      id: "allai_health",
+      name: "Allai Health",
+      type: "startup",
+      size: 10,
+      description: "Atlanta-based AI-enabled precision medicine startup focused on genomics, early detection, and personalized health insights. Uses multimodal patient data to identify disease risk and improve outcomes.",
+      website: "https://allaihealth.com/",
+      keyPersonnel: [
+      {
+        "name": "Mark Bouzyk",
+        "linkedin": "https://www.linkedin.com/in/mark-b-8a42648/"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Launched in 2023 by serial genomics entrepreneur Mark Bouzyk. Builds upon clinical genomics platforms developed through AKESOgen and other ventures."
+    },
+    {
+      id: "nucleate_atlanta",
+      name: "Nucleate",
+      type: "community",
+      size: 12,
+      description: "Nonprofit organization accelerating the next generation of biotech founders from academia. Nucleate Atlanta chapter supports PhD and postdoc-led venture teams at Emory, Georgia Tech, and Morehouse through structured mentorship and company formation programs.",
+      website: "https://nucleate.org/",
+      keyPersonnel: [
+      {
+        "name": "Daniel Aziz",
+        "linkedin": "https://www.linkedin.com/in/danielaziz298461138/"
+      },
+      {
+        "name": "Sean Healy",
+        "linkedin": "https://www.linkedin.com/in/sean-healy-53202b18b/"
+      },
+      {
+        "name": "Hung-Jen Wu",
+        "linkedin": "https://www.linkedin.com/in/hungjenwu/"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Launched Atlanta chapter in 2023. Supports cohorts of academic biotech teams with support from national partners like BMS, RA Capital, and Y Combinator Bio."
     }
   ],
 
@@ -1250,6 +1337,10 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "grady", type: "collaboration", description: "Emory partners with Grady for clinical care, research, and workforce development" },
     { source: "morehouse", target: "grady", type: "collaboration", description: "Morehouse School of Medicine is a core academic partner at Grady" },
     { source: "agetech_connect", target: "oak_street_health", type: "partnership", description: "AgeTech Connect engages Oak Street Health for aging-related healthcare pilot opportunities" },
+    { source: "nucleate_atlanta", target: "gatech", type: "collaboration", description: "Nucleate Atlanta recruits founders and fellows from Georgia Tech graduate programs." },
+    { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
+    { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
+    { source: "nucleate_atlanta", target: "gsu", type: "collaboration", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
 
     // --- University Spinouts ---
     { source: "emory", target: "geovax", type: "spinout", description: "Technology developed at Emory" },
@@ -1264,6 +1355,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "oxos", type: "spinout", description: "Formed via CREATE-X program" },
     { source: "gatech", target: "sanguina", type: "spinout", description: "Co-founded by GT alumna from student research" },
     { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
+    { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
     { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
     // --- VC Investments ---
