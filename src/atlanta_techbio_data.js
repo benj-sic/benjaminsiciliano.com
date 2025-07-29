@@ -1317,6 +1317,26 @@ export const atlantaTechBioEcosystem = {
     ],
       atlantaPresence: true,
       recentNews: "Launched Atlanta chapter in 2023. Supports cohorts of academic biotech teams with support from national partners like BMS, RA Capital, and Y Combinator Bio."
+    },
+    {
+      id: "tamm_net",
+      name: "TAMM Net",
+      type: "serviceProvider",
+      size: 12,
+      description: "Atlanta-based strategic consulting firm specializing in regulatory strategy, market access, and commercialization planning for life sciences and digital health startups. Active partner in healthtech innovation and product launch strategy.",
+      website: "https://www.tammnet.com/",
+      keyPersonnel: [
+      {
+        "name": "Art Spalding",
+        "linkedin": "https://www.linkedin.com/in/artspalding/"
+      },
+      {
+        "name": "Betty Lou Anderson",
+        "linkedin": "https://www.linkedin.com/in/bettylouanderson/"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Supports early-stage and growth healthtech firms in navigating regulatory and commercial milestones; frequently involved in regional biotech events and venture readiness programs."
     }
   ],
 
