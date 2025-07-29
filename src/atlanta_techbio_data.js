@@ -563,6 +563,61 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Opened in early 2023; residents benefit from Biolocity network and core facility access."
     },
     {
+      id: "quadrant_i",
+      name: "Quadrant-i",
+      type: "facility",
+      size: 15,
+      description: "Georgia Tech's innovation acceleration hub transforming disruptive research into scalable startups. Quadrant-i empowers faculty and students through expert-led commercialization strategy, venture-building programs, and investor access—bridging research and market impact.",
+      website: "https://quadrant-i.gatech.edu/",
+      keyPersonnel: [
+      {
+        "name": "Harold Solomon",
+        "linkedin": "https://www.linkedin.com/in/haroldmsolomon/"
+      },
+      {
+        "name": "Cynthia Lee Sundell",
+        "linkedin": "https://www.linkedin.com/in/cynthia-sundell-71b21017/"
+      },
+      {
+        "name": "Jeff Garbers",
+        "linkedin": "https://www.linkedin.com/in/jgarbers/"
+      },
+      {
+        "name": "Jonathan Goldman",
+        "linkedin": "https://www.linkedin.com/in/jonathanagoldman/"
+      },
+      {
+        "name": "Richard Gruber",
+        "linkedin": "https://www.linkedin.com/in/richard-gruber-b75327280/"
+      },
+      {
+        "name": "Paul Joseph"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Launched as Georgia Tech's commercialization powerhouse in 2025. Partners with Technology Licensing to vet and launch startups across medtech, biotech, engineering, and diagnostics. Supports Biolocity teams and collaborates with GT VentureLab and EIR networks."
+    },
+    {
+      id: "venturelab",
+      name: "Georgia Tech VentureLab",
+      type: "facility",
+      size: 15,
+      description: "Georgia Tech's startup incubation and customer discovery program. Serves as an NSF I-Corps Node, helping faculty and student innovators across biotech, medtech, AI, and engineering translate research into marketable ventures.",
+      website: "https://venturelab.gatech.edu/",
+      keyPersonnel: [
+      {
+        "name": "Keith McGreggor",
+        "role": "Director"
+      },
+      {
+        "name": "Sara Henderson",
+        "role": "Associate Director"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Leads Georgia Tech's NSF I-Corps Node and early-stage founder support programs. Works closely with Quadrant-i, CREATE-X, and Biolocity to support translational research commercialization."
+    },
+    {
       id: "emory_ott",
       name: "Emory OTT",
       type: "serviceProvider",
@@ -1337,6 +1392,48 @@ export const atlantaTechBioEcosystem = {
     ],
       atlantaPresence: true,
       recentNews: "Supports early-stage and growth healthtech firms in navigating regulatory and commercial milestones; frequently involved in regional biotech events and venture readiness programs."
+    },
+    {
+      id: "exvade_bioscience",
+      name: "Exvade Bioscience",
+      type: "startup",
+      size: 4,
+      description: "Atlanta-based medtech startup developing the Tumor Monorail device for guiding glioblastoma cells into a retrievable reservoir, enabling serial biopsy and real‑time monitoring.",
+      website: "https://www.exvadebio.com/",
+      keyPersonnel: [
+      {
+        "name": "Nassir Mokarram, PhD"
+      },
+      {
+        "name": "Sean Meehan"
+      },
+      {
+        "name": "Barun Brahma, MD"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Awarded NIH Fast‑Track Phase I/II SBIR in 2024. First‑in‑human trials initiated for GBM device in partnership with academic medical centers."
+    },
+    {
+      id: "oncurna",
+      name: "OnCuRNA",
+      type: "startup",
+      size: 6,
+      description: "Georgia Tech/Biolocity-supported biotech startup developing nanostructured RNAi delivery platforms (SANGs) targeting solid tumors, including ovarian and other high‑need cancers.",
+      website: "https://oncurna.com/",
+      keyPersonnel: [
+      {
+        "name": "Nick Housley, PhD"
+      },
+      {
+        "name": "Alisyn Bourque"
+      },
+      {
+        "name": "M. G. Finn, PhD"
+      }
+    ],
+      atlantaPresence: true,
+      recentNews: "Selected in 2025‑26 Biolocity cohort for ovarian cancer drug delivery platform – receiving mentorship and non‑dilutive funding."
     }
   ],
 
@@ -1417,6 +1514,18 @@ export const atlantaTechBioEcosystem = {
     { source: "emory", target: "lab2launch", type: "infrastructure", description: "Lab2Launch located onsite at Emory's HSRB II Innovation Floor; supports Emory-affiliated innovators." },
     { source: "emory_ott", target: "emory", type: "affiliation", description: "Office of Technology Transfer is Emory's formal commercialization & IP licensing arm." },
     { source: "emory_ott", target: "biolocity", type: "collaboration", description: "OTT collaborates with Biolocity to connect researchers to commercialization funding and support programs." },
+    
+    // --- Quadrant-i Relationships ---
+    { source: "gatech", target: "quadrant_i", type: "affiliation", description: "Quadrant-i is a Georgia Tech commercialization and venture creation unit accelerating research translation into startups." },
+    { source: "quadrant_i", target: "biolocity", type: "collaboration", description: "Quadrant-i Principals advise Biolocity projects and help connect funded teams to investors and partners." },
+    { source: "quadrant_i", target: "emory", type: "collaboration", description: "Collaborates on Emory-affiliated Biolocity projects such as Infinite Loupe and OnCuRNA." },
+    { source: "quadrant_i", target: "exvade_bioscience", type: "support", description: "Supported commercialization of continuous glioblastoma biopsy device developed at Georgia Tech." },
+    { source: "quadrant_i", target: "oncurna", type: "support", description: "Assisted Georgia Tech researchers in forming OnCuRNA, focused on solid tumor RNAi therapeutics." },
+    
+    // --- VentureLab Relationships ---
+    { source: "gatech", target: "venturelab", type: "affiliation", description: "VentureLab is Georgia Tech's startup launch and commercialization support hub." },
+    { source: "venturelab", target: "quadrant_i", type: "collaboration", description: "VentureLab works upstream of Quadrant-i to identify and nurture promising tech transfer opportunities." },
+    { source: "venturelab", target: "biolocity", type: "collaboration", description: "Refers high-potential GT teams to Biolocity for translational medtech support and funding." },
     { source: "gatech", target: "cambium_oncology", type: "research_collaboration", description: "Georgia Tech bioengineering and drug manufacturing support" },
     { source: "oxos", target: "department_of_veterans_affairs", type: "partnership", description: "Pilot program partnership" },
     { source: "micron", target: "cdc", type: "partnership", description: "Research and clinical trial collaboration" },
