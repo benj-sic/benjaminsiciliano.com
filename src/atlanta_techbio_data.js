@@ -1005,6 +1005,21 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: [],
       recentNews: "Hosted Georgia Health Leaders Summit and connects hospital innovation teams with startups and vendors."
     },
+    {
+      id: "emory_biotech_consulting_club",
+      name: "EBCC",
+      type: "community",
+      size: 11,
+      description: "Student-led biotech consulting organization supporting Atlanta-area faculty inventors and startups with commercialization strategy. EBCC provides teams of graduate students from Emory, Georgia Tech, and Georgia State to perform market research, IP strategy, regulatory analysis, and customer discovery.",
+      website: "https://scholarblogs.emory.edu/ebcc/",
+      keyPersonnel: [
+      {
+        "name": "Bill Wuest",
+        "linkedin": "https://www.linkedin.com/in/bill-wuest-7452063/"
+      }
+    ],
+      recentNews: "Since launching in 2019 under the Innovate@Emory initiative, EBCC has completed 50+ startup projects with partners including Biolocity, Emory OTT, GRA, and Emory Advancement."
+    },
 
     // EMERGING STARTUPS
     {
@@ -1487,11 +1502,13 @@ export const atlantaTechBioEcosystem = {
     { source: "create_x", target: "oxos", type: "support", description: "Incubated at CREATE-X (alumni)" },
     { source: "biolocity", target: "sanguina", type: "support", description: "Received early grant funding" },
     { source: "biolocity", target: "andson_biotech", type: "support", description: "Received translational funding and startup support from Biolocity." },
+    { source: "biolocity", target: "emory_biotech_consulting_club", type: "collaboration", description: "EBCC provides consulting services to Biolocity-supported startups." },
     { source: "emory", target: "ebfi", type: "affiliation", description: "Hosted and operated by Emory University" },
     { source: "emory", target: "eddf", type: "affiliation", description: "Part of Emory Innovations, Inc." },
 
     // --- DRIVE Relationships ---
     { source: "emory", target: "drive", type: "affiliation", description: "Emory-formed drug development accelerator for antiviral therapeutics" },
+    { source: "emory", target: "emory_biotech_consulting_club", type: "affiliation", description: "Student-led biotech consulting organization under Innovate@Emory initiative." },
     { source: "drive", target: "eddf", type: "origin", description: "Established EDDF using royalties from DRIVE-licensed drug molnupiravir (LAGEVRIO)" },
     { source: "drive", target: "altesa", type: "spinout", description: "Antiviral spinout formed via DRIVE to develop Vapendavir and other respiratory virus therapies" },
     { source: "drive", target: "agrithera", type: "research_funding", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
@@ -1556,6 +1573,11 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported foundational cancer research programs at Emory that seeded Cambium." },
     { source: "gra", target: "andson_biotech", type: "funding", description: "Received early translational support from Georgia Research Alliance." },
     { source: "gra", target: "axion_biosystems", type: "funding", description: "Received financial backing via Georgia Research Alliance / GRA Venture Fund." },
+    { source: "gra", target: "emory_biotech_consulting_club", type: "collaboration", description: "EBCC provides consulting services to GRA-supported projects and startups." },
+    { source: "emory_biotech_consulting_club", target: "emory", type: "affiliation", description: "EBCC is a student-led commercialization and consulting program founded at Emory University under the Innovate@Emory initiative." },
+    { source: "emory_biotech_consulting_club", target: "emory_ott", type: "collaboration", description: "Partners with Emory OTT to support technology assessments and connect student teams to Emory-affiliated startups." },
+    { source: "emory_biotech_consulting_club", target: "biolocity", type: "collaboration", description: "Collaborates with Biolocity to provide commercialization strategy support for early-stage medtech projects." },
+    { source: "emory_biotech_consulting_club", target: "gra", type: "collaboration", description: "Engages with Georgia Research Alliance through university commercialization programs and startup diligence efforts." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
 
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" }
