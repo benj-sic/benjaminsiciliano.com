@@ -736,6 +736,22 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Continues to operate as a specialized neurogenetic testing lab within LabCorp."
     },
     {
+      id: "axion_biosystems",
+      name: "Axion BioSystems",
+      type: "serviceProvider",
+      size: 9,
+      description: "Atlanta‑headquartered live‑cell analysis platform company (MEA & imaging) spun out of Georgia Tech and widely used in neuroscience, cardiology, oncology, and virology research.",
+      website: "https://axionbiosystems.com",
+      keyPersonnel: [
+      {
+        "name": "Julien Bradley",
+        "role": "CEO",
+        "linkedin": "https://www.linkedin.com/in/julienbradley/"
+      }
+    ],
+      recentNews: "Acquired by Summa Equity in 2021; raised ~$20M including support via GRA Venture Fund."
+    },
+    {
       id: "radyus",
       name: "Radyus Research",
       type: "serviceProvider",
@@ -1449,6 +1465,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
     { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
     { source: "gatech", target: "andson_biotech", type: "spinout", description: "Georgia Tech spinout commercializing DynaChip™ microfluidic technology." },
+    { source: "gatech", target: "axion_biosystems", type: "spinout", description: "Founded based on licensed technology from Georgia Tech NanoBioSensors Lab." },
     { source: "emory", target: "metaclipse", type: "collaboration", description: "Emory-affiliated advisors and founders contribute scientific expertise to VLP platform development." },
     { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
@@ -1538,6 +1555,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "allonix", type: "funding", description: "Backed Emory IP and early preclinical studies through GRA-sponsored programs." },
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported foundational cancer research programs at Emory that seeded Cambium." },
     { source: "gra", target: "andson_biotech", type: "funding", description: "Received early translational support from Georgia Research Alliance." },
+    { source: "gra", target: "axion_biosystems", type: "funding", description: "Received financial backing via Georgia Research Alliance / GRA Venture Fund." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
 
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" }
