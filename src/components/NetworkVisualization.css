@@ -24,6 +24,9 @@
   --network-control-border: rgba(255, 255, 255, 0.2);
   --network-control-hover: rgba(255, 255, 255, 0.1);
   --network-control-disabled: rgba(255, 255, 255, 0.3);
+  /* New highlight colors for better contrast */
+  --network-highlight-color: #ff6b6b;
+  --network-highlight-shadow: rgba(255, 107, 107, 0.6);
 }
 
 /* Light theme */
@@ -51,6 +54,9 @@
   --network-control-border: rgba(0, 0, 0, 0.2);
   --network-control-hover: rgba(0, 0, 0, 0.05);
   --network-control-disabled: rgba(0, 0, 0, 0.3);
+  /* Light theme highlight colors for better contrast */
+  --network-highlight-color: #3b82f6;
+  --network-highlight-shadow: rgba(59, 130, 246, 0.6);
 }
 
 .network-visualization {
@@ -291,20 +297,18 @@
 
 /* Node highlighting styles */
 .node-highlighted {
-  stroke: var(--text-accent) !important;
-  stroke-width: 3px !important;
-  filter: drop-shadow(0 0 12px var(--shadow-color)) !important;
-  animation: pulse 2s infinite;
+  stroke: var(--network-highlight-color) !important;
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) !important;
 }
 
 .label-highlighted {
   font-weight: 900 !important;
   font-size: 32px !important;
-  fill: var(--text-accent) !important;
-  stroke: var(--text-accent) !important;
+  fill: var(--network-highlight-color) !important;
+  stroke: var(--network-highlight-color) !important;
   stroke-width: 1px !important;
-  filter: drop-shadow(0 0 8px var(--shadow-color)) !important;
-  animation: pulse 2s infinite;
+  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) !important;
 }
 
 /* Node dimming styles */
@@ -331,14 +335,7 @@
   transition: opacity 0.3s ease;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
+
 
 /* Improved node visibility with enhanced shadows */
 .network-canvas circle {
