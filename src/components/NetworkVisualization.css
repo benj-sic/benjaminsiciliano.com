@@ -510,6 +510,45 @@
   transition: color 0.3s ease;
 }
 
+.connection-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.connection-list li {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  padding: 0;
+  position: relative;
+  padding-left: 16px;
+}
+
+.connection-list li:before {
+  content: '•';
+  color: var(--network-text-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.connection-list .connection-name {
+  font-weight: 600;
+  color: var(--network-text-primary);
+}
+
+.connection-list .connection-type {
+  font-style: italic;
+  color: var(--network-text-accent);
+  margin: 0 4px;
+}
+
+.connection-list .connection-description {
+  color: var(--network-text-secondary);
+}
+
 .recent-news {
   color: var(--network-text-secondary);
   font-size: 0.8rem;

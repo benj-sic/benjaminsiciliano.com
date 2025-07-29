@@ -543,6 +543,17 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: ["Courtney J. Law"],
       recentNews: "Expanding Atlanta office by 40,000 sq ft; designated as one of JPMorgan's 23 global technology centers; active in life sciences startup banking and biotech client services."
     },
+    {
+      id: "jones_day",
+      name: "Jones Day",
+      type: "serviceProvider",
+      size: 12,
+      description: "Global law firm with an established Atlanta office; active in life sciences, medtech, M&A, cross-border and VC transaction support for startups and growth companies.",
+      website: "https://www.jonesday.com",
+      keyPersonnel: ["Bill Zawrotny", "Katie Vest"],
+      atlantaPresence: true,
+      recentNews: "Hosts legal educational series 'Brewed & Briefed' in Atlanta. Bill and Katie provide counsel to Georgia life sciences startups and investors."
+    },
 
     // EMERGING STARTUPS
     {
@@ -762,8 +773,9 @@ export const atlantaTechBioEcosystem = {
     // --- Key Partnerships & Affiliations ---
     { source: "gatech", target: "science_square", type: "development", description: "Development partner (via GATV)" },
     { source: "science_square", target: "portal", type: "tenant", description: "Anchor tenant" },
+    { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
+    { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
     { source: "catalyst", target: "atdc", type: "partnership", description: "Formal partnership for HealthTech pipeline" },
-    { source: "portal", target: "catalyst", type: "partnership", description: "Partner in Novo Nordisk 'Pathbreakers' program" },
     { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
     { source: "biolocity", target: "gatech", type: "collaboration", description: "Joint program with Georgia Tech" },

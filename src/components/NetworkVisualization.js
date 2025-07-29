@@ -226,6 +226,13 @@ const NetworkVisualization = () => {
           strokeDasharray: '4,4',
           opacity: 0.7
         };
+      case 'education_program':
+        return {
+          stroke: '#9b59b6',
+          strokeWidth: 6,
+          strokeDasharray: '6,3',
+          opacity: 0.7
+        };
       default:
         return {
           stroke: '#a0a0a0',
@@ -949,8 +956,16 @@ const NetworkVisualization = () => {
                     <span className="legend-label">Service Providers</span>
                   </div>
                   <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.health_system]}}></div>
+                    <span className="legend-label">Health Systems</span>
+                  </div>
+                  <div className="legend-item">
                     <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.government]}}></div>
                     <span className="legend-label">Government</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.facility]}}></div>
+                    <span className="legend-label">Facilities</span>
                   </div>
                 </div>
                 
@@ -979,6 +994,10 @@ const NetworkVisualization = () => {
                   <div className="legend-item">
                     <div className="legend-line" style={{borderColor: '#dda0dd', borderStyle: 'dashed'}}></div>
                     <span className="legend-label">Support</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-line" style={{borderColor: '#9b59b6', borderStyle: 'dashed'}}></div>
+                    <span className="legend-label">Education Program</span>
                   </div>
                 </div>
               </div>
@@ -1097,6 +1116,28 @@ const NetworkVisualization = () => {
                           <p className="recent-news">{selectedNode.recentNews}</p>
                         </div>
                       )}
+                      
+                      <div className="details-section">
+                        <h4>Connections</h4>
+                        <ul className="connection-list">
+                          {networkData.links
+                            .filter(link => link.source === selectedNode.id || link.target === selectedNode.id)
+                            .map((link, idx) => {
+                              const isSource = link.source === selectedNode.id;
+                              const otherId = isSource ? link.target : link.source;
+                              const otherNode = networkData.nodes.find(n => n.id === otherId);
+                              const typeLabel = link.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase()); // e.g. "spinout" → "Spinout"
+                              
+                              return (
+                                <li key={idx}>
+                                  <span className="connection-name">{otherNode?.name}</span>
+                                  <span className="connection-type">{typeLabel}</span>
+                                  <span className="connection-description">: {link.description}</span>
+                                </li>
+                              );
+                            })}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 )}
