@@ -96,6 +96,39 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: [],
       recentNews: "EHIH has partnered with Verily, Stryker, and others to pilot new healthcare technologies. Supports Emory's biotech and digital health spinouts via clinical research access and implementation studies."
     },
+    {
+      id: "wellstar",
+      name: "Wellstar Health System",
+      type: "health_system",
+      size: 18,
+      description: "One of the largest health systems in Georgia, operating hospitals, urgent care, and specialty centers. Parent organization of Catalyst by Wellstar, the system's innovation and venture arm.",
+      website: "https://www.wellstar.org",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Wellstar continues to expand its footprint through new clinical sites and innovation initiatives via Catalyst."
+    },
+    {
+      id: "grady",
+      name: "Grady Health System",
+      type: "health_system",
+      size: 17,
+      description: "Atlanta's largest safety-net hospital and trauma center. Key clinical research site and community health partner for Emory, Morehouse, and Georgia CTSA programs.",
+      website: "https://www.gradyhealth.org",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Grady remains central to Emory and Morehouse clinical research and care access for underserved populations."
+    },
+    {
+      id: "oak_street_health",
+      name: "Oak Street Health",
+      type: "health_system",
+      size: 14,
+      description: "Value-based primary care provider with multiple clinics across Atlanta serving Medicare and elderly populations. Often partners with digital health and aging-focused innovators.",
+      website: "https://www.oakstreethealth.com",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Oak Street continues to grow its clinic network in Georgia and expand partnerships with health tech innovators."
+    },
 
     // MAJOR COMPANIES - CLINICAL STAGE
     {
@@ -209,7 +242,10 @@ export const atlantaTechBioEcosystem = {
       size: 20,
       description: "Life sciences venture development engine combining seed capital with 33,000 sq ft of managed lab space at Science Square.",
       website: "https://portalinnovations.com",
-      keyPersonnel: ["John Flavin", "Suna Lumeh"],
+      keyPersonnel: [
+        { name: "Eddie Lai", linkedin: "https://www.linkedin.com/in/edwarddlai/" },
+        { name: "Ashley Cornelison", linkedin: "https://www.linkedin.com/in/ashley-cornelison/" }
+      ],
       recentNews: "Made first Atlanta investment in Moonlight Therapeutics. Partnered with Novo Nordisk on 'Pathbreakers' program."
     },
     {
@@ -781,6 +817,10 @@ export const atlantaTechBioEcosystem = {
     { source: "emory_healthcare", target: "florence", type: "pilot", description: "Florence's eClinical tools validated in Emory Healthcare Innovation Hub pilot programs" },
     { source: "switchboard_md", target: "emory_healthcare", type: "pilot", description: "Partnered with Emory Healthcare to implement and validate clinical operations and AI workflow tools" },
     { source: "switchboard_md", target: "emory", type: "collaboration", description: "Founded by Emory-affiliated physicians and collaborates on applied AI and clinical operations research" },
+    { source: "catalyst", target: "wellstar", type: "affiliation", description: "Catalyst is the innovation and venture arm of Wellstar Health System" },
+    { source: "emory", target: "grady", type: "collaboration", description: "Emory partners with Grady for clinical care, research, and workforce development" },
+    { source: "morehouse", target: "grady", type: "collaboration", description: "Morehouse School of Medicine is a core academic partner at Grady" },
+    { source: "agetech_connect", target: "oak_street_health", type: "partnership", description: "AgeTech Connect engages Oak Street Health for aging-related healthcare pilot opportunities" },
 
     // --- University Spinouts ---
     { source: "emory", target: "inhibikase", type: "spinout", description: "Licensed technology, early investor" },
