@@ -698,6 +698,16 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Life sciences economic development initiatives."
     },
     {
+      id: "georgia_ctsa",
+      name: "Georgia CTSA",
+      type: "government",
+      size: 14,
+      description: "Georgia Clinical & Translational Science Alliance (Georgia CTSA) is an NIH-funded statewide collaboration accelerating clinical and translational research across Emory, Georgia Tech, Morehouse School of Medicine, and Georgia State University.",
+      website: "https://georgiactsa.org",
+      keyPersonnel: [],
+      recentNews: "Supports clinical trials infrastructure, pilot grant funding, and translational training programs across Atlanta's research universities and hospitals."
+    },
+    {
       id: "georgia_ecd",
       name: "GDEcD",
       type: "government",
@@ -868,7 +878,12 @@ export const atlantaTechBioEcosystem = {
       size: 11,
       description: "Full-service CRO based in Atlanta, clinical trial support",
       website: "https://peachtreebrs.com",
-      keyPersonnel: [],
+      keyPersonnel: [
+        {
+          "name": "Kristy Nichols",
+          "linkedin": "https://www.linkedin.com/in/kristy-nichols-85068410/"
+        }
+      ],
       recentNews: "Regional clinical trial services"
     },
     {
@@ -1459,6 +1474,12 @@ export const atlantaTechBioEcosystem = {
     { source: "catalyst", target: "wellstar", type: "affiliation", description: "Catalyst is the innovation and venture arm of Wellstar Health System" },
     { source: "emory", target: "grady", type: "collaboration", description: "Emory partners with Grady for clinical care, research, and workforce development" },
     { source: "morehouse", target: "grady", type: "collaboration", description: "Morehouse School of Medicine is a core academic partner at Grady" },
+    { source: "georgia_ctsa", target: "emory", type: "collaboration", description: "Core CTSA partner leading clinical trials infrastructure and translational science programs." },
+    { source: "georgia_ctsa", target: "gatech", type: "collaboration", description: "Georgia Tech co-leads Georgia CTSA efforts in device development, data science, and commercialization support." },
+    { source: "georgia_ctsa", target: "morehouse", type: "collaboration", description: "Partner in CTSA community engagement, clinical trial access, and translational research training." },
+    { source: "georgia_ctsa", target: "gsu", type: "collaboration", description: "Contributes public health and behavioral science expertise to statewide CTSA programs." },
+    { source: "georgia_ctsa", target: "grady", type: "infrastructure", description: "Operates clinical research units within Grady for translational and population health research." },
+    { source: "georgia_ctsa", target: "choa", type: "infrastructure", description: "Supports pediatric clinical research infrastructure at CHOA sites." },
     { source: "agetech_connect", target: "oak_street_health", type: "partnership", description: "AgeTech Connect engages Oak Street Health for aging-related healthcare pilot opportunities" },
     { source: "nucleate_atlanta", target: "gatech", type: "collaboration", description: "Nucleate Atlanta recruits founders and fellows from Georgia Tech graduate programs." },
     { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
@@ -1477,6 +1498,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "moonlight", type: "spinout", description: "GT Capstone project spinout" },
     { source: "gatech", target: "oxos", type: "spinout", description: "Formed via CREATE-X program" },
     { source: "gatech", target: "sanguina", type: "spinout", description: "Co-founded by GT alumna from student research" },
+    { source: "sanguina", target: "emory", type: "spinout", description: "Georgia Tech / Emory research spinout—AnemoCheck platform developed with Wilbur Lam (Emory/GT) and clinically validated using Emory patient data." },
     { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
     { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
     { source: "gatech", target: "andson_biotech", type: "spinout", description: "Georgia Tech spinout commercializing DynaChip™ microfluidic technology." },
