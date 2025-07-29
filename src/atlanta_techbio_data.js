@@ -450,7 +450,7 @@ export const atlantaTechBioEcosystem = {
         "Caitlin J. Couch",
         "Dave Edwards"
       ],
-      recentNews: "Helped local biotechs win multiple SBIR/STTR grants in 2023."
+      recentNews: "Announced strategic partnerships in 2024‑25 with Eurofins CDMO Alphora (May 2025) and Dt&CRO (May 2024) to deliver integrated, end‑to‑end drug development services—from preclinical through GMP manufacturing—for biotech clients globally."
     },
     {
       id: "akesogen",
