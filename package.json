@@ -20,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate-social-card": "node scripts/generate-social-card.js"
+    "generate-social-card": "node scripts/generate-social-card.js",
+    "generate-all-social-images": "node scripts/generate-all-social-images.js"
   },
   "eslintConfig": {
     "extends": [

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Card Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .social-preview {
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+        }
+        .image-test {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .image-test img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        code {
+            background: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Social Card Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>Current Social Card Image</h2>
+        <div class="image-test">
+            <img src="/social-card.png?v=2" alt="Social Card Test" />
+        </div>
+        <p><strong>Image URL:</strong> <code>https://benjaminsiciliano.com/social-card.png?v=2</code></p>
+        <p><strong>Dimensions:</strong> 1200x630px</p>
+        <p><strong>File Size:</strong> ~495KB</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Meta Tags Check</h2>
+        <p>The following meta tags should be present in the main page:</p>
+        <ul>
+            <li><code>og:image</code> = <code>https://benjaminsiciliano.com/social-card.png?v=2</code></li>
+            <li><code>og:image:width</code> = <code>1200</code></li>
+            <li><code>og:image:height</code> = <code>630</code></li>
+            <li><code>og:image:type</code> = <code>image/png</code></li>
+            <li><code>og:image:secure_url</code> = <code>https://benjaminsiciliano.com/social-card.png?v=2</code></li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>LinkedIn Debugging Steps</h2>
+        <ol>
+            <li><strong>Clear LinkedIn Cache:</strong> LinkedIn caches social cards for a long time. Try sharing the URL in a private/incognito window.</li>
+            <li><strong>Use LinkedIn's Debug Tool:</strong> Visit <a href="https://www.linkedin.com/post-inspector/" target="_blank">LinkedIn Post Inspector</a> and paste your URL to see how LinkedIn sees your page.</li>
+            <li><strong>Check Image Accessibility:</strong> The image should be publicly accessible without authentication.</li>
+            <li><strong>Verify HTTPS:</strong> LinkedIn requires HTTPS for social cards.</li>
+            <li><strong>Wait for Cache:</strong> LinkedIn can take up to 24 hours to update cached images.</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>Quick Tests</h2>
+        <p><strong>Test 1:</strong> <a href="https://benjaminsiciliano.com/social-card.png?v=2" target="_blank">Direct image link</a></p>
+        <p><strong>Test 2:</strong> <a href="https://www.linkedin.com/post-inspector/" target="_blank">LinkedIn Post Inspector</a></p>
+        <p><strong>Test 3:</strong> <a href="https://developers.facebook.com/tools/debug/" target="_blank">Facebook Sharing Debugger</a></p>
+    </div>
+    
+    <div class="social-preview">
+        <h3>Expected Social Card Preview</h3>
+        <p>When shared on LinkedIn, your post should show:</p>
+        <ul>
+            <li><strong>Title:</strong> Benjamin Siciliano, PhD - Atlanta TechBio Network</li>
+            <li><strong>Description:</strong> Interactive visualization of Georgia's biotech innovation ecosystem. Explore startups, universities, VCs, and service providers powering Atlanta's biotech scene.</li>
+            <li><strong>Image:</strong> The Atlanta TechBio Network visualization with title overlay</li>
+        </ul>
+    </div>
+</body>
+</html> 

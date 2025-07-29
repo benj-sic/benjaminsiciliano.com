@@ -5,6 +5,8 @@ This directory contains scripts for generating social media cards for the Atlant
 ## Files
 
 - `generate-social-card.js` - Script to generate a social card image of the network visualization
+- `generate-all-social-images.js` - Comprehensive script to generate all social media images
+- `SOCIAL_IMAGES_GUIDE.md` - Complete guide for all social media images and their use cases
 - `README.md` - This documentation file
 
 ## Social Card Generation
@@ -14,10 +16,11 @@ The social card is a static image of the Atlanta TechBio Network visualization w
 ### Features
 
 - **Dimensions**: 1200x630px (optimal for social media platforms)
-- **Background**: Beautiful gradient background
+- **Background**: Transparent background (no gradient)
 - **Network**: Shows all nodes and connections without text labels
-- **Title Overlay**: "Atlanta TechBio Network" with subtitle
+- **Clean Design**: No text overlay, just the pure network visualization
 - **Auto-centering**: Network automatically centers and scales to fit the card
+- **LinkedIn Optimized**: Includes additional meta tags and cache-busting parameters
 
 ### Usage
 
@@ -68,6 +71,15 @@ If the script fails:
 2. Check that the network data file exists: `src/atlanta_techbio_data.js`
 3. Verify the public directory is writable
 4. On macOS, you may need to grant screen recording permissions to Terminal/VS Code
+
+#### LinkedIn Social Card Issues
+
+If the social card isn't appearing on LinkedIn:
+1. **Clear LinkedIn Cache**: Try sharing in a private/incognito window
+2. **Use LinkedIn Post Inspector**: Visit https://www.linkedin.com/post-inspector/ and paste your URL
+3. **Check Image Accessibility**: Verify the image loads at https://benjaminsiciliano.com/social-card.png?v=2
+4. **Wait for Cache**: LinkedIn can take up to 24 hours to update cached images
+5. **Test Page**: Visit https://benjaminsiciliano.com/social-test.html for debugging tools
 
 ### Integration
 
