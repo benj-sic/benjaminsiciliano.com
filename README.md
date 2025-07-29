@@ -9,16 +9,17 @@ A modern, interactive personal website featuring an Atlanta TechBio Network visu
 - **Interactive Nodes**: Clickable organizations with detailed information panels
 - **Smart Highlighting**: Click a node to highlight it and dim non-connected nodes
 - **Toggle Selection**: Click the same node again to deselect it
-- **Filtering System**: Filter by organization type (companies, universities, incubators, VCs, service providers)
+- **Filtering System**: Filter by organization type (companies, startups, universities, incubators, VCs, service providers)
 - **Zoom & Pan**: Natural zoom range from 10% to 100% with smooth transitions
 - **Auto-Centering**: Network automatically re-centers on filter changes
 - **Force-Directed Layout**: Dynamic positioning with physics simulation
 - **Mobile Optimized**: Touch-friendly interactions on mobile devices
 
 ### Network Data
-- **50+ Organizations**: Atlanta's biotech/healthtech ecosystem
+- **40+ Organizations**: Curated Atlanta biotech/healthtech ecosystem focused on innovation-generating entities
 - **200+ Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
 - **Major Hubs**: Emory, Georgia Tech, Portal Innovations, ATDC prominently featured
+- **Dual Filtering**: Separate filters for startups vs established companies
 - **Color-Coded Types**: Visual distinction between organization categories
 - **Rich Metadata**: Detailed descriptions, websites, key personnel, and recent news
 - **LinkedIn Integration**: Direct links to key personnel profiles where available
@@ -192,6 +193,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Location**: Atlanta, Georgia
 
 ## 🎯 Recent Updates
+
+### v1.2.0 - Enhanced Filtering & Network Scope
+- ✅ **Dual Organization Filtering**: Separate filters for startups vs established companies
+- ✅ **Network Scope Optimization**: Curated to focus on innovation-generating entities
+- ✅ **Updated Node Descriptions**: Clarified affiliations (e.g., Tempus as Chicago-based with Atlanta lab)
+- ✅ **Removed Generic Service Providers**: Streamlined to focus on Atlanta-specific biotech ecosystem
+- ✅ **Enhanced Legend**: Updated to distinguish between startups and companies
 
 ### v1.1.0 - Enhanced Network Interaction
 - ✅ **Smart Node Highlighting**: Click a node to highlight it and dim non-connected nodes
