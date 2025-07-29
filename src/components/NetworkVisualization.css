@@ -165,6 +165,14 @@
   overflow: visible;
 }
 
+/* Desktop only: Fixed height to prevent expansion when sidebar content grows */
+@media (min-width: 1025px) {
+  .network-layout {
+    height: 80vh; /* Fixed height to prevent expansion */
+    max-height: 80vh; /* Constrain maximum height */
+  }
+}
+
 /* Network Container - Takes most of the space */
 .network-main {
   flex: 1;
@@ -185,16 +193,24 @@
 /* Sidebar - Separate from network, smaller on desktop */
 .network-sidebar-left {
   width: 280px;
-  min-height: 80vh;
+  height: auto;
   overflow-y: auto;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   padding: 20px;
   border: 1px solid #666;
   border-right: none;
   border-radius: 8px 0 0 8px;
   margin-right: 0;
+}
+
+/* Desktop only: Constrain height to prevent expansion */
+@media (min-width: 1025px) {
+  .network-sidebar-left {
+    max-height: 80vh; /* Constrain height in desktop view */
+  }
 }
 
 /* Main Network Canvas - Enhanced to use more space */
@@ -213,6 +229,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* Prevent iOS Safari from interfering with touch events */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Ensure network canvas background is properly themed immediately */
@@ -650,6 +668,13 @@
   justify-content: center;
   width: 36px;
   height: 36px;
+  /* Touch improvements for mobile */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .control-button:hover:not(:disabled) {
@@ -718,7 +743,7 @@
 
 /* Dropdown Containers */
 .dropdown-container {
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .dropdown-button {
@@ -752,11 +777,12 @@
 }
 
 .dropdown-content {
-  margin-top: 8px;
-  padding: 12px;
+  margin-top: 0;
+  padding: 8px;
   background: var(--network-bg-secondary);
   border: 1px solid var(--network-border-primary);
   border-radius: 6px;
+  margin-bottom: 0;
 }
 
 /* Control Groups */
@@ -1049,7 +1075,6 @@
   .network-sidebar-left {
     width: 100%;
     height: auto;
-    min-height: 50vh;
     max-height: none;
     border: 1px solid #666;
     border-radius: 8px;
@@ -1059,7 +1084,7 @@
     display: flex !important;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 8px;
     padding: 20px;
     margin-top: 10px;
     margin-right: 0;
@@ -1095,7 +1120,8 @@
     border: 1px solid var(--network-border-primary);
     border-top: none;
     border-radius: 0 0 8px 8px;
-    margin-top: -1px;
+    margin-top: 0;
+    padding: 8px;
     display: block !important;
   }
   
@@ -1128,7 +1154,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
-    padding: 12px;
+    padding: 8px;
   }
   
   /* Legend layout for tablet */
@@ -1136,12 +1162,12 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
-    padding: 12px;
+    padding: 8px;
   }
   
   /* Search layout for tablet - Increased max height and better spacing */
 .search-dropdown {
-  padding: 12px;
+  padding: 8px;
   max-height: 400px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -1203,14 +1229,13 @@
   .network-sidebar-left {
     width: 100%;
     height: auto;
-    min-height: 60vh;
     max-height: none;
     border: 1px solid #666;
     border-radius: 8px;
     order: 2;
     display: flex !important;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
     padding: 20px;
     margin-top: 10px;
     margin-right: 0;
@@ -1244,7 +1269,8 @@
     border: 1px solid var(--border-primary);
     border-top: none;
     border-radius: 0 0 8px 8px;
-    margin-top: -1px;
+    margin-top: 0;
+    padding: 8px;
     display: block !important;
   }
   
@@ -1271,6 +1297,9 @@
     flex: 1;
     min-width: 44px;
     height: 44px;
+    /* Enhanced touch target for mobile */
+    padding: 12px;
+    border-radius: 8px;
   }
   
   /* Mobile filter grid */
@@ -1278,7 +1307,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    padding: 16px;
+    padding: 8px;
   }
   
   /* Mobile legend layout */
@@ -1286,12 +1315,12 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 12px;
-    padding: 16px;
+    padding: 8px;
   }
   
   /* Mobile search layout - Increased height and better spacing */
 .search-dropdown {
-  padding: 16px;
+  padding: 8px;
   max-height: 350px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -1318,12 +1347,31 @@
   
   /* Ensure network canvas is touch-friendly */
   .network-canvas {
-    touch-action: manipulation;
+    touch-action: pan-x pan-y pinch-zoom;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   
   .network-canvas circle {
     cursor: pointer;
-    touch-action: manipulation;
+    touch-action: auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .network-canvas svg {
+    touch-action: pan-x pan-y pinch-zoom;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }
 
@@ -1359,7 +1407,7 @@
     flex: 1;
     min-height: 40vh;
     /* Touch interaction improvements for extra small screens */
-    touch-action: manipulation;
+    touch-action: auto;
   }
   
   .network-header {
@@ -1376,13 +1424,12 @@
   
   .network-sidebar-left {
     padding: 16px;
-    gap: 12px;
+    gap: 8px;
     border: 1px solid #666;
     border-radius: 8px;
     margin-top: 10px;
     margin-right: 0;
     margin-bottom: 0;
-    min-height: 50vh;
   }
   
   /* Extra small screen controls */
@@ -1401,7 +1448,7 @@
   .filter-dropdown {
     grid-template-columns: 1fr;
     gap: 8px;
-    padding: 12px;
+    padding: 8px;
   }
   
   .filter-checkbox {
@@ -1410,7 +1457,7 @@
   
   /* Extra small screen legend */
   .legend-dropdown {
-    padding: 12px;
+    padding: 8px;
   }
   
   .legend-item {
@@ -1419,7 +1466,7 @@
   
   /* Extra small screen search - Increased height for better usability */
 .search-dropdown {
-  padding: 12px;
+  padding: 8px;
   max-height: 300px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

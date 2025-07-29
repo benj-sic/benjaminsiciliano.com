@@ -59,7 +59,7 @@ const NetworkVisualization = () => {
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const zoomParam = urlParams.get('zoom');
-    return zoomParam ? parseFloat(zoomParam) : 0.20; // Start at 20% zoom for better initial view
+    return zoomParam ? parseFloat(zoomParam) : 0.25; // Start at 25% zoom for better initial view
   };
 
   const [zoomLevel, setZoomLevel] = useState(getInitialZoomLevel);
@@ -300,7 +300,7 @@ const NetworkVisualization = () => {
         const padding = 20; // Minimal padding
         const scaleX = (width - padding * 2) / networkWidth;
         const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY, 0.2); // Cap at 20% zoom
+        const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
         
         // Calculate the transform to center the network in the viewport
         // Adjust the Y translation to center properly
@@ -316,7 +316,7 @@ const NetworkVisualization = () => {
         // Fallback to simple centering if no nodes
         const transform = d3.zoomIdentity
           .translate(width / 2, height / 2)
-          .scale(0.7); // Moderate zoom fallback
+          .scale(0.25); // 25% zoom fallback
         
         svg.transition()
           .duration(500)
@@ -352,7 +352,7 @@ const NetworkVisualization = () => {
         const padding = 20; // Minimal padding
         const scaleX = (width - padding * 2) / networkWidth;
         const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY, 0.2); // Cap at 20% zoom
+        const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
         
         // Calculate the transform to center the network in the viewport
         // Adjust the Y translation to center properly
@@ -368,7 +368,7 @@ const NetworkVisualization = () => {
         // Fallback to simple centering if no nodes
         const transform = d3.zoomIdentity
           .translate(width / 2, height / 2)
-          .scale(0.2); // 20% zoom fallback
+          .scale(0.25); // 25% zoom fallback
         
         svg.transition()
           .duration(500)
@@ -379,7 +379,7 @@ const NetworkVisualization = () => {
 
   // Zoom functions
   const zoomIn = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 1.0 && !isMobile) {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 1.0) {
       const newZoomLevel = Math.min(zoomLevel + 0.1, 1.0); // 10% step, max 100%
       setZoomLevel(newZoomLevel);
       d3.select(svgRef.current)
@@ -390,7 +390,7 @@ const NetworkVisualization = () => {
   };
 
   const zoomOut = () => {
-    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.1 && !isMobile) {
+    if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.1) {
       const newZoomLevel = Math.max(zoomLevel - 0.1, 0.1); // 10% step, minimum 10%
       setZoomLevel(newZoomLevel);
       d3.select(svgRef.current)
@@ -526,6 +526,7 @@ const NetworkVisualization = () => {
     // Add zoom behavior with enhanced controls and mobile optimization
     const zoom = d3.zoom()
       .scaleExtent([0.1, 1.0]) // Zoom range from 10% to 100%
+      .wheelDelta(event => -event.deltaY * (event.deltaMode ? 120 : 1) / 500) // Smoother wheel zoom
       .on("zoom", (event) => {
         // Use requestAnimationFrame for smoother zoom on mobile
         requestAnimationFrame(() => {
@@ -534,24 +535,24 @@ const NetworkVisualization = () => {
         });
       });
 
-    // Only enable zoom on desktop - completely disable on mobile
+      // Enable zoom for both desktop and mobile, but with different configurations
     if (!isMobile) {
+      // Desktop: full zoom functionality
       svg.call(zoom);
     } else {
-      // On mobile, prevent any zoom/pan interactions but still allow programmatic transforms
-      svg.on("wheel.zoom", null);
-      svg.on("mousedown.zoom", null);
-      svg.on("dblclick.zoom", null);
+      // Mobile: enable zoom but with touch-friendly settings
+      svg.call(zoom);
+      
+      // Remove any existing touch event handlers that might interfere
       svg.on("touchstart.zoom", null);
       svg.on("touchmove.zoom", null);
       svg.on("touchend.zoom", null);
-      
-      // Still call zoom to set up the behavior for programmatic use
-      svg.call(zoom);
-      
-      // Also prevent any transform changes from user interaction
-      svg.style("pointer-events", "none");
-      svg.selectAll("*").style("pointer-events", "auto");
+      svg.on("touchstart", null);
+      svg.on("touchmove", null);
+      svg.on("touchend", null);
+      svg.on("gesturestart", null);
+      svg.on("gesturechange", null);
+      svg.on("gestureend", null);
     }
     
     // Store reference to zoom behavior
@@ -686,10 +687,6 @@ const NetworkVisualization = () => {
   };
 
   const handleNodeClick = useCallback((node, event) => {
-    // Prevent any default behaviors that might cause animations
-    event?.preventDefault();
-    event?.stopPropagation();
-    
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
     
     // Toggle selection: if clicking the same node, deselect it
@@ -704,32 +701,15 @@ const NetworkVisualization = () => {
       return;
     }
     
-    // On mobile, completely prevent any network movement
+    // On mobile, allow normal interactions but ensure smooth performance
     if (isMobile) {
-      // Force the network to stay in place
+      // Ensure smooth performance on mobile
       if (svgRef.current) {
-        const svg = d3.select(svgRef.current);
-        const zoomGroup = svg.select("g.zoom-group");
-        
-        // Lock the current transform
-        const currentTransform = zoomGroup.attr("transform");
-        zoomGroup.attr("transform", currentTransform);
-        
-        // Disable all zoom/pan events
-        svg.on("wheel.zoom", null);
-        svg.on("mousedown.zoom", null);
-        svg.on("dblclick.zoom", null);
-        svg.on("touchstart.zoom", null);
-        svg.on("touchmove.zoom", null);
-        svg.on("touchend.zoom", null);
-        svg.on("click.zoom", null);
-        svg.on("dblclick.zoom", null);
-        
-        // Stop simulation updates temporarily to prevent movement
-        if (simulationRef.current) {
-          simulationRef.current.alpha(0);
-          simulationRef.current.alphaDecay(0);
-        }
+        // Use requestAnimationFrame for smoother updates
+        requestAnimationFrame(() => {
+          // Allow normal zoom/pan interactions
+          // The zoom behavior is already set up in the useEffect
+        });
       }
     }
     
