@@ -38,7 +38,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "uga",
-      name: "University of Georgia",
+      name: "UGA",
       type: "university",
       size: 18,
       description: "Major public research university with strengths in veterinary medicine, pharmacy, and agricultural biotech. A key partner in statewide innovation initiatives through GRA.",
@@ -48,7 +48,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "gsu",
-      name: "Georgia State University",
+      name: "GSU",
       type: "university",
       size: 16,
       description: "Research university with growing programs in infectious disease and neuroscience. Key collaborator on public health initiatives.",
@@ -534,16 +534,6 @@ export const atlantaTechBioEcosystem = {
       website: "https://peachtreebrs.com",
       keyPersonnel: [],
       recentNews: "Regional clinical trial services"
-    },
-    {
-      id: "acrc",
-      name: "Atlanta Clinical Research Centers",
-      type: "serviceProvider",
-      size: 11,
-      description: "Regional CRO specializing in cardiology and metabolics",
-      website: "https://atlantaclinicalresearch.com",
-      keyPersonnel: [],
-      recentNews: "Specialized clinical research services"
     },
     {
       id: "11ten",
