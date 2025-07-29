@@ -103,6 +103,29 @@ const NetworkVisualization = () => {
 
   // Use imported color scheme and type mapping
   const typeMap = nodeTypeMap;
+  
+  // Theme-aware color scheme
+  const getNodeColor = (nodeType) => {
+    const baseColor = nodeColors[typeMap[nodeType]];
+    if (!baseColor) return theme === 'dark' ? '#ffffff' : '#000000';
+    
+    if (theme === 'light') {
+      // Convert dark colors to lighter versions for better readability
+      const colorMap = {
+        '#0033A0': '#4A90E2', // Academia & Research - Lighter Blue
+        '#0D6A42': '#4CAF50', // Company - Lighter Green
+        '#F2A900': '#FFD54F', // Investor - Lighter Gold
+        '#A43533': '#E57373', // Accelerator & Incubator - Lighter Red
+        '#5A2D81': '#BA68C8', // Government & Trade Org - Lighter Purple
+        '#545454': '#9E9E9E', // Service Provider - Lighter Gray
+        '#00AEEF': '#81D4FA', // Startup - Lighter Blue
+        '#7C9A7A': '#A5D6A7', // Provider & Health System - Lighter Sage
+      };
+      return colorMap[baseColor] || baseColor;
+    }
+    
+    return baseColor;
+  };
 
   // Enhanced link styling based on type with new relationship types
   const getLinkStyle = (linkType) => {
@@ -495,7 +518,7 @@ const NetworkVisualization = () => {
       .data(filteredNodes)
       .enter().append("circle")
       .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16)) // Smaller nodes on mobile
-      .attr("fill", d => nodeColors[typeMap[d.type]])
+      .attr("fill", d => getNodeColor(d.type))
       .style("cursor", "pointer")
       .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")) // Remove shadows on mobile
       .attr("class", d => `node ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
@@ -521,14 +544,20 @@ const NetworkVisualization = () => {
       .attr("fill", theme === 'dark' ? "#fff" : "#1a1a1a") // Darker text for light theme
       .attr("font-size", isMobile ? "20px" : "28px") // Smaller font on mobile
       .attr("font-weight", "800") // Bolder font weight
-      .style("pointer-events", "none")
+      .style("pointer-events", "auto")
+      .style("cursor", "pointer")
       .style("text-shadow", isMobile ? "none" : (theme === 'dark' ? 
-        "2px 2px 4px rgba(0,0,0,0.8), 1px 1px 2px rgba(0,0,0,0.6)" : 
-        "2px 2px 4px rgba(255,255,255,0.95), 1px 1px 2px rgba(255,255,255,0.8), 0px 0px 8px rgba(255,255,255,0.6)")) // Enhanced text shadows
+        "1px 1px 2px rgba(0,0,0,0.6)" : 
+        "1px 1px 2px rgba(255,255,255,0.7)")) // Reduced text shadows
       .style("font-family", "system-ui, -apple-system, sans-serif")
-      .style("stroke", theme === 'dark' ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.8)") // Text outline
-      .style("stroke-width", "0.5px") // Thin outline for better contrast
-      .attr("class", d => `label ${selectedNode && selectedNode.id === d.id ? 'label-highlighted' : ''}`);
+      .style("stroke", theme === 'dark' ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.4)") // Text outline
+      .style("stroke-width", "0.3px") // Thinner outline for better contrast
+      .attr("class", d => `label ${selectedNode && selectedNode.id === d.id ? 'label-highlighted' : ''}`)
+      .on("click", function(event, d) {
+        event.stopPropagation(); // Prevent bubbling to container
+        console.log('D3 label click event:', d.id);
+        handleNodeClick(d, event);
+      });
 
     // Add zoom behavior with enhanced controls and mobile optimization
     const zoom = d3.zoom()
@@ -540,26 +569,39 @@ const NetworkVisualization = () => {
           zoomGroup.attr("transform", event.transform);
           setZoomLevel(event.transform.k);
         });
+      })
+      .on("start", (event) => {
+        // Prevent default only for non-touch events to allow native iOS gestures
+        if (!event.sourceEvent || event.sourceEvent.type !== 'touchstart') {
+          event.sourceEvent?.preventDefault();
+        }
       });
 
-      // Enable zoom for both desktop and mobile, but with different configurations
+    // Enable zoom for both desktop and mobile, but with different configurations
     if (!isMobile) {
       // Desktop: full zoom functionality
       svg.call(zoom);
     } else {
-      // Mobile: enable zoom but with touch-friendly settings
+      // Mobile: enable zoom with iOS Safari compatibility
       svg.call(zoom);
       
-      // Remove any existing touch event handlers that might interfere
-      svg.on("touchstart.zoom", null);
-      svg.on("touchmove.zoom", null);
-      svg.on("touchend.zoom", null);
-      svg.on("touchstart", null);
-      svg.on("touchmove", null);
-      svg.on("touchend", null);
-      svg.on("gesturestart", null);
-      svg.on("gesturechange", null);
-      svg.on("gestureend", null);
+      // Set touch-action to allow native gestures while enabling D3 zoom
+      svg.style("touch-action", "pan-x pan-y pinch-zoom");
+      
+      // Add passive touch listeners to improve iOS Safari performance
+      svg.on("touchstart", function(event) {
+        // Don't prevent default - let native gestures work
+        // D3 will handle the zoom behavior
+      }, { passive: true });
+      
+      svg.on("touchmove", function(event) {
+        // Don't prevent default - let native gestures work
+        // D3 will handle the zoom behavior
+      }, { passive: true });
+      
+      svg.on("touchend", function(event) {
+        // Don't prevent default - let native gestures work
+      }, { passive: true });
     }
     
     // Store reference to zoom behavior
@@ -695,6 +737,9 @@ const NetworkVisualization = () => {
 
   const handleNodeClick = useCallback((node, event) => {
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
+    
+    // Stop event propagation to prevent container click handler from firing
+    event?.stopPropagation();
     
     // Toggle selection: if clicking the same node, deselect it
     if (selectedNodeRef.current && selectedNodeRef.current.id === node.id) {
@@ -936,35 +981,35 @@ const NetworkVisualization = () => {
                 <div className="legend-section">
                   <h5>Node Types</h5>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.university]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('university')}}></div>
                     <span className="legend-label">Universities</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.company]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('company')}}></div>
                     <span className="legend-label">Companies</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.vc]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('vc')}}></div>
                     <span className="legend-label">Venture Capital</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.incubator]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('incubator')}}></div>
                     <span className="legend-label">Incubators</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.serviceProvider]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('serviceProvider')}}></div>
                     <span className="legend-label">Service Providers</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.health_system]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('health_system')}}></div>
                     <span className="legend-label">Health Systems</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.government]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('government')}}></div>
                     <span className="legend-label">Government</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: nodeColors[typeMap.facility]}}></div>
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('facility')}}></div>
                     <span className="legend-label">Facilities</span>
                   </div>
                 </div>
@@ -1036,7 +1081,7 @@ const NetworkVisualization = () => {
                           className="search-result-item"
                           onClick={() => handleNodeClick(node)}
                         >
-                          <div className="result-node-color" style={{backgroundColor: nodeColors[typeMap[node.type]]}}></div>
+                          <div className="result-node-color" style={{backgroundColor: getNodeColor(node.type)}}></div>
                           <div className="result-content">
                             <div className="result-name">{node.name}</div>
                             <div className="result-type">{typeMap[node.type] || node.type}</div>
@@ -1161,10 +1206,20 @@ const NetworkVisualization = () => {
             className={`network-canvas ${isLoading ? 'repositioning' : ''}`}
             ref={containerRef}
             onClick={(e) => {
-              // Only clear selection if clicking on the container itself, not on nodes
-              if (e.target === e.currentTarget) {
+              // Clear selection if clicking on empty space (not on nodes, labels, or links)
+              const target = e.target;
+              const isNode = target.classList.contains('node') || target.classList.contains('label');
+              const isLink = target.tagName === 'line';
+              const isControl = target.closest('.network-sidebar-left') || target.closest('.dropdown-container');
+              
+              // If clicking on empty space (not on interactive elements), clear selection
+              if (!isNode && !isLink && !isControl) {
                 setSelectedNode(null);
                 selectedNodeRef.current = null;
+                setConnectedNodes(new Set());
+                setSearchQuery('');
+                setSearchResults([]);
+                setShowSearch(false);
               }
             }}
           >
