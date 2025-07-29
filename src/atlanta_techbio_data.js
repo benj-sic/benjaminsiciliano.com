@@ -591,7 +591,8 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/richard-gruber-b75327280/"
       },
       {
-        "name": "Paul Joseph"
+        "name": "Paul Joseph",
+        "linkedin": "https://www.linkedin.com/in/paul-j-joseph-266015240/"
       }
     ],
       atlantaPresence: true,
@@ -607,11 +608,13 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: [
       {
         "name": "Keith McGreggor",
-        "role": "Director"
+        "role": "Director",
+        "linkedin": "https://www.linkedin.com/in/keithmcgreggor/"
       },
       {
         "name": "Sara Henderson",
-        "role": "Associate Director"
+        "role": "Associate Director",
+        "linkedin": "https://www.linkedin.com/in/sara-martin-henderson/"
       }
     ],
       atlantaPresence: true,
@@ -1402,13 +1405,16 @@ export const atlantaTechBioEcosystem = {
       website: "https://www.exvadebio.com/",
       keyPersonnel: [
       {
-        "name": "Nassir Mokarram, PhD"
+        "name": "Nassir Mokarram, PhD",
+        "linkedin": "https://www.linkedin.com/in/nassir-mokarram-5b966017/"
       },
       {
-        "name": "Sean Meehan"
+        "name": "Sean Meehan",
+        "linkedin": "https://www.linkedin.com/in/sean-meehan-93799215/"
       },
       {
-        "name": "Barun Brahma, MD"
+        "name": "Barun Brahma, MD",
+        "linkedin": "https://www.linkedin.com/in/barun-brahma-b5b9247/"
       }
     ],
       atlantaPresence: true,
@@ -1423,13 +1429,8 @@ export const atlantaTechBioEcosystem = {
       website: "https://oncurna.com/",
       keyPersonnel: [
       {
-        "name": "Nick Housley, PhD"
-      },
-      {
-        "name": "Alisyn Bourque"
-      },
-      {
-        "name": "M. G. Finn, PhD"
+        "name": "Nick Housley, PhD",
+        "linkedin": "https://www.linkedin.com/in/nick-housley/"
       }
     ],
       atlantaPresence: true,
@@ -1530,7 +1531,7 @@ export const atlantaTechBioEcosystem = {
     { source: "oxos", target: "department_of_veterans_affairs", type: "partnership", description: "Pilot program partnership" },
     { source: "micron", target: "cdc", type: "partnership", description: "Research and clinical trial collaboration" },
     { source: "iqvia_atlanta", target: "cdc", type: "partnership", description: "Real-world data partnership" },
-    { source: "akesogen", target: "cdc", type: "service", description: "Genomic sequencing services contract" },
+
 
     // --- Service Provider Relationships ---
     { source: "king_spalding", target: "vero", type: "service", description: "FDA regulatory legal counsel" },
@@ -1558,8 +1559,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "allonix", type: "funding", description: "Backed Emory IP and early preclinical studies through GRA-sponsored programs." },
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported foundational cancer research programs at Emory that seeded Cambium." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
-    { source: "georgia_bio", target: "vero", type: "membership", description: "Trade association member" },
-    { source: "georgia_bio", target: "geovax", type: "membership", description: "Trade association member" },
+
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" },
     { source: "clearside", target: "micron", type: "technology", description: "Shared Prausnitz technology base" }
   ]
