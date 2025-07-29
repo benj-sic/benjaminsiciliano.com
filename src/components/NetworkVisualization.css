@@ -55,8 +55,8 @@
   --network-control-hover: rgba(0, 0, 0, 0.05);
   --network-control-disabled: rgba(0, 0, 0, 0.3);
   /* Light theme highlight colors for better contrast */
-  --network-highlight-color: #3b82f6;
-  --network-highlight-shadow: rgba(59, 130, 246, 0.6);
+  --network-highlight-color: #ff6b6b;
+  --network-highlight-shadow: rgba(255, 107, 107, 0.6);
 }
 
 .network-visualization {

@@ -783,6 +783,19 @@ const NetworkVisualization = () => {
     setSearchQuery('');
     setSearchResults([]);
     setShowSearch(true); // Auto-open the search & details dropdown
+    
+    // Auto-scroll to the search & details section
+    setTimeout(() => {
+      const sidebar = document.querySelector('.network-sidebar-left');
+      const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
+      if (sidebar && searchDropdownButton) {
+        const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
+        sidebar.scrollTo({
+          top: scrollTop,
+          behavior: 'smooth'
+        });
+      }
+    }, 100); // Small delay to ensure the dropdown is rendered
   }, [isMobile, selectedNode, networkData.links]);
 
   return (
