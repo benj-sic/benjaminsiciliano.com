@@ -688,7 +688,10 @@ export const atlantaTechBioEcosystem = {
       description: "Specialized neurogenetics CRO acquired by LabCorp in 2019. Provides testing services to Emory and other institutions.",
       website: "https://mnglabs.com",
       keyPersonnel: [
-      "LabCorp Leadership"
+      {
+        "name": "William Trey Langley",
+        "linkedin": "https://www.linkedin.com/in/william-trey-langley-17147921/"
+      }
     ],
       recentNews: "Continues to operate as a specialized neurogenetic testing lab within LabCorp."
     },
@@ -728,16 +731,24 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Announced strategic partnerships in 2024‑25 with Eurofins CDMO Alphora (May 2025) and Dt&CRO (May 2024) to deliver integrated, end‑to‑end drug development services—from preclinical through GMP manufacturing—for biotech clients globally."
     },
     {
-      id: "akesogen",
-      name: "AKESOgen",
+      id: "tempus",
+      name: "Tempus",
       type: "serviceProvider",
-      size: 12,
-      description: "Genomics and bioinformatics CRO acquired by Tempus in 2019. A key service provider to the CDC.",
-      website: "https://tempus.com",
+      size: 14,
+      description: "AI-powered precision medicine company offering clinical and molecular data solutions. Operates a CLIA‑compliant, CAP‑accredited genomics lab in Atlanta following its 2019 acquisition of AKESOgen.",
+      website: "https://www.tempus.com",
       keyPersonnel: [
-      "Tempus Leadership"
+      {
+        "name": "Maria Mikkelson",
+        "linkedin": "https://www.linkedin.com/in/maria-mikkelson-1b97b784/"
+      },
+      {
+        "name": "Christoff Coetzee",
+        "linkedin": "https://www.linkedin.com/in/christoff-coetzee-7673291/"
+      }
     ],
-      recentNews: "Atlanta lab has expanded Tempus's sequencing capabilities since its acquisition."
+      atlantaPresence: true,
+      recentNews: "Acquired AKESOgen in 2019; maintains Atlanta operations as part of its national genomics infrastructure for precision medicine and clinical trials."
     },
     {
       id: "king_spalding",
