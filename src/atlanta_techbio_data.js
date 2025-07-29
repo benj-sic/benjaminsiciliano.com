@@ -583,7 +583,14 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Grassroots founder and funder gathering focused on early-stage healthtech, biotech, and digital health in Atlanta. Builds trust-based connections across investors, operators, and domain experts.",
       website: "https://www.linkedin.com/company/bonnefireatl/",
-      keyPersonnel: [],
+      keyPersonnel: [
+        { name: "Nadine Peever", role: "Co-Founder" },
+        { name: "Alexa Morse", role: "Advisor & Co-Founder" },
+        { name: "Sarah Carrigan", role: "Public Health Engagement Chair" },
+        { name: "Eddie Lai", role: "Advisor" },
+        { name: "Patrick Kennedy", role: "Host Team Member" },
+        { name: "Ben Huffman", role: "Host Team Member" }
+      ],
       recentNews: "Hosted monthly pitch and networking events in 2024–2025 featuring emerging Atlanta healthtech startups."
     },
     {
@@ -598,7 +605,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "ache_georgia",
-      name: "ACHE – Georgia Chapter",
+      name: "ACHE of Georgia",
       type: "community",
       size: 12,
       description: "Professional society for healthcare executives across Georgia. Provides education, networking, and mentorship for clinical innovation leaders across hospitals, payers, and systems.",
@@ -705,7 +712,10 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Venture support institute based at Emory. Identifies and supports high-potential life science innovations with investment, mentorship, and commercialization strategy to bridge academia and industry.",
       website: "https://www.ebfi.org/",
-      keyPersonnel: [],
+      keyPersonnel: [
+        { name: "Michael Tanenbaum", linkedin: "https://www.linkedin.com/in/michael-tanenbaum-447a54b/" },
+        { name: "Nassir Mokarram", linkedin: "https://www.linkedin.com/in/nassir-mokarram-5b966017/" }
+      ],
       recentNews: "Supports Emory-affiliated startups across medtech, diagnostics, and therapeutics."
     },
     {
