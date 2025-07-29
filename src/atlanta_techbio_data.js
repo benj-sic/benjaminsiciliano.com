@@ -140,6 +140,17 @@ export const atlantaTechBioEcosystem = {
       atlantaPresence: true,
       recentNews: "Corporate HQ based in Atlanta; serves over 300 locations across 33 states; active in home‑based healthcare innovation and population health partnership pilots."
     },
+    {
+      id: "piedmont_healthcare",
+      name: "Piedmont Healthcare",
+      type: "health_system",
+      size: 16,
+      description: "Atlanta-based health system operating hospitals and clinics across Georgia. Known for major construction projects including Marcus Tower and partnerships with healthtech providers.",
+      website: "https://www.piedmont.org",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Completed Marcus Tower (16-story, $603M hospital project) with advanced RTLS and monitoring systems."
+    },
 
     // MAJOR COMPANIES - CLINICAL STAGE
 
@@ -598,6 +609,17 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Expanding Atlanta office by 40,000 sq ft; designated as one of JPMorgan's 23 global technology centers; active in life sciences startup banking and biotech client services."
     },
     {
+      id: "vizzia",
+      name: "Vizzia Technologies",
+      type: "serviceProvider",
+      size: 14,
+      description: "Atlanta-based provider of real-time location systems (RTLS) and environmental monitoring software for hospitals. Selected by CHOA, Grady, and Piedmont to support Georgia's largest healthcare construction projects.",
+      website: "https://www.vizziatech.com",
+      keyPersonnel: ["Dave Wiedman"],
+      atlantaPresence: true,
+      recentNews: "Selected by CHOA for $1.5B Arthur M. Blank Hospital RTLS system; deployed solutions at Marcus Tower (Piedmont) and Correll Pavilion (Grady). Named Top 40 healthtech company by TAG."
+    },
+    {
       id: "jones_day",
       name: "Jones Day",
       type: "serviceProvider",
@@ -807,6 +829,28 @@ export const atlantaTechBioEcosystem = {
         "Yuanda Zhu, PhD"
       ],
       recentNews: "Continues to grow adoption of its AI-powered platform across provider networks. Built by clinicians with deep healthcare system expertise."
+    },
+    {
+      id: "armor_medical",
+      name: "Armor Medical Inc.",
+      type: "startup",
+      size: 10,
+      description: "Atlanta-based medtech startup developing Maternal aRMOR, a wearable for early detection of postpartum hemorrhage.",
+      website: "https://armormedical.us",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Received strategic investment from Catalyst by Wellstar in June 2025; selected for MedTech Innovator 2025 showcase."
+    },
+    {
+      id: "rimidi",
+      name: "Rimidi",
+      type: "startup",
+      size: 12,
+      description: "Atlanta-based digital health company offering software platforms for chronic disease management, patient engagement, and clinical decision support. Works with health systems to integrate into EHRs and personalize patient treatment.",
+      website: "https://rimidi.com",
+      keyPersonnel: ["Lucienne Ide"],
+      atlantaPresence: true,
+      recentNews: "Partnered with Emory Healthcare to launch patient-centered treatment apps; continues to expand remote monitoring capabilities."
     }
   ],
 
@@ -851,6 +895,7 @@ export const atlantaTechBioEcosystem = {
     { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
     { source: "noro", target: "sharecare", type: "investment", description: "Early investor" },
+    { source: "catalyst", target: "armor_medical", type: "investment", description: "Catalyst by Wellstar invested in Armor Medical to support development of Maternal aRMOR wearable (Jun 2025)." },
 
     // --- Accelerator & Incubator Support ---
     { source: "atdc", target: "gatech", type: "affiliation", description: "Program of Georgia Tech" },
@@ -872,6 +917,7 @@ export const atlantaTechBioEcosystem = {
     { source: "science_square", target: "portal", type: "tenant", description: "Anchor tenant" },
     { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
     { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
+    { source: "portal", target: "jpmorgan_chase", type: "partnership", description: "J.P. Morgan Chase is a corporate partner of Portal Innovations, supporting early-stage life sciences and medtech ventures." },
     { source: "catalyst", target: "atdc", type: "partnership", description: "Formal partnership for HealthTech pipeline" },
     { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
@@ -893,6 +939,10 @@ export const atlantaTechBioEcosystem = {
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
     { source: "11ten", target: "emory_healthcare", type: "collaboration", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
+    { source: "vizzia", target: "choa", type: "service", description: "Selected by CHOA to deploy RTLS and asset tracking for Arthur M. Blank Hospital (2025)." },
+    { source: "vizzia", target: "piedmont_healthcare", type: "service", description: "Deployed RTLS platform at Marcus Tower (16-story, $603M hospital project)." },
+    { source: "vizzia", target: "grady", type: "service", description: "Implemented RTLS and environmental monitoring system at Correll Pavilion (10-story surgical center)." },
+    { source: "rimidi", target: "emory_healthcare", type: "pilot", description: "Partnered with Emory Healthcare to deploy digital treatment apps supporting personalized care." },
 
     // --- Broader Ecosystem Connections ---
     { source: "gra", target: "emory", type: "funding", description: "Funding and endowed scholar support" },
