@@ -775,7 +775,7 @@ export const atlantaTechBioEcosystem = {
       name: "Tempus",
       type: "serviceProvider",
       size: 14,
-      description: "AI-powered precision medicine company offering clinical and molecular data solutions. Operates a CLIA‑compliant, CAP‑accredited genomics lab in Atlanta following its 2019 acquisition of AKESOgen.",
+      description: "Chicago-based precision medicine company with Atlanta genomics lab (acquired from AKESOgen in 2019). Maintains significant local operations and clinical partnerships but not Atlanta-founded.",
       website: "https://www.tempus.com",
       keyPersonnel: [
       {
@@ -833,32 +833,14 @@ export const atlantaTechBioEcosystem = {
     ],
       recentNews: "Supports startups emerging from academic accelerators and translational research programs."
     },
-    {
-      id: "mckinsey_atlanta",
-      name: "McKinsey & Company",
-      type: "serviceProvider",
-      size: 14,
-      description: "Global consulting with life sciences practice in Atlanta",
-      website: "https://mckinsey.com",
-      keyPersonnel: [],
-      recentNews: "Life sciences and healthcare consulting"
-    },
-    {
-      id: "deloitte_atlanta",
-      name: "Deloitte",
-      type: "serviceProvider",
-      size: 14,
-      description: "AI compliance and healthcare consulting, Atlas AI™ platform",
-      website: "https://deloitte.com",
-      keyPersonnel: [],
-      recentNews: "NVIDIA-powered compliance consulting"
-    },
+
+
     {
       id: "iqvia_atlanta",
       name: "IQVIA",
       type: "serviceProvider",
       size: 15,
-      description: "Global CRO with Atlanta office, clinical research and consulting",
+      description: "Global CRO with Atlanta office providing clinical trial services and CDC partnerships",
       website: "https://iqvia.com",
       keyPersonnel: [],
       recentNews: "Partnerships with CDC on real-world data"
@@ -911,6 +893,7 @@ export const atlantaTechBioEcosystem = {
     ],
       recentNews: "Expanding Atlanta office by 40,000 sq ft; designated as one of JPMorgan's 23 global technology centers; active in life sciences startup banking and biotech client services."
     },
+
     {
       id: "vizzia",
       name: "Vizzia Technologies",
@@ -1484,6 +1467,7 @@ export const atlantaTechBioEcosystem = {
     { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
     { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
     { source: "portal", target: "jpmorgan_chase", type: "partnership", description: "J.P. Morgan Chase is a corporate partner of Portal Innovations, supporting early-stage life sciences and medtech ventures." },
+
     { source: "catalyst", target: "atdc", type: "partnership", description: "Formal partnership for HealthTech pipeline" },
     { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
