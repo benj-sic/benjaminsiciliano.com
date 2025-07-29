@@ -711,7 +711,7 @@ export const atlantaTechBioEcosystem = {
         id: 'department_of_veterans_affairs',
         name: 'VA',
         type: 'government',
-        size: 8,
+        size: 14,
         description: "Federal agency providing healthcare services to military veterans. A key partner for medtech pilot programs.",
         website: 'https://www.va.gov/',
         keyPersonnel: [],
@@ -739,7 +739,7 @@ export const atlantaTechBioEcosystem = {
       id: "axion_biosystems",
       name: "Axion BioSystems",
       type: "serviceProvider",
-      size: 9,
+      size: 15,
       description: "Atlanta‑headquartered live‑cell analysis platform company (MEA & imaging) spun out of Georgia Tech and widely used in neuroscience, cardiology, oncology, and virology research.",
       website: "https://axionbiosystems.com",
       keyPersonnel: [
@@ -790,7 +790,7 @@ export const atlantaTechBioEcosystem = {
       id: "tempus",
       name: "Tempus",
       type: "serviceProvider",
-      size: 14,
+      size: 17,
       description: "Chicago-based precision medicine company with Atlanta genomics lab (acquired from AKESOgen in 2019). Maintains significant local operations and clinical partnerships but not Atlanta-founded.",
       website: "https://www.tempus.com",
       keyPersonnel: [
@@ -1041,7 +1041,7 @@ export const atlantaTechBioEcosystem = {
       id: "andson_biotech",
       name: "Andson Biotech",
       type: "startup",
-      size: 8,
+      size: 13,
       description: "Georgia Tech spinout building the DynaChip™ X1 platform to automate and miniaturize mass spectrometry sample prep for biologics and advanced therapeutics. Enables faster, cheaper, and more scalable bioanalysis.",
       website: "http://www.andsonbiotech.com",
       keyPersonnel: [
@@ -1248,7 +1248,7 @@ export const atlantaTechBioEcosystem = {
       id: "cambium_oncology",
       name: "Cambium Oncology",
       type: "startup",
-      size: 5,
+      size: 13,
       description: "Immuno‑oncology startup headquartered in Atlanta, GA developing first‑in‑class VIP receptor antagonists (e.g. ANT308) to restore anti‑cancer T‑cell activity in tumors with elevated VIP/VPAC signaling.",
       website: "https://cambiumoncology.com",
       keyPersonnel: [
@@ -1407,7 +1407,7 @@ export const atlantaTechBioEcosystem = {
       id: "exvade_bioscience",
       name: "Exvade Bioscience",
       type: "startup",
-      size: 4,
+      size: 11,
       description: "Atlanta-based medtech startup developing the Tumor Monorail device for guiding glioblastoma cells into a retrievable reservoir, enabling serial biopsy and real‑time monitoring.",
       website: "https://www.exvadebio.com/",
       keyPersonnel: [
@@ -1430,7 +1430,7 @@ export const atlantaTechBioEcosystem = {
       id: "oncurna",
       name: "OnCuRNA",
       type: "startup",
-      size: 6,
+      size: 11,
       description: "Georgia Tech/Biolocity-supported biotech startup developing nanostructured RNAi delivery platforms (SANGs) targeting solid tumors, including ovarian and other high‑need cancers.",
       website: "https://oncurna.com/",
       keyPersonnel: [
