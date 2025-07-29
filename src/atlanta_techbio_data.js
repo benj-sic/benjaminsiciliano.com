@@ -320,6 +320,28 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Supports translational research through strategic grants and mentorship. Operates in collaboration with Emory and Georgia Tech to de-risk early-stage medtech projects."
     },
     {
+      id: "lab2launch",
+      name: "Lab2Launch (Emory HSRB II)",
+      type: "facility",
+      size: 14,
+      description: "Wet lab and co-working space at Emory's HSRB II Innovation Floor, providing bench space and infrastructure to Emory-affiliated startups supported through Biolocity.",
+      website: "https://med.emory.edu/research/research-innovation/entrepreneurship/lab2launch/",
+      keyPersonnel: ["Morgan Greenleaf"],
+      atlantaPresence: true,
+      recentNews: "Opened in early 2023; residents benefit from Biolocity network and core facility access."
+    },
+    {
+      id: "emory_ott",
+      name: "Emory Office of Technology Transfer (OTT)",
+      type: "serviceProvider",
+      size: 17,
+      description: "Emory's central technology transfer office, advising researchers on IP, licensing, commercialization, and supporting translational startups.",
+      website: "https://ott.emory.edu",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Enabled 231 invention disclosures, 35 licenses, and launched Entrepreneurship Clinic and Bench2Market programs in FY2024."
+    },
+    {
       id: "science_square",
       name: "Science Square",
       type: "facility",
@@ -554,6 +576,36 @@ export const atlantaTechBioEcosystem = {
       atlantaPresence: true,
       recentNews: "Hosts legal educational series 'Brewed & Briefed' in Atlanta. Bill and Katie provide counsel to Georgia life sciences startups and investors."
     },
+    {
+      id: "bonnefire_atl",
+      name: "Bonne Fire ATL",
+      type: "community",
+      size: 12,
+      description: "Grassroots founder and funder gathering focused on early-stage healthtech, biotech, and digital health in Atlanta. Builds trust-based connections across investors, operators, and domain experts.",
+      website: "https://www.linkedin.com/company/bonnefireatl/",
+      keyPersonnel: [],
+      recentNews: "Hosted monthly pitch and networking events in 2024–2025 featuring emerging Atlanta healthtech startups."
+    },
+    {
+      id: "agetech_connect",
+      name: "AgeTech Connect",
+      type: "community",
+      size: 11,
+      description: "Ecosystem convener focused on aging innovation, including gerotech, value-based care, and aging-in-place startups. Connects innovators with payers, providers, and public health programs.",
+      website: "https://www.agetechconnect.com",
+      keyPersonnel: [],
+      recentNews: "Launched regional events connecting age-related innovators to pilot partners and investors."
+    },
+    {
+      id: "ache_georgia",
+      name: "ACHE – Georgia Chapter",
+      type: "community",
+      size: 12,
+      description: "Professional society for healthcare executives across Georgia. Provides education, networking, and mentorship for clinical innovation leaders across hospitals, payers, and systems.",
+      website: "https://ga.ache.org",
+      keyPersonnel: [],
+      recentNews: "Hosted Georgia Health Leaders Summit and connects hospital innovation teams with startups and vendors."
+    },
 
     // EMERGING STARTUPS
     {
@@ -779,6 +831,10 @@ export const atlantaTechBioEcosystem = {
     { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
     { source: "biolocity", target: "gatech", type: "collaboration", description: "Joint program with Georgia Tech" },
+    { source: "biolocity", target: "lab2launch", type: "infrastructure_support", description: "Biolocity subsidizes and guides startups in Lab2Launch, includes programmatic support and consultation." },
+    { source: "emory", target: "lab2launch", type: "infrastructure", description: "Lab2Launch located onsite at Emory's HSRB II Innovation Floor; supports Emory-affiliated innovators." },
+    { source: "emory_ott", target: "emory", type: "affiliation", description: "Office of Technology Transfer is Emory's formal commercialization & IP licensing arm." },
+    { source: "emory_ott", target: "biolocity", type: "collaboration", description: "OTT collaborates with Biolocity to connect researchers to commercialization funding and support programs." },
     { source: "gatech", target: "cambium_oncology", type: "research_collaboration", description: "Georgia Tech bioengineering and drug manufacturing support" },
     { source: "oxos", target: "department_of_veterans_affairs", type: "partnership", description: "Pilot program partnership" },
     { source: "micron", target: "cdc", type: "partnership", description: "Research and clinical trial collaboration" },
@@ -825,6 +881,7 @@ export const nodeTypeMap = {
     cro: 'Service Provider',
     law_firm: 'Service Provider',
     consulting: 'Service Provider',
+    community: 'Community Builder',
 };
 
 // Color scheme for different node types (Updated for better visual distinction)
@@ -837,4 +894,5 @@ export const nodeColors = {
     'Service Provider': '#545454', // Gray
     'Startup': '#00AEEF', // Light Blue
     'Provider & Health System': '#7C9A7A', // Sage
+    'Community Builder': '#669999', // muted teal-gray for connective nodes
 };
