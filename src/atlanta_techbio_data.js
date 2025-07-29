@@ -1260,7 +1260,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "metaclipse",
-      name: "MetaClipse Therapeutics",
+      name: "Metaclipse Therapeutics",
       type: "startup",
       size: 10,
       description: "Atlanta-based immuno-oncology startup developing virus-like particle (VLP)-based personalized cancer vaccines using patient tumor neoantigen profiling and AI-powered peptide selection.",
