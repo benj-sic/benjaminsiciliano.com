@@ -321,7 +321,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "lab2launch",
-      name: "Lab2Launch (Emory HSRB II)",
+      name: "Lab2Launch",
       type: "facility",
       size: 14,
       description: "Wet lab and co-working space at Emory's HSRB II Innovation Floor, providing bench space and infrastructure to Emory-affiliated startups supported through Biolocity.",
@@ -332,7 +332,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "emory_ott",
-      name: "Emory Office of Technology Transfer (OTT)",
+      name: "Emory OTT",
       type: "serviceProvider",
       size: 17,
       description: "Emory's central technology transfer office, advising researchers on IP, licensing, commercialization, and supporting translational startups.",
