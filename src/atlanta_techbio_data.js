@@ -129,18 +129,20 @@ export const atlantaTechBioEcosystem = {
       atlantaPresence: true,
       recentNews: "Oak Street continues to grow its clinic network in Georgia and expand partnerships with health tech innovators."
     },
+    {
+      id: "aveanna_healthcare",
+      name: "Aveanna Healthcare",
+      type: "health_system",
+      size: 17,
+      description: "Atlanta-headquartered national leader in pediatric and adult home health, hospice, and private‑duty nursing. Supports aging‑care pilots and partnerships with healthtech innovators.",
+      website: "https://www.aveanna.com",
+      keyPersonnel: [],
+      atlantaPresence: true,
+      recentNews: "Corporate HQ based in Atlanta; serves over 300 locations across 33 states; active in home‑based healthcare innovation and population health partnership pilots."
+    },
 
     // MAJOR COMPANIES - CLINICAL STAGE
-    {
-      id: "inhibikase",
-      name: "Inhibikase Therapeutics",
-      type: "public_company",
-      size: 18,
-      description: "Clinical-stage biotech (NASDAQ: IKT) spun out of Emory research. Secured up to $275M in financing. Current focus is on advancing its lead drug for PAH.",
-      website: "https://inhibikase.com",
-      keyPersonnel: ["Mark Iwicki", "Amit Munshi"],
-      recentNews: "Underwent leadership transformation. Focus has shifted to Pulmonary Arterial Hypertension (PAH)."
-    },
+
     {
       id: "geovax",
       name: "GeoVax Labs",
@@ -395,7 +397,11 @@ export const atlantaTechBioEcosystem = {
       size: 17,
       description: "Public-private partnership that helps recruit top scientists and fund university research commercialization in Georgia.",
       website: "https://gra.org",
-      keyPersonnel: ["Timothy Denning"],
+      keyPersonnel: [
+        "Timothy Denning",
+        { name: "Justin Burns", linkedin: "https://www.linkedin.com/in/jburns301/" },
+        { name: "Andrew Short", linkedin: "https://www.linkedin.com/in/andreweshort/" }
+      ],
       recentNews: "Tim Denning became GRA's fifth president and CEO in November 2023, after serving as vice president for research and economic development at Georgia State University."
     },
     {
@@ -823,7 +829,6 @@ export const atlantaTechBioEcosystem = {
     { source: "agetech_connect", target: "oak_street_health", type: "partnership", description: "AgeTech Connect engages Oak Street Health for aging-related healthcare pilot opportunities" },
 
     // --- University Spinouts ---
-    { source: "emory", target: "inhibikase", type: "spinout", description: "Licensed technology, early investor" },
     { source: "emory", target: "geovax", type: "spinout", description: "Technology developed at Emory" },
     { source: "emory", target: "neurop", type: "spinout", description: "Founded by Emory faculty" },
     { source: "emory", target: "altesa", type: "spinout", description: "Formed via Emory's DRIVE institute" },
@@ -897,8 +902,7 @@ export const atlantaTechBioEcosystem = {
     { source: "georgia_bio", target: "vero", type: "membership", description: "Trade association member" },
     { source: "georgia_bio", target: "geovax", type: "membership", description: "Trade association member" },
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" },
-    { source: "clearside", target: "micron", type: "technology", description: "Shared Prausnitz technology base" },
-    { source: "neurop", target: "inhibikase", type: "industry", description: "CNS therapeutics focus" }
+    { source: "clearside", target: "micron", type: "technology", description: "Shared Prausnitz technology base" }
   ]
 };
 
