@@ -78,7 +78,8 @@ const NetworkVisualization = () => {
       government: true,
       trade: true,
       development: true,
-      facilities: true
+      facilities: true,
+      communityBuilders: true
     };
     
     // If URL has filter parameters, only enable those
@@ -291,7 +292,8 @@ const NetworkVisualization = () => {
     'serviceProvider': 'serviceProviders',
     'government': 'government',
     'trade': 'trade',
-    'development': 'development'
+    'development': 'development',
+    'community': 'communityBuilders'
   }), []);
 
   // Center network function with improved visibility
@@ -987,6 +989,16 @@ const NetworkVisualization = () => {
                 <span className="checkbox-custom"></span>
                 <span className="checkbox-label">Facilities</span>
               </label>
+              
+              <label className="filter-checkbox">
+                <input 
+                  type="checkbox" 
+                  checked={filters.communityBuilders}
+                  onChange={() => toggleFilter('communityBuilders')}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checkbox-label">Community Builders</span>
+              </label>
             </div>
             )}
           </div>
@@ -1034,6 +1046,10 @@ const NetworkVisualization = () => {
                   <div className="legend-item">
                     <div className="legend-color" style={{backgroundColor: getNodeColor('facility')}}></div>
                     <span className="legend-label">Facilities</span>
+                  </div>
+                  <div className="legend-item">
+                    <div className="legend-color" style={{backgroundColor: getNodeColor('community')}}></div>
+                    <span className="legend-label">Community Builders</span>
                   </div>
                 </div>
                 
