@@ -368,7 +368,7 @@ export const atlantaTechBioEcosystem = {
       type: "trade",
       size: 15,
       description: "The state's life sciences trade association (formerly Georgia Bio), with over 500 members. Hosts the annual Golden Helix Awards.",
-      website: "https://georgialifesciences.org",
+      website: "https://www.galifesciences.org/",
       keyPersonnel: ["Maria Thacker-Goethe"],
       recentNews: "Organization rebranded from Georgia Bio to Georgia Life Sciences in January 2025 to reflect expanded membership and scope."
     },
@@ -474,7 +474,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "kilpatrick_townsend",
-      name: "Kilpatrick Townsend & Stockton",
+      name: "Kilpatrick",
       type: "serviceProvider",
       size: 13,
       description: "Major law firm with a dominant intellectual property practice serving the Atlanta tech community.",
