@@ -898,6 +898,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "emory", type: "funding", description: "Funding and endowed scholar support" },
     { source: "gra", target: "gatech", type: "funding", description: "Funding and endowed scholar support" },
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported by Georgia Research Alliance for early research programs" },
+    { source: "gra", target: "gra_fund", type: "affiliation", description: "GRA Venture Fund is the investment arm of the Georgia Research Alliance, supporting university-affiliated startups with seed-stage capital." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
     { source: "georgia_bio", target: "vero", type: "membership", description: "Trade association member" },
     { source: "georgia_bio", target: "geovax", type: "membership", description: "Trade association member" },
