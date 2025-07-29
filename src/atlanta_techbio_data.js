@@ -1,3 +1,4 @@
+// ✅ Updated with verified LinkedIn data from CSV on 2025-07-29
 // Atlanta TechBio Ecosystem Network Data
 // This file contains comprehensive, verified data about the Atlanta TechBio ecosystem.
 // All data has been updated as of July 2025 based on a synthesis of multiple AI fact-checking reports.
@@ -13,7 +14,24 @@ export const atlantaTechBioEcosystem = {
       size: 25,
       description: "Leading private research university with over $1B in sponsored research funding. A major source of biomedical innovation and biotech spinouts like Altesa, NeurOp, and GeoVax.",
       website: "https://emory.edu",
-      keyPersonnel: ["Wilbur Lam", "Morgan Greenleaf", "C. Michael Cassidy", "Todd Polley"],
+      keyPersonnel: [
+      {
+        "name": "Wilbur Lam",
+        "linkedin": "https://www.linkedin.com/in/wilbur-a-lam-5b84a667/"
+      },
+      {
+        "name": "Morgan Greenleaf",
+        "linkedin": "https://www.linkedin.com/in/morgan-greenleaf/"
+      },
+      {
+        "name": "C. Michael Cassidy",
+        "linkedin": "https://www.linkedin.com/in/michael-cassidy-14867130/"
+      },
+      {
+        "name": "Todd Polley",
+        "linkedin": "https://www.linkedin.com/in/polley/"
+      }
+    ],
       recentNews: "Launched BioFoundry Institute (BDCI); multiple spinouts including Brain Trust Bio."
     },
     {
@@ -23,7 +41,16 @@ export const atlantaTechBioEcosystem = {
       size: 23,
       description: "Top public engineering and research university. Home to the ATDC incubator and CREATE-X startup programs. A hub for medtech innovation, spinning out companies like Micron, Clearside, and OXOS.",
       website: "https://gatech.edu",
-      keyPersonnel: ["Mark Prausnitz", "Raghupathy Sivakumar"],
+      keyPersonnel: [
+      {
+        "name": "Mark Prausnitz",
+        "linkedin": "https://www.linkedin.com/in/mark-prausnitz-61a46423/"
+      },
+      {
+        "name": "Raghupathy Sivakumar",
+        "linkedin": "https://www.linkedin.com/in/sivarag/"
+      }
+    ],
       recentNews: "CREATE-X announced a record cohort of 318 founders in 2025. Science Square Phase 1 completed in 2024."
     },
     {
@@ -33,7 +60,12 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "Historically Black medical school focused on health equity. Partner in the Georgia Clinical & Translational Science Alliance (CTSA).",
       website: "https://msm.edu",
-      keyPersonnel: ["Valerie Montgomery Rice"],
+      keyPersonnel: [
+      {
+        "name": "Valerie Montgomery Rice",
+        "linkedin": "https://www.linkedin.com/in/valerie-montgomery-rice-473015201/"
+      }
+    ],
       recentNews: "Celebrating 50th anniversary in 2025. Key partner in Georgia CTSA."
     },
     {
@@ -43,7 +75,12 @@ export const atlantaTechBioEcosystem = {
       size: 18,
       description: "Major public research university with strengths in veterinary medicine, pharmacy, and agricultural biotech. A key partner in statewide innovation initiatives through GRA.",
       website: "https://uga.edu",
-      keyPersonnel: ["Jere W. Morehead"],
+      keyPersonnel: [
+      {
+        "name": "Jere W. Morehead",
+        "linkedin": "https://www.linkedin.com/in/jeremorehead/"
+      }
+    ],
       recentNews: "Partner in statewide biotech initiatives via GRA."
     },
     {
@@ -53,7 +90,12 @@ export const atlantaTechBioEcosystem = {
       size: 16,
       description: "Research university with growing programs in infectious disease and neuroscience. Key collaborator on public health initiatives.",
       website: "https://gsu.edu",
-      keyPersonnel: ["M. Brian Blake"],
+      keyPersonnel: [
+      {
+        "name": "M. Brian Blake",
+        "linkedin": "https://www.linkedin.com/in/m-brian-blake/"
+      }
+    ],
       recentNews: "Co-leading NIH Antiviral Countermeasures Development Center (AC/DC) with Emory."
     },
     {
@@ -63,7 +105,12 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "Georgia's public academic medical center, home of the Medical College of Georgia. Operates a statewide campus network focused on health sciences.",
       website: "https://augusta.edu",
-      keyPersonnel: ["Dr. Russell Keen"],
+      keyPersonnel: [
+      {
+        "name": "Dr. Russell Keen",
+        "linkedin": "https://www.linkedin.com/in/russell-keen/"
+      }
+    ],
       recentNews: "President Brooks A. Keel retired in 2024; Dr. Russell Keen inaugurated in 2025."
     },
     {
@@ -73,7 +120,12 @@ export const atlantaTechBioEcosystem = {
       size: 20,
       description: "U.S. Centers for Disease Control and Prevention. A major federal anchor for public health and infectious disease research, headquartered in Atlanta.",
       website: "https://cdc.gov",
-      keyPersonnel: ["Dr. Mandy K. Cohen"],
+      keyPersonnel: [
+      {
+        "name": "Dr. Mandy K. Cohen",
+        "linkedin": "https://www.linkedin.com/in/mandy-cohen-03aa343/"
+      }
+    ],
       recentNews: "Expanding lab capacity and forming industry partnerships with Roche and Quest for global health initiatives."
     },
     {
@@ -161,7 +213,12 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "Clinical-stage vaccine and immunotherapy company. An Emory spinout developing novel vaccine technologies for infectious diseases and cancer.",
       website: "https://geovax.com",
-      keyPersonnel: ["David Dodd"],
+      keyPersonnel: [
+      {
+        "name": "David Dodd",
+        "linkedin": "https://www.linkedin.com/in/david-a-dodd-3b28616/"
+      }
+    ],
       recentNews: "Advancing Phase 2 clinical trials for its next-gen COVID-19 vaccine."
     },
     {
@@ -171,7 +228,16 @@ export const atlantaTechBioEcosystem = {
       size: 16,
       description: "Georgia Tech spinout developing a dissolvable microneedle patch for painless, needle-free delivery of drugs and vaccines.",
       website: "https://micronbiomedical.com",
-      keyPersonnel: ["Steven Damon", "Mark Prausnitz"],
+      keyPersonnel: [
+      {
+        "name": "Steven Damon",
+        "linkedin": "https://www.linkedin.com/in/steven-damon-a1966a5/"
+      },
+      {
+        "name": "Mark Prausnitz",
+        "linkedin": "https://www.linkedin.com/in/mark-prausnitz-61a46423/"
+      }
+    ],
       recentNews: "Completed first-in-human trial for influenza patch."
     },
     {
@@ -181,7 +247,13 @@ export const atlantaTechBioEcosystem = {
       size: 14,
       description: "Clinical-stage CNS drug developer. A spinout from research at Emory and Duke University.",
       website: "https://neuropinc.com/",
-      keyPersonnel: ["James McNamara", "Raymond Dingledine"],
+      keyPersonnel: [
+      "James McNamara",
+      {
+        "name": "Raymond Dingledine",
+        "linkedin": "https://www.linkedin.com/in/ray-dingledine-41669821/"
+      }
+    ],
       recentNews: "Phase 1 clinical trials completed with positive safety and tolerability results. Company announced plans for Phase 2 trials in subarachnoid hemorrhage (SAH) starting 2023. FDA granted Orphan Drug Designation for NP10679 in December 2021."
     },
     {
@@ -191,7 +263,9 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "Atlanta-based biotech focused on developing a cure for Hepatitis B virus (HBV).",
       website: "https://antiostherapeutics.com",
-      keyPersonnel: ["Abel De La Rosa"],
+      keyPersonnel: [
+      "Abel De La Rosa"
+    ],
       recentNews: "Announced promising Phase 2 data for lead HBV drug, aiming for a functional cure."
     },
 
@@ -203,7 +277,13 @@ export const atlantaTechBioEcosystem = {
       size: 20,
       description: "Digital health company providing a personalized health platform. A major Atlanta tech exit, demonstrating the region's strength in health IT.",
       website: "https://sharecare.com",
-      keyPersonnel: ["Jeff Arnold", "Brent Layton"],
+      keyPersonnel: [
+      "Jeff Arnold",
+      {
+        "name": "Brent Layton",
+        "linkedin": "https://www.linkedin.com/in/brent-layton-514091157/"
+      }
+    ],
       recentNews: "Acquired by Altaris Capital Partners in Oct 2024. Jeff Arnold continues as Executive Chairman."
     },
     {
@@ -213,7 +293,12 @@ export const atlantaTechBioEcosystem = {
       size: 17,
       description: "Leading eClinical software company providing an electronic Trial Master File (eTMF) platform. Series C funding totaled $107M ($80M + $27M).",
       website: "https://florencehc.com",
-      keyPersonnel: ["Ryan Jones"],
+      keyPersonnel: [
+      {
+        "name": "Ryan Jones",
+        "linkedin": "https://www.linkedin.com/in/adventurejones/"
+      }
+    ],
       recentNews: "Network has grown to over 37,000 research sites in 44 countries."
     },
     {
@@ -223,7 +308,16 @@ export const atlantaTechBioEcosystem = {
       size: 16,
       description: "Biopharmaceutical company developing treatments for sight-threatening diseases. A Georgia Tech spinout commercializing a proprietary microinjector technology.",
       website: "https://clearsidebio.com",
-      keyPersonnel: ["Dr. George Lasezkay", "Mark Prausnitz"],
+      keyPersonnel: [
+      {
+        "name": "Dr. George Lasezkay",
+        "linkedin": "https://www.linkedin.com/in/george-lasezkay-1848679/"
+      },
+      {
+        "name": "Mark Prausnitz",
+        "linkedin": "https://www.linkedin.com/in/mark-prausnitz-61a46423/"
+      }
+    ],
       recentNews: "Positive results from Phase 2b trial in wet AMD (CLS-AX). Focusing on suprachoroidal drug delivery for retinal diseases."
     },
     {
@@ -233,7 +327,12 @@ export const atlantaTechBioEcosystem = {
       size: 17,
       description: "Medtech company with an FDA-approved inhaled nitric oxide system (Genosyl®) for neonatal respiratory failure.",
       website: "https://vero-biotech.com",
-      keyPersonnel: ["Brent V. Furse"],
+      keyPersonnel: [
+      {
+        "name": "Brent V. Furse",
+        "linkedin": "https://www.linkedin.com/in/brentfurse/"
+      }
+    ],
       recentNews: "Relocating HQ and manufacturing to Atlanta. Developing next-gen inhaled nitric oxide delivery systems."
     },
     {
@@ -243,7 +342,12 @@ export const atlantaTechBioEcosystem = {
       size: 18,
       description: "Formerly CryoLife, a global leader in cardiac and vascular surgery solutions.",
       website: "https://artivion.com",
-      keyPersonnel: ["Pat Mackin"],
+      keyPersonnel: [
+      {
+        "name": "Pat Mackin",
+        "linkedin": "https://www.linkedin.com/in/pat-mackin-223aa7151/"
+      }
+    ],
       recentNews: "Launched On-X Plus 1.5™ mechanical heart valve in Europe."
     },
 
@@ -256,9 +360,15 @@ export const atlantaTechBioEcosystem = {
       description: "Life sciences venture development engine combining seed capital with 33,000 sq ft of managed lab space at Science Square.",
       website: "https://portalinnovations.com",
       keyPersonnel: [
-        { name: "Eddie Lai", linkedin: "https://www.linkedin.com/in/edwarddlai/" },
-        { name: "Ashley Cornelison", linkedin: "https://www.linkedin.com/in/ashley-cornelison/" }
-      ],
+      {
+        "name": "Eddie Lai",
+        "linkedin": "https://www.linkedin.com/in/edwarddlai/"
+      },
+      {
+        "name": "Ashley Cornelison",
+        "linkedin": "https://www.linkedin.com/in/ashley-cornelison/"
+      }
+    ],
       recentNews: "Made first Atlanta investment in Moonlight Therapeutics. Partnered with Novo Nordisk on 'Pathbreakers' program."
     },
     {
@@ -268,7 +378,20 @@ export const atlantaTechBioEcosystem = {
       size: 18,
       description: "Corporate venture fund and innovation arm of Wellstar Health System, investing in early-stage digital health and medtech.",
       website: "https://catalyst.wellstar.org",
-      keyPersonnel: ["Hank Capps", "Jaimie Clark", "Stefanie Diaz"],
+      keyPersonnel: [
+      {
+        "name": "Hank Capps",
+        "linkedin": "https://www.linkedin.com/in/nasirwise/"
+      },
+      {
+        "name": "Jaimie Clark",
+        "linkedin": "https://www.linkedin.com/in/jaimiesclark/"
+      },
+      {
+        "name": "Stefanie Diaz",
+        "linkedin": "https://www.linkedin.com/in/thestefaniediaz/"
+      }
+    ],
       recentNews: "Has made over 21 startup investments and provides pilot opportunities within the Wellstar health system."
     },
     {
@@ -278,7 +401,16 @@ export const atlantaTechBioEcosystem = {
       size: 16,
       description: "Atlanta-based VC firm (formerly Panoramic Ventures) that invests across technology sectors, including a significant practice in health IT.",
       website: "https://bipventures.vc",
-      keyPersonnel: ["Austin Poole", "Tami McQueen"],
+      keyPersonnel: [
+      {
+        "name": "Austin Poole",
+        "linkedin": "https://www.linkedin.com/in/austinmpoole/"
+      },
+      {
+        "name": "Tami McQueen",
+        "linkedin": "https://www.linkedin.com/in/tamimcqueen/"
+      }
+    ],
       recentNews: "Actively investing across Seed to Series B, with portfolio companies like OncoLens and The Rounds."
     },
     {
@@ -288,7 +420,12 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "One of Atlanta's most established VC firms (founded 1983), focusing on healthcare IT and tech-enabled services.",
       website: "https://noromoseley.com",
-      keyPersonnel: ["Ryan Collins"],
+      keyPersonnel: [
+      {
+        "name": "Ryan Collins",
+        "linkedin": "https://www.linkedin.com/in/ryan-collins-661a6547/"
+      }
+    ],
       recentNews: "Active in healthcare IT, recently backing KODE Health's $27M Series B in Jan 2025."
     },
     {
@@ -298,7 +435,12 @@ export const atlantaTechBioEcosystem = {
       size: 14,
       description: "State-affiliated seed fund that invests exclusively in companies emerging from Georgia's research universities.",
       website: "https://gra.org/venture-fund/",
-      keyPersonnel: ["Connor Seabrook"],
+      keyPersonnel: [
+      {
+        "name": "Connor Seabrook",
+        "linkedin": "https://www.linkedin.com/in/connor-seabrook-4659553/"
+      }
+    ],
       recentNews: "Co-invests alongside private VCs in Georgia research spinouts, requiring a 3:1 private match."
     },
     {
@@ -308,7 +450,16 @@ export const atlantaTechBioEcosystem = {
       size: 13,
       description: "Venture studio that builds and invests in seed-stage SaaS and digital health companies.",
       website: "https://atlantaventures.com",
-      keyPersonnel: ["David Cummings", "Kathryn O'Day"],
+      keyPersonnel: [
+      {
+        "name": "David Cummings",
+        "linkedin": "https://www.linkedin.com/in/davidcummings/"
+      },
+      {
+        "name": "Kathryn O'Day",
+        "linkedin": "https://www.linkedin.com/in/kathrynoday/"
+      }
+    ],
       recentNews: "Hosts the Atlanta Healthcare Meetup and has a growing health IT portfolio."
     },
     {
@@ -328,7 +479,12 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "Early-stage VC firm deeply integrated with the Georgia Tech ecosystem. Co-founder of Engage Ventures.",
       website: "https://techsquareventures.com",
-      keyPersonnel: ["Blake Patton"],
+      keyPersonnel: [
+      {
+        "name": "Blake Patton",
+        "linkedin": "https://www.linkedin.com/in/blakepatton/"
+      }
+    ],
       recentNews: "Early investor in several Atlanta tech companies."
     },
 
@@ -340,7 +496,12 @@ export const atlantaTechBioEcosystem = {
       size: 18,
       description: "Georgia Tech's state-chartered technology incubator (founded 1980). Features a dedicated HealthTech track in partnership with Wellstar.",
       website: "https://atdc.org",
-      keyPersonnel: ["John Avery"],
+      keyPersonnel: [
+      {
+        "name": "John Avery",
+        "linkedin": "https://www.linkedin.com/in/johnwavery/"
+      }
+    ],
       recentNews: "Serves 150+ startups and has helped companies secure over $125M in SBIR grants."
     },
     {
@@ -350,7 +511,12 @@ export const atlantaTechBioEcosystem = {
       size: 16,
       description: "Georgia Tech initiative providing funding and mentorship to student and faculty founders. Has launched over 650 startups since 2014.",
       website: "https://create-x.gatech.edu",
-      keyPersonnel: ["Raghupathy Sivakumar"],
+      keyPersonnel: [
+      {
+        "name": "Raghupathy Sivakumar",
+        "linkedin": "https://www.linkedin.com/in/sivarag/"
+      }
+    ],
       recentNews: "Expanded AI Health vertical. Alumni include Stord and OXOS."
     },
     {
@@ -361,11 +527,23 @@ export const atlantaTechBioEcosystem = {
       description: "Joint Emory-GT commercialization accelerator that provides seed funding, project management, and technical guidance to advance promising university medical technologies toward market readiness.",
       website: "https://biolocity.org",
       keyPersonnel: [
-        "Angela Gill Nelms",
-        "Rifat Pamukcu",
-        "Brian Walsh",
-        "Manuel Kingsley"
-      ],
+      {
+        "name": "Angela Gill Nelms",
+        "linkedin": "https://www.linkedin.com/in/angelagillnelms/"
+      },
+      {
+        "name": "Rifat Pamukcu",
+        "linkedin": "https://www.linkedin.com/in/rifat-pamukcu/"
+      },
+      {
+        "name": "Brian Walsh",
+        "linkedin": "https://www.linkedin.com/in/brian-walsh-1bb681/"
+      },
+      {
+        "name": "Manuel Kingsley",
+        "linkedin": "https://www.linkedin.com/in/manuelkingsley/"
+      }
+    ],
       recentNews: "Supports translational research through strategic grants and mentorship. Operates in collaboration with Emory and Georgia Tech to de-risk early-stage medtech projects."
     },
     {
@@ -375,7 +553,12 @@ export const atlantaTechBioEcosystem = {
       size: 14,
       description: "Wet lab and co-working space at Emory's HSRB II Innovation Floor, providing bench space and infrastructure to Emory-affiliated startups supported through Biolocity.",
       website: "https://med.emory.edu/research/research-innovation/entrepreneurship/lab2launch/",
-      keyPersonnel: ["Morgan Greenleaf"],
+      keyPersonnel: [
+      {
+        "name": "Morgan Greenleaf",
+        "linkedin": "https://www.linkedin.com/in/morgan-greenleaf/"
+      }
+    ],
       atlantaPresence: true,
       recentNews: "Opened in early 2023; residents benefit from Biolocity network and core facility access."
     },
@@ -409,10 +592,19 @@ export const atlantaTechBioEcosystem = {
       description: "Public-private partnership that helps recruit top scientists and fund university research commercialization in Georgia.",
       website: "https://gra.org",
       keyPersonnel: [
-        "Timothy Denning",
-        { name: "Justin Burns", linkedin: "https://www.linkedin.com/in/jburns301/" },
-        { name: "Andrew Short", linkedin: "https://www.linkedin.com/in/andreweshort/" }
-      ],
+      {
+        "name": "Timothy Denning",
+        "linkedin": "https://www.linkedin.com/in/tim-denning-phd-4b13728b/"
+      },
+      {
+        "name": "Justin Burns",
+        "linkedin": "https://www.linkedin.com/in/jburns301/"
+      },
+      {
+        "name": "Andrew Short",
+        "linkedin": "https://www.linkedin.com/in/andreweshort/"
+      }
+    ],
       recentNews: "Tim Denning became GRA's fifth president and CEO in November 2023, after serving as vice president for research and economic development at Georgia State University."
     },
     {
@@ -422,7 +614,12 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "The state's life sciences trade association (formerly Georgia Bio), with over 500 members. Hosts the annual Golden Helix Awards.",
       website: "https://www.galifesciences.org/",
-      keyPersonnel: ["Maria Thacker-Goethe"],
+      keyPersonnel: [
+      {
+        "name": "Maria Thacker-Goethe",
+        "linkedin": "https://www.linkedin.com/in/mariathacker/"
+      }
+    ],
       recentNews: "Organization rebranded from Georgia Bio to Georgia Life Sciences in January 2025 to reflect expanded membership and scope."
     },
     {
@@ -432,7 +629,12 @@ export const atlantaTechBioEcosystem = {
       size: 16,
       description: "Developing a 2,000-acre knowledge community in Gwinnett County focused on biotech, agriculture, and environmental tech.",
       website: "https://rowenlife.com",
-      keyPersonnel: ["Mason Ailstock"],
+      keyPersonnel: [
+      {
+        "name": "Mason Ailstock",
+        "linkedin": "https://www.linkedin.com/in/masonailstock/"
+      }
+    ],
       recentNews: "Broke ground on infrastructure in 2024 for a new 2,000-acre innovation district."
     },
     {
@@ -485,7 +687,9 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Specialized neurogenetics CRO acquired by LabCorp in 2019. Provides testing services to Emory and other institutions.",
       website: "https://mnglabs.com",
-      keyPersonnel: ["LabCorp Leadership"],
+      keyPersonnel: [
+      "LabCorp Leadership"
+    ],
       recentNews: "Continues to operate as a specialized neurogenetic testing lab within LabCorp."
     },
     {
@@ -496,13 +700,31 @@ export const atlantaTechBioEcosystem = {
       description: "Boutique preclinical CRO providing grant writing and project management services to startups.",
       website: "https://radyusresearch.com",
       keyPersonnel: [
-        "Marta New",
-        "Kamyra Edokpolor",
-        "Benjamin Siciliano",
-        "Anthony Chilton",
-        "Caitlin J. Couch",
-        "Dave Edwards"
-      ],
+      {
+        "name": "Marta New",
+        "linkedin": "https://www.linkedin.com/in/melarnew/"
+      },
+      {
+        "name": "Kamyra Edokpolor",
+        "linkedin": "https://www.linkedin.com/in/kamyra-edokpolor/"
+      },
+      {
+        "name": "Benjamin Siciliano",
+        "linkedin": "https://www.linkedin.com/in/benjamin-siciliano/"
+      },
+      {
+        "name": "Anthony Chilton",
+        "linkedin": "https://www.linkedin.com/in/anthony-chilton-1994298/"
+      },
+      {
+        "name": "Caitlin J. Couch",
+        "linkedin": "https://www.linkedin.com/in/catecouch/"
+      },
+      {
+        "name": "Dave Edwards",
+        "linkedin": "https://www.linkedin.com/in/dave-edwards-a3a736b/"
+      }
+    ],
       recentNews: "Announced strategic partnerships in 2024‑25 with Eurofins CDMO Alphora (May 2025) and Dt&CRO (May 2024) to deliver integrated, end‑to‑end drug development services—from preclinical through GMP manufacturing—for biotech clients globally."
     },
     {
@@ -512,7 +734,9 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Genomics and bioinformatics CRO acquired by Tempus in 2019. A key service provider to the CDC.",
       website: "https://tempus.com",
-      keyPersonnel: ["Tempus Leadership"],
+      keyPersonnel: [
+      "Tempus Leadership"
+    ],
       recentNews: "Atlanta lab has expanded Tempus's sequencing capabilities since its acquisition."
     },
     {
@@ -522,7 +746,12 @@ export const atlantaTechBioEcosystem = {
       size: 11,
       description: "Global law firm with a world-renowned FDA regulatory and life sciences practice. Represents major local biotechs like VERO.",
       website: "https://kslaw.com",
-      keyPersonnel: ["Mark Brown"],
+      keyPersonnel: [
+      {
+        "name": "Mark Brown",
+        "linkedin": "https://www.linkedin.com/in/mark-brown-3b38b93/"
+      }
+    ],
       recentNews: "Expanded life sciences IP litigation team in 2024."
     },
     {
@@ -543,9 +772,15 @@ export const atlantaTechBioEcosystem = {
       description: "Boutique consulting firm focused on biotech and medtech startups. Provides interim executive leadership, commercialization strategy, and capital planning support.",
       website: "https://biotechexec.com",
       keyPersonnel: [
-        { name: "Robert Allen", linkedin: "https://www.linkedin.com/in/rallen/" },
-        { name: "William Dull", linkedin: "https://www.linkedin.com/in/william-dull/" }
-      ],
+      {
+        "name": "Robert Allen",
+        "linkedin": "https://www.linkedin.com/in/rallen/"
+      },
+      {
+        "name": "William Dull",
+        "linkedin": "https://www.linkedin.com/in/william-dull/"
+      }
+    ],
       recentNews: "Supports startups emerging from academic accelerators and translational research programs."
     },
     {
@@ -595,7 +830,20 @@ export const atlantaTechBioEcosystem = {
       size: 13,
       description: "Atlanta-based innovation consultancy focused on healthcare commercialization and clinical validation. Operates a 5G-enabled living lab and partners with systems like Emory Healthcare to prototype and pilot digital health and medtech solutions in real-world settings.",
       website: "https://11ten.com",
-      keyPersonnel: ["James Lewis", "Caleb Szubski", "Steve Gertz"],
+      keyPersonnel: [
+      {
+        "name": "James Lewis",
+        "linkedin": "https://www.linkedin.com/in/jamesrlewis2/"
+      },
+      {
+        "name": "Caleb Szubski",
+        "linkedin": "https://www.linkedin.com/in/calebrs/"
+      },
+      {
+        "name": "Steve Gertz",
+        "linkedin": "https://www.linkedin.com/in/steve-gertz-bb0a3721/"
+      }
+    ],
       recentNews: "Supports the Emory Healthcare Innovation Hub with UX research and pilot design for digital health deployments. Acquired by ClinicalMind in 2024."
     },
     {
@@ -605,7 +853,12 @@ export const atlantaTechBioEcosystem = {
       size: 18,
       description: "Global financial services firm with a strong presence in Atlanta (Buckhead), supporting life sciences banking, commercial banking, wealth management, and technology operations.",
       website: "https://www.jpmorganchase.com",
-      keyPersonnel: ["Courtney J. Law"],
+      keyPersonnel: [
+      {
+        "name": "Courtney J. Law",
+        "linkedin": "https://www.linkedin.com/in/courtneyjlaw/"
+      }
+    ],
       recentNews: "Expanding Atlanta office by 40,000 sq ft; designated as one of JPMorgan's 23 global technology centers; active in life sciences startup banking and biotech client services."
     },
     {
@@ -615,7 +868,9 @@ export const atlantaTechBioEcosystem = {
       size: 14,
       description: "Atlanta-based provider of real-time location systems (RTLS) and environmental monitoring software for hospitals. Selected by CHOA, Grady, and Piedmont to support Georgia's largest healthcare construction projects.",
       website: "https://www.vizziatech.com",
-      keyPersonnel: ["Dave Wiedman"],
+      keyPersonnel: [
+      "Dave Wiedman"
+    ],
       atlantaPresence: true,
       recentNews: "Selected by CHOA for $1.5B Arthur M. Blank Hospital RTLS system; deployed solutions at Marcus Tower (Piedmont) and Correll Pavilion (Grady). Named Top 40 healthtech company by TAG."
     },
@@ -626,7 +881,16 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Global law firm with an established Atlanta office; active in life sciences, medtech, M&A, cross-border and VC transaction support for startups and growth companies.",
       website: "https://www.jonesday.com",
-      keyPersonnel: ["Bill Zawrotny", "Katie Vest"],
+      keyPersonnel: [
+      {
+        "name": "Bill Zawrotny",
+        "linkedin": "https://www.linkedin.com/in/bill-zawrotny-19456b9/"
+      },
+      {
+        "name": "Katie Vest",
+        "linkedin": "https://www.linkedin.com/in/katievest/"
+      }
+    ],
       atlantaPresence: true,
       recentNews: "Hosts legal educational series 'Brewed & Briefed' in Atlanta. Bill and Katie provide counsel to Georgia life sciences startups and investors."
     },
@@ -638,13 +902,37 @@ export const atlantaTechBioEcosystem = {
       description: "Grassroots founder and funder gathering focused on early-stage healthtech, biotech, and digital health in Atlanta. Builds trust-based connections across investors, operators, and domain experts.",
       website: "https://www.linkedin.com/company/bonnefireatl/",
       keyPersonnel: [
-        { name: "Nadine Peever", role: "Co-Founder" },
-        { name: "Alexa Morse", role: "Advisor & Co-Founder" },
-        { name: "Sarah Carrigan", role: "Public Health Engagement Chair" },
-        { name: "Eddie Lai", role: "Advisor" },
-        { name: "Patrick Kennedy", role: "Host Team Member" },
-        { name: "Ben Huffman", role: "Host Team Member" }
-      ],
+      {
+        "name": "Nadine Peever",
+        "role": "Co-Founder",
+        "linkedin": "https://www.linkedin.com/in/nadinepeever/"
+      },
+      {
+        "name": "Alexa Morse",
+        "role": "Advisor & Co-Founder",
+        "linkedin": "https://www.linkedin.com/in/alexa-morse/"
+      },
+      {
+        "name": "Sarah Carrigan",
+        "role": "Public Health Engagement Chair",
+        "linkedin": "https://www.linkedin.com/in/sarahdavid413/"
+      },
+      {
+        "name": "Eddie Lai",
+        "role": "Advisor",
+        "linkedin": "https://www.linkedin.com/in/edwarddlai/"
+      },
+      {
+        "name": "Patrick Kennedy",
+        "role": "Host Team Member",
+        "linkedin": "https://www.linkedin.com/in/patrick-kennedy-b7919a59/"
+      },
+      {
+        "name": "Ben Huffman",
+        "role": "Host Team Member",
+        "linkedin": "https://www.linkedin.com/in/ben-1-huffman/"
+      }
+    ],
       recentNews: "Hosted monthly pitch and networking events in 2024–2025 featuring emerging Atlanta healthtech startups."
     },
     {
@@ -676,7 +964,12 @@ export const atlantaTechBioEcosystem = {
       size: 10,
       description: "Developing a microneedle-based immunotherapy platform (TASIS) for food allergies. Portal Innovations' first Atlanta investment. Advancing lead program into Phase I trials.",
       website: "https://moonlighttx.com",
-      keyPersonnel: ["Samir Patel"],
+      keyPersonnel: [
+      {
+        "name": "Samir Patel",
+        "linkedin": "https://www.linkedin.com/in/patelsamirkumar/"
+      }
+    ],
       recentNews: "Received multiple NIH grants and raised Series A co-led by Portal Innovations."
     },
     {
@@ -686,7 +979,12 @@ export const atlantaTechBioEcosystem = {
       size: 11,
       description: "Digital health startup spun out of Emory/GT collaboration. Developed AnemoCheck Mobile, a non-invasive app for anemia screening.",
       website: "https://sanguina.com",
-      keyPersonnel: ["Erika Tyburski"],
+      keyPersonnel: [
+      {
+        "name": "Erika Tyburski",
+        "linkedin": "https://www.linkedin.com/in/erika-tyburski-292555b1/"
+      }
+    ],
       recentNews: "Received FDA Breakthrough Device status for its smartphone-based anemia screening app."
     },
     {
@@ -696,7 +994,16 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Georgia Tech CREATE-X alumnus making portable, handheld X-ray imaging systems.",
       website: "https://oxos.com",
-      keyPersonnel: ["Greg Kolovich", "Evan Ruff"],
+      keyPersonnel: [
+      {
+        "name": "Greg Kolovich",
+        "linkedin": "https://www.linkedin.com/in/gregory-kolovich-777900117/"
+      },
+      {
+        "name": "Evan Ruff",
+        "linkedin": "https://www.linkedin.com/in/evan-ruff/"
+      }
+    ],
       recentNews: "Received FDA clearance for its handheld Micro C X-ray device and deployed devices in a VA pilot program."
     },
     {
@@ -706,7 +1013,16 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Antiviral company formed in partnership with Emory's DRIVE institute to develop treatments for respiratory viruses.",
       website: "https://altesabio.com",
-      keyPersonnel: ["George Painter", "Dennis Liotta"],
+      keyPersonnel: [
+      {
+        "name": "George Painter",
+        "linkedin": "https://www.linkedin.com/in/george-painter-61ab25126/"
+      },
+      {
+        "name": "Dennis Liotta",
+        "linkedin": "https://www.linkedin.com/in/dennis-liotta-1b087729/"
+      }
+    ],
       recentNews: "Licensed Vapendavir from Vaxart to develop for RSV and other respiratory viruses."
     },
     {
@@ -716,7 +1032,12 @@ export const atlantaTechBioEcosystem = {
       size: 10,
       description: "Emory spinout founded by neurosurgeon Dr. Nicholas Boulis, focusing on novel drug delivery methods for the central nervous system.",
       website: "https://braintrustbio.com",
-      keyPersonnel: ["Chen Benkler"],
+      keyPersonnel: [
+      {
+        "name": "Chen Benkler",
+        "linkedin": "https://www.linkedin.com/in/chen-benkler/"
+      }
+    ],
       recentNews: "Preclinical stage startup aiming to improve CNS drug delivery."
     },
     {
@@ -726,7 +1047,12 @@ export const atlantaTechBioEcosystem = {
       size: 10,
       description: "Atlanta-based startup developing a non-invasive, drug-free pain management system (NOVABLOC™) for post-operative knee pain. Clinical-stage therapy delivering novel electrical stimulation to extend pain relief while preserving sensory function.",
       website: "https://www.linkedin.com/company/novabloc-pain-free-knee/",
-      keyPersonnel: ["Shyamy Sastry"],
+      keyPersonnel: [
+      {
+        "name": "Shyamy Sastry",
+        "linkedin": "https://www.linkedin.com/in/shyamy-sastry-4508922/"
+      }
+    ],
       recentNews: "Backed by Portal Innovations. Completed feasibility studies showing >20 days of relief after one treatment."
     },
     {
@@ -736,7 +1062,12 @@ export const atlantaTechBioEcosystem = {
       size: 10,
       description: "Diagnostic startup developing the Cosmos Platform for rapid, culture-free pathogen identification and antibiotic susceptibility testing using interferometry and AI. A spinout from Georgia Tech and Emory University.",
       website: "https://www.portalinnovations.com/portfolio/",
-      keyPersonnel: ["Yogi Patel"],
+      keyPersonnel: [
+      {
+        "name": "Yogi Patel",
+        "linkedin": "https://www.linkedin.com/in/yapatel/"
+      }
+    ],
       recentNews: "Backed by Portal Innovations. Developed a platform delivering microbial ID and resistance data in under 4 hours."
     },
     {
@@ -767,9 +1098,15 @@ export const atlantaTechBioEcosystem = {
       description: "Venture support institute based at Emory. Identifies and supports high-potential life science innovations with investment, mentorship, and commercialization strategy to bridge academia and industry.",
       website: "https://www.ebfi.org/",
       keyPersonnel: [
-        { name: "Michael Tanenbaum", linkedin: "https://www.linkedin.com/in/michael-tanenbaum-447a54b/" },
-        { name: "Nassir Mokarram", linkedin: "https://www.linkedin.com/in/nassir-mokarram-5b966017/" }
-      ],
+      {
+        "name": "Michael Tanenbaum",
+        "linkedin": "https://www.linkedin.com/in/michael-tanenbaum-447a54b/"
+      },
+      {
+        "name": "Nassir Mokarram",
+        "linkedin": "https://www.linkedin.com/in/nassir-mokarram-5b966017/"
+      }
+    ],
       recentNews: "Supports Emory-affiliated startups across medtech, diagnostics, and therapeutics."
     },
     {
@@ -779,7 +1116,12 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Early-stage investment fund under Emory Innovations, Inc. Established in 2023 using royalties from Merck's LEGEVRIO™ (molnupiravir). Funds Emory-discovered therapeutics to IND/clinical milestones.",
       website: "https://innovate.emory.edu/ecosystem/emory-drug-development-fund.html",
-      keyPersonnel: ["Doug Gooding"],
+      keyPersonnel: [
+      {
+        "name": "Doug Gooding",
+        "linkedin": "https://www.linkedin.com/in/doug-gooding-75248967/"
+      }
+    ],
       recentNews: "Backed Emory-based projects in IBD, seizure disorders, and respiratory disease."
     },
     {
@@ -789,7 +1131,13 @@ export const atlantaTechBioEcosystem = {
       size: 10,
       description: "Emory spinout developing small molecule agonists targeting inflammation and cholesterol pathways for the treatment of inflammatory bowel disease (IBD). Co-founded with Orange Grove Bio.",
       website: "https://gra.org/company/324/Allonix.html",
-      keyPersonnel: ["Eric Ortlund", "John Calvert"],
+      keyPersonnel: [
+      {
+        "name": "Eric Ortlund",
+        "linkedin": "https://www.linkedin.com/in/eric-ortlund-31600611/"
+      },
+      "John Calvert"
+    ],
       recentNews: "EDDF portfolio company focused on IBD therapeutics."
     },
     {
@@ -799,7 +1147,16 @@ export const atlantaTechBioEcosystem = {
       size: 10,
       description: "Emory spinout developing cannabinoid pro-drug therapeutics for seizure disorders, chronic pain, and anxiety.",
       website: "https://agrithera.com",
-      keyPersonnel: ["Dennis Liotta", "Stephen Traynelis"],
+      keyPersonnel: [
+      {
+        "name": "Dennis Liotta",
+        "linkedin": "https://www.linkedin.com/in/dennis-liotta-1b087729/"
+      },
+      {
+        "name": "Stephen Traynelis",
+        "linkedin": "https://www.linkedin.com/in/stephen-traynelis-22726ab/"
+      }
+    ],
       recentNews: "Part of EDDF portfolio targeting neurotherapeutics."
     },
     {
@@ -809,7 +1166,16 @@ export const atlantaTechBioEcosystem = {
       size: 5,
       description: "Immuno‑oncology startup headquartered in Atlanta, GA developing first‑in‑class VIP receptor antagonists (e.g. ANT308) to restore anti‑cancer T‑cell activity in tumors with elevated VIP/VPAC signaling.",
       website: "https://cambiumoncology.com",
-      keyPersonnel: ["Ned Waller", "Gary Altman"],
+      keyPersonnel: [
+      {
+        "name": "Ned Waller",
+        "linkedin": "https://www.linkedin.com/in/edmundwaller/"
+      },
+      {
+        "name": "Gary Altman",
+        "linkedin": "https://www.linkedin.com/in/ggaltman/"
+      }
+    ],
       recentNews: "Received NIH Fast‑Track grant and a $5M strategic equity investment from OEP Innovations to advance ANT308 into IND stage."
     },
     {
@@ -820,14 +1186,14 @@ export const atlantaTechBioEcosystem = {
       description: "Atlanta-based digital health startup using physician-built AI to streamline care team workflows. Offers solutions for inbox management, disease escalation, and revenue cycle through real-time prioritization and routing of clinical and admin tasks.",
       website: "https://www.switchboardmd.com",
       keyPersonnel: [
-        "Blake Anderson, MD",
-        "Bradley Gallaher",
-        "Ankit Tiwari",
-        "Will Akers",
-        "Kelly Luckasevic",
-        "Ashley Badgett",
-        "Yuanda Zhu, PhD"
-      ],
+      "Blake Anderson, MD",
+      "Bradley Gallaher",
+      "Ankit Tiwari",
+      "Will Akers",
+      "Kelly Luckasevic",
+      "Ashley Badgett",
+      "Yuanda Zhu, PhD"
+    ],
       recentNews: "Continues to grow adoption of its AI-powered platform across provider networks. Built by clinicians with deep healthcare system expertise."
     },
     {
@@ -848,7 +1214,9 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Atlanta-based digital health company offering software platforms for chronic disease management, patient engagement, and clinical decision support. Works with health systems to integrate into EHRs and personalize patient treatment.",
       website: "https://rimidi.com",
-      keyPersonnel: ["Lucienne Ide"],
+      keyPersonnel: [
+      "Lucienne Ide"
+    ],
       atlantaPresence: true,
       recentNews: "Partnered with Emory Healthcare to launch patient-centered treatment apps; continues to expand remote monitoring capabilities."
     }
