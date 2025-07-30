@@ -1455,6 +1455,31 @@ export const atlantaTechBioEcosystem = {
       }
     ],
       recentNews: "Selected in 2025‑26 Biolocity cohort for ovarian cancer drug delivery platform – receiving mentorship and non‑dilutive funding."
+    },
+    {
+      "id": "huxley_medical",
+      "name": "Huxley Medical",
+      "type": "startup",
+      "size": 7,
+      "description": "Atlanta‑based medical device company developing multi‑sensor diagnostic patch (SANSA) for cardio‑sleep and vital sign monitoring.",
+      "website": "https://www.huxleymed.com/",
+      "keyPersonnel": [
+        {
+          "name": "Chris Lee",
+          "linkedin": "https://www.linkedin.com/in/chris-lee-20995922/"
+        }
+      ],
+      "recentNews": "Raised $7.2M seed round in 2023 with support from GRA Venture Fund. CEO Chris Lee is a serial medtech entrepreneur (Vertera Spine) and Emory/GT alum."
+    },
+    {
+      "id": "biocircuit_technologies",
+      "name": "BioCircuit Technologies",
+      "type": "startup",
+      "size": 8,
+      "description": "Atlanta‑based bioelectronics startup developing Nerve Tape®—a sutureless nerve repair patch backed by NIH SBIR and GRA Venture Fund support.",
+      "website": "https://www.biocircuit.com/",
+      "keyPersonnel": [],
+      "recentNews": "NIH awarded $3M SBIR to expand Nerve Tape; GRA Venture Fund backed company through early-stage investment."
     }
   ],
 
@@ -1516,6 +1541,18 @@ export const atlantaTechBioEcosystem = {
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
     { source: "noro", target: "sharecare", type: "investment", description: "Early investor" },
     { source: "catalyst", target: "armor_medical", type: "investment", description: "Catalyst by Wellstar invested in Armor Medical to support development of Maternal aRMOR wearable (Jun 2025)." },
+    {
+      "source": "gra_fund",
+      "target": "huxley_medical",
+      "type": "investment",
+      "description": "Portfolio investment in Huxley's SANSA patch platform for cardio-sleep diagnostics."
+    },
+    {
+      "source": "gra_fund",
+      "target": "biocircuit_technologies",
+      "type": "investment",
+      "description": "Early-stage investment in BioCircuit's Nerve Tape® nerve repair technology."
+    },
 
     // --- Accelerator & Incubator Support ---
     { source: "atdc", target: "gatech", type: "affiliation", description: "Program of Georgia Tech" },
