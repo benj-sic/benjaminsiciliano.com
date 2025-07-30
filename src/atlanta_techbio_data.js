@@ -604,6 +604,242 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Leads Georgia Tech's NSF I-Corps Node and early-stage founder support programs. Works closely with Quadrant-i, CREATE-X, and Biolocity to support translational research commercialization."
     },
     {
+      id: "augusta_biobusiness_incubator",
+      name: "Augusta Biobusiness Incubator",
+      type: "incubator",
+      size: 12,
+      description: "Life sciences business incubator at Augusta University supporting biotech research translation and company formation in eastern Georgia.",
+      website: "https://www.augusta.edu/research/oic/biobusiness-incubator.php",
+      keyPersonnel: [],
+      recentNews: "Part of Augusta University's innovation ecosystem. Supports life sciences ventures with lab space, mentorship, and access to Augusta University's core facilities."
+    },
+    {
+      id: "collabtech_gsu",
+      name: "CollabTech (GSU)",
+      type: "incubator",
+      size: 12,
+      description: "Downtown Atlanta biotech incubator hosted by Georgia State University. Offers lab space and core facilities for early-stage bioscience companies.",
+      website: "https://research.gsu.edu/georgia-state-technology-enterprises/",
+      keyPersonnel: [],
+      recentNews: "Part of Georgia State's research commercialization initiatives. Located at 58 Edgewood Avenue."
+    },
+    {
+      id: "t2c2_gatech",
+      name: "T2C2 (Georgia Tech)",
+      type: "community",
+      size: 10,
+      description: "Georgia Tech-based student consulting program supporting translational research and tech transfer initiatives.",
+      website: "",
+      keyPersonnel: [],
+      recentNews: "Student-led program providing consulting services to support Georgia Tech's translational research and commercialization efforts."
+    },
+    {
+      id: "eidd",
+      name: "EIDD",
+      type: "serviceProvider",
+      size: 14,
+      description: "Translational drug discovery center at Emory University focused on antiviral and small molecule therapeutics. Provides lead optimization, IND-enabling studies, and CMC support for internal and external biotech partners.",
+      website: "https://eidd.emory.edu/index.html",
+      keyPersonnel: [],
+      recentNews: "EIDD has supported antiviral drug discovery efforts including molnupiravir (LAGEVRIO) and continues to provide infrastructure for Emory spinouts and licensed therapeutics."
+    },
+
+
+    {
+      id: "ariel_savannah_angel_partners",
+      name: "Ariel Savannah Angel Partners",
+      type: "vc",
+      size: 12,
+      description: "Savannah-based angel investment group supporting early-stage startups across the Southeast. Invests in life sciences, biotech, and medtech ventures with Georgia ties.",
+      website: "https://asap-invests.com",
+      keyPersonnel: [],
+      recentNews: "Portfolio includes TYBR Health, InnAVasc Medical, and other medical technology startups across Georgia."
+    },
+    {
+      id: "biospark_labs",
+      name: "BioSpark Labs",
+      type: "lab_space",
+      size: 12,
+      description: "Purpose‑built shared wet‑lab, cleanroom, and office facility for early‑stage biotech and life sciences startups at Science Square, Atlanta.",
+      website: "https://www.biosparklabs.com",
+      keyPersonnel: [],
+      recentNews: "BioSpark opened a new 17,000 SF facility in 2023 at Science Square to support biotech startups affiliated with Emory, Georgia Tech, and Georgia State."
+    },
+    {
+      id: "ascend_atlanta",
+      name: "Ascend Atlanta",
+      type: "community",
+      size: 11,
+      description: "Entrepreneurship accelerator and network based at Morehouse Innovation Center, focused on scaling minority-owned startups in Georgia through capital access and mentorship.",
+      website: "https://www.ascendatl.org",
+      keyPersonnel: [],
+      recentNews: "Sponsored by JPMorgan and operated by Morehouse MIEC. Supports high-growth Black and Latinx founders in the Atlanta innovation ecosystem."
+    },
+    {
+      id: "cranium_incubator",
+      name: "The Cranium Incubator",
+      type: "incubator",
+      size: 11,
+      description: "Atlanta-based incubator supporting underrepresented founders in early-stage fundraising, product validation, and startup strategy. Backed by investor Joe Beverly.",
+      website: "https://cranium-incubator.com",
+      keyPersonnel: [],
+      recentNews: "Launched in 2020 to increase diversity in venture-backed startups. Hosts educational programming and investor prep cohorts."
+    },
+    {
+      id: "propel_center",
+      name: "Propel Center",
+      type: "education",
+      size: 13,
+      description: "Global innovation and learning hub for HBCU students and faculty headquartered at Clark Atlanta University. Focuses on tech, health equity, and STEM entrepreneurship.",
+      website: "https://propelcenter.org",
+      keyPersonnel: [],
+      recentNews: "Backed by Apple and Southern Company. Operates with a mission to diversify the innovation pipeline in health, biotech, and beyond."
+    },
+    {
+      id: "tag_digital_health",
+      name: "TAG Digital Health Society",
+      type: "professional_association",
+      size: 55,
+      description: "Statewide society housed within the Technology Association of Georgia that advances healthcare innovation and digital health across Georgia with events, collaboration, and an ecosystem directory.",
+      website: "https://www.tagonline.org/chapters-and-societies/health/",
+      keyPersonnel: [],
+      recentNews: "Maintains Georgia's Digital Health Ecosystem directory (~460 orgs), hosts events on medtech, health IT, and equity; sponsors include Northside Hospital, UCB Pharmaceuticals."
+    },
+    {
+      id: "adjust_center_emory",
+      name: "ADJUST Center",
+      type: "serviceProvider",
+      size: 12,
+      description: "The Center for the Advancement of Diagnostics for a Just Society (ADJUST) at Emory University: translational diagnostics incubator focused on equitable diagnostic technology development and validation.",
+      website: "https://adjust.emory.edu",
+      keyPersonnel: [],
+      recentNews: "Operates a CLIA-certified diagnostics laboratory, supports assay development for public health, and collaborates on pediatric and community health diagnostics translation."
+    },
+
+    {
+      id: "hatchbridge",
+      name: "HatchBridge Incubator",
+      type: "incubator",
+      size: 11,
+      description: "Startup incubator located at Kennesaw State University focused on supporting faculty, student, and community ventures across life sciences, software, and deep tech sectors.",
+      website: "https://research.kennesaw.edu/hatchbridge",
+      keyPersonnel: [],
+      recentNews: "Launched in 2023 and has supported over 50 ventures. Hosts Georgia Startup Launch grants and connects founders with mentors and funders."
+    },
+
+    {
+      id: "kennesaw_state_university",
+      name: "Kennesaw State University",
+      type: "university",
+      size: 15,
+      description: "Major public university in Georgia with growing research activity in biosciences, entrepreneurship, and engineering. Hosts the HatchBridge startup incubator.",
+      website: "https://www.kennesaw.edu",
+      keyPersonnel: [],
+      recentNews: "HatchBridge incubator launched in 2023 to support faculty and student-led ventures, with ties to Georgia Startup Launch and GRA programs."
+    },
+
+    {
+      id: "mercer_university",
+      name: "Mercer University",
+      type: "university",
+      size: 16,
+      description: "Georgia-based private university with strengths in health sciences, pharmacy, biomedical engineering, and community health. Operates multiple campuses and translational research programs.",
+      website: "https://www.mercer.edu",
+      keyPersonnel: [],
+      recentNews: "Mercer supports entrepreneurship through the Mercer Innovation Center and health innovation through its School of Medicine and College of Pharmacy."
+    },
+
+    {
+      id: "mercer_innovation_center",
+      name: "Mercer Innovation Center",
+      type: "community",
+      size: 12,
+      description: "Entrepreneurship and innovation hub at Mercer University supporting early-stage ventures in healthcare, bioscience, and tech across Georgia with mentorship, incubation, and investor access.",
+      website: "https://mic.mercer.edu",
+      keyPersonnel: [],
+      recentNews: "Operates campus incubators in Macon, Atlanta, and Savannah with programming that includes translational medtech and community health ventures."
+    },
+    {
+      id: "piezo_therapeutics",
+      name: "Piezo Therapeutics",
+      type: "startup",
+      size: 12,
+      description: "Georgia Tech spinout focused on enabling next-gen nucleic acid vaccines and therapeutics via energy-based delivery. Integrating innovations in drug delivery and genetic medicine, Piezo is advancing its delivery platform and investigational therapeutics in collaboration with global pharma and biotech companies to prevent and treat deadly or debilitating diseases.",
+      website: "https://www.piezotx.com/",
+      keyPersonnel: [
+        {
+          "name": "Gaurav Byagathvalli",
+          "linkedin": "https://www.linkedin.com/in/gaurav-byagathvalli/"
+        }
+      ],
+      recentNews: "Raised initial financing in 2023 led by Good Ventures. Located at 58 Edgewood Ave NE, Atlanta."
+    },
+    {
+      id: "palate_therapeutics",
+      name: "Palate Therapeutics",
+      type: "startup",
+      size: 10,
+      description: "IndieBio NY06 company working to address the growing prevalence of metabolic diseases including insulin resistance, obesity, and diabetes. Developing an oral oligonucleotide therapy to temporarily alter how sweet foods taste and how they are metabolized to help change patient's food preferences.",
+      website: "https://www.linkedin.com/company/palate-therapeutics/",
+      keyPersonnel: [
+        {
+          "name": "Mighten Yip",
+          "linkedin": "https://www.linkedin.com/in/mighten-yip/"
+        }
+      ],
+      recentNews: "Part of IndieBio NY06 cohort. Focuses on metabolic disease therapeutics through oral oligonucleotide therapy."
+    },
+    {
+      id: "university_bioconnect",
+      name: "University Bioconnect",
+      type: "community",
+      size: 11,
+      description: "Atlanta-based biotech community connecting university students and researchers with local industry professionals through meetups and networking events.",
+      website: "https://www.meetup.com/university-bioconnect/",
+      keyPersonnel: [],
+      recentNews: "Hosts recurring meetups for early-career biotech professionals in the Atlanta region."
+    },
+    {
+      id: "cordx",
+      name: "CorDx",
+      type: "company",
+      size: 18,
+      description: "Multi-national biotech organization headquartered in Atlanta focused on rapid testing and point-of-care medical device solutions for infectious disease detection, pregnancy, drugs of abuse, and biomarkers. Leverages AI and data science for diagnostic solutions.",
+      website: "https://cordx.com/",
+      keyPersonnel: [],
+      recentNews: "Founded in 2006 with over 2,100 employees globally. Serves millions of users in over 100 countries. Recently showcased 3-in-1 COVID-19, Flu A & B test at ADLM 2025."
+    },
+    {
+      id: "lucid_scientific",
+      name: "Lucid Scientific",
+      type: "company",
+      size: 14,
+      description: "Atlanta-based biotech company creating Resipher, the world's first real-time cell culture monitor to measure oxygen consumption in standard multi-well plates. Provides continuous insight for cell metabolism research and drug screening.",
+      website: "https://lucidsci.com",
+      keyPersonnel: [
+        {
+          "name": "Walker Inman",
+          "linkedin": "https://www.linkedin.com/in/walker-inman-4954aa8/"
+        }
+      ],
+      recentNews: "Founded in 2012. Raised $7M Series A in 2023 led by IAG Capital Partners. Resipher technology used in mitochondrial function research and cell metabolism studies."
+    },
+    {
+      id: "timeless_biosciences",
+      name: "Timeless Biosciences",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based biotech startup enabling precision diagnostics and targeted treatment through systems biology models informed by real-world patient data. Focuses on complex chronic conditions through precision medicine approaches.",
+      website: "https://www.timelessbiosciences.com/",
+      keyPersonnel: [
+        {
+          "name": "Nita Jain",
+          "linkedin": "https://www.linkedin.com/in/nitajain/"
+        }
+      ],
+      recentNews: "Founded in 2024. Early-stage startup focused on precision microbiome therapies for complex chronic diseases."
+    },
+    {
       id: "emory_ott",
       name: "Emory OTT",
       type: "serviceProvider",
@@ -1510,6 +1746,21 @@ export const atlantaTechBioEcosystem = {
     { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
     { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
     { source: "nucleate_atlanta", target: "gsu", type: "collaboration", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
+    { source: "gatech", target: "t2c2_gatech", type: "community_support", description: "Georgia Tech-based student consulting program supporting translational research and tech transfer." },
+    { source: "gsu", target: "collabtech_gsu", type: "infrastructure", description: "CollabTech is Georgia State University's life sciences incubator providing lab space and core research facilities." },
+    { source: "augusta_university", target: "augusta_biobusiness_incubator", type: "infrastructure", description: "Life sciences business incubator operated by Augusta University to support biotech startups and translational research." },
+    { source: "emory", target: "eidd", type: "infrastructure", description: "EIDD is a drug discovery and translational research center established and operated by Emory University." },
+    { source: "science_square", target: "biospark_labs", type: "infrastructure", description: "BioSpark Labs is the shared wet‑lab and core facility node within the Science Square life sciences district in Atlanta." },
+    { source: "portal", target: "biospark_labs", type: "infrastructure", description: "Portal Innovations Atlanta operates and supports BioSpark Labs within its Science Square facility, integrating venture support and lab infrastructure." },
+    { source: "gatech", target: "biospark_labs", type: "infrastructure", description: "Georgia Tech helped establish BioSpark Labs at Science Square and its core facilities serve startups located there." },
+    { source: "ascend_atlanta", target: "morehouse", type: "affiliation", description: "Ascend Atlanta is hosted by the Morehouse Innovation & Entrepreneurship Center and supports minority startup acceleration." },
+    { source: "propel_center", target: "cau", type: "infrastructure", description: "Propel Center is headquartered at Clark Atlanta University and serves as a national hub for HBCU innovation." },
+    { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
+    { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
+    { source: "hatchbridge", target: "kennesaw_state_university", type: "affiliation", description: "HatchBridge is Kennesaw State University's startup incubator, supporting students, faculty, and community founders." },
+
+    { source: "mercer_innovation_center", target: "mercer_university", type: "affiliation", description: "Mercer Innovation Center is Mercer University's entrepreneurship hub, supporting innovation and startup formation across health, medtech, and community ventures." },
+    { source: "gatech", target: "piezo_therapeutics", type: "spinout", description: "Georgia Tech spinout focused on energy-based nucleic acid delivery technology." },
 
     // --- University Spinouts ---
     { source: "emory", target: "geovax", type: "spinout", description: "Technology developed at Emory" },
