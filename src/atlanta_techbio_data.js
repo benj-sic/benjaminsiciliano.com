@@ -160,7 +160,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "grady",
-      name: "Grady Health System",
+      name: "Grady",
       type: "health_system",
       size: 17,
       description: "Atlanta's largest safety-net hospital and trauma center. Key clinical research site and community health partner for Emory, Morehouse, and Georgia CTSA programs.",
@@ -584,7 +584,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "venturelab",
-      name: "Georgia Tech VentureLab",
+      name: "VentureLab",
       type: "facility",
       size: 15,
       description: "Georgia Tech's startup incubation and customer discovery program. Serves as an NSF I-Corps Node, helping faculty and student innovators across biotech, medtech, AI, and engineering translate research into marketable ventures.",
@@ -615,7 +615,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "collabtech_gsu",
-      name: "CollabTech (GSU)",
+      name: "CollabTech",
       type: "incubator",
       size: 12,
       description: "Downtown Atlanta biotech incubator hosted by Georgia State University. Offers lab space and core facilities for early-stage bioscience companies.",
@@ -625,7 +625,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "t2c2_gatech",
-      name: "T2C2 (Georgia Tech)",
+      name: "T2C2",
       type: "community",
       size: 10,
       description: "Georgia Tech-based student consulting program supporting translational research and tech transfer initiatives.",
@@ -647,7 +647,7 @@ export const atlantaTechBioEcosystem = {
 
     {
       id: "ariel_savannah_angel_partners",
-      name: "Ariel Savannah Angel Partners",
+      name: "ASAP",
       type: "vc",
       size: 12,
       description: "Savannah-based angel investment group supporting early-stage startups across the Southeast. Invests in life sciences, biotech, and medtech ventures with Georgia ties.",
@@ -677,7 +677,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "cranium_incubator",
-      name: "The Cranium Incubator",
+      name: "Cranium Incubator",
       type: "incubator",
       size: 11,
       description: "Atlanta-based incubator supporting underrepresented founders in early-stage fundraising, product validation, and startup strategy. Backed by investor Joe Beverly.",
@@ -729,7 +729,7 @@ export const atlantaTechBioEcosystem = {
 
     {
       id: "kennesaw_state_university",
-      name: "Kennesaw State University",
+      name: "Kennesaw State",
       type: "university",
       size: 15,
       description: "Major public university in Georgia with growing research activity in biosciences, entrepreneurship, and engineering. Hosts the HatchBridge startup incubator.",
@@ -838,6 +838,16 @@ export const atlantaTechBioEcosystem = {
         }
       ],
       recentNews: "Founded in 2024. Early-stage startup focused on precision microbiome therapies for complex chronic diseases."
+    },
+    {
+      id: "strados_labs",
+      name: "Strados Labs",
+      type: "startup",
+      size: 12,
+      description: "Digital health company with FDA-cleared RESP® wearable for continuous respiratory monitoring. Operates in both Philadelphia and Atlanta, supporting clinical trials and decentralized care.",
+      website: "https://www.stradoslabs.com",
+      keyPersonnel: [],
+      recentNews: "Atlanta office supports decentralized clinical trials and respiratory innovation using RESP® wearable."
     },
     {
       id: "emory_ott",
@@ -1147,7 +1157,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "jpmorgan_chase",
-      name: "J.P. Morgan Chase & Co.",
+      name: "JPMorgan Chase",
       type: "serviceProvider",
       size: 18,
       description: "Global financial services firm with a strong presence in Atlanta (Buckhead), supporting life sciences banking, commercial banking, wealth management, and technology operations.",
@@ -1248,7 +1258,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "ache_georgia",
-      name: "ACHE of Georgia",
+      name: "ACHE Georgia",
       type: "community",
       size: 12,
       description: "Professional society for healthcare executives across Georgia. Provides education, networking, and mentorship for clinical innovation leaders across hospitals, payers, and systems.",
@@ -1408,7 +1418,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "avanos",
-      name: "Avanos Medical",
+      name: "Avanos",
       type: "company",
       size: 14,
       description: "Medtech company headquartered in Alpharetta, GA. Focuses on chronic care and pain management solutions, including nerve block and respiratory health technologies.",
@@ -1462,7 +1472,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "allonix",
-      name: "Allonix Therapeutics",
+      name: "Allonix",
       type: "startup",
       size: 10,
       description: "Emory spinout developing small molecule agonists targeting inflammation and cholesterol pathways for the treatment of inflammatory bowel disease (IBD). Co-founded with Orange Grove Bio.",
@@ -1497,7 +1507,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "cambium_oncology",
-      name: "Cambium Oncology",
+      name: "Cambium",
       type: "startup",
       size: 13,
       description: "Immuno‑oncology startup headquartered in Atlanta, GA developing first‑in‑class VIP receptor antagonists (e.g. ANT308) to restore anti‑cancer T‑cell activity in tumors with elevated VIP/VPAC signaling.",
@@ -1555,7 +1565,7 @@ export const atlantaTechBioEcosystem = {
     },
     {
       id: "armor_medical",
-      name: "Armor Medical Inc.",
+      name: "Armor Medical",
       type: "startup",
       size: 10,
       description: "Atlanta-based medtech startup developing Maternal aRMOR, a wearable for early detection of postpartum hemorrhage.",
