@@ -390,13 +390,21 @@
 .link-highlighted {
   stroke-width: 8px !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 8px var(--shadow-color)) !important;
+  filter: drop-shadow(0 0 8px var(--network-highlight-shadow)) !important;
   transition: all 0.3s ease;
 }
 
 .link-dimmed {
   opacity: 0.1 !important;
   transition: opacity 0.3s ease;
+}
+
+/* Edge hover effect for better interactivity */
+.network-canvas line:hover {
+  stroke-width: 8px !important;
+  opacity: 0.9 !important;
+  filter: drop-shadow(0 0 4px var(--network-highlight-shadow)) !important;
+  transition: all 0.2s ease;
 }
 
 
@@ -1056,6 +1064,142 @@
 .node-details {
   border-top: 1px solid var(--network-border-primary);
   padding-top: 16px;
+}
+
+/* Edge Details */
+.edge-details {
+  border-top: 1px solid var(--network-border-primary);
+  padding-top: 16px;
+}
+
+.connected-organizations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.org-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.org-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.org-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.org-name {
+  color: var(--network-text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.org-website-link {
+  color: var(--network-text-accent);
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.org-website-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.org-type {
+  color: var(--network-text-tertiary);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.relationship-type {
+  color: var(--network-text-accent);
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.relationship-description {
+  color: var(--network-text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile responsive styles for edge details */
+@media (max-width: 768px) {
+  .connected-organizations {
+    gap: 6px;
+  }
+  
+  .org-name {
+    font-size: 12px;
+  }
+  
+  .org-type {
+    font-size: 10px;
+  }
+  
+  .org-website-link {
+    font-size: 11px;
+  }
+  
+  .relationship-type {
+    font-size: 13px;
+  }
+  
+  .relationship-description {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .org-name {
+    font-size: 11px;
+  }
+  
+  .org-type {
+    font-size: 9px;
+  }
+  
+  .org-website-link {
+    font-size: 10px;
+  }
+  
+  .relationship-type {
+    font-size: 12px;
+  }
+  
+  .relationship-description {
+    font-size: 10px;
+  }
 }
 
 .details-header {

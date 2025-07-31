@@ -11,6 +11,8 @@ const NetworkVisualization = () => {
   const simulationRef = useRef();
   const [selectedNode, setSelectedNode] = useState(null);
   const [connectedNodes, setConnectedNodes] = useState(new Set());
+  const [selectedEdge, setSelectedEdge] = useState(null);
+  const [edgeConnectedNodes, setEdgeConnectedNodes] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const selectedNodeRef = useRef(null);
   const [lastCommitDate, setLastCommitDate] = useState('July 2025');
@@ -532,7 +534,14 @@ const NetworkVisualization = () => {
       .attr("stroke-width", d => getLinkStyle(d.type).strokeWidth)
       .attr("stroke-dasharray", d => getLinkStyle(d.type).strokeDasharray)
       .attr("opacity", d => getLinkStyle(d.type).opacity)
-      .style("pointer-events", "none");
+      .style("pointer-events", "auto")
+      .style("cursor", "pointer")
+      .attr("class", d => `link ${selectedEdge && selectedEdge.source.id === d.source.id && selectedEdge.target.id === d.target.id ? 'link-highlighted' : ''}`)
+      .on("click", function(event, d) {
+        event.stopPropagation(); // Prevent bubbling to container
+        console.log('D3 link click event:', d.source.id, '->', d.target.id);
+        handleEdgeClick(d, event);
+      });
 
     // Create nodes in zoom group with mobile-optimized sizes
     const nodes = zoomGroup.append("g")
@@ -671,7 +680,7 @@ const NetworkVisualization = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedFilters, networkData, typeMap, theme, filterMapping, isMobile]);
 
-  // Update node highlighting when selectedNode changes
+  // Update node and edge highlighting when selections change
   useEffect(() => {
     if (!isLoading && containerRef.current) {
       const svg = d3.select(containerRef.current).select("svg");
@@ -697,9 +706,27 @@ const NetworkVisualization = () => {
         labels.filter(d => !connectedNodes.has(d.id)).classed("label-dimmed", true);
         links.filter(d => d.source.id !== selectedNode.id && d.target.id !== selectedNode.id)
           .classed("link-dimmed", true);
+      } else if (selectedEdge) {
+        // Highlight the selected edge
+        links.filter(d => 
+          (d.source.id === selectedEdge.source.id && d.target.id === selectedEdge.target.id) ||
+          (d.source.id === selectedEdge.target.id && d.target.id === selectedEdge.source.id)
+        ).classed("link-highlighted", true);
+        
+        // Highlight the nodes connected by this edge
+        nodes.filter(d => edgeConnectedNodes.has(d.id)).classed("node-highlighted", true);
+        labels.filter(d => edgeConnectedNodes.has(d.id)).classed("label-highlighted", true);
+        
+        // Dim nodes that are not connected by this edge
+        nodes.filter(d => !edgeConnectedNodes.has(d.id)).classed("node-dimmed", true);
+        labels.filter(d => !edgeConnectedNodes.has(d.id)).classed("label-dimmed", true);
+        links.filter(d => 
+          !((d.source.id === selectedEdge.source.id && d.target.id === selectedEdge.target.id) ||
+            (d.source.id === selectedEdge.target.id && d.target.id === selectedEdge.source.id))
+        ).classed("link-dimmed", true);
       }
     }
-  }, [selectedNode, connectedNodes, isLoading]);
+  }, [selectedNode, connectedNodes, selectedEdge, edgeConnectedNodes, isLoading]);
 
   // Handle URL parameters for focusing on a specific node
   useEffect(() => {
@@ -751,11 +778,59 @@ const NetworkVisualization = () => {
     setSearchResults(results);
   };
 
+  const handleEdgeClick = useCallback((edge, event) => {
+    console.log('Edge clicked:', edge.source.id, '->', edge.target.id, 'Current selected edge:', selectedEdge);
+    
+    // Stop event propagation to prevent container click handler from firing
+    event?.stopPropagation();
+    
+    // Toggle selection: if clicking the same edge, deselect it
+    if (selectedEdge && 
+        selectedEdge.source.id === edge.source.id && 
+        selectedEdge.target.id === edge.target.id) {
+      console.log('Deselecting edge:', edge.source.id, '->', edge.target.id);
+      setSelectedEdge(null);
+      setEdgeConnectedNodes(new Set());
+      setSearchQuery('');
+      setSearchResults([]);
+      setShowSearch(false);
+      return;
+    }
+    
+    // Find connected nodes for this edge
+    const connected = new Set();
+    connected.add(edge.source.id);
+    connected.add(edge.target.id);
+    
+    setSelectedEdge(edge);
+    setEdgeConnectedNodes(connected);
+    setSearchQuery('');
+    setSearchResults([]);
+    setShowSearch(true); // Auto-open the search & details dropdown
+    
+    // Auto-scroll to the search & details section
+    setTimeout(() => {
+      const sidebar = document.querySelector('.network-sidebar-left');
+      const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
+      if (sidebar && searchDropdownButton) {
+        const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
+        sidebar.scrollTo({
+          top: scrollTop,
+          behavior: 'smooth'
+        });
+      }
+    }, 100); // Small delay to ensure the dropdown is rendered
+  }, []);
+
   const handleNodeClick = useCallback((node, event) => {
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
     
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
+    
+    // Clear edge selection when clicking a node
+    setSelectedEdge(null);
+    setEdgeConnectedNodes(new Set());
     
     // Toggle selection: if clicking the same node, deselect it
     if (selectedNodeRef.current && selectedNodeRef.current.id === node.id) {
@@ -812,7 +887,7 @@ const NetworkVisualization = () => {
         });
       }
     }, 100); // Small delay to ensure the dropdown is rendered
-  }, [isMobile, selectedNode, networkData.links]);
+  }, [isMobile, selectedNode, networkData.links, selectedEdge]);
 
   return (
     <div className="network-visualization">
@@ -1228,28 +1303,92 @@ const NetworkVisualization = () => {
                           <p className="recent-news">{selectedNode.recentNews}</p>
                         </div>
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Selected Edge Details */}
+                {selectedEdge && (
+                  <div className="edge-details">
+                    <div className="details-header">
+                      <h3>Connection Details</h3>
+                      <button 
+                        className="details-close"
+                        onClick={() => {
+                          setSelectedEdge(null);
+                          setEdgeConnectedNodes(new Set());
+                          // Clear highlighting
+                          if (containerRef.current) {
+                            const svg = d3.select(containerRef.current).select("svg");
+                            svg.selectAll(".link").classed("link-highlighted", false);
+                            svg.selectAll(".node").classed("node-highlighted", false);
+                            svg.selectAll(".label").classed("label-highlighted", false);
+                          }
+                        }}
+                        title="Close"
+                      >
+                        ×
+                      </button>
+                    </div>
+                    
+                    <div className="details-content">
+                      <div className="details-section">
+                        <h4>Connected Organizations</h4>
+                        <div className="connected-organizations">
+                          <div className="org-item">
+                            <div className="org-node-color" style={{backgroundColor: getNodeColor(selectedEdge.source.type)}}></div>
+                            <div className="org-content">
+                              <div className="org-name">
+                                {selectedEdge.source.name}
+                                {selectedEdge.source.website && (
+                                  <a 
+                                    href={selectedEdge.source.website} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="org-website-link"
+                                  >
+                                    ↗
+                                  </a>
+                                )}
+                              </div>
+                              <div className="org-type">{typeMap[selectedEdge.source.type] || selectedEdge.source.type}</div>
+                            </div>
+                          </div>
+                          <div className="org-item">
+                            <div className="org-node-color" style={{backgroundColor: getNodeColor(selectedEdge.target.type)}}></div>
+                            <div className="org-content">
+                              <div className="org-name">
+                                {selectedEdge.target.name}
+                                {selectedEdge.target.website && (
+                                  <a 
+                                    href={selectedEdge.target.website} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="org-website-link"
+                                  >
+                                    ↗
+                                  </a>
+                                )}
+                              </div>
+                              <div className="org-type">{typeMap[selectedEdge.target.type] || selectedEdge.target.type}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       
                       <div className="details-section">
-                        <h4>Connections</h4>
-                        <ul className="connection-list">
-                          {networkData.links
-                            .filter(link => link.source === selectedNode.id || link.target === selectedNode.id)
-                            .map((link, idx) => {
-                              const isSource = link.source === selectedNode.id;
-                              const otherId = isSource ? link.target : link.source;
-                              const otherNode = networkData.nodes.find(n => n.id === otherId);
-                              const typeLabel = link.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase()); // e.g. "spinout" → "Spinout"
-                              
-                              return (
-                                <li key={idx}>
-                                  <span className="connection-name">{otherNode?.name}</span>
-                                  <span className="connection-type">{typeLabel}</span>
-                                  <span className="connection-description">: {link.description}</span>
-                                </li>
-                              );
-                            })}
-                        </ul>
+                        <h4>Relationship Type</h4>
+                        <p className="relationship-type">
+                          {selectedEdge.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </p>
                       </div>
+                      
+                      {selectedEdge.description && (
+                        <div className="details-section">
+                          <h4>Description</h4>
+                          <p className="relationship-description">{selectedEdge.description}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -1284,6 +1423,8 @@ const NetworkVisualization = () => {
                 setSelectedNode(null);
                 selectedNodeRef.current = null;
                 setConnectedNodes(new Set());
+                setSelectedEdge(null);
+                setEdgeConnectedNodes(new Set());
                 setSearchQuery('');
                 setSearchResults([]);
                 setShowSearch(false);

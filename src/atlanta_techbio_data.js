@@ -640,7 +640,7 @@ export const atlantaTechBioEcosystem = {
       type: "incubator",
       size: 12,
       description: "Downtown Atlanta biotech incubator hosted by Georgia State University. Offers lab space and core facilities for early-stage bioscience companies.",
-      website: "https://research.gsu.edu/georgia-state-technology-enterprises/",
+      website: "https://research.gsu.edu/georgia-state-technology-transfer/collabtech-incubator/",
       keyPersonnel: [],
       recentNews: "Part of Georgia State's research commercialization initiatives. Located at 58 Edgewood Avenue."
     },
