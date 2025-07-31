@@ -1296,21 +1296,21 @@ const NetworkVisualization = () => {
 
       </div>
       
-      {/* Stats Display */}
-      <div className="stats-display">
-        <div className="stats-item">
-          <span className="stat-label">Nodes:</span>
-          <span className="stat-value">{networkData.nodes.length}</span>
-        </div>
-        <div className="stats-item">
-          <span className="stat-label">Edges:</span>
-          <span className="stat-value">{networkData.links.length}</span>
-        </div>
-        <div className="stats-item">
-          <span className="stat-label">Last Update:</span>
-          <span className="stat-value">{lastCommitDate}</span>
-        </div>
-      </div>
+             {/* Stats Display */}
+       <div className="stats-display">
+         <div className="stats-item">
+           <span className="stat-label">Organizations:</span>
+           <span className="stat-value">{networkData.nodes.length}</span>
+         </div>
+         <div className="stats-item">
+           <span className="stat-label">Connections:</span>
+           <span className="stat-value">{networkData.links.length}</span>
+         </div>
+         <div className="stats-item">
+           <span className="stat-label">Last Update:</span>
+           <span className="stat-value">{lastCommitDate}</span>
+         </div>
+       </div>
 
 
 
