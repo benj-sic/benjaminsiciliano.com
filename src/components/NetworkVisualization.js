@@ -565,13 +565,11 @@ const NetworkVisualization = () => {
     // Add zoom behavior with enhanced controls and mobile optimization
     const zoom = d3.zoom()
       .scaleExtent([0.1, 1.0]) // Zoom range from 10% to 100%
-      .wheelDelta(event => -event.deltaY * (event.deltaMode ? 120 : 1) / 500) // Smoother wheel zoom
+      .wheelDelta(event => -event.deltaY * (event.deltaMode ? 120 : 1) / 100) // Faster wheel zoom for desktop
       .on("zoom", (event) => {
-        // Use requestAnimationFrame for smoother zoom on mobile
-        requestAnimationFrame(() => {
-          zoomGroup.attr("transform", event.transform);
-          setZoomLevel(event.transform.k);
-        });
+        // Direct DOM update for faster response on desktop
+        zoomGroup.attr("transform", event.transform);
+        setZoomLevel(event.transform.k);
       })
       .on("start", (event) => {
         // Prevent default only for non-touch events to allow native iOS gestures
@@ -587,9 +585,6 @@ const NetworkVisualization = () => {
     } else {
       // Mobile: enable zoom with iOS Safari compatibility
       svg.call(zoom);
-      
-      // Set touch-action to allow native gestures while enabling D3 zoom
-      svg.style("touch-action", "pan-x pan-y pinch-zoom");
       
       // Add passive touch listeners to improve iOS Safari performance
       svg.on("touchstart", function(event) {
@@ -612,22 +607,20 @@ const NetworkVisualization = () => {
 
     // Update positions on simulation tick with performance optimization
     simulation.on("tick", () => {
-      // Use requestAnimationFrame for smoother updates on mobile
-      requestAnimationFrame(() => {
-        links
-          .attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y);
+      // Direct DOM updates for better performance
+      links
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
 
-        nodes
-          .attr("cx", d => d.x)
-          .attr("cy", d => d.y);
+      nodes
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y);
 
-        labels
-          .attr("x", d => d.x)
-          .attr("y", d => d.y);
-      });
+      labels
+        .attr("x", d => d.x)
+        .attr("y", d => d.y);
     });
 
     // Set loading states with mobile-optimized timeouts

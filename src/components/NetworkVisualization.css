@@ -229,7 +229,7 @@
   min-width: 0; /* Allow canvas to shrink if needed */
   background: var(--network-bg-secondary);
   /* Touch interaction improvements */
-  touch-action: pan-x pan-y pinch-zoom;
+  touch-action: manipulation;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -264,7 +264,7 @@
   will-change: transform;
   transform: translateZ(0);
   /* Touch interaction improvements */
-  touch-action: pan-x pan-y pinch-zoom;
+  touch-action: manipulation;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1383,7 +1383,7 @@
   
   /* Ensure network canvas is touch-friendly */
   .network-canvas {
-    touch-action: pan-x pan-y pinch-zoom;
+    touch-action: manipulation;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1393,7 +1393,7 @@
   
   .network-canvas circle {
     cursor: pointer;
-    touch-action: pan-x pan-y pinch-zoom;
+    touch-action: manipulation;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1402,7 +1402,7 @@
   }
   
   .network-canvas svg {
-    touch-action: pan-x pan-y pinch-zoom;
+    touch-action: manipulation;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1443,7 +1443,7 @@
     flex: 1;
     min-height: 40vh;
     /* Touch interaction improvements for extra small screens */
-    touch-action: pan-x pan-y pinch-zoom;
+    touch-action: manipulation;
     -webkit-overflow-scrolling: touch;
   }
   
