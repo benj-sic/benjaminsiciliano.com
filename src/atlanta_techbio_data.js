@@ -58,7 +58,7 @@ export const atlantaTechBioEcosystem = {
       name: "MSM",
       type: "university",
       size: 15,
-      description: "Historically Black medical school focused on health equity. Partner in the Georgia Clinical & Translational Science Alliance (CTSA).",
+      description: "Morehouse School of Medicine (MSM) - historically Black medical school focused on health equity. Partner in the Georgia Clinical & Translational Science Alliance (CTSA).",
       website: "https://msm.edu",
       keyPersonnel: [
       {
@@ -528,6 +528,10 @@ export const atlantaTechBioEcosystem = {
       {
         "name": "Manuel Kingsley",
         "linkedin": "https://www.linkedin.com/in/manuelkingsley/"
+      },
+      {
+        "name": "Jessie Buckelew",
+        "linkedin": "https://www.linkedin.com/in/jessie-buckelew-24868b8a/"
       }
     ],
       recentNews: "Supports translational research through strategic grants and mentorship. Operates in collaboration with Emory and Georgia Tech to de-risk early-stage medtech projects."
@@ -848,6 +852,112 @@ export const atlantaTechBioEcosystem = {
       website: "https://www.stradoslabs.com",
       keyPersonnel: [],
       recentNews: "Atlanta office supports decentralized clinical trials and respiratory innovation using RESP® wearable."
+    },
+    {
+      id: "heald",
+      name: "Heald",
+      type: "company",
+      size: 12,
+      description: "Integrated diabetes remission program that focuses on the mind, as much as on the body. Uses atomic habits to create incremental progress in the journey. Doctor-led care team designs personalized healing plans based on lifestyle and physical condition, with app syncing to wearables for real-time progress tracking.",
+      website: "https://iheald.com/",
+      keyPersonnel: [],
+      recentNews: "Founded in 2023. Located in Alpharetta, Georgia with 11-50 employees. Specializes in diabetes, healthcare, healthtech, machine learning, and Gen AI. Now eligible for FSA/HSA coverage."
+    },
+    {
+      id: "emtherapro",
+      name: "Emtherapro",
+      type: "company",
+      size: 15,
+      description: "Next generation precision medicine enablement solution for neurodegenerative diseases. Empowers biotech, lifesciences and pharmaceutical companies to develop novel diagnostics and therapies using robust precision medicine approach with proteomics, AI/ML, and systems biology capabilities.",
+      website: "https://emtherapro.com/",
+      keyPersonnel: [
+        {
+          "name": "Kiran Pandey",
+          "linkedin": "https://www.linkedin.com/in/kiranpandey/"
+        },
+        {
+          "name": "Allan Levey",
+          "linkedin": "https://www.linkedin.com/in/allan-levey-m-d-ph-d-0b8b0ba/"
+        },
+        {
+          "name": "Duc Duong",
+          "linkedin": "https://www.linkedin.com/in/duc-duong-6a063b34/"
+        },
+        {
+          "name": "Nicholas Seyfried",
+          "linkedin": "https://www.linkedin.com/in/nicholas-seyfried-3a1947/"
+        }
+      ],
+      recentNews: "Emory spinout transforming diagnosis and treatment of neurodegenerative diseases through pioneering science, data and insights. Offers comprehensive precision medicine enablement solution with proteomics, drug discovery, and clinical trials capabilities. Uses Jones Day for legal counsel."
+    },
+    {
+      id: "arc_proteomics",
+      name: "Arc Proteomics",
+      type: "company",
+      size: 12,
+      description: "Cutting-edge proteomics company dedicated to advancing drug and biomarker discovery through mass spectrometry-based proteomics. Offers discovery and targeted proteomics solutions using Orbitrap Astral platform for comprehensive proteome analysis.",
+      website: "https://arcproteomics.com/",
+      keyPersonnel: [
+        {
+          "name": "Kiran Pandey",
+          "linkedin": "https://www.linkedin.com/in/kiranpandey/"
+        },
+        {
+          "name": "Duc Duong",
+          "linkedin": "https://www.linkedin.com/in/duc-duong-6a063b34/"
+        },
+        {
+          "name": "Nicholas Seyfried",
+          "linkedin": "https://www.linkedin.com/in/nicholas-seyfried-3a1947/"
+        }
+      ],
+      recentNews: "Emory spinout located in Decatur, GA specializing in proteome-wide assays for biomarker discovery. Offers comprehensive, customized proteomics solutions for academic institutions and biotechnology companies. Uses Jones Day for legal counsel."
+    },
+    {
+      id: "orthopreserve",
+      name: "OrthoPreserve",
+      type: "startup",
+      size: 8,
+      description: "Medical technology startup developing an artificial meniscus replacement implant to restore knee joint function. Aims to relieve pain and impairment, allow for quick recovery, and reduce the risk of arthritis and knee replacements in patients with previous meniscus injuries.",
+      website: "https://www.orthopreserve.com",
+      keyPersonnel: [
+        {
+          "name": "Jonathan Schwartz",
+          "linkedin": "https://www.linkedin.com/in/jonathanwschwartz/"
+        },
+        {
+          "name": "Cyrus Kump",
+          "linkedin": "https://www.linkedin.com/in/cyrus-kump-69308a91/"
+        },
+        {
+          "name": "Brendan Baggot",
+          "linkedin": "https://www.linkedin.com/in/brendan-baggot/"
+        },
+        {
+          "name": "Max Guillot",
+          "linkedin": ""
+        }
+      ],
+      recentNews: "Founded in 2021. Selected as one of 6 finalists for the Startup Prize: Focus on Health 2025 competition. Meniscus implant currently undergoing pre-clinical testing. Located in Atlanta, Georgia with 2-10 employees."
+    },
+    {
+      id: "oridivus",
+      name: "Oridivus",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based biotechnology company focused on oral wound healing by leveraging the innate immune system. Specializes in pharma and drug delivery solutions for oral health applications.",
+      website: "",
+      keyPersonnel: [
+        {
+          "name": "Nathan Chiappa",
+          "linkedin": "https://www.linkedin.com/in/nathan-chiappa-phd-1912a4142/"
+        },
+        {
+          "name": "Steven Goudy",
+          "linkedin": "https://www.linkedin.com/in/steven-goudy-md-mba-b3ba819/"
+        }
+      ],
+      recentNews: "Founded in 2019. Located in Atlanta, Georgia with 2-10 employees. Focuses on biotechnology research for oral wound healing through innate immune system modulation."
     },
     {
       id: "emory_ott",
