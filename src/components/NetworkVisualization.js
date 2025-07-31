@@ -554,7 +554,11 @@ const NetworkVisualization = () => {
           return sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
         };
         const currentEdgeId = createEdgeId(d);
-        return `link ${currentEdgeId === selectedEdgeId ? 'link-highlighted' : ''}`;
+        const isHighlighted = currentEdgeId === selectedEdgeId;
+        if (isHighlighted) {
+          console.log('Highlighting edge:', d.source.id, '->', d.target.id, 'with ID:', currentEdgeId);
+        }
+        return `link ${isHighlighted ? 'link-highlighted' : ''}`;
       })
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
@@ -802,6 +806,8 @@ const NetworkVisualization = () => {
     console.log('Edge clicked:', edge.source.id, '->', edge.target.id);
     console.log('Edge object:', edge);
     console.log('Current selected edge ID:', selectedEdgeId);
+    console.log('Event target:', event?.target);
+    console.log('Event type:', event?.type);
     
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
@@ -818,43 +824,58 @@ const NetworkVisualization = () => {
     console.log('Clicked edge ID:', clickedEdgeId);
     console.log('Selected edge ID:', selectedEdgeId);
     console.log('Is same edge?', clickedEdgeId === selectedEdgeId);
+    console.log('String comparison details:');
+    console.log('  clickedEdgeId type:', typeof clickedEdgeId);
+    console.log('  selectedEdgeId type:', typeof selectedEdgeId);
+    console.log('  clickedEdgeId length:', clickedEdgeId?.length);
+    console.log('  selectedEdgeId length:', selectedEdgeId?.length);
+    console.log('  clickedEdgeId === selectedEdgeId:', clickedEdgeId === selectedEdgeId);
+    console.log('  clickedEdgeId == selectedEdgeId:', clickedEdgeId === selectedEdgeId);
     console.log('=== END DEBUG ===');
     
     // Toggle selection: if clicking the same edge, deselect it
-    if (clickedEdgeId === selectedEdgeId) {
-      console.log('Deselecting edge:', edge.source.id, '->', edge.target.id);
-      setSelectedEdgeId(null);
-      setEdgeConnectedNodes(new Set());
-      setSearchQuery('');
-      setSearchResults([]);
-      setShowSearch(false);
-      return;
-    }
-    
-    // Find connected nodes for this edge
-    const connected = new Set();
-    connected.add(edge.source.id);
-    connected.add(edge.target.id);
-    
-    setSelectedEdgeId(clickedEdgeId);
-    setEdgeConnectedNodes(connected);
-    setSearchQuery('');
-    setSearchResults([]);
-    setShowSearch(true); // Auto-open the search & details dropdown
-    
-    // Auto-scroll to the search & details section
-    setTimeout(() => {
-      const sidebar = document.querySelector('.network-sidebar-left');
-      const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
-      if (sidebar && searchDropdownButton) {
-        const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
-        sidebar.scrollTo({
-          top: scrollTop,
-          behavior: 'smooth'
-        });
+    setSelectedEdgeId(prevSelectedEdgeId => {
+      console.log('Previous selected edge ID:', prevSelectedEdgeId);
+      console.log('Clicked edge ID:', clickedEdgeId);
+      console.log('Are they the same?', clickedEdgeId === prevSelectedEdgeId);
+      
+      if (clickedEdgeId === prevSelectedEdgeId) {
+        console.log('Deselecting edge:', edge.source.id, '->', edge.target.id);
+        console.log('Setting selectedEdgeId to null');
+        setEdgeConnectedNodes(new Set());
+        setSearchQuery('');
+        setSearchResults([]);
+        setShowSearch(false);
+        return null;
+      } else {
+        console.log('Setting selectedEdgeId to:', clickedEdgeId);
+        // Find connected nodes for this edge
+        const connected = new Set();
+        connected.add(edge.source.id);
+        connected.add(edge.target.id);
+        
+        setEdgeConnectedNodes(connected);
+        setSearchQuery('');
+        setSearchResults([]);
+        setShowSearch(true); // Auto-open the search & details dropdown
+        
+        // Auto-scroll to the search & details section
+        setTimeout(() => {
+          const sidebar = document.querySelector('.network-sidebar-left');
+          const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
+          if (sidebar && searchDropdownButton) {
+            const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
+            sidebar.scrollTo({
+              top: scrollTop,
+              behavior: 'smooth'
+            });
+          }
+        }, 100); // Small delay to ensure the dropdown is rendered
+        
+        return clickedEdgeId;
       }
-    }, 100); // Small delay to ensure the dropdown is rendered
-  }, [selectedEdgeId]);
+    });
+  }, [selectedEdgeId, setSelectedEdgeId, setEdgeConnectedNodes, setSearchQuery, setSearchResults, setShowSearch]);
 
   const handleNodeClick = useCallback((node, event) => {
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
