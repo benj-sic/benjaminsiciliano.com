@@ -677,26 +677,6 @@ export const atlantaTechBioEcosystem = {
       recentNews: "BioSpark opened a new 17,000 SF facility in 2023 at Science Square to support biotech startups affiliated with Emory, Georgia Tech, and Georgia State."
     },
     {
-      id: "ascend_atlanta",
-      name: "Ascend Atlanta",
-      type: "community",
-      size: 11,
-      description: "Entrepreneurship accelerator and network based at Morehouse Innovation Center, focused on scaling minority-owned startups in Georgia through capital access and mentorship.",
-      website: "https://www.ascendatl.org",
-      keyPersonnel: [],
-      recentNews: "Sponsored by JPMorgan and operated by Morehouse MIEC. Supports high-growth Black and Latinx founders in the Atlanta innovation ecosystem."
-    },
-    {
-      id: "cranium_incubator",
-      name: "Cranium Incubator",
-      type: "incubator",
-      size: 11,
-      description: "Atlanta-based incubator supporting underrepresented founders in early-stage fundraising, product validation, and startup strategy. Backed by investor Joe Beverly.",
-      website: "https://cranium-incubator.com",
-      keyPersonnel: [],
-      recentNews: "Launched in 2020 to increase diversity in venture-backed startups. Hosts educational programming and investor prep cohorts."
-    },
-    {
       id: "propel_center",
       name: "Propel Center",
       type: "community",
@@ -1972,7 +1952,7 @@ export const atlantaTechBioEcosystem = {
     { source: "science_square", target: "biospark_labs", type: "infrastructure", description: "BioSpark Labs is the shared wet‑lab and core facility node within the Science Square life sciences district in Atlanta." },
     { source: "portal", target: "biospark_labs", type: "infrastructure", description: "Portal Innovations Atlanta operates and supports BioSpark Labs within its Science Square facility, integrating venture support and lab infrastructure." },
     { source: "gatech", target: "biospark_labs", type: "infrastructure", description: "Georgia Tech helped establish BioSpark Labs at Science Square and its core facilities serve startups located there." },
-    { source: "ascend_atlanta", target: "morehouse", type: "affiliation", description: "Ascend Atlanta is hosted by the Morehouse Innovation & Entrepreneurship Center and supports minority startup acceleration." },
+
     { source: "propel_center", target: "cau", type: "partner", description: "Propel Center is headquartered at Clark Atlanta University and serves as a national hub for HBCU innovation." },
     { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
     { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
