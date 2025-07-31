@@ -536,10 +536,7 @@ const NetworkVisualization = () => {
       .attr("opacity", d => getLinkStyle(d.type).opacity)
       .style("pointer-events", "auto")
       .style("cursor", "pointer")
-      .attr("class", d => `link ${selectedEdge && (
-        (selectedEdge.source.id === d.source.id && selectedEdge.target.id === d.target.id) ||
-        (selectedEdge.source.id === d.target.id && selectedEdge.target.id === d.source.id)
-      ) ? 'link-highlighted' : ''}`)
+      .attr("class", d => `link ${selectedEdge && ((selectedEdge.source.id === d.source.id && selectedEdge.target.id === d.target.id) || (selectedEdge.source.id === d.target.id && selectedEdge.target.id === d.source.id)) ? 'link-highlighted' : ''}`)
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
         console.log('D3 link click event:', d.source.id, '->', d.target.id);
@@ -788,11 +785,10 @@ const NetworkVisualization = () => {
     event?.stopPropagation();
     
     // Toggle selection: if clicking the same edge, deselect it
-    // Handle bidirectional edges by checking both directions
-    if (selectedEdge && (
-        (selectedEdge.source.id === edge.source.id && selectedEdge.target.id === edge.target.id) ||
-        (selectedEdge.source.id === edge.target.id && selectedEdge.target.id === edge.source.id)
-    )) {
+    // Check both directions since edges can be bidirectional
+    if (selectedEdge && 
+        ((selectedEdge.source.id === edge.source.id && selectedEdge.target.id === edge.target.id) ||
+         (selectedEdge.source.id === edge.target.id && selectedEdge.target.id === edge.source.id))) {
       console.log('Deselecting edge:', edge.source.id, '->', edge.target.id);
       setSelectedEdge(null);
       setEdgeConnectedNodes(new Set());
