@@ -820,7 +820,7 @@ const NetworkVisualization = () => {
         });
       }
     }, 100); // Small delay to ensure the dropdown is rendered
-  }, []);
+  }, [selectedEdge]);
 
   const handleNodeClick = useCallback((node, event) => {
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
@@ -887,7 +887,7 @@ const NetworkVisualization = () => {
         });
       }
     }, 100); // Small delay to ensure the dropdown is rendered
-  }, [isMobile, selectedNode, networkData.links, selectedEdge]);
+  }, [isMobile, selectedNode, networkData.links]);
 
   return (
     <div className="network-visualization">
