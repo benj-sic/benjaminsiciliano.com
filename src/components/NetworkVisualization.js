@@ -536,7 +536,16 @@ const NetworkVisualization = () => {
       .attr("opacity", d => getLinkStyle(d.type).opacity)
       .style("pointer-events", "auto")
       .style("cursor", "pointer")
-      .attr("class", d => `link ${selectedEdge && ((selectedEdge.source.id === d.source.id && selectedEdge.target.id === d.target.id) || (selectedEdge.source.id === d.target.id && selectedEdge.target.id === d.source.id)) ? 'link-highlighted' : ''}`)
+      .attr("class", d => {
+        const createEdgeId = (edge) => {
+          const sourceId = edge.source.id;
+          const targetId = edge.target.id;
+          return sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
+        };
+        const currentEdgeId = createEdgeId(d);
+        const selectedEdgeId = selectedEdge ? createEdgeId(selectedEdge) : null;
+        return `link ${currentEdgeId === selectedEdgeId ? 'link-highlighted' : ''}`;
+      })
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
         console.log('D3 link click event:', d.source.id, '->', d.target.id);
@@ -779,16 +788,28 @@ const NetworkVisualization = () => {
   };
 
   const handleEdgeClick = useCallback((edge, event) => {
-    console.log('Edge clicked:', edge.source.id, '->', edge.target.id, 'Current selected edge:', selectedEdge);
+    console.log('Edge clicked:', edge.source.id, '->', edge.target.id);
+    console.log('Current selected edge:', selectedEdge ? `${selectedEdge.source.id} -> ${selectedEdge.target.id}` : 'none');
     
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
     
+    // Create a unique edge identifier (sorted to handle both directions)
+    const createEdgeId = (edge) => {
+      const sourceId = edge.source.id;
+      const targetId = edge.target.id;
+      return sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
+    };
+    
+    const clickedEdgeId = createEdgeId(edge);
+    const selectedEdgeId = selectedEdge ? createEdgeId(selectedEdge) : null;
+    
+    console.log('Clicked edge ID:', clickedEdgeId);
+    console.log('Selected edge ID:', selectedEdgeId);
+    console.log('Is same edge?', clickedEdgeId === selectedEdgeId);
+    
     // Toggle selection: if clicking the same edge, deselect it
-    // Check both directions since edges can be bidirectional
-    if (selectedEdge && 
-        ((selectedEdge.source.id === edge.source.id && selectedEdge.target.id === edge.target.id) ||
-         (selectedEdge.source.id === edge.target.id && selectedEdge.target.id === edge.source.id))) {
+    if (clickedEdgeId === selectedEdgeId) {
       console.log('Deselecting edge:', edge.source.id, '->', edge.target.id);
       setSelectedEdge(null);
       setEdgeConnectedNodes(new Set());
