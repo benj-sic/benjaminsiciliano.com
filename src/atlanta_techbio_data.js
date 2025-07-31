@@ -99,21 +99,6 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Co-leading NIH Antiviral Countermeasures Development Center (AC/DC) with Emory."
     },
     {
-      id: "augusta_university",
-      name: "Augusta University",
-      type: "university",
-      size: 15,
-      description: "Georgia's public academic medical center, home of the Medical College of Georgia. Operates a statewide campus network focused on health sciences.",
-      website: "https://augusta.edu",
-      keyPersonnel: [
-      {
-        "name": "Dr. Russell Keen",
-        "linkedin": "https://www.linkedin.com/in/russell-keen/"
-      }
-    ],
-      recentNews: "President Brooks A. Keel retired in 2024; Dr. Russell Keen inaugurated in 2025."
-    },
-    {
       id: "cdc",
       name: "CDC",
       type: "government",
@@ -367,7 +352,7 @@ export const atlantaTechBioEcosystem = {
       keyPersonnel: [
       {
         "name": "Hank Capps",
-        "linkedin": "https://www.linkedin.com/in/nasirwise/"
+        "linkedin": "https://www.linkedin.com/in/hankcapps/"
       },
       {
         "name": "Jaimie Clark",
@@ -608,16 +593,6 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Leads Georgia Tech's NSF I-Corps Node and early-stage founder support programs. Works closely with Quadrant-i, CREATE-X, and Biolocity to support translational research commercialization."
     },
     {
-      id: "augusta_biobusiness_incubator",
-      name: "Augusta Biobusiness Incubator",
-      type: "incubator",
-      size: 12,
-      description: "Life sciences business incubator at Augusta University supporting biotech research translation and company formation in eastern Georgia.",
-      website: "https://www.augusta.edu/research/oic/biobusiness-incubator.php",
-      keyPersonnel: [],
-      recentNews: "Part of Augusta University's innovation ecosystem. Supports life sciences ventures with lab space, mentorship, and access to Augusta University's core facilities."
-    },
-    {
       id: "collabtech_gsu",
       name: "CollabTech",
       type: "incubator",
@@ -633,7 +608,7 @@ export const atlantaTechBioEcosystem = {
       type: "community",
       size: 10,
       description: "Georgia Tech-based student consulting program supporting translational research and tech transfer initiatives.",
-      website: "",
+      website: "https://t2c2gatech.github.io",
       keyPersonnel: [],
       recentNews: "Student-led program providing consulting services to support Georgia Tech's translational research and commercialization efforts."
     },
@@ -650,19 +625,9 @@ export const atlantaTechBioEcosystem = {
 
 
     {
-      id: "ariel_savannah_angel_partners",
-      name: "ASAP",
-      type: "vc",
-      size: 12,
-      description: "Savannah-based angel investment group supporting early-stage startups across the Southeast. Invests in life sciences, biotech, and medtech ventures with Georgia ties.",
-      website: "https://asap-invests.com",
-      keyPersonnel: [],
-      recentNews: "Portfolio includes TYBR Health, InnAVasc Medical, and other medical technology startups across Georgia."
-    },
-    {
       id: "biospark_labs",
       name: "BioSpark Labs",
-      type: "lab_space",
+      type: "facility",
       size: 12,
       description: "Purpose‑built shared wet‑lab, cleanroom, and office facility for early‑stage biotech and life sciences startups at Science Square, Atlanta.",
       website: "https://www.biosparklabs.com",
@@ -692,7 +657,7 @@ export const atlantaTechBioEcosystem = {
     {
       id: "propel_center",
       name: "Propel Center",
-      type: "education",
+      type: "community",
       size: 13,
       description: "Global innovation and learning hub for HBCU students and faculty headquartered at Clark Atlanta University. Focuses on tech, health equity, and STEM entrepreneurship.",
       website: "https://propelcenter.org",
@@ -702,7 +667,7 @@ export const atlantaTechBioEcosystem = {
     {
       id: "tag_digital_health",
       name: "TAG Digital Health Society",
-      type: "professional_association",
+      type: "community",
       size: 55,
       description: "Statewide society housed within the Technology Association of Georgia that advances healthcare innovation and digital health across Georgia with events, collaboration, and an ecosystem directory.",
       website: "https://www.tagonline.org/chapters-and-societies/health/",
@@ -784,7 +749,7 @@ export const atlantaTechBioEcosystem = {
       type: "startup",
       size: 10,
       description: "IndieBio NY06 company working to address the growing prevalence of metabolic diseases including insulin resistance, obesity, and diabetes. Developing an oral oligonucleotide therapy to temporarily alter how sweet foods taste and how they are metabolized to help change patient's food preferences.",
-      website: "https://www.linkedin.com/company/palate-therapeutics/",
+      website: "https://www.palatetx.com",
       keyPersonnel: [
         {
           "name": "Mighten Yip",
@@ -888,7 +853,7 @@ export const atlantaTechBioEcosystem = {
           "linkedin": "https://www.linkedin.com/in/nicholas-seyfried-3a1947/"
         }
       ],
-      recentNews: "Emory spinout transforming diagnosis and treatment of neurodegenerative diseases through pioneering science, data and insights. Offers comprehensive precision medicine enablement solution with proteomics, drug discovery, and clinical trials capabilities. Uses Jones Day for legal counsel."
+      recentNews: "Emory spinout transforming diagnosis and treatment of neurodegenerative diseases through pioneering science, data and insights. Offers comprehensive precision medicine enablement solution with proteomics, drug discovery, and clinical trials capabilities."
     },
     {
       id: "arc_proteomics",
@@ -911,7 +876,7 @@ export const atlantaTechBioEcosystem = {
           "linkedin": "https://www.linkedin.com/in/nicholas-seyfried-3a1947/"
         }
       ],
-      recentNews: "Emory spinout located in Decatur, GA specializing in proteome-wide assays for biomarker discovery. Offers comprehensive, customized proteomics solutions for academic institutions and biotechnology companies. Uses Jones Day for legal counsel."
+      recentNews: "Emory spinout located in Decatur, GA specializing in proteome-wide assays for biomarker discovery. Offers comprehensive, customized proteomics solutions for academic institutions and biotechnology companies."
     },
     {
       id: "orthopreserve",
@@ -946,7 +911,7 @@ export const atlantaTechBioEcosystem = {
       type: "startup",
       size: 8,
       description: "Atlanta-based biotechnology company focused on oral wound healing by leveraging the innate immune system. Specializes in pharma and drug delivery solutions for oral health applications.",
-      website: "",
+      website: "https://www.linkedin.com/company/oridivus",
       keyPersonnel: [
         {
           "name": "Nathan Chiappa",
@@ -1340,7 +1305,7 @@ export const atlantaTechBioEcosystem = {
       type: "serviceProvider",
       size: 13,
       description: "Healthcare commercialization consultancy formerly known as 11TEN Innovation Partners. Offers co-design, real-world piloting, and strategic support via its Innovation Lab in Atlanta.",
-      website: "https://11ten.com",
+      website: "https://wovenhealth.io",
       keyPersonnel: [
       {
         "name": "James Lewis",
@@ -1386,7 +1351,7 @@ export const atlantaTechBioEcosystem = {
         "linkedin": "https://www.linkedin.com/in/dave-wiedman-b821881/"
       }
     ],
-      recentNews: "Selected by CHOA for $1.5B Arthur M. Blank Hospital RTLS system; deployed solutions at Marcus Tower (Piedmont) and Correll Pavilion (Grady). Named Top 40 healthtech company by TAG."
+      recentNews: "2025: RTLS selected for CHOA Blank Hospital; deployments at Piedmont's Marcus Tower and Grady's Correll Pavilion."
     },
     {
       id: "jones_day",
@@ -1905,19 +1870,19 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Selected in 2025‑26 Biolocity cohort for ovarian cancer drug delivery platform – receiving mentorship and non‑dilutive funding."
     },
     {
-      "id": "huxley_medical",
-      "name": "Huxley Medical",
-      "type": "startup",
-      "size": 7,
-      "description": "Atlanta‑based medical device company developing multi‑sensor diagnostic patch (SANSA) for cardio‑sleep and vital sign monitoring.",
-      "website": "https://www.huxleymed.com/",
-      "keyPersonnel": [
+      id: "huxley_medical",
+      name: "Huxley Medical",
+      type: "startup",
+      size: 7,
+      description: "Atlanta‑based medical device company developing multi‑sensor diagnostic patch (SANSA) for cardio‑sleep and vital sign monitoring.",
+      website: "https://www.huxleymed.com/",
+      keyPersonnel: [
         {
           "name": "Chris Lee",
           "linkedin": "https://www.linkedin.com/in/chris-lee-20995922/"
         }
       ],
-      "recentNews": "Raised $7.2M seed round in 2023 with support from GRA Venture Fund. CEO Chris Lee is a serial medtech entrepreneur (Vertera Spine) and Emory/GT alum."
+      recentNews: "Completed first feasibility study of SANSA cardio-sleep patch with Emory & CHOA in June 2025."
     },
     {
       "id": "biocircuit_technologies",
@@ -1960,7 +1925,7 @@ export const atlantaTechBioEcosystem = {
     { source: "nucleate_atlanta", target: "gsu", type: "collaboration", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
     { source: "gatech", target: "t2c2_gatech", type: "community_support", description: "Georgia Tech-based student consulting program supporting translational research and tech transfer." },
     { source: "gsu", target: "collabtech_gsu", type: "infrastructure", description: "CollabTech is Georgia State University's life sciences incubator providing lab space and core research facilities." },
-    { source: "augusta_university", target: "augusta_biobusiness_incubator", type: "infrastructure", description: "Life sciences business incubator operated by Augusta University to support biotech startups and translational research." },
+
     { source: "emory", target: "eidd", type: "infrastructure", description: "EIDD is a drug discovery and translational research center established and operated by Emory University." },
     { source: "science_square", target: "biospark_labs", type: "infrastructure", description: "BioSpark Labs is the shared wet‑lab and core facility node within the Science Square life sciences district in Atlanta." },
     { source: "portal", target: "biospark_labs", type: "infrastructure", description: "Portal Innovations Atlanta operates and supports BioSpark Labs within its Science Square facility, integrating venture support and lab infrastructure." },
@@ -2086,7 +2051,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gra", target: "uga", type: "funding", description: "Supports innovation and entrepreneurship across UGA's pharmacy, agbio, and veterinary programs." },
     { source: "gra", target: "morehouse", type: "funding", description: "Partners in Georgia CTSA and supports research infrastructure at Morehouse." },
     { source: "gra", target: "gsu", type: "funding", description: "Supports infectious disease and neuro research; GRA Scholars hosted at Georgia State." },
-    { source: "gra", target: "augusta_university", type: "funding", description: "GRA-supported research and startup activity at Medical College of Georgia." },
+
     { source: "gra", target: "gra_fund", type: "affiliation", description: "GRA Venture Fund is the investment arm of the Georgia Research Alliance, supporting university-affiliated startups with seed-stage capital." },
     { source: "gra", target: "micron", type: "funding", description: "Provided translational research and matching capital support." },
     { source: "gra", target: "clearside", type: "funding", description: "Clearside's founding research supported through GRA-backed technology and translational grants." },
@@ -2101,6 +2066,12 @@ export const atlantaTechBioEcosystem = {
     { source: "emory_biotech_consulting_club", target: "biolocity", type: "collaboration", description: "Collaborates with Biolocity to provide commercialization strategy support for early-stage medtech projects." },
     { source: "emory_biotech_consulting_club", target: "gra", type: "collaboration", description: "Engages with Georgia Research Alliance through university commercialization programs and startup diligence efforts." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
+
+    // --- Emtherapro and Arc Proteomics Connections ---
+    { source: "emtherapro", target: "emory", type: "spinout", description: "Emory spinout transforming diagnosis and treatment of neurodegenerative diseases through pioneering science, data and insights." },
+    { source: "emtherapro", target: "jones_day", type: "service", description: "Uses Jones Day for legal counsel." },
+    { source: "arc_proteomics", target: "emory", type: "spinout", description: "Emory spinout located in Decatur, GA specializing in proteome-wide assays for biomarker discovery." },
+    { source: "arc_proteomics", target: "jones_day", type: "service", description: "Uses Jones Day for legal counsel." },
 
     { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" }
   ]
