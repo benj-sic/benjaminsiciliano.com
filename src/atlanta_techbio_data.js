@@ -960,6 +960,98 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Founded in 2019. Located in Atlanta, Georgia with 2-10 employees. Focuses on biotechnology research for oral wound healing through innate immune system modulation."
     },
     {
+      id: "paint_therapeutics",
+      name: "Paint Therapeutics",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based emerging seed-funded biotechnology company utilizing proprietary drug targeting algorithm to improve localization and duration of action of therapeutic agents in the tissues where they are needed most. Paint's conjugation-based therapeutic development platforms enable rapid generation of clinical lead compounds with new compositions of matter starting from drugs already known to be active. Most advanced platform, PulmoPaint™, targets diseases of the lungs, with lead program for treatment of inflammatory lung diseases on track for IND in 2025. Advancing extensive pipeline of additional PulmoPaint™ products including immune potentiating approaches for lung-resident cancers, treatments for refractory and resistant bacterial lung infections including NTM, and preventive agents for viral respiratory infection prophylaxis.",
+      website: "https://www.painttherapeutics.com/",
+      keyPersonnel: [
+        {
+          "name": "Bill Reddick",
+          "linkedin": "https://www.linkedin.com/in/bill-reddick-b042894/"
+        },
+        {
+          "name": "Eric Springman",
+          "linkedin": "https://www.linkedin.com/in/ericspringmanphd/"
+        },
+        {
+          "name": "Mariah Stewart",
+          "linkedin": "https://www.linkedin.com/in/mariah-stewart-unc/"
+        }
+      ],
+      recentNews: "Founded in 2022. Seeking additional funding partners to continue both lead advancement and further platform development. Industry: Biotechnology Research. Company size: 2-10 employees."
+    },
+    {
+      id: "nutrivert",
+      name: "Nutrivert",
+      type: "startup",
+      size: 12,
+      description: "Atlanta-based animal health company developing non-antibiotic alternatives for livestock production. Nutrivert LDPP is a synthetic non-antibiotic product that mimics a cell wall component released by all bacteria, reducing inflammation and promoting better growth and feed conversion. Designed to improve livestock health and feed efficiency without relying on antibiotics, targeting the $5.8 billion veterinary livestock antibiotics growth promotion market. Also developing early-stage products for protection against Flu.",
+      website: "https://www.nutrivertglobal.com/",
+      keyPersonnel: [
+        {
+          "name": "Horace Nalle",
+          "linkedin": "https://www.linkedin.com/in/horace-nalle-8b7a6030/"
+        },
+        {
+          "name": "Bernhard Kaltenboeck",
+          "linkedin": "https://www.linkedin.com/in/bernhard-kaltenboeck-18b32661/"
+        },
+        {
+          "name": "Peter Selover",
+          "linkedin": "https://www.linkedin.com/in/peterselover/"
+        }
+      ],
+      recentNews: "Winner of the Cade Prize for Creativity and Innovation. GRA portfolio company. Developing alternatives to the $5.8 billion veterinary livestock antibiotics market."
+    },
+    {
+      id: "fibronox",
+      name: "FibroNox",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based biotechnology company focused on developing patented first-in-class therapeutics to treat and reverse life-threatening fibrotic diseases. FibroNox has pioneered the development of selective Nox4 inhibitors and Nrf2 activators that have shown robust protection from fibrosis development and promoted the reversal of age-associated established fibrosis. Initial focus is treating idiopathic pulmonary fibrosis (IPF) and fibrosis in Duchenne muscular dystrophy. FibroNox's therapeutics offer the opportunity to reverse age-associated established fibrosis, representing the holy grail for more effective strategies to treat fibrotic diseases.",
+      website: "https://fibronox.com/",
+      keyPersonnel: [
+        {
+          "name": "Joseph Patti",
+          "linkedin": "https://www.linkedin.com/in/josephmpatti/"
+        },
+        {
+          "name": "Louise Hecker",
+          "linkedin": "https://www.linkedin.com/in/louise-hecker-69ba1915/"
+        }
+      ],
+      recentNews: "Founded in 2023. Developing inhaled therapeutic delivery for pulmonary fibrosis with significant advantages over current FDA-approved treatments. Targeting 140,000 IPF patients in the U.S. with 40,000 deaths per year."
+    },
+    {
+      id: "oncospherix",
+      name: "OncoSpherix",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based pre-clinical stage oncology drug development company advancing a proprietary platform of first-in-class small molecule therapeutics designed to improve quality of life and survival for people with many forms of cancer by targeting a common feature of solid tumors: the activation of hypoxia inducible factor-1 (HIF-1). Nearly all solid cancers grow faster than their blood supply, leading to regions of low oxygen in tumors and HIF activation, which induces expression of over 100 genes that help tumor cells survive and spread. OncoSpherix has several classes of small molecules that block activation of HIF-1 through novel mechanisms.",
+      website: "https://oncospherix.com/",
+      keyPersonnel: [
+        {
+          "name": "Margaret K. Offermann",
+          "linkedin": "https://www.linkedin.com/in/margaret-k-offermann-236b505/"
+        },
+        {
+          "name": "Erwin Van Meir",
+          "linkedin": "https://www.linkedin.com/in/erwinvanmeirphd/"
+        },
+        {
+          "name": "Steve Coats",
+          "linkedin": "https://www.linkedin.com/in/steve-coats-99a5066/"
+        },
+        {
+          "name": "Allan Valmonte",
+          "linkedin": "https://www.linkedin.com/in/avalmonte/"
+        }
+      ],
+      recentNews: "Founded in 2018. Lead clinical candidate has been shown in mouse models to reduce primary tumor growth, inhibit metastases, and prolong survival in many types of cancer including glioblastoma, pancreatic cancer, uveal melanoma, lung cancer, and breast cancer. Agents are well tolerated and can be combined with therapeutics that work in well oxygenated regions of cancers."
+    },
+    {
       id: "emory_ott",
       name: "Emory OTT",
       type: "serviceProvider",
