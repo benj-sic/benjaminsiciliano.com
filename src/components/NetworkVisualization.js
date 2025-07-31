@@ -812,6 +812,11 @@ const NetworkVisualization = () => {
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
     
+    // Clear node selection when clicking an edge
+    setSelectedNode(null);
+    selectedNodeRef.current = null;
+    setConnectedNodes(new Set());
+    
     // Create a unique edge identifier (sorted to handle both directions)
     const createEdgeId = (edge) => {
       const sourceId = edge.source.id;
