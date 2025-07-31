@@ -405,7 +405,7 @@ main {
 
 /* Network Section - Front and Center */
 .network-section {
-  padding: 1rem 0;
+  padding: 2rem 0;
   min-height: auto;
   display: flex;
   align-items: stretch;
@@ -423,14 +423,14 @@ main {
 
 /* About Section */
 .about-section {
-  padding: 3rem 0;
+  padding: 2rem 0;
   background: var(--bg-tertiary);
   border-top: 1px solid var(--border-primary);
   transition: all 0.3s ease;
   width: 100%;
   position: relative;
   z-index: 0;
-  margin-top: 3rem;
+  margin-top: 0;
 }
 
 .about-content {
@@ -545,7 +545,7 @@ main {
 
 /* Motivation Section */
 .motivation-section {
-  padding: 3rem 0;
+  padding: 2rem 0;
   background: var(--bg-quaternary);
   border-top: 1px solid var(--border-tertiary);
   transition: all 0.3s ease;
@@ -581,7 +581,7 @@ main {
 
 /* Contact Section */
 .contact-section {
-  padding: 4rem 0;
+  padding: 2rem 0;
   width: 100%;
 }
 
@@ -975,7 +975,7 @@ noscript .submit-error {
   }
   
   .welcome-section {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
   
   .welcome-content p {
@@ -983,19 +983,19 @@ noscript .submit-error {
   }
   
   .network-section {
-    padding: 3rem 0;
+    padding: 1.5rem 0;
     min-height: 100vh;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
   }
   
   .about-section,
   .motivation-section,
   .contact-section {
-    padding: 3rem 0;
+    padding: 1.5rem 0;
   }
   
   .about-section {
-    margin-top: 5rem;
+    margin-top: 0;
   }
   
   .contact-links {
@@ -1020,7 +1020,7 @@ noscript .submit-error {
   }
   
   .network-section {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     min-height: auto;
     margin-bottom: 0;
     overflow: visible;
@@ -1031,7 +1031,7 @@ noscript .submit-error {
   }
   
   .about-section {
-    margin-top: 6rem;
+    margin-top: 0;
   }
   
   .header-content {

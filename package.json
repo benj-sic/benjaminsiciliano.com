@@ -17,11 +17,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node scripts/inject-git-date.js && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-social-card": "node scripts/generate-social-card.js",
-    "generate-all-social-images": "node scripts/generate-all-social-images.js"
+    "generate-all-social-images": "node scripts/generate-all-social-images.js",
+    "inject-git-date": "node scripts/inject-git-date.js"
   },
   "eslintConfig": {
     "extends": [

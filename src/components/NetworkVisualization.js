@@ -13,6 +13,26 @@ const NetworkVisualization = () => {
   const [connectedNodes, setConnectedNodes] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const selectedNodeRef = useRef(null);
+  const [lastCommitDate, setLastCommitDate] = useState('July 2025');
+  
+  // Function to fetch last git commit date
+  const fetchLastCommitDate = useCallback(async () => {
+    try {
+      const response = await fetch('/last-commit-date.json');
+      if (response.ok) {
+        const data = await response.json();
+        setLastCommitDate(data.lastCommitDate);
+      }
+    } catch (error) {
+      console.log('Could not fetch last commit date:', error);
+      // Keep default date if fetch fails
+    }
+  }, []);
+
+  // Fetch last commit date on component mount
+  useEffect(() => {
+    fetchLastCommitDate();
+  }, [fetchLastCommitDate]);
   
   // Sidebar state
   const [showControls, setShowControls] = useState(true); // Controls open by default
@@ -1276,10 +1296,23 @@ const NetworkVisualization = () => {
 
       </div>
       
-      {/* Last Updated Line - positioned below the entire network layout */}
-      <div className="last-updated-line">
-        Last updated: July 2025
+      {/* Stats Display */}
+      <div className="stats-display">
+        <div className="stats-item">
+          <span className="stat-label">Nodes:</span>
+          <span className="stat-value">{networkData.nodes.length}</span>
+        </div>
+        <div className="stats-item">
+          <span className="stat-label">Edges:</span>
+          <span className="stat-value">{networkData.links.length}</span>
+        </div>
+        <div className="stats-item">
+          <span className="stat-label">Last Update:</span>
+          <span className="stat-value">{lastCommitDate}</span>
+        </div>
       </div>
+
+
 
     </div>
   );
