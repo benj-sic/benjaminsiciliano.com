@@ -99,6 +99,21 @@ export const atlantaTechBioEcosystem = {
       recentNews: "Co-leading NIH Antiviral Countermeasures Development Center (AC/DC) with Emory."
     },
     {
+      id: "cau",
+      name: "Clark Atlanta University",
+      type: "university",
+      size: 12,
+      description: "Historically Black research university in Atlanta with strengths in cancer research, data science, and biomedical innovation. Participant in Propel Center and NSF-funded STEM programs.",
+      website: "https://www.cau.edu",
+      keyPersonnel: [
+      {
+        "name": "George T. French Jr.",
+        "linkedin": "https://www.linkedin.com/in/gtfrench1898/"
+      }
+    ],
+      recentNews: "Participant in Propel Center and NSF-funded STEM programs."
+    },
+    {
       id: "cdc",
       name: "CDC",
       type: "government",
@@ -320,6 +335,33 @@ export const atlantaTechBioEcosystem = {
       }
     ],
       recentNews: "Launched On-X Plus 1.5™ mechanical heart valve in Europe."
+    },
+    {
+      id: "copient_health",
+      name: "Copient Health",
+      type: "company",
+      size: 8,
+      description: "Healthcare technology company that provides solutions that improve OR scheduling efficiency in both hospitals and surgery centers. Founded in 2019, headquartered in Atlanta, Georgia.",
+      website: "https://copienthealth.com",
+      keyPersonnel: [
+      {
+        "name": "Burke Michael",
+        "linkedin": "https://www.linkedin.com/in/burke-michael/"
+      },
+      {
+        "name": "Keyton Weissinger",
+        "linkedin": "https://www.linkedin.com/in/keytonweissinger/"
+      },
+      {
+        "name": "Kathryn Farrell",
+        "linkedin": "https://www.linkedin.com/in/kathrynkfarrell/"
+      },
+      {
+        "name": "Amy Pecic",
+        "linkedin": "https://www.linkedin.com/in/amy-pecic-b287a4/"
+      }
+    ],
+      recentNews: "Provides three main modules: Reclaim (machine learning to identify unused block time), Distribute (connect open time with providers), and Measure and Manage (analytics for OR scheduling)."
     },
 
     // VENTURE CAPITAL & INVESTORS
@@ -1904,7 +1946,7 @@ export const atlantaTechBioEcosystem = {
     { source: "gatech", target: "morehouse", type: "collaboration", description: "Georgia CTSA Alliance" },
     { source: "emory", target: "cdc", type: "collaboration", description: "Numerous research partnerships" },
     { source: "emory", target: "choa", type: "collaboration", description: "Academic partner in pediatric research and clinical training" },
-    { source: "gatech", target: "choa", type: "research_collaboration", description: "Collaborates on pediatric medtech and translational research" },
+    { source: "gatech", target: "choa", type: "collaboration", description: "Collaborates on pediatric medtech and translational research" },
     { source: "emory", target: "emory_healthcare", type: "affiliation", description: "Clinical enterprise of Emory University; partner for translational and digital health research" },
     { source: "emory_healthcare", target: "florence", type: "pilot", description: "Florence's eClinical tools validated in Emory Healthcare Innovation Hub pilot programs" },
     { source: "switchboard_md", target: "emory_healthcare", type: "pilot", description: "Partnered with Emory Healthcare to implement and validate clinical operations and AI workflow tools" },
@@ -1923,7 +1965,7 @@ export const atlantaTechBioEcosystem = {
     { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
     { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
     { source: "nucleate_atlanta", target: "gsu", type: "collaboration", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
-    { source: "gatech", target: "t2c2_gatech", type: "community_support", description: "Georgia Tech-based student consulting program supporting translational research and tech transfer." },
+    { source: "gatech", target: "t2c2_gatech", type: "support", description: "Georgia Tech-based student consulting program supporting translational research and tech transfer." },
     { source: "gsu", target: "collabtech_gsu", type: "infrastructure", description: "CollabTech is Georgia State University's life sciences incubator providing lab space and core research facilities." },
 
     { source: "emory", target: "eidd", type: "infrastructure", description: "EIDD is a drug discovery and translational research center established and operated by Emory University." },
@@ -1931,7 +1973,7 @@ export const atlantaTechBioEcosystem = {
     { source: "portal", target: "biospark_labs", type: "infrastructure", description: "Portal Innovations Atlanta operates and supports BioSpark Labs within its Science Square facility, integrating venture support and lab infrastructure." },
     { source: "gatech", target: "biospark_labs", type: "infrastructure", description: "Georgia Tech helped establish BioSpark Labs at Science Square and its core facilities serve startups located there." },
     { source: "ascend_atlanta", target: "morehouse", type: "affiliation", description: "Ascend Atlanta is hosted by the Morehouse Innovation & Entrepreneurship Center and supports minority startup acceleration." },
-    { source: "propel_center", target: "cau", type: "infrastructure", description: "Propel Center is headquartered at Clark Atlanta University and serves as a national hub for HBCU innovation." },
+    { source: "propel_center", target: "cau", type: "partner", description: "Propel Center is headquartered at Clark Atlanta University and serves as a national hub for HBCU innovation." },
     { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
     { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
     { source: "hatchbridge", target: "kennesaw_state_university", type: "affiliation", description: "HatchBridge is Kennesaw State University's startup incubator, supporting students, faculty, and community founders." },
@@ -1963,7 +2005,7 @@ export const atlantaTechBioEcosystem = {
     { source: "portal", target: "moonlight", type: "investment", description: "Co-led Series A for peanut allergy immunotherapy platform" },
     { source: "portal", target: "synaptrix", type: "investment", description: "Portfolio company focused on post-surgical pain management" },
     { source: "portal", target: "topodx", type: "investment", description: "Portfolio company advancing AI-driven AST diagnostics" },
-    { source: "portal", target: "armor_medical", type: "membership", description: "Portal member company with access to lab space and resources" },
+    { source: "armor_medical", target: "portal", type: "incubated_at", description: "Armor Medical is a tenant of Portal Innovations' BioSpark Labs at Science Square" },
     { source: "eddf", target: "allonix", type: "investment", description: "EDDF portfolio investment in IBD therapeutics" },
     { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
@@ -1981,6 +2023,10 @@ export const atlantaTechBioEcosystem = {
       "type": "investment",
       "description": "Early-stage investment in BioCircuit's Nerve Tape® nerve repair technology."
     },
+    { source: "gra_fund", target: "geovax", type: "investment", description: "GeoVax is in the GRA Venture Fund portfolio" },
+    { source: "gra_fund", target: "clearside", type: "investment", description: "GRA Venture Fund held a 7.2% stake pre-IPO" },
+    { source: "gra_fund", target: "axion_biosystems", type: "investment", description: "GRA VF led Axion's early-stage round" },
+    { source: "gra", target: "huxley_medical", type: "funded_by", description: "Huxley Medical is listed in GRA's portfolio" },
 
     // --- Accelerator & Incubator Support ---
     { source: "atdc", target: "gatech", type: "affiliation", description: "Program of Georgia Tech" },
@@ -1998,10 +2044,11 @@ export const atlantaTechBioEcosystem = {
 
     { source: "drive", target: "eddf", type: "origin", description: "Established EDDF using royalties from DRIVE-licensed drug molnupiravir (LAGEVRIO)" },
     { source: "drive", target: "altesa", type: "spinout", description: "Antiviral spinout formed via DRIVE to develop Vapendavir and other respiratory virus therapies" },
-    { source: "drive", target: "agrithera", type: "research_funding", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
+    { source: "drive", target: "agrithera", type: "funded_by", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
 
     // --- Key Partnerships & Affiliations ---
     { source: "gatech", target: "science_square", type: "development", description: "Development partner (via GATV)" },
+    { source: "emory", target: "science_square", type: "housed_at", description: "Seven Emory labs relocating to Science Square (2025)" },
     { source: "science_square", target: "portal", type: "tenant", description: "Anchor tenant" },
     { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
     { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
@@ -2011,7 +2058,7 @@ export const atlantaTechBioEcosystem = {
     { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
     { source: "biolocity", target: "gatech", type: "collaboration", description: "Joint program with Georgia Tech" },
-    { source: "biolocity", target: "lab2launch", type: "infrastructure_support", description: "Biolocity subsidizes and guides startups in Lab2Launch, includes programmatic support and consultation." },
+    { source: "biolocity", target: "lab2launch", type: "support", description: "Biolocity subsidizes and guides startups in Lab2Launch, includes programmatic support and consultation." },
     { source: "emory", target: "lab2launch", type: "infrastructure", description: "Lab2Launch located onsite at Emory's HSRB II Innovation Floor; supports Emory-affiliated innovators." },
     { source: "emory_ott", target: "emory", type: "affiliation", description: "Office of Technology Transfer is Emory's formal commercialization & IP licensing arm." },
     { source: "emory_ott", target: "biolocity", type: "collaboration", description: "OTT collaborates with Biolocity to connect researchers to commercialization funding and support programs." },
@@ -2073,7 +2120,7 @@ export const atlantaTechBioEcosystem = {
     { source: "arc_proteomics", target: "emory", type: "spinout", description: "Emory spinout located in Decatur, GA specializing in proteome-wide assays for biomarker discovery." },
     { source: "arc_proteomics", target: "jones_day", type: "service", description: "Uses Jones Day for legal counsel." },
 
-    { source: "rowen", target: "science_square", type: "development", description: "Future biotech infrastructure" }
+
   ]
 };
 
