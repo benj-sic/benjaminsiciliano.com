@@ -475,16 +475,7 @@ export const atlantaTechBioEcosystem = {
     ],
       recentNews: "Hosts the Atlanta Healthcare Meetup and has a growing health IT portfolio."
     },
-    {
-      id: "engage_ventures",
-      name: "Engage Ventures",
-      type: "vc",
-      size: 14,
-      description: "Accelerator fund backed by major corporations (Coca-Cola, UPS, Wellstar) to help startups secure enterprise partnerships.",
-      website: "https://engage.vc",
-      keyPersonnel: [],
-      recentNews: "Mentors at Georgia Tech's CREATE-X Demo Day and sources startups from university programs."
-    },
+
     {
       id: "tech_square_ventures",
       name: "Tech Square Ventures",
@@ -641,7 +632,12 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Downtown Atlanta biotech incubator hosted by Georgia State University. Offers lab space and core facilities for early-stage bioscience companies.",
       website: "https://research.gsu.edu/georgia-state-technology-transfer/collabtech-incubator/",
-      keyPersonnel: [],
+      keyPersonnel: [
+        {
+          "name": "Darryle Taylor",
+          "linkedin": "https://www.linkedin.com/in/darryle-taylor-88171a2b/"
+        }
+      ],
       recentNews: "Part of Georgia State's research commercialization initiatives. Located at 58 Edgewood Avenue."
     },
     {
@@ -1045,7 +1041,28 @@ export const atlantaTechBioEcosystem = {
       size: 15,
       description: "Emory's central technology transfer office, advising researchers on IP, licensing, commercialization, and supporting translational startups.",
       website: "https://ott.emory.edu",
-      keyPersonnel: [],
+      keyPersonnel: [
+        {
+          "name": "Todd Sherer",
+          "linkedin": "https://www.linkedin.com/in/todd-sherer-0270011a/"
+        },
+        {
+          "name": "Mark Coburn",
+          "linkedin": "https://www.linkedin.com/in/mark-coburn-739685/"
+        },
+        {
+          "name": "Catherine Murari-Kanti",
+          "linkedin": "https://www.linkedin.com/in/catherine-murari-kanti-ph-d-b6873315/"
+        },
+        {
+          "name": "Patrick Reynolds",
+          "linkedin": "https://www.linkedin.com/in/preynolds123/"
+        },
+        {
+          "name": "Jill Uhl",
+          "linkedin": "https://www.linkedin.com/in/jill-uhl-027242a/"
+        }
+      ],
       recentNews: "Enabled 231 invention disclosures, 35 licenses, and launched Entrepreneurship Clinic and Bench2Market programs in FY2024."
     },
     {
@@ -2035,7 +2052,7 @@ export const atlantaTechBioEcosystem = {
     { source: "portal", target: "jpmorgan_chase", type: "partnership", description: "J.P. Morgan Chase is a corporate partner of Portal Innovations, supporting early-stage life sciences and medtech ventures." },
 
     { source: "catalyst", target: "atdc", type: "partnership", description: "Formal partnership for HealthTech pipeline" },
-    { source: "engage_ventures", target: "create_x", type: "partnership", description: "Mentorship and startup sourcing" },
+
     { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
     { source: "biolocity", target: "gatech", type: "collaboration", description: "Joint program with Georgia Tech" },
     { source: "biolocity", target: "lab2launch", type: "support", description: "Biolocity subsidizes and guides startups in Lab2Launch, includes programmatic support and consultation." },
@@ -2093,6 +2110,12 @@ export const atlantaTechBioEcosystem = {
     { source: "emory_biotech_consulting_club", target: "biolocity", type: "collaboration", description: "Collaborates with Biolocity to provide commercialization strategy support for early-stage medtech projects." },
     { source: "emory_biotech_consulting_club", target: "gra", type: "collaboration", description: "Engages with Georgia Research Alliance through university commercialization programs and startup diligence efforts." },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
+
+    // --- CollabTech Tenant Relationships ---
+    { source: "andson_biotech", target: "collabtech_gsu", type: "tenant", description: "Andson Biotech is a current tenant at CollabTech incubator, developing DynaChip™ microfluidic technology." },
+    { source: "palate_therapeutics", target: "collabtech_gsu", type: "tenant", description: "Palate Therapeutics is a current tenant at CollabTech incubator, developing oral oligonucleotide therapy for metabolic diseases." },
+    { source: "piezo_therapeutics", target: "collabtech_gsu", type: "tenant", description: "Piezo Therapeutics is a current tenant at CollabTech incubator, developing energy-based nucleic acid delivery technology." },
+    { source: "neurop", target: "collabtech_gsu", type: "graduate", description: "NeurOp is a CollabTech graduate, having incubated at Georgia State University's biotech incubator before advancing to clinical-stage CNS drug development." },
 
     // --- Emtherapro and Arc Proteomics Connections ---
     { source: "emtherapro", target: "emory", type: "spinout", description: "Emory spinout transforming diagnosis and treatment of neurodegenerative diseases through pioneering science, data and insights." },
