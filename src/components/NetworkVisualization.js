@@ -1115,12 +1115,88 @@ const NetworkVisualization = () => {
       return;
     }
     
-    const results = networkData.nodes.filter(node => 
-      node.name.toLowerCase().includes(query.toLowerCase()) ||
-      (typeMap[node.type] && typeMap[node.type].toLowerCase().includes(query.toLowerCase())) ||
-      (node.description && node.description.toLowerCase().includes(query.toLowerCase()))
-    );
-    setSearchResults(results);
+    const queryLower = query.toLowerCase();
+    
+    // Get all connections for this node to search in relationship types and descriptions
+    const getNodeConnections = (nodeId) => {
+      return networkData.links.filter(link => 
+        link.source === nodeId || link.target === nodeId
+      );
+    };
+    
+    const results = networkData.nodes.filter(node => {
+      // Search in node ID
+      if (node.id.toLowerCase().includes(queryLower)) return true;
+      
+      // Search in node name
+      if (node.name.toLowerCase().includes(queryLower)) return true;
+      
+      // Search in node type
+      if (typeMap[node.type] && typeMap[node.type].toLowerCase().includes(queryLower)) return true;
+      
+      // Search in description
+      if (node.description && node.description.toLowerCase().includes(queryLower)) return true;
+      
+      // Search in website URL
+      if (node.website && node.website.toLowerCase().includes(queryLower)) return true;
+      
+      // Search in recent news
+      if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) return true;
+      
+      // Search in key personnel names
+      if (node.keyPersonnel) {
+        for (const person of node.keyPersonnel) {
+          const personName = typeof person === 'string' ? person : person.name;
+          if (personName.toLowerCase().includes(queryLower)) return true;
+        }
+      }
+      
+      // Search in connection types and descriptions
+      const nodeConnections = getNodeConnections(node.id);
+      for (const connection of nodeConnections) {
+        // Search in connection type
+        if (connection.type && connection.type.toLowerCase().includes(queryLower)) return true;
+        
+        // Search in connection description
+        if (connection.description && connection.description.toLowerCase().includes(queryLower)) return true;
+      }
+      
+      return false;
+    });
+    
+    // Sort results by relevance
+    const sortedResults = results.sort((a, b) => {
+      const aId = a.id.toLowerCase();
+      const bId = b.id.toLowerCase();
+      const aName = a.name.toLowerCase();
+      const bName = b.name.toLowerCase();
+      const queryLower = query.toLowerCase();
+      
+      // Priority 1: Exact ID match
+      if (aId === queryLower && bId !== queryLower) return -1;
+      if (bId === queryLower && aId !== queryLower) return 1;
+      
+      // Priority 2: ID starts with query
+      if (aId.startsWith(queryLower) && !bId.startsWith(queryLower)) return -1;
+      if (bId.startsWith(queryLower) && !aId.startsWith(queryLower)) return 1;
+      
+      // Priority 3: Exact name match
+      if (aName === queryLower && bName !== queryLower) return -1;
+      if (bName === queryLower && aName !== queryLower) return 1;
+      
+      // Priority 4: Name starts with query
+      if (aName.startsWith(queryLower) && !bName.startsWith(queryLower)) return -1;
+      if (bName.startsWith(queryLower) && !aName.startsWith(queryLower)) return 1;
+      
+      // Priority 5: Name contains query (for partial matches)
+      if (aName.includes(queryLower) && !bName.includes(queryLower)) return -1;
+      if (bName.includes(queryLower) && !aName.includes(queryLower)) return 1;
+      
+      // Priority 6: Alphabetical by name
+      return aName.localeCompare(bName);
+    });
+    
+    setSearchResults(sortedResults);
   };
 
   const handleEdgeClick = useCallback((edge, event) => {
