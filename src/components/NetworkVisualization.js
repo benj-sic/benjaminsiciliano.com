@@ -1117,13 +1117,6 @@ const NetworkVisualization = () => {
     
     const queryLower = query.toLowerCase();
     
-    // Get all connections for this node to search in relationship types and descriptions
-    const getNodeConnections = (nodeId) => {
-      return networkData.links.filter(link => 
-        link.source === nodeId || link.target === nodeId
-      );
-    };
-    
     const results = networkData.nodes.filter(node => {
       // Search in node ID
       if (node.id.toLowerCase().includes(queryLower)) return true;
@@ -1149,16 +1142,6 @@ const NetworkVisualization = () => {
           const personName = typeof person === 'string' ? person : person.name;
           if (personName.toLowerCase().includes(queryLower)) return true;
         }
-      }
-      
-      // Search in connection types and descriptions
-      const nodeConnections = getNodeConnections(node.id);
-      for (const connection of nodeConnections) {
-        // Search in connection type
-        if (connection.type && connection.type.toLowerCase().includes(queryLower)) return true;
-        
-        // Search in connection description
-        if (connection.description && connection.description.toLowerCase().includes(queryLower)) return true;
       }
       
       return false;
