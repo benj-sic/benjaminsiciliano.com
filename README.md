@@ -1,6 +1,6 @@
 # Benjamin Siciliano - Personal Website
 
-A modern, interactive personal website featuring an Atlanta TechBio Network visualization built with React and D3.js.
+A modern, interactive personal website featuring an Atlanta Biotech Network visualization built with React and D3.js. This project showcases Benjamin's expertise in computational biology and biotech innovation through an engaging, data-driven interface.
 
 ## 🌟 Features
 
@@ -9,7 +9,7 @@ A modern, interactive personal website featuring an Atlanta TechBio Network visu
 - **Interactive Nodes**: Clickable organizations with detailed information panels
 - **Smart Highlighting**: Click a node to highlight it and dim non-connected nodes
 - **Toggle Selection**: Click the same node again to deselect it
-- **Filtering System**: Filter by organization type (companies, startups, universities, incubators, VCs, service providers)
+- **Advanced Filtering**: Filter by organization type (companies, startups, universities, incubators, VCs, service providers)
 - **Zoom & Pan**: Natural zoom range from 10% to 100% with smooth transitions
 - **Auto-Centering**: Network automatically re-centers on filter changes
 - **Force-Directed Layout**: Dynamic positioning with physics simulation
@@ -24,20 +24,23 @@ A modern, interactive personal website featuring an Atlanta TechBio Network visu
 - **Rich Metadata**: Detailed descriptions, websites, key personnel, and recent news
 - **LinkedIn Integration**: Direct links to key personnel profiles where available
 
-### Site Sections
-- **Hero Section**: Compelling headline with ecosystem statistics
-- **Network Visualization**: Main interactive feature
-- **Contact Form**: Professional contact information and opportunities
-- **About Section**: Benjamin's background, achievements, and positioning
-- **Contact Section**: Professional contact information and opportunities
+### Site Features
+- **Dark/Light Theme Toggle**: Seamless theme switching with persistent preferences
+- **Social Sharing**: Built-in sharing functionality for Twitter and LinkedIn
+- **Contact Form**: Professional contact form with Formspree integration
+- **Responsive Design**: Mobile-first approach with touch-optimized interactions
+- **SEO Optimized**: Meta tags, social cards, and structured data
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18
-- **Visualization**: D3.js v7
-- **Styling**: CSS3 with modern features (backdrop-filter, gradients)
+- **Frontend**: React 18 with modern hooks
+- **Visualization**: D3.js v7 for network graphics
+- **Styling**: CSS3 with modern features (backdrop-filter, gradients, CSS Grid)
 - **Typography**: Inter font family
-- **Responsive Design**: Mobile-first approach
+- **Build Tools**: Create React App with custom build scripts
+- **Deployment**: Netlify with automated builds
+- **Form Handling**: Formspree for contact form processing
+- **Social Media**: Custom social card generation with Puppeteer
 
 ## 🚀 Getting Started
 
@@ -65,37 +68,54 @@ npm start
 
 4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Building for Production
+### Available Scripts
 
 ```bash
-npm run build
+npm start          # Start development server
+npm run build      # Build for production (includes git date injection)
+npm test           # Run tests
+npm run eject      # Eject from Create React App
+npm run generate-social-card      # Generate social media cards
+npm run generate-all-social-images # Generate all social images
+npm run inject-git-date          # Inject last commit date into build
 ```
 
 ## 📁 Project Structure
 
 ```
-src/
-├── components/
-│   ├── NetworkVisualization.js    # Main D3.js network visualization
-│   ├── NetworkVisualization.css   # Network-specific styles
-│   ├── Hero.js                    # Hero section component
-│   ├── Hero.css                   # Hero styles
-│   ├── About.js                   # About section
-│   ├── About.css                  # About styles
-│   ├── Contact.js                 # Contact information
-│   ├── Contact.css                # Contact styles
-
-├── App.js                         # Main app component
-├── App.css                        # App-specific styles
-├── index.js                       # React entry point
-└── index.css                      # Global styles
+benjaminsiciliano.com/
+├── public/                    # Static assets
+│   ├── index.html            # Main HTML file
+│   ├── favicon.svg           # Site favicon
+│   ├── BS_headshot.jpeg      # Profile image
+│   └── social-cards/         # Generated social media images
+├── src/
+│   ├── components/           # React components
+│   │   ├── NetworkVisualization.js    # Main D3.js network
+│   │   ├── NetworkVisualization.css   # Network styles
+│   │   ├── ThemeToggle.js             # Theme switcher
+│   │   └── ThemeToggle.css            # Theme styles
+│   ├── contexts/
+│   │   └── ThemeContext.js            # Theme context provider
+│   ├── App.js                         # Main app component
+│   ├── App.css                        # App styles
+│   ├── index.js                       # React entry point
+│   └── index.css                      # Global styles
+├── scripts/                  # Build and utility scripts
+│   ├── generate-social-card.js        # Social card generator
+│   ├── generate-all-social-images.js  # Batch social image generator
+│   ├── inject-git-date.js            # Git date injection
+│   └── README.md                     # Scripts documentation
+├── netlify.toml             # Netlify deployment config
+├── package.json             # Dependencies and scripts
+└── README.md               # This file
 ```
 
 ## 🎨 Design Philosophy
 
 ### Visual Design
 - **Scientific Aesthetic**: Clean, professional design inspired by biological networks
-- **Dark Theme**: Modern dark gradient background with subtle transparency effects
+- **Dark/Light Themes**: Modern theme switching with smooth transitions
 - **Biological Network Styling**: Nodes and edges styled like protein interaction networks
 - **Mobile Responsive**: Fully responsive design that works on all devices
 
@@ -111,21 +131,39 @@ src/
 To add new organizations to the network:
 
 1. Edit the `networkData` object in `src/components/NetworkVisualization.js`
-2. Add new nodes to the `nodes` array
-3. Add corresponding links to the `links` array
-4. Update the organization type mapping if needed
+2. Add new nodes to the `nodes` array with required fields:
+   ```javascript
+   {
+     id: "unique-id",
+     name: "Organization Name",
+     type: "company|university|incubator|vc|serviceProvider",
+     size: 10, // Node size (6-20)
+     description: "Organization description"
+   }
+   ```
+3. Add corresponding links to the `links` array:
+   ```javascript
+   {
+     source: "source-node-id",
+     target: "target-node-id",
+     type: "collaboration|investment|spinout|partnership"
+   }
+   ```
 
 ### Styling Changes
-- Global styles: `src/index.css`
-- Component-specific styles: Individual `.css` files in `src/components/`
-- App-wide styles: `src/App.css`
+- **Global styles**: `src/index.css`
+- **Component-specific styles**: Individual `.css` files in `src/components/`
+- **App-wide styles**: `src/App.css`
+- **Theme variables**: Defined in `src/contexts/ThemeContext.js`
 
 ### Network Configuration
-- Node colors: Modify `nodeColors` object in `NetworkVisualization.js`
-- Force simulation parameters: Adjust D3.js force simulation settings
-- Filter options: Update the `filters` state and filter buttons
+- **Node colors**: Modify `nodeColors` object in `NetworkVisualization.js`
+- **Force simulation parameters**: Adjust D3.js force simulation settings
+- **Filter options**: Update the `filters` state and filter buttons
 
 ## 📊 Network Data Structure
+
+The network visualization uses a graph structure with nodes (organizations) and links (relationships):
 
 ```javascript
 const networkData = {
@@ -135,9 +173,12 @@ const networkData = {
       name: "Organization Name",
       type: "company|university|incubator|vc|serviceProvider",
       size: 10, // Node size (6-20)
-      x: 400, // Initial x position
-      y: 300, // Initial y position
-      description: "Organization description"
+      x: 400, // Initial x position (optional)
+      y: 300, // Initial y position (optional)
+      description: "Organization description",
+      website: "https://example.com",
+      keyPersonnel: ["Person 1", "Person 2"],
+      linkedInProfiles: ["https://linkedin.com/in/person1"]
     }
   ],
   links: [
@@ -153,18 +194,30 @@ const networkData = {
 
 ## 🚀 Deployment
 
-### Netlify (Recommended)
-1. Connect your GitHub repository to Netlify
-2. Set build command: `npm run build`
-3. Set publish directory: `build`
-4. Deploy automatically on git push
+### Netlify (Current Setup)
+The site is deployed on Netlify with automatic builds:
 
-### Vercel
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run: `vercel`
-3. Follow the prompts
+1. **Build Command**: `npm run build`
+2. **Publish Directory**: `build`
+3. **Environment**: Production with optimized assets
+4. **Custom Domain**: benjaminsiciliano.com
 
-### GitHub Pages
+### Build Process
+The build process includes:
+- React app compilation
+- Git date injection for freshness indicators
+- Social card generation
+- Asset optimization
+
+### Alternative Deployment Options
+
+#### Vercel
+```bash
+npm i -g vercel
+vercel
+```
+
+#### GitHub Pages
 1. Add `"homepage": "https://username.github.io/repo-name"` to package.json
 2. Install gh-pages: `npm install --save-dev gh-pages`
 3. Add scripts to package.json:
@@ -174,13 +227,39 @@ const networkData = {
    ```
 4. Run: `npm run deploy`
 
+## 🛠️ Development Tools
+
+### Social Media Cards
+The project includes automated social media card generation:
+
+```bash
+npm run generate-social-card      # Generate single social card
+npm run generate-all-social-images # Generate all social images
+```
+
+### Git Integration
+- **Date Injection**: Automatically injects last commit date into builds
+- **Version Tracking**: Builds include git metadata for freshness indicators
+
+### Performance Optimization
+- **Code Splitting**: React.lazy for component loading
+- **Asset Optimization**: Compressed images and optimized bundles
+- **Caching**: Proper cache headers for static assets
+
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -am 'Add feature'`
-4. Push to branch: `git push origin feature-name`
-5. Submit a pull request
+3. Make your changes and test thoroughly
+4. Commit changes: `git commit -am 'Add feature'`
+5. Push to branch: `git push origin feature-name`
+6. Submit a pull request
+
+### Development Guidelines
+- Follow React best practices and hooks patterns
+- Maintain responsive design principles
+- Test on multiple devices and browsers
+- Update documentation for new features
 
 ## 📝 License
 
@@ -190,15 +269,23 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - **Email**: ben.siciliano@gmail.com
 - **LinkedIn**: [linkedin.com/in/benjaminsiciliano](https://linkedin.com/in/benjaminsiciliano)
+- **GitHub**: [github.com/benj-sic](https://github.com/benj-sic)
+- **Twitter**: [@benjsiciliano](https://x.com/benjsiciliano)
 - **Location**: Atlanta, Georgia
 
 ## 🎯 Recent Updates
 
+### v1.3.0 - Enhanced Social Features & Performance
+- ✅ **Social Sharing Integration**: Built-in Twitter and LinkedIn sharing
+- ✅ **Theme Toggle**: Dark/light theme switching with persistent preferences
+- ✅ **Performance Optimization**: Improved loading times and mobile responsiveness
+- ✅ **Contact Form Enhancement**: Better error handling and user feedback
+- ✅ **SEO Improvements**: Enhanced meta tags and social cards
+
 ### v1.2.0 - Enhanced Filtering & Network Scope
 - ✅ **Dual Organization Filtering**: Separate filters for startups vs established companies
 - ✅ **Network Scope Optimization**: Curated to focus on innovation-generating entities
-- ✅ **Updated Node Descriptions**: Clarified affiliations (e.g., Tempus as Chicago-based with Atlanta lab)
-- ✅ **Removed Generic Service Providers**: Streamlined to focus on Atlanta-specific biotech ecosystem
+- ✅ **Updated Node Descriptions**: Clarified affiliations and relationships
 - ✅ **Enhanced Legend**: Updated to distinguish between startups and companies
 
 ### v1.1.0 - Enhanced Network Interaction
@@ -207,15 +294,17 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - ✅ **Natural Zoom Range**: Reduced max zoom from 250% to 100% for more realistic interaction
 - ✅ **Auto-Centering**: Network automatically re-centers before reappearing on filter changes
 - ✅ **LinkedIn Integration**: Direct links to key personnel profiles
-- ✅ **Improved Loading**: Consolidated loading states with "Loading network..." messaging
 - ✅ **Mobile Optimization**: Enhanced touch interactions and performance on mobile devices
 
 ## 🎯 Future Enhancements
 
-- [ ] Neurotech subnetworks
-- [ ] RTP expansion
-- [ ] Automated updates from API
-- [ ] Real-time collaboration features
-- [ ] Advanced filtering and search
-- [ ] Network analytics dashboard
-- [ ] Integration with external data sources 
+- [ ] **Neurotech subnetworks**: Specialized visualization for neurotech companies
+- [ ] **RTP expansion**: Expand to include Research Triangle Park ecosystem
+- [ ] **Automated updates**: API integration for real-time data updates
+- [ ] **Advanced analytics**: Network metrics and relationship analysis
+- [ ] **Collaboration features**: Real-time multi-user interaction
+- [ ] **Advanced filtering**: Search and filter by multiple criteria
+- [ ] **External data integration**: Connect with external biotech databases
+- [ ] **Interactive tutorials**: Guided tours of the network
+- [ ] **Export functionality**: PDF/PNG export of network views
+- [ ] **API endpoints**: RESTful API for network data access 
