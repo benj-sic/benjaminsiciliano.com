@@ -349,24 +349,52 @@ const NetworkVisualization = () => {
       // Get the actual bounds of the network nodes
       const nodes = svg.selectAll(".node").nodes();
       if (nodes.length > 0) {
-        const xCoords = nodes.map(n => n.cx.baseVal.value);
-        const yCoords = nodes.map(n => n.cy.baseVal.value);
-        const minX = Math.min(...xCoords);
-        const maxX = Math.max(...xCoords);
-        const minY = Math.min(...yCoords);
-        const maxY = Math.max(...yCoords);
+        // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
+        const bounds = nodes.map(n => {
+          const labelPadding = isMobile ? 15 : 25;
+          const nodeRadius = Math.max(parseFloat(n.r.baseVal.value), 16);
+          
+          // Estimate label dimensions based on node data
+          const fontSize = isMobile ? 20 : 28;
+          // We need to get the node name from the data, but we only have the DOM element
+          // For now, use a reasonable estimate
+          const estimatedLabelWidth = 150; // Conservative estimate
+          const estimatedLabelHeight = fontSize * 1.2;
+          
+          // Calculate label radius using same logic as collision detection
+          const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+          const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+          const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+          
+          return {
+            left: n.cx.baseVal.value - totalRadius,
+            right: n.cx.baseVal.value + totalRadius,
+            top: n.cy.baseVal.value - totalRadius,
+            bottom: n.cy.baseVal.value + totalRadius
+          };
+        });
+        
+        // Find the overall bounds
+        const minX = Math.min(...bounds.map(b => b.left));
+        const maxX = Math.max(...bounds.map(b => b.right));
+        const minY = Math.min(...bounds.map(b => b.top));
+        const maxY = Math.max(...bounds.map(b => b.bottom));
         
         // Calculate the center of the network
         const networkCenterX = (minX + maxX) / 2;
         const networkCenterY = (minY + maxY) / 2;
         
-        // Calculate the scale to fit the network in the viewport with minimal padding
+        // Calculate the dimensions of the network
         const networkWidth = maxX - minX;
         const networkHeight = maxY - minY;
-        const padding = 20; // Minimal padding
+        
+        // Add minimal padding around the network
+        const padding = 10; // Very minimal padding
+        
+        // Calculate the scale to fit the network in the viewport
         const scaleX = (width - padding * 2) / networkWidth;
         const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
+        const scale = Math.min(scaleX, scaleY);
         
         // Calculate the transform to center the network in the viewport
         // Adjust the Y translation to center properly
@@ -389,7 +417,7 @@ const NetworkVisualization = () => {
           .call(zoomBehaviorRef.current.transform, transform);
       }
     }
-  }, []);
+  }, [isMobile]);
 
   // Manual center network function (doesn't hide the plot)
   const manualCenterNetwork = useCallback(() => {
@@ -401,24 +429,51 @@ const NetworkVisualization = () => {
       // Get the simulation data for all visible nodes (filtered nodes)
       const nodes = simulationRef.current.nodes();
       if (nodes.length > 0) {
-        const xCoords = nodes.map(n => n.x);
-        const yCoords = nodes.map(n => n.y);
-        const minX = Math.min(...xCoords);
-        const maxX = Math.max(...xCoords);
-        const minY = Math.min(...yCoords);
-        const maxY = Math.max(...yCoords);
+        // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
+        const bounds = nodes.map(n => {
+          const labelPadding = isMobile ? 15 : 25;
+          const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
+          
+          // Estimate label dimensions
+          const fontSize = isMobile ? 20 : 28;
+          const avgCharWidth = fontSize * 0.6;
+          const estimatedLabelWidth = Math.max(n.name.length * avgCharWidth, 100);
+          const estimatedLabelHeight = fontSize * 1.2;
+          
+          // Calculate label radius using same logic as collision detection
+          const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+          const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+          const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+          
+          return {
+            left: n.x - totalRadius,
+            right: n.x + totalRadius,
+            top: n.y - totalRadius,
+            bottom: n.y + totalRadius
+          };
+        });
+        
+        // Find the overall bounds
+        const minX = Math.min(...bounds.map(b => b.left));
+        const maxX = Math.max(...bounds.map(b => b.right));
+        const minY = Math.min(...bounds.map(b => b.top));
+        const maxY = Math.max(...bounds.map(b => b.bottom));
         
         // Calculate the center of the network
         const networkCenterX = (minX + maxX) / 2;
         const networkCenterY = (minY + maxY) / 2;
         
-        // Calculate the scale to fit the network in the viewport with minimal padding
+        // Calculate the dimensions of the network
         const networkWidth = maxX - minX;
         const networkHeight = maxY - minY;
-        const padding = 20; // Minimal padding
+        
+        // Add minimal padding around the network
+        const padding = 10; // Very minimal padding
+        
+        // Calculate the scale to fit the network in the viewport
         const scaleX = (width - padding * 2) / networkWidth;
         const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
+        const scale = Math.min(scaleX, scaleY);
         
         // Calculate the transform to center the network in the viewport
         const transform = d3.zoomIdentity
@@ -446,7 +501,7 @@ const NetworkVisualization = () => {
         setZoomLevel(0.25);
       }
     }
-  }, []);
+  }, [isMobile]);
 
   // Zoom functions
   const zoomIn = () => {
@@ -471,7 +526,7 @@ const NetworkVisualization = () => {
     }
   };
 
-  // Helper function to calculate base zoom level (like center/reset zoom)
+  // Helper function to calculate base zoom level using outermost node/label plus padding method
   const calculateBaseZoomLevel = useCallback(() => {
     if (!svgRef.current || !simulationRef.current) return 0.25; // Fallback
     
@@ -483,29 +538,50 @@ const NetworkVisualization = () => {
     const nodes = simulationRef.current.nodes();
     if (nodes.length === 0) return 0.25; // Fallback
     
-    const xCoords = nodes.map(n => n.x);
-    const yCoords = nodes.map(n => n.y);
-    const minX = Math.min(...xCoords);
-    const maxX = Math.max(...xCoords);
-    const minY = Math.min(...yCoords);
-    const maxY = Math.max(...yCoords);
+    // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
+    const bounds = nodes.map(n => {
+      const labelPadding = isMobile ? 15 : 25;
+      const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
+      
+      // Estimate label dimensions
+      const fontSize = isMobile ? 20 : 28;
+      const avgCharWidth = fontSize * 0.6;
+      const estimatedLabelWidth = Math.max(n.name.length * avgCharWidth, 100);
+      const estimatedLabelHeight = fontSize * 1.2;
+      
+      // Calculate label radius using same logic as collision detection
+      const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+      const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+      const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+      
+      return {
+        left: n.x - totalRadius,
+        right: n.x + totalRadius,
+        top: n.y - totalRadius,
+        bottom: n.y + totalRadius
+      };
+    });
     
-    // Calculate the scale to fit the network in the viewport with minimal padding
+    // Find the overall bounds
+    const minX = Math.min(...bounds.map(b => b.left));
+    const maxX = Math.max(...bounds.map(b => b.right));
+    const minY = Math.min(...bounds.map(b => b.top));
+    const maxY = Math.max(...bounds.map(b => b.bottom));
+    
+    // Calculate the dimensions of the network
     const networkWidth = maxX - minX;
     const networkHeight = maxY - minY;
-    const padding = 20; // Minimal padding
     
-    // Handle edge cases where network dimensions are very small
-    if (networkWidth <= 0 || networkHeight <= 0) {
-      return 0.25; // Fallback for invalid dimensions
-    }
+    // Add minimal padding around the network
+    const padding = 10; // Very minimal padding
     
+    // Calculate the scale to fit the network in the viewport
     const scaleX = (width - padding * 2) / networkWidth;
     const scaleY = (height - padding * 2) / networkHeight;
-    const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
+    const scale = Math.min(scaleX, scaleY);
     
     return scale;
-  }, []);
+  }, [isMobile]);
 
   // Zoom to subnetwork function
   const zoomToSubnetwork = useCallback((node) => {
@@ -520,32 +596,25 @@ const NetworkVisualization = () => {
     
     // Special handling for edge connections
     if (node.id === 'edge-center') {
-      // For edge connections, find the source and target nodes
+      // For edge connections, only include the two nodes directly connected by this edge
       const sourceId = node.sourceId;
       const targetId = node.targetId;
       
       if (sourceId && targetId) {
         connectedNodeIds.add(sourceId);
         connectedNodeIds.add(targetId);
-        
-        // Also add nodes connected to the source and target
-        networkData.links.forEach(link => {
-          if (link.source === sourceId || link.target === sourceId) {
-            connectedNodeIds.add(link.source);
-            connectedNodeIds.add(link.target);
-          }
-          if (link.source === targetId || link.target === targetId) {
-            connectedNodeIds.add(link.source);
-            connectedNodeIds.add(link.target);
-          }
-        });
+        // Don't add other connected nodes - just focus on the two nodes of this edge
       }
     } else {
       // Normal node selection
       networkData.links.forEach(link => {
-        if (link.source === node.id || link.target === node.id) {
-          connectedNodeIds.add(link.source);
-          connectedNodeIds.add(link.target);
+        // Handle both string IDs and node objects in links
+        const linkSource = typeof link.source === 'string' ? link.source : link.source.id;
+        const linkTarget = typeof link.target === 'string' ? link.target : link.target.id;
+        
+        if (linkSource === node.id || linkTarget === node.id) {
+          connectedNodeIds.add(linkSource);
+          connectedNodeIds.add(linkTarget);
         }
       });
     }
@@ -560,7 +629,7 @@ const NetworkVisualization = () => {
     // Calculate bounds including label radius for each node (using same logic as collision detection)
     const bounds = connectedNodes.map(n => {
       // Use the same label radius calculation as collision detection, but with reduced padding for zoom
-      const labelPadding = isMobile ? 20 : 30; // Reduced padding for zoom calculation
+      const labelPadding = isMobile ? 15 : 25; // Reduced padding for zoom calculation
       const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
       
       // Estimate label dimensions
@@ -611,7 +680,7 @@ const NetworkVisualization = () => {
     // Apply zoom bounds using dynamic base zoom level
     const baseZoomLevel = calculateBaseZoomLevel();
     const minScale = baseZoomLevel; // Minimum zoom (same as center/reset zoom)
-    const maxScale = baseZoomLevel * 3; // Maximum zoom (3x center/reset zoom) for large subnetworks
+    const maxScale = baseZoomLevel * 2; // Maximum zoom (2x center/reset zoom) for large subnetworks
     scale = Math.max(scale, minScale);
     scale = Math.min(scale, maxScale);
     
@@ -624,7 +693,7 @@ const NetworkVisualization = () => {
         viewportWidth: width,
         viewportHeight: height,
         padding,
-        labelPadding: isMobile ? 20 : 30,
+        labelPadding: isMobile ? 15 : 25,
         bounds: bounds.length,
         baseZoomLevel,
         minScale,
@@ -653,7 +722,7 @@ const NetworkVisualization = () => {
     
     // Update zoom level state
     setZoomLevel(scale);
-  }, [networkData.links]);
+  }, [networkData.links, calculateBaseZoomLevel, isMobile]);
 
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
@@ -714,7 +783,7 @@ const NetworkVisualization = () => {
       .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280))
       .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 40 : 60)))
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 15 : 25)))
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1))
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1));
     
@@ -809,7 +878,7 @@ const NetworkVisualization = () => {
       // Create a more sophisticated collision detection that accounts for label boundaries
       simulation.force("collision", d3.forceCollide().radius(d => {
         const nodeRadius = Math.max(d.size * (isMobile ? 2.5 : 3.5), 16);
-        const labelPadding = isMobile ? 40 : 60;
+        const labelPadding = isMobile ? 15 : 25;
         
         // Find the corresponding label element to measure its actual bounds
         const labelElement = labels.filter(labelD => labelD.id === d.id).node();
@@ -1162,7 +1231,7 @@ const NetworkVisualization = () => {
         return clickedEdgeId;
       }
     });
-  }, [selectedEdgeId, setSelectedEdgeId, setEdgeConnectedNodes, setSearchQuery, setSearchResults, setShowSearch]);
+  }, [selectedEdgeId, setSelectedEdgeId, setEdgeConnectedNodes, setSearchQuery, setSearchResults, setShowSearch, manualCenterNetwork, zoomToSubnetwork]);
 
   const handleNodeClick = useCallback((node, event) => {
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
@@ -1238,7 +1307,7 @@ const NetworkVisualization = () => {
         });
       }
     }, 100); // Small delay to ensure the dropdown is rendered
-  }, [isMobile, selectedNode, networkData.links, zoomToSubnetwork]);
+  }, [isMobile, selectedNode, networkData.links, zoomToSubnetwork, manualCenterNetwork]);
 
   return (
     <div className="network-visualization">
