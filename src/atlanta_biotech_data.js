@@ -1165,7 +1165,12 @@ export const atlantaBiotechEcosystem = {
       size: 14,
       description: "Georgia Department of Economic Development - the state's primary arm for business recruitment and economic development.",
       website: "https://georgia.org",
-      keyPersonnel: [],
+      keyPersonnel: [
+        {
+          "name": "Glen Whitley",
+          "linkedin": "https://www.linkedin.com/in/glenwhitley/"
+        }
+      ],
       recentNews: "Supports biotech through incentive packages and site location assistance."
     },
     {
