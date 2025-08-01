@@ -43,6 +43,10 @@ export const atlantaBiotechEcosystem = {
       {
         "name": "Raghupathy Sivakumar",
         "linkedin": "https://www.linkedin.com/in/sivarag/"
+      },
+      {
+        "name": "Marvin Whiteley",
+        "linkedin": "https://www.linkedin.com/in/marvin-whiteley-895997194/"
       }
     ],
       recentNews: "CREATE-X announced a record cohort of 318 founders in 2025. Science Square Phase 1 completed in 2024."
@@ -1912,6 +1916,135 @@ export const atlantaBiotechEcosystem = {
       "website": "https://www.biocircuit.com/",
       "keyPersonnel": [],
       "recentNews": "NIH awarded $3M SBIR to expand Nerve Tape; GRA Venture Fund backed company through early-stage investment."
+    },
+    {
+      id: "synthbiome",
+      name: "SynthBiome Inc.",
+      type: "startup",
+      size: 10,
+      description: "Atlanta-based biotechnology company developing synthetic environments to mimic physiological conditions for drug development and treatment selection. Focuses on creating accurate synthetic models for cystic fibrosis research (SCFM1, SCFM2) and chronic wound infection research (LCWB).",
+      website: "https://www.synthbiome.com/",
+      keyPersonnel: [
+        {
+          "name": "Marvin Whiteley",
+          "linkedin": "https://www.linkedin.com/in/marvin-whiteley-895997194/"
+        }
+      ],
+      recentNews: "Founded in 2022. Developing synthetic media that accurately replicate human infection environments for improved drug development and antibiotic treatment selection."
+    },
+    {
+      id: "tether_therapeutics",
+      name: "Tether Therapeutics",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based mRNA therapeutics company developing inhalable treatments for life-threatening respiratory diseases using proprietary polymer formulations. Technology based on novel chemistry developed at Georgia Tech and Emory University, optimized for lung delivery.",
+      website: "https://tethertx.com/",
+      keyPersonnel: [
+        {
+          "name": "Michael Chang",
+          "linkedin": "https://www.linkedin.com/in/michaelcchang2/"
+        }
+      ],
+      recentNews: "Developing next-generation gene therapy for respiratory disease using biodegradable polymeric nanoparticles for aerosol gene delivery."
+    },
+    {
+      id: "youngheartvalve",
+      name: "YoungHeartValve",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based cardiovascular medtech startup developing next-generation heart valve technology. Creates hyaluronan-enhanced, polymeric transcatheter aortic valves that eliminate the need for animal tissue and anticoagulants.",
+      website: "https://youngheartvalve.com/",
+      keyPersonnel: [
+        {
+          "name": "Prasad Dasi",
+          "linkedin": "https://www.linkedin.com/in/lakshmi-dasi-2613659/"
+        },
+        {
+          "name": "Todd Tomba",
+          "linkedin": "https://www.linkedin.com/in/toddtomba/"
+        }
+      ],
+      recentNews: "Successfully raised $450K+ in NIH SBIR Phase 1 funding (double the normal amount). Located at T3 Labs in Global Center for Medical Innovation, Atlanta."
+    },
+    {
+      id: "oz_link_technologies",
+      name: "OZ-Link Technologies",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based biotechnology company developing a family of self-cleaving chemical linkers for controlled release therapeutics. Enables exquisite control of therapeutic detachment from any carrier at pre-programmed rates ranging from minutes to weeks.",
+      website: "https://www.ozlinktech.com/",
+      keyPersonnel: [
+        {
+          "name": "Dr. Kasie Collins",
+          "linkedin": "https://www.linkedin.com/in/kasielcollins/"
+        }
+      ],
+      recentNews: "Founded in 2022. Developing modular platform for time-controlled release from small molecules to biologics and vaccines, improving pharmacokinetics and minimizing off-target effects."
+    },
+    {
+      id: "lymphatech",
+      name: "LymphaTech",
+      type: "startup",
+      size: 10,
+      description: "Atlanta-based healthcare technology company focused on innovative 3D measurement solutions for clinical care. Digital measuring platform with proprietary algorithms for accurate human geometry measurement, serving physical therapists, oncology, and compression garment professionals.",
+      website: "https://www.lymphatechnology.com/",
+      keyPersonnel: [
+        {
+          "name": "Mike Weiler",
+          "linkedin": "https://www.linkedin.com/in/mike-weiler-8725a130/"
+        },
+        {
+          "name": "J. Brandon Dixon",
+          "linkedin": "https://www.linkedin.com/in/jbrandondixon/"
+        },
+        {
+          "name": "Nathan Frank",
+          "linkedin": "https://www.linkedin.com/in/nathan-frank-7881597/"
+        }
+      ],
+      recentNews: "Founded in 2014. Received seed funding from Georgia Research Alliance in 2015. System is 99% accurate compared to water displacement for volume and tape measure for circumference, validated through external clinical research."
+    },
+    {
+      id: "jackson_medical",
+      name: "Jackson Medical",
+      type: "startup",
+      size: 12,
+      description: "Atlanta-based safety-focused medical and surgical device company. Manufactures GloShield™, a fiber-optic light cable shield that reduces potential for fires and burns to patients and hospital staff during surgeries.",
+      website: "https://www.jackson-medical.com/",
+      keyPersonnel: [
+        {
+          "name": "James Rains",
+          "linkedin": "https://www.linkedin.com/in/jamesrains/"
+        },
+        {
+          "name": "Kamil Makhnejia",
+          "linkedin": "https://www.linkedin.com/in/kamilmakhnejia/"
+        },
+        {
+          "name": "Spencer Kozinn",
+          "linkedin": "https://www.linkedin.com/in/spencer-kozinn-a18617b6/"
+        }
+      ],
+      recentNews: "GloShield™ has been used in over 250,000 surgeries with zero burns. Award-winning solution that aligns with Joint Commission and AORN recommendations for surgical fire prevention."
+    },
+    {
+      id: "ethos_medical",
+      name: "Ethos Medical",
+      type: "startup",
+      size: 8,
+      description: "Atlanta-based medical device company developing the Iris needle guidance system for safer and more efficient percutaneous access. Interfaces with existing ultrasound equipment to enable dynamic image guidance with pre-puncture needle path prediction.",
+      website: "https://www.ethos-medical.com/",
+      keyPersonnel: [
+        {
+          "name": "Cassidy Wang",
+          "linkedin": "https://www.linkedin.com/in/cassidywang/"
+        },
+        {
+          "name": "Lucas Mara Muller",
+          "linkedin": "https://www.linkedin.com/in/lucas-mara-muller/"
+        }
+      ],
+      recentNews: "Founded in 2018. Supported by National Science Foundation funding. Member of Portal Innovations at Science Square. Developing real-time instrument guidance for safer and simpler spinal access."
     }
   ],
 
@@ -2103,6 +2236,31 @@ export const atlantaBiotechEcosystem = {
     { source: "emtherapro", target: "jones_day", type: "service", description: "Uses Jones Day for legal counsel." },
     { source: "arc_proteomics", target: "emory", type: "spinout", description: "Emory spinout located in Decatur, GA specializing in proteome-wide assays for biomarker discovery." },
     { source: "arc_proteomics", target: "jones_day", type: "service", description: "Uses Jones Day for legal counsel." },
+
+    // --- SynthBiome Connections ---
+    { source: "synthbiome", target: "gatech", type: "spinout", description: "SynthBiome Inc. founded by Georgia Tech faculty Marvin Whiteley, developing synthetic environments for drug development and treatment selection. Whiteley's 10-year research program on bacterial behavior in human environments led to the creation of synthetic media that accurately replicate human infection conditions." },
+    { source: "synthbiome", target: "biospark_labs", type: "tenant", description: "SynthBiome is one of five startups based at BioSpark Labs, where it develops synthetic environments to accelerate antibiotic drug discovery and overcome the challenge of translating lab discoveries to clinical success." },
+
+    // --- Tether Therapeutics Connections ---
+    { source: "tether_therapeutics", target: "gatech", type: "spinout", description: "Tether Therapeutics technology based on novel chemistry developed at Georgia Tech, developing biodegradable polymeric nanoparticles for aerosol gene delivery to treat respiratory diseases." },
+    { source: "tether_therapeutics", target: "emory", type: "spinout", description: "Tether Therapeutics technology based on novel chemistry developed at Emory University, creating next-generation delivery solutions for mRNA therapeutics targeting respiratory diseases." },
+
+    // --- YoungHeartValve Connections ---
+    { source: "youngheartvalve", target: "emory", type: "collaboration", description: "YoungHeartValve collaborates with Emory-affiliated cardiovascular surgeons including Vinod Thourani, MD of Piedmont Heart Institute, for clinical validation of next-generation heart valve technology." },
+
+    // --- OZ-Link Technologies Connections ---
+    { source: "oz_link_technologies", target: "gatech", type: "collaboration", description: "OZ-Link Technologies collaborates with Georgia Tech researchers on polymer chemistry and bioconjugation technologies for controlled release therapeutics." },
+
+    // --- LymphaTech Connections ---
+    { source: "lymphatech", target: "gatech", type: "spinout", description: "LymphaTech founded by Georgia Tech faculty J. Brandon Dixon, developing innovative 3D measurement solutions for clinical care using proprietary algorithms for accurate human geometry measurement." },
+    { source: "lymphatech", target: "gra", type: "funding", description: "LymphaTech received seed funding from Georgia Research Alliance in 2015 to support development of digital measuring platform for healthcare applications." },
+
+    // --- Jackson Medical Connections ---
+    { source: "jackson_medical", target: "emory_healthcare", type: "partnership", description: "Jackson Medical's GloShield™ surgical safety device is used in healthcare systems including Emory Healthcare to prevent fiber-optic cable fires and burns in operating rooms." },
+
+    // --- Ethos Medical Connections ---
+    { source: "ethos_medical", target: "portal", type: "tenant", description: "Ethos Medical is a member of Portal Innovations at Science Square, receiving support for development of the Iris needle guidance system for safer percutaneous access." },
+    { source: "ethos_medical", target: "gatech", type: "collaboration", description: "Ethos Medical collaborates with Georgia Tech researchers on ultrasound-guided needle guidance technology and real-time image guidance systems." },
 
 
   ]

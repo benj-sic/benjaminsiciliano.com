@@ -1,6 +1,6 @@
 # Social Card Generation
 
-This directory contains scripts for generating social media cards for the Atlanta TechBio Network visualization.
+This directory contains scripts for generating social media cards for the Atlanta Biotech Network visualization.
 
 ## Files
 
@@ -11,7 +11,7 @@ This directory contains scripts for generating social media cards for the Atlant
 
 ## Social Card Generation
 
-The social card is a static image of the Atlanta TechBio Network visualization without labels, optimized for social media sharing.
+The social card is a static image of the Atlanta Biotech Network visualization without labels, optimized for social media sharing.
 
 ### Features
 
@@ -68,7 +68,7 @@ To modify the social card:
 
 If the script fails:
 1. Ensure Puppeteer is installed: `npm install`
-2. Check that the network data file exists: `src/atlanta_techbio_data.js`
+2. Check that the network data file exists: `src/atlanta_biotech_data.js`
 3. Verify the public directory is writable
 4. On macOS, you may need to grant screen recording permissions to Terminal/VS Code
 

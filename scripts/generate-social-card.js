@@ -36,7 +36,7 @@ async function generateSocialCard() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta TechBio Network</title>
+    <title>Atlanta Biotech Network</title>
     <style>
         body {
             margin: 0;
@@ -67,7 +67,7 @@ async function generateSocialCard() {
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         // Network data (embedded directly for social card generation)
-        const networkData = ${JSON.stringify(require('../src/atlanta_techbio_data.js').atlantaTechBioEcosystem)};
+        const networkData = ${JSON.stringify(require('../src/atlanta_biotech_data.js').atlantaBiotechEcosystem)};
         
         // Color scheme for nodes (ensuring all are visible and none are white)
         const nodeColors = {

@@ -1,7 +1,7 @@
 // scripts/extract-linkedin-queries.js
 const fs = require('fs');
 const path = require('path');
-const { atlantaTechBioEcosystem } = require('../src/atlanta_techbio_data');
+const { atlantaBiotechEcosystem } = require('../src/atlanta_biotech_data');
 
 const outputPath = path.join(__dirname, 'linkedin_search_export.csv');
 
@@ -18,7 +18,7 @@ const rows = [
 ];
 
 // Collect and format key personnel
-atlantaTechBioEcosystem.nodes.forEach((node) => {
+atlantaBiotechEcosystem.nodes.forEach((node) => {
   const org = node.name;
   const personnel = node.keyPersonnel || [];
 

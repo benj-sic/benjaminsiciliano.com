@@ -1,10 +1,4 @@
-// ✅ Updated with verified LinkedIn data from CSV on 2025-07-29
-// Atlanta TechBio Ecosystem Network Data
-// This file contains comprehensive, verified data about the Atlanta TechBio ecosystem.
-// All data has been updated as of July 2025 based on a synthesis of multiple AI fact-checking reports.
-// This file can directly replace the old data in your project.
-
-export const atlantaTechBioEcosystem = {
+export const atlantaBiotechEcosystem = {
   nodes: [
     // UNIVERSITIES & RESEARCH INSTITUTIONS
     {

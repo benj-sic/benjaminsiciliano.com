@@ -1,7 +1,7 @@
 {
   "name": "benjaminsiciliano-website",
   "version": "1.0.0",
-  "description": "Personal website featuring Atlanta TechBio Network visualization",
+  "description": "Personal website featuring Atlanta Biotech Network visualization",
   "homepage": "https://benjaminsiciliano.com",
   "private": true,
   "dependencies": {

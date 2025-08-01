@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import * as d3 from 'd3';
-import { atlantaTechBioEcosystem, nodeTypeMap, nodeColors } from '../atlanta_techbio_data.js';
+import { atlantaBiotechEcosystem, nodeTypeMap, nodeColors } from '../atlanta_biotech_data.js';
 import { useTheme } from '../contexts/ThemeContext';
 import './NetworkVisualization.css';
 
@@ -122,8 +122,8 @@ const NetworkVisualization = () => {
   // Store zoom behavior reference
   const zoomBehaviorRef = useRef(null);
 
-  // Real Atlanta TechBio ecosystem data
-  const networkData = atlantaTechBioEcosystem;
+  // Real Atlanta Biotech ecosystem data
+  const networkData = atlantaBiotechEcosystem;
   
   // Helper function to get the selected edge object from the ID
   const getSelectedEdge = useMemo(() => {
