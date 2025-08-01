@@ -585,6 +585,7 @@ const NetworkVisualization = () => {
 
 
 
+
     // Create labels in zoom group with enhanced readability
     const labels = zoomGroup.append("g")
       .attr("class", "labels")
@@ -613,6 +614,69 @@ const NetworkVisualization = () => {
         console.log('D3 label click event:', d.id);
         handleNodeClick(d, event);
       });
+
+    // Update collision detection with actual label measurements after labels are rendered
+    setTimeout(() => {
+      // Create a more sophisticated collision detection that accounts for label boundaries
+      simulation.force("collision", d3.forceCollide().radius(d => {
+        const nodeRadius = Math.max(d.size * (isMobile ? 2.5 : 3.5), 16);
+        const labelPadding = isMobile ? 40 : 60;
+        
+        // Find the corresponding label element to measure its actual bounds
+        const labelElement = labels.filter(labelD => labelD.id === d.id).node();
+        let labelRadius = nodeRadius + labelPadding;
+        
+        if (labelElement) {
+          try {
+            // Get the actual bounding box of the label
+            const bbox = labelElement.getBBox();
+            const labelWidth = bbox.width;
+            const labelHeight = bbox.height;
+            
+            // Calculate the radius needed to encompass the label
+            // Since labels are centered on nodes, we need half the label dimensions plus padding
+            const labelRadiusX = (labelWidth / 2) + labelPadding;
+            const labelRadiusY = (labelHeight / 2) + labelPadding;
+            labelRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+            
+            // Debug logging for a few nodes to verify the calculation
+            if (d.id === filteredNodes[0]?.id || d.id === filteredNodes[Math.floor(filteredNodes.length / 2)]?.id) {
+              console.log(`Node ${d.name}:`, {
+                nodeRadius,
+                labelWidth,
+                labelHeight,
+                labelRadiusX,
+                labelRadiusY,
+                finalRadius: labelRadius
+              });
+            }
+          } catch (e) {
+            // Fallback to estimated dimensions if getBBox fails
+            const fontSize = isMobile ? 20 : 28;
+            const avgCharWidth = fontSize * 0.6;
+            const labelWidth = Math.max(d.name.length * avgCharWidth, 100);
+            const labelHeight = fontSize * 1.2;
+            const estimatedLabelRadius = Math.max(labelWidth / 2, labelHeight / 2) + labelPadding;
+            labelRadius = Math.max(estimatedLabelRadius, nodeRadius + labelPadding);
+            
+            console.log(`Node ${d.name} (fallback):`, {
+              nodeRadius,
+              estimatedLabelWidth: labelWidth,
+              estimatedLabelHeight: labelHeight,
+              estimatedLabelRadius,
+              finalRadius: labelRadius
+            });
+          }
+        }
+        
+
+        
+        return labelRadius;
+      }));
+      
+      // Restart simulation with updated collision detection
+      simulation.alpha(0.3).restart();
+    }, 100); // Small delay to ensure labels are rendered
 
     // Add zoom behavior with enhanced controls and mobile optimization
     const zoom = d3.zoom()
@@ -1363,6 +1427,90 @@ const NetworkVisualization = () => {
                           <p className="recent-news">{selectedNode.recentNews}</p>
                         </div>
                       )}
+                      
+                      {/* Connections List */}
+                      <div className="details-section">
+                        <h4>Connections</h4>
+                        {(() => {
+                          // Find all connections for the selected node
+                          const nodeConnections = networkData.links.filter(link => 
+                            link.source === selectedNode.id || link.target === selectedNode.id
+                          );
+                          
+                          if (nodeConnections.length === 0) {
+                            return <p className="no-connections">No connections found.</p>;
+                          }
+                          
+                          return (
+                            <div className="connections-list">
+                              {nodeConnections.map((connection, index) => {
+                                // Determine the connected node (not the selected one)
+                                const connectedNodeId = connection.source === selectedNode.id ? connection.target : connection.source;
+                                const connectedNode = networkData.nodes.find(n => n.id === connectedNodeId);
+                                
+                                if (!connectedNode) return null;
+                                
+                                return (
+                                  <div 
+                                    key={index} 
+                                    className="connection-item"
+                                    onClick={() => {
+                                      // Clear node selection first (same as clicking visual edges)
+                                      setSelectedNode(null);
+                                      selectedNodeRef.current = null;
+                                      setConnectedNodes(new Set());
+                                      
+                                      // Create the edge object that matches the visual edge
+                                      const edgeToHighlight = {
+                                        source: { id: connection.source },
+                                        target: { id: connection.target },
+                                        type: connection.type,
+                                        description: connection.description
+                                      };
+                                      
+                                      // Trigger the same edge highlighting effect
+                                      handleEdgeClick(edgeToHighlight, { stopPropagation: () => {} });
+                                    }}
+                                    style={{ cursor: 'pointer' }}
+                                  >
+                                    <div className="connection-header">
+                                      <div className="connection-node-color" style={{backgroundColor: getNodeColor(connectedNode.type)}}></div>
+                                      <div className="connection-content">
+                                        <div className="connection-name">
+                                          {connectedNode.name}
+                                          {connectedNode.website && (
+                                            <a 
+                                              href={connectedNode.website} 
+                                              target="_blank" 
+                                              rel="noopener noreferrer"
+                                              className="connection-website-link"
+                                              onClick={(e) => e.stopPropagation()} // Prevent triggering connection highlight when clicking website link
+                                            >
+                                              ↗
+                                            </a>
+                                          )}
+                                        </div>
+                                        <div className="connection-type">{typeMap[connectedNode.type] || connectedNode.type}</div>
+                                      </div>
+                                    </div>
+                                    <div className="connection-relationship">
+                                      <span className="relationship-label">Relationship:</span>
+                                      <span className="relationship-type">
+                                        {connection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                      </span>
+                                    </div>
+                                    {connection.description && (
+                                      <div className="connection-description">
+                                        {connection.description}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          );
+                        })()}
+                      </div>
                     </div>
                   </div>
                 )}
