@@ -1127,8 +1127,9 @@ const NetworkVisualization = () => {
       // Search in node type
       if (typeMap[node.type] && typeMap[node.type].toLowerCase().includes(queryLower)) return true;
       
-      // For short queries (3 characters or less), be more restrictive with description/news
-      if (queryLower.length <= 3) {
+      // For short queries and common organization names, be more restrictive with description/news
+      const shortQueryKeywords = ['gra', 'emory', 'gatech', 'uga', 'gsu', 'choa', 'grady', 'atdc', 'ebfi', 'eddf', 'eidd', 'ebcc'];
+      if (queryLower.length <= 3 || shortQueryKeywords.includes(queryLower)) {
         // Only search in description if it's likely about the node itself
         if (node.description && node.description.toLowerCase().includes(queryLower)) {
           const descriptionLower = node.description.toLowerCase();
