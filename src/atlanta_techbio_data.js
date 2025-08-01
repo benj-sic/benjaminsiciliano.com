@@ -657,7 +657,13 @@ export const atlantaTechBioEcosystem = {
       size: 14,
       description: "Translational drug discovery center at Emory University focused on antiviral and small molecule therapeutics. Provides lead optimization, IND-enabling studies, and CMC support for internal and external biotech partners.",
       website: "https://eidd.emory.edu/index.html",
-      keyPersonnel: [],
+      keyPersonnel: [
+        { "name": "George Painter", "linkedin": "https://www.linkedin.com/in/george-painter-5664aa11/" },
+        { "name": "Mike Natchus", "linkedin": "https://www.linkedin.com/in/mike-natchus-26424625/" },
+        { "name": "Alexander Kolykhalov", "linkedin": "https://www.linkedin.com/in/alexanderkolykhalov/" },
+        { "name": "Dana Schneider", "linkedin": "https://www.linkedin.com/in/dana-schneider-abb18a43/" },
+        { "name": "Marcus Rodriguez", "linkedin": "https://www.linkedin.com/in/marcus-rodriguez-9269282/" }
+      ],
       recentNews: "EIDD has supported antiviral drug discovery efforts including molnupiravir (LAGEVRIO) and continues to provide infrastructure for Emory spinouts and licensed therapeutics."
     },
 
@@ -669,19 +675,17 @@ export const atlantaTechBioEcosystem = {
       size: 12,
       description: "Purpose‑built shared wet‑lab, cleanroom, and office facility for early‑stage biotech and life sciences startups at Science Square, Atlanta.",
       website: "https://www.biosparklabs.com",
-      keyPersonnel: [],
+      keyPersonnel: [
+        { "name": "Ryan Nicole Lawler", "linkedin": "https://www.linkedin.com/in/ryannicolelawler/" },
+        { "name": "Melissa T. Storey", "linkedin": "https://www.linkedin.com/in/melissa-t-storey/" },
+        { "name": "Noriko Walker", "linkedin": "https://www.linkedin.com/in/noriko-walker-rpa-ccim-4403279/" },
+        { "name": "Willis Herron", "linkedin": "https://www.linkedin.com/in/willis-herron-59a01662/" },
+        { "name": "Tiffany A.C. Mitchell", "linkedin": "https://www.linkedin.com/in/tiffanyacmitchell/" },
+        { "name": "Tony Zivalich Jr.", "linkedin": "https://www.linkedin.com/in/tony-zivalich-jr-a7a680352/" }
+      ],
       recentNews: "BioSpark opened a new 17,000 SF facility in 2023 at Science Square to support biotech startups affiliated with Emory, Georgia Tech, and Georgia State."
     },
-    {
-      id: "propel_center",
-      name: "Propel Center",
-      type: "community",
-      size: 13,
-      description: "Global innovation and learning hub for HBCU students and faculty headquartered at Clark Atlanta University. Focuses on tech, health equity, and STEM entrepreneurship.",
-      website: "https://propelcenter.org",
-      keyPersonnel: [],
-      recentNews: "Backed by Apple and Southern Company. Operates with a mission to diversify the innovation pipeline in health, biotech, and beyond."
-    },
+
     {
       id: "tag_digital_health",
       name: "TAG Digital Health Society",
@@ -689,7 +693,12 @@ export const atlantaTechBioEcosystem = {
       size: 18,
       description: "Statewide society housed within the Technology Association of Georgia that advances healthcare innovation and digital health across Georgia with events, collaboration, and an ecosystem directory.",
       website: "https://www.tagonline.org/chapters-and-societies/health/",
-      keyPersonnel: [],
+      keyPersonnel: [
+        { "name": "Tracy Slee", "linkedin": "https://www.linkedin.com/in/tracyslee/" },
+        { "name": "Aastha Sharma", "linkedin": "https://www.linkedin.com/in/aasthasharma1/" },
+        { "name": "Robin M. Hackney", "linkedin": "https://www.linkedin.com/in/robinmhackney/" },
+        { "name": "Anita B", "linkedin": "https://www.linkedin.com/in/anitab/" }
+      ],
       recentNews: "Maintains Georgia's Digital Health Ecosystem directory (~460 orgs), hosts events on medtech, health IT, and equity; sponsors include Northside Hospital, UCB Pharmaceuticals."
     },
     {
@@ -709,8 +718,12 @@ export const atlantaTechBioEcosystem = {
       type: "incubator",
       size: 11,
       description: "Startup incubator located at Kennesaw State University focused on supporting faculty, student, and community ventures across life sciences, software, and deep tech sectors.",
-      website: "https://research.kennesaw.edu/hatchbridge",
-      keyPersonnel: [],
+      website: "https://www.hatchbridge.com/",
+      keyPersonnel: [
+        { "name": "Colin Ake", "linkedin": "https://www.linkedin.com/in/colinake/" },
+        { "name": "Graham Gintz", "linkedin": "https://www.linkedin.com/in/grahamgintz/" },
+        { "name": "Marie Northington", "linkedin": "https://www.linkedin.com/in/marie-northington/" }
+      ],
       recentNews: "Launched in 2023 and has supported over 50 ventures. Hosts Georgia Startup Launch grants and connects founders with mentors and funders."
     },
 
@@ -1970,7 +1983,7 @@ export const atlantaTechBioEcosystem = {
     { source: "portal", target: "biospark_labs", type: "infrastructure", description: "Portal Innovations Atlanta operates and supports BioSpark Labs within its Science Square facility, integrating venture support and lab infrastructure." },
     { source: "gatech", target: "biospark_labs", type: "infrastructure", description: "Georgia Tech helped establish BioSpark Labs at Science Square and its core facilities serve startups located there." },
 
-    { source: "propel_center", target: "cau", type: "partner", description: "Propel Center is headquartered at Clark Atlanta University and serves as a national hub for HBCU innovation." },
+
     { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
     { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
     { source: "hatchbridge", target: "kennesaw_state_university", type: "affiliation", description: "HatchBridge is Kennesaw State University's startup incubator, supporting students, faculty, and community founders." },
