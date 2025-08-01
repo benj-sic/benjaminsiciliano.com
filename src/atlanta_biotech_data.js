@@ -758,7 +758,7 @@ export const atlantaBiotechEcosystem = {
           "linkedin": "https://www.linkedin.com/in/gaurav-byagathvalli/"
         }
       ],
-      recentNews: "Raised initial financing in 2023 led by Good Ventures. Located at 58 Edgewood Ave NE, Atlanta."
+      recentNews: "Raised $2M in 2023 from seed investors led by Good Ventures; published first human data in 2024; technology licensing with Georgia Tech confirmed; expects major pharmaceutical development deals and clinical data in 2025."
     },
     {
       id: "palate_therapeutics",
@@ -2084,7 +2084,7 @@ export const atlantaBiotechEcosystem = {
     { source: "gatech", target: "biospark_labs", type: "infrastructure", description: "Georgia Tech helped establish BioSpark Labs at Science Square and its core facilities serve startups located there." },
 
 
-    { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
+    { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (formerly Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
     { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
     { source: "hatchbridge", target: "kennesaw_state_university", type: "affiliation", description: "HatchBridge is Kennesaw State University's startup incubator, supporting students, faculty, and community founders." },
 
