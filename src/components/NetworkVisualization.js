@@ -1127,14 +1127,41 @@ const NetworkVisualization = () => {
       // Search in node type
       if (typeMap[node.type] && typeMap[node.type].toLowerCase().includes(queryLower)) return true;
       
-      // Search in description
-      if (node.description && node.description.toLowerCase().includes(queryLower)) return true;
+      // For short queries (3 characters or less), be more restrictive with description/news
+      if (queryLower.length <= 3) {
+        // Only search in description if it's likely about the node itself
+        if (node.description && node.description.toLowerCase().includes(queryLower)) {
+          const descriptionLower = node.description.toLowerCase();
+          const nodeNameLower = node.name.toLowerCase();
+          
+          // Only include if the match is in the first sentence or mentions the node's own name
+          const firstSentence = descriptionLower.split('.')[0];
+          if (firstSentence.includes(queryLower) || 
+              (descriptionLower.includes(nodeNameLower) && descriptionLower.includes(queryLower))) {
+            return true;
+          }
+        }
+        
+        // Only search in recent news if it's likely about the node itself
+        if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) {
+          const newsLower = node.recentNews.toLowerCase();
+          const nodeNameLower = node.name.toLowerCase();
+          
+          // Only include if the match is in the first part or mentions the node's own name
+          const firstPart = newsLower.split('.')[0];
+          if (firstPart.includes(queryLower) || 
+              (newsLower.includes(nodeNameLower) && newsLower.includes(queryLower))) {
+            return true;
+          }
+        }
+      } else {
+        // For longer queries, search in all fields
+        if (node.description && node.description.toLowerCase().includes(queryLower)) return true;
+        if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) return true;
+      }
       
       // Search in website URL
       if (node.website && node.website.toLowerCase().includes(queryLower)) return true;
-      
-      // Search in recent news
-      if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) return true;
       
       // Search in key personnel names
       if (node.keyPersonnel) {
