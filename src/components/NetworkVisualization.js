@@ -393,16 +393,16 @@ const NetworkVisualization = () => {
 
   // Manual center network function (doesn't hide the plot)
   const manualCenterNetwork = useCallback(() => {
-    if (svgRef.current && zoomBehaviorRef.current) {
+    if (svgRef.current && zoomBehaviorRef.current && simulationRef.current) {
       const svg = d3.select(svgRef.current);
       const width = svg.node().getBoundingClientRect().width;
       const height = svg.node().getBoundingClientRect().height;
       
-      // Get the actual bounds of the network nodes
-      const nodes = svg.selectAll(".node").nodes();
+      // Get the simulation data for all visible nodes (filtered nodes)
+      const nodes = simulationRef.current.nodes();
       if (nodes.length > 0) {
-        const xCoords = nodes.map(n => n.cx.baseVal.value);
-        const yCoords = nodes.map(n => n.cy.baseVal.value);
+        const xCoords = nodes.map(n => n.x);
+        const yCoords = nodes.map(n => n.y);
         const minX = Math.min(...xCoords);
         const maxX = Math.max(...xCoords);
         const minY = Math.min(...yCoords);
@@ -421,7 +421,6 @@ const NetworkVisualization = () => {
         const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
         
         // Calculate the transform to center the network in the viewport
-        // Adjust the Y translation to center properly
         const transform = d3.zoomIdentity
           .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
           .scale(scale);
@@ -430,6 +429,9 @@ const NetworkVisualization = () => {
         svg.transition()
           .duration(500)
           .call(zoomBehaviorRef.current.transform, transform);
+        
+        // Update zoom level state
+        setZoomLevel(scale);
       } else {
         // Fallback to simple centering if no nodes
         const transform = d3.zoomIdentity
@@ -439,6 +441,9 @@ const NetworkVisualization = () => {
         svg.transition()
           .duration(500)
           .call(zoomBehaviorRef.current.transform, transform);
+        
+        // Update zoom level state
+        setZoomLevel(0.25);
       }
     }
   }, []);
@@ -465,6 +470,190 @@ const NetworkVisualization = () => {
         .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
     }
   };
+
+  // Helper function to calculate base zoom level (like center/reset zoom)
+  const calculateBaseZoomLevel = useCallback(() => {
+    if (!svgRef.current || !simulationRef.current) return 0.25; // Fallback
+    
+    const svg = d3.select(svgRef.current);
+    const width = svg.node().getBoundingClientRect().width;
+    const height = svg.node().getBoundingClientRect().height;
+    
+    // Get the simulation data for all visible nodes
+    const nodes = simulationRef.current.nodes();
+    if (nodes.length === 0) return 0.25; // Fallback
+    
+    const xCoords = nodes.map(n => n.x);
+    const yCoords = nodes.map(n => n.y);
+    const minX = Math.min(...xCoords);
+    const maxX = Math.max(...xCoords);
+    const minY = Math.min(...yCoords);
+    const maxY = Math.max(...yCoords);
+    
+    // Calculate the scale to fit the network in the viewport with minimal padding
+    const networkWidth = maxX - minX;
+    const networkHeight = maxY - minY;
+    const padding = 20; // Minimal padding
+    
+    // Handle edge cases where network dimensions are very small
+    if (networkWidth <= 0 || networkHeight <= 0) {
+      return 0.25; // Fallback for invalid dimensions
+    }
+    
+    const scaleX = (width - padding * 2) / networkWidth;
+    const scaleY = (height - padding * 2) / networkHeight;
+    const scale = Math.min(scaleX, scaleY, 0.25); // Cap at 25% zoom
+    
+    return scale;
+  }, []);
+
+  // Zoom to subnetwork function
+  const zoomToSubnetwork = useCallback((node) => {
+    if (!svgRef.current || !zoomBehaviorRef.current) return;
+    
+    const svg = d3.select(svgRef.current);
+    const width = svg.node().getBoundingClientRect().width;
+    const height = svg.node().getBoundingClientRect().height;
+    
+    // Find all connected nodes (the selected node + its immediate connections)
+    const connectedNodeIds = new Set([node.id]);
+    
+    // Special handling for edge connections
+    if (node.id === 'edge-center') {
+      // For edge connections, find the source and target nodes
+      const sourceId = node.sourceId;
+      const targetId = node.targetId;
+      
+      if (sourceId && targetId) {
+        connectedNodeIds.add(sourceId);
+        connectedNodeIds.add(targetId);
+        
+        // Also add nodes connected to the source and target
+        networkData.links.forEach(link => {
+          if (link.source === sourceId || link.target === sourceId) {
+            connectedNodeIds.add(link.source);
+            connectedNodeIds.add(link.target);
+          }
+          if (link.source === targetId || link.target === targetId) {
+            connectedNodeIds.add(link.source);
+            connectedNodeIds.add(link.target);
+          }
+        });
+      }
+    } else {
+      // Normal node selection
+      networkData.links.forEach(link => {
+        if (link.source === node.id || link.target === node.id) {
+          connectedNodeIds.add(link.source);
+          connectedNodeIds.add(link.target);
+        }
+      });
+    }
+    
+    // Get the simulation data for connected nodes
+    const connectedNodes = simulationRef.current.nodes().filter(d => connectedNodeIds.has(d.id));
+    
+    if (connectedNodes.length === 0) return;
+    
+
+    
+    // Calculate bounds including label radius for each node (using same logic as collision detection)
+    const bounds = connectedNodes.map(n => {
+      // Use the same label radius calculation as collision detection, but with reduced padding for zoom
+      const labelPadding = isMobile ? 20 : 30; // Reduced padding for zoom calculation
+      const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
+      
+      // Estimate label dimensions
+      const fontSize = isMobile ? 20 : 28;
+      const avgCharWidth = fontSize * 0.6;
+      const estimatedLabelWidth = Math.max(n.name.length * avgCharWidth, 100);
+      const estimatedLabelHeight = fontSize * 1.2;
+      
+      // Calculate label radius using same logic as collision detection
+      const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+      const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+      const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+      
+
+      
+      return {
+        left: n.x - totalRadius,
+        right: n.x + totalRadius,
+        top: n.y - totalRadius,
+        bottom: n.y + totalRadius
+      };
+    });
+    
+
+    
+    // Find the overall bounds
+    const minX = Math.min(...bounds.map(b => b.left));
+    const maxX = Math.max(...bounds.map(b => b.right));
+    const minY = Math.min(...bounds.map(b => b.top));
+    const maxY = Math.max(...bounds.map(b => b.bottom));
+    
+    // Calculate the center of the subnetwork
+    const subnetworkCenterX = (minX + maxX) / 2;
+    const subnetworkCenterY = (minY + maxY) / 2;
+    
+    // Calculate the dimensions of the subnetwork
+    const subnetworkWidth = maxX - minX;
+    const subnetworkHeight = maxY - minY;
+    
+    // Add minimal padding around the subnetwork - nodes should be just barely within the window
+    const padding = 10; // Very minimal padding to make network more manageable
+    
+    // Calculate the scale to fit the subnetwork in the viewport
+    const scaleX = (width - padding * 2) / subnetworkWidth;
+    const scaleY = (height - padding * 2) / subnetworkHeight;
+    let scale = Math.min(scaleX, scaleY);
+    
+    // Apply zoom bounds using dynamic base zoom level
+    const baseZoomLevel = calculateBaseZoomLevel();
+    const minScale = baseZoomLevel; // Minimum zoom (same as center/reset zoom)
+    const maxScale = baseZoomLevel * 3; // Maximum zoom (3x center/reset zoom) for large subnetworks
+    scale = Math.max(scale, minScale);
+    scale = Math.min(scale, maxScale);
+    
+    // Debug logging for subnetworks
+    if (connectedNodes.length > 5) {
+      console.log(`Zooming to subnetwork for ${node.name}:`, {
+        nodeCount: connectedNodes.length,
+        subnetworkWidth: Math.round(subnetworkWidth),
+        subnetworkHeight: Math.round(subnetworkHeight),
+        viewportWidth: width,
+        viewportHeight: height,
+        padding,
+        labelPadding: isMobile ? 20 : 30,
+        bounds: bounds.length,
+        baseZoomLevel,
+        minScale,
+        maxScale,
+        finalScale: scale,
+        originalScaleX: scaleX,
+        originalScaleY: scaleY,
+        sampleBounds: bounds.slice(0, 3).map(b => ({
+          left: Math.round(b.left),
+          right: Math.round(b.right),
+          top: Math.round(b.top),
+          bottom: Math.round(b.bottom)
+        }))
+      });
+    }
+    
+    // Calculate the transform to center the subnetwork in the viewport
+    const transform = d3.zoomIdentity
+      .translate(width / 2 - subnetworkCenterX * scale, height / 2 - subnetworkCenterY * scale)
+      .scale(scale);
+    
+    // Apply the transform with a smooth transition
+    svg.transition()
+      .duration(800)
+      .call(zoomBehaviorRef.current.transform, transform);
+    
+    // Update zoom level state
+    setZoomLevel(scale);
+  }, [networkData.links]);
 
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
@@ -915,6 +1104,10 @@ const NetworkVisualization = () => {
         setSearchQuery('');
         setSearchResults([]);
         setShowSearch(false);
+        // Reset to full network view when deselecting edge
+        setTimeout(() => {
+          manualCenterNetwork();
+        }, 100);
         return null;
       } else {
         console.log('Setting selectedEdgeId to:', clickedEdgeId);
@@ -927,6 +1120,31 @@ const NetworkVisualization = () => {
         setSearchQuery('');
         setSearchResults([]);
         setShowSearch(true); // Auto-open the search & details dropdown
+        
+        // Zoom to show the connected nodes
+        setTimeout(() => {
+          // Create a virtual node at the center of the edge for zooming
+          const sourceNode = simulationRef.current?.nodes().find(n => n.id === edge.source.id);
+          const targetNode = simulationRef.current?.nodes().find(n => n.id === edge.target.id);
+          
+          if (sourceNode && targetNode) {
+            // Create a virtual node at the midpoint of the edge
+            const virtualNode = {
+              id: 'edge-center',
+              x: (sourceNode.x + targetNode.x) / 2,
+              y: (sourceNode.y + targetNode.y) / 2,
+              name: 'Connection',
+              type: 'connection',
+              sourceId: edge.source.id,
+              targetId: edge.target.id
+            };
+            
+            // Zoom to show both connected nodes
+            zoomToSubnetwork(virtualNode);
+          } else {
+            console.log('Could not find source or target nodes for edge zoom');
+          }
+        }, 100); // Small delay to ensure state updates
         
         // Auto-scroll to the search & details section
         setTimeout(() => {
@@ -965,6 +1183,10 @@ const NetworkVisualization = () => {
       setSearchQuery('');
       setSearchResults([]);
       setShowSearch(false);
+      // Reset to full network view when deselecting - use manual center to avoid reload
+      setTimeout(() => {
+        manualCenterNetwork();
+      }, 100);
       return;
     }
     
@@ -999,6 +1221,11 @@ const NetworkVisualization = () => {
     setSearchResults([]);
     setShowSearch(true); // Auto-open the search & details dropdown
     
+    // Zoom to the subnetwork after a short delay to ensure state updates and simulation has settled
+    setTimeout(() => {
+      zoomToSubnetwork(node);
+    }, 100);
+    
     // Auto-scroll to the search & details section
     setTimeout(() => {
       const sidebar = document.querySelector('.network-sidebar-left');
@@ -1011,7 +1238,7 @@ const NetworkVisualization = () => {
         });
       }
     }, 100); // Small delay to ensure the dropdown is rendered
-  }, [isMobile, selectedNode, networkData.links]);
+  }, [isMobile, selectedNode, networkData.links, zoomToSubnetwork]);
 
   return (
     <div className="network-visualization">
@@ -1451,28 +1678,24 @@ const NetworkVisualization = () => {
                                 if (!connectedNode) return null;
                                 
                                 return (
-                                  <div 
-                                    key={index} 
-                                    className="connection-item"
-                                    onClick={() => {
-                                      // Clear node selection first (same as clicking visual edges)
-                                      setSelectedNode(null);
-                                      selectedNodeRef.current = null;
-                                      setConnectedNodes(new Set());
-                                      
-                                      // Create the edge object that matches the visual edge
-                                      const edgeToHighlight = {
-                                        source: { id: connection.source },
-                                        target: { id: connection.target },
-                                        type: connection.type,
-                                        description: connection.description
-                                      };
-                                      
-                                      // Trigger the same edge highlighting effect
-                                      handleEdgeClick(edgeToHighlight, { stopPropagation: () => {} });
-                                    }}
-                                    style={{ cursor: 'pointer' }}
-                                  >
+                                                                      <div 
+                                      key={index} 
+                                      className="connection-item"
+                                      onClick={() => {
+                                        // Highlight the connection/edge instead of zooming to the connected node
+                                        const edgeToHighlight = {
+                                          source: { id: connection.source },
+                                          target: { id: connection.target },
+                                          type: connection.type,
+                                          description: connection.description
+                                        };
+                                        
+                                        // Trigger edge highlighting
+                                        handleEdgeClick(edgeToHighlight, { stopPropagation: () => {} });
+                                      }}
+                                      style={{ cursor: 'pointer' }}
+                                      title="Click to highlight this connection"
+                                    >
                                     <div className="connection-header">
                                       <div className="connection-node-color" style={{backgroundColor: getNodeColor(connectedNode.type)}}></div>
                                       <div className="connection-content">
@@ -1543,7 +1766,17 @@ const NetworkVisualization = () => {
                       <div className="details-section">
                         <h4>Connected Organizations</h4>
                         <div className="connected-organizations">
-                          <div className="org-item">
+                          <div 
+                            className="org-item"
+                            onClick={() => {
+                              const sourceNode = networkData.nodes.find(n => n.id === getSelectedEdge.source);
+                              if (sourceNode) {
+                                handleNodeClick(sourceNode, { stopPropagation: () => {} });
+                              }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                            title="Click to highlight this organization"
+                          >
                             {(() => {
                               const sourceNode = networkData.nodes.find(n => n.id === getSelectedEdge.source);
                               return (
@@ -1558,6 +1791,7 @@ const NetworkVisualization = () => {
                                           target="_blank" 
                                           rel="noopener noreferrer"
                                           className="org-website-link"
+                                          onClick={(e) => e.stopPropagation()} // Prevent triggering node click when clicking website link
                                         >
                                           ↗
                                         </a>
@@ -1569,7 +1803,17 @@ const NetworkVisualization = () => {
                               );
                             })()}
                           </div>
-                          <div className="org-item">
+                          <div 
+                            className="org-item"
+                            onClick={() => {
+                              const targetNode = networkData.nodes.find(n => n.id === getSelectedEdge.target);
+                              if (targetNode) {
+                                handleNodeClick(targetNode, { stopPropagation: () => {} });
+                              }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                            title="Click to highlight this organization"
+                          >
                             {(() => {
                               const targetNode = networkData.nodes.find(n => n.id === getSelectedEdge.target);
                               return (
@@ -1584,6 +1828,7 @@ const NetworkVisualization = () => {
                                           target="_blank" 
                                           rel="noopener noreferrer"
                                           className="org-website-link"
+                                          onClick={(e) => e.stopPropagation()} // Prevent triggering node click when clicking website link
                                         >
                                           ↗
                                         </a>

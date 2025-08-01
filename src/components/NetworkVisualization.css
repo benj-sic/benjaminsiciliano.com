@@ -813,6 +813,8 @@
   border: 1px solid var(--network-border-primary);
 }
 
+
+
 /* Network Layout with Sidebars */
 .network-layout {
   display: flex;
@@ -1084,6 +1086,14 @@
   align-items: center;
   gap: 8px;
   width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.org-item:hover {
+  background-color: var(--network-hover-bg);
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px;
 }
 
 .org-node-color {
