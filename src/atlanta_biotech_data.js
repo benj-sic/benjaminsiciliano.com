@@ -2141,6 +2141,163 @@ export const atlantaBiotechEcosystem = {
       website: "https://veranex.com",
       keyPersonnel: [],
       recentNews: "Acquired T3 Labs in 2024, expanding preclinical testing capabilities in Atlanta's Science Square. T3 Labs brings 33,000-square-foot facility with expertise in 12 therapeutic areas and over 60 FDA-approved products in the past decade."
+    },
+    {
+      id: "lybbie",
+      name: "Lybbie",
+      type: "startup",
+      size: 8,
+      description: "Health technology company focused on solving overlooked challenges in early parenthood. Building tools that support breastfeeding through science, technology, and empathy — offering new ways to understand and optimize the feeding experience. Founded by Dr. Andrea Braden, a nationally recognized Ob/Gyn and expert in Breastfeeding Medicine.",
+      website: "https://www.lybbie.com",
+      keyPersonnel: [
+        {
+          "name": "Dr. Andrea Braden",
+          "linkedin": "https://www.linkedin.com/in/drandreabraden/"
+        }
+      ],
+      recentNews: "Founded in 2019. Built by physicians, informed by parents, backed by data. Developing patented continuous milk monitoring technology to address Perceived Insufficient Milk Syndrome affecting 87% of moms."
+    },
+    {
+      id: "aruna_bio",
+      name: "Aruna Bio",
+      type: "company",
+      size: 15,
+      description: "Harnessing the natural abilities of neural exosomes to cross the blood brain barrier and enhance the body's anti-inflammatory, self-repair and protective mechanisms to treat a range of neurodegenerative disorders. Leveraging proprietary exosomes and manufacturing platform to create synergistic therapies by enhancing exosomes with small molecules, RNA, oligonucleotides and antibodies.",
+      website: "https://www.arunabio.com",
+      keyPersonnel: [
+        {
+          "name": "Steven Stice",
+          "linkedin": "https://www.linkedin.com/in/steven-stice-337a048/"
+        },
+        {
+          "name": "Tracey Worthington Stice",
+          "linkedin": "https://www.linkedin.com/in/twstice/"
+        }
+      ],
+      recentNews: "Founded in 2003. Developing AB126, a therapeutic neural cell-derived exosome that demonstrates multiple modes of action: reducing neuro-inflammation, promoting neuro-protection, and stimulating neuro-regeneration."
+    },
+    {
+      id: "accuitis",
+      name: "Accuitis Pharmaceuticals",
+      type: "company",
+      size: 10,
+      description: "Developing therapeutics which protect and restore healthy cellular function in neurodegenerative diseases. Participant in the Georgia Research Alliance Venture Lab program with key technology discovered by Emory University. Engaged in acquisition and development of pharmaceuticals targeting niche, orphan, and underserved disease states.",
+      website: "https://accuitis.com",
+      keyPersonnel: [
+        {
+          "name": "Rick Coulon",
+          "linkedin": "https://www.linkedin.com/in/rick-coulon-b7b2756/"
+        },
+        {
+          "name": "Jack Arbiser",
+          "linkedin": "https://www.linkedin.com/in/jack-arbiser-7119039/"
+        },
+        {
+          "name": "Mike Shippel",
+          "linkedin": "https://www.linkedin.com/in/mikeshippel/"
+        },
+        {
+          "name": "Adam Sabouni",
+          "linkedin": "https://www.linkedin.com/in/adamsabouni/"
+        }
+      ],
+      recentNews: "Founded in 2011. Lead compound AN-018 is a small molecule validated in preclinical research to restore mitochondrial SIRT3 expression for treating Alzheimer's, Parkinson's disease, and methamphetamine addiction."
+    },
+    {
+      id: "diasyst",
+      name: "Diasyst - Medication Intelligence",
+      type: "company",
+      size: 15,
+      description: "Introduces the first ever Medication Intelligence solution for chronic disease management, empowering healthcare providers to make timely, quick, safe, and effective treatment decisions. Backed by decades of research at Emory University and the VA, Diasyst gathers, computerizes, and maintains an ever-expanding knowledge base of clinical guidelines, drug labels, research studies, and best practices.",
+      website: "https://www.diasyst.com",
+      keyPersonnel: [
+        {
+          "name": "Chun Yong",
+          "linkedin": "https://www.linkedin.com/in/chunyong/"
+        },
+        {
+          "name": "Med LSP",
+          "linkedin": "https://www.linkedin.com/in/medlsp/"
+        },
+        {
+          "name": "Dimitar Ivanov",
+          "linkedin": "https://www.linkedin.com/in/dimitar-ivanov-16942a17/"
+        }
+      ],
+      recentNews: "Founded in 2015. Through proprietary AI, Diasyst delivers treatment recommendations to decision-makers, helping save time, increase revenues, and maximize patient outcomes. Received GRA funding in 2019."
+    },
+    {
+      id: "earlitec",
+      name: "EarliTec Diagnostics",
+      type: "company",
+      size: 15,
+      description: "Making earlier identification and treatment for autism and related early childhood vulnerabilities accessible to children everywhere. EarliTec's flagship product, EarliPoint™, is FDA authorized to diagnose and assess autism in children ages 16-30 months old.",
+      website: "https://earlitecdx.com",
+      keyPersonnel: [
+        {
+          "name": "Cheryl Tierney",
+          "linkedin": "https://www.linkedin.com/in/cheryl-tierney-md-mph/"
+        },
+        {
+          "name": "Jonathan Lehmann",
+          "linkedin": "https://www.linkedin.com/in/jonathan-lehmann-0014ba25/"
+        },
+        {
+          "name": "John Revier",
+          "linkedin": "https://www.linkedin.com/in/john-reviere-3307973/"
+        },
+        {
+          "name": "Ryan Bormann",
+          "linkedin": "https://www.linkedin.com/in/ryan-bormann-5798955/"
+        }
+      ],
+      recentNews: "Founded in 2019. EarliPoint System device is FDA-authorized as a tool to aid qualified clinicians in the diagnosis and assessment of Autism Spectrum Disorder (ASD) in children ages 16 months through 30 months. Uses clinically validated measures to track social-visual engagement."
+    },
+    {
+      id: "kodikaz",
+      name: "Kodikaz Therapeutics",
+      type: "startup",
+      size: 8,
+      description: "Developing targeted cancer therapies through their Zip-Code™ Technology platform, a first-in-class cell-specific delivery system for gene therapy applications. Derived from endogenous human mechanisms, avoiding viral delivery challenges while being universally applicable and cell-type specific.",
+      website: "https://kodikaz.com",
+      keyPersonnel: [
+        {
+          "name": "Anthony Johnson",
+          "linkedin": "https://www.linkedin.com/in/anjoso/"
+        },
+        {
+          "name": "Matthew Tindall",
+          "linkedin": "https://www.linkedin.com/in/matthewtindall/"
+        }
+      ],
+      recentNews: "Founded in 2018. Mission to move from incremental cancer therapies with devastating side effects to durable cures through targeted therapies that can eradicate cancers completely. Zip-Code™ Technology platform redefining boundaries of medicine for new therapeutic approaches."
+    },
+    {
+      id: "nyra_medical",
+      name: "Nyra Medical",
+      type: "company",
+      size: 15,
+      description: "Clinical-stage medical company pioneering a new era in structural heart care. Mission to improve and extend the lives of patients with valvular heart disease through elegant, transcatheter solutions that restore valve function while preserving natural physiology.",
+      website: "https://nyramedical.com",
+      keyPersonnel: [
+        {
+          "name": "Lori Chmura",
+          "linkedin": "https://www.linkedin.com/in/lori-chmura-9938556/"
+        },
+        {
+          "name": "Murali Padala",
+          "linkedin": "https://www.linkedin.com/in/murali-padala-462a677/"
+        },
+        {
+          "name": "Adam Martinez",
+          "linkedin": "https://www.linkedin.com/in/adamwmartinez/"
+        },
+        {
+          "name": "Jennifer Mischke",
+          "linkedin": "https://www.linkedin.com/in/jennifermischke/"
+        }
+      ],
+      recentNews: "Founded in 2021. Proprietary Cardiac Leaflet Enhancer (CARLEN) technology designed to address unmet need through sutureless, single-leaflet device that augments native valve anatomy. Licensed core technology from Emory University in 2021, raised Series A in 2022."
     }
   ],
 
@@ -2166,7 +2323,7 @@ export const atlantaBiotechEcosystem = {
     { source: "georgia_ctsa", target: "gsu", type: "collaboration", description: "Contributes public health and behavioral science expertise to statewide CTSA programs." },
     { source: "georgia_ctsa", target: "grady", type: "infrastructure", description: "Operates clinical research units within Grady for translational and population health research." },
     { source: "georgia_ctsa", target: "choa", type: "infrastructure", description: "Supports pediatric clinical research infrastructure at CHOA sites." },
-    { source: "agetech_connect", target: "oak_street_health", type: "partnership", description: "AgeTech Connect engages Oak Street Health for aging-related healthcare pilot opportunities" },
+
     { source: "nucleate_atlanta", target: "gatech", type: "collaboration", description: "Nucleate Atlanta recruits founders and fellows from Georgia Tech graduate programs." },
     { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
     { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
@@ -2186,6 +2343,7 @@ export const atlantaBiotechEcosystem = {
 
     { source: "mercer_innovation_center", target: "mercer_university", type: "affiliation", description: "Mercer Innovation Center is Mercer University's entrepreneurship hub, supporting innovation and startup formation across health, medtech, and community ventures." },
     { source: "gatech", target: "piezo_therapeutics", type: "spinout", description: "Georgia Tech spinout focused on energy-based nucleic acid delivery technology." },
+    { source: "gatech", target: "orthopreserve", type: "spinout", description: "Georgia Tech spinout founded in 2021 with medical device technology." },
 
     // --- University Spinouts ---
     { source: "emory", target: "geovax", type: "spinout", description: "Technology developed at Emory" },
@@ -2260,6 +2418,30 @@ export const atlantaBiotechEcosystem = {
     { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
     { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
     { source: "portal", target: "jpmorgan_chase", type: "partnership", description: "J.P. Morgan Chase is a corporate partner of Portal Innovations, supporting early-stage life sciences and medtech ventures." },
+    { source: "portal", target: "radyus", type: "partnership", description: "Radyus Research is a Portal partner providing preclinical CRO services to early-stage life sciences ventures." },
+    { source: "portal", target: "armor_medical", type: "member", description: "Armor Medical is a Portal Atlanta member company." },
+    { source: "portal", target: "oridivus", type: "member", description: "Oridivus is a Portal Atlanta member company." },
+    { source: "portal", target: "orthopreserve", type: "member", description: "OrthoPreserve is a Portal Atlanta member company." },
+    { source: "portal", target: "lymphatech", type: "member", description: "LymphaTech is a Portal Atlanta member company." },
+    { source: "portal", target: "ethos_medical", type: "member", description: "Ethos Medical is a Portal Atlanta member company." },
+    { source: "portal", target: "oncospherix", type: "member", description: "OncoSpherix is a Portal Atlanta member company." },
+    { source: "portal", target: "palate_therapeutics", type: "member", description: "Palate Therapeutics is a Portal Atlanta member company." },
+    { source: "portal", target: "lybbie", type: "member", description: "Lybbie is a Portal Atlanta member company." },
+    { source: "aruna_bio", target: "uga", type: "collaboration", description: "Aruna Bio is headquartered in Athens, GA and collaborates with University of Georgia on neural stem cell research and drug development." },
+    { source: "accuitis", target: "emory", type: "spinout", description: "Accuitis Pharmaceuticals key technology was discovered by Emory University." },
+    { source: "accuitis", target: "gra", type: "program", description: "Accuitis is a participant in the Georgia Research Alliance Venture Lab program." },
+    { source: "diasyst", target: "emory", type: "collaboration", description: "Diasyst is backed by decades of research at Emory University and the VA." },
+    { source: "diasyst", target: "gra", type: "funding", description: "Diasyst received GRA funding in 2019." },
+    { source: "earlitec", target: "emory", type: "collaboration", description: "EarliTec Diagnostics collaborates with Emory University on autism research and clinical validation studies." },
+    { source: "kodikaz", target: "emory", type: "collaboration", description: "Kodikaz Therapeutics collaborates with Emory University on gene therapy research. Co-Founder Dr. Leon Bernal-Mizrachi is Associate Professor in the Department of Hematology and Medical Oncology at Emory University School of Medicine." },
+    { source: "nyra_medical", target: "emory", type: "spinout", description: "Nyra Medical was founded in 2021 based on intellectual property developed at Emory University by Dr. Murali Padala. The company licensed its core CARLEN technology from Emory University." },
+    { source: "gra_fund", target: "accuitis", type: "investment", description: "Accuitis is a GRA Venture Fund portfolio company developing dermatology drugs for rosacea." },
+    { source: "gra_fund", target: "aruna_bio", type: "investment", description: "ArunA Biomedical is a GRA Venture Fund portfolio company developing exosome therapeutics for neurodegeneration." },
+    { source: "gra_fund", target: "diasyst", type: "investment", description: "Diasyst is a GRA Venture Fund portfolio company developing chronic disease management tools." },
+    { source: "gra_fund", target: "earlitec", type: "investment", description: "EarliTec Diagnostics is a GRA Venture Fund portfolio company developing early diagnosis tools for autism and developmental disorders." },
+    { source: "gra_fund", target: "kodikaz", type: "investment", description: "Kodikaz is a GRA Venture Fund portfolio company developing gene therapies for cancer." },
+    { source: "gra_fund", target: "nyra_medical", type: "investment", description: "Nyra Medical is a GRA Venture Fund portfolio company developing transcatheter mitral valve repair technology." },
+    { source: "gra_fund", target: "sanguina", type: "investment", description: "Sanguina is a GRA Venture Fund portfolio company developing hemoglobin testing via smartphone (AnemoCheck)." },
 
     { source: "catalyst", target: "atdc", type: "partnership", description: "Formal partnership for HealthTech pipeline" },
 
@@ -2294,8 +2476,8 @@ export const atlantaBiotechEcosystem = {
 
 
     // --- Service Provider Relationships ---
-    { source: "king_spalding", target: "vero", type: "service", description: "FDA regulatory legal counsel" },
-    { source: "kilpatrick_townsend", target: "atdc", type: "service", description: "Official IP legal services sponsor" },
+
+
     { source: "biotechexec", target: "biolocity", type: "service", description: "Mentorship and strategic consulting" },
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
@@ -2342,6 +2524,7 @@ export const atlantaBiotechEcosystem = {
     // --- SynthBiome Connections ---
     { source: "synthbiome", target: "gatech", type: "spinout", description: "SynthBiome Inc. founded by Georgia Tech faculty Marvin Whiteley, developing synthetic environments for drug development and treatment selection. Whiteley's 10-year research program on bacterial behavior in human environments led to the creation of synthetic media that accurately replicate human infection conditions." },
     { source: "synthbiome", target: "biospark_labs", type: "tenant", description: "SynthBiome is one of five startups based at BioSpark Labs, where it develops synthetic environments to accelerate antibiotic drug discovery and overcome the challenge of translating lab discoveries to clinical success." },
+    { source: "orthopreserve", target: "biospark_labs", type: "tenant", description: "OrthoPreserve is based at BioSpark Labs, a life sciences incubator space in Georgia Tech's Science Square district." },
 
     // --- Tether Therapeutics Connections ---
     { source: "tether_therapeutics", target: "gatech", type: "spinout", description: "Tether Therapeutics technology based on novel chemistry developed at Georgia Tech, developing biodegradable polymeric nanoparticles for aerosol gene delivery to treat respiratory diseases." },
@@ -2358,7 +2541,6 @@ export const atlantaBiotechEcosystem = {
 
     // --- Missing GRA Portfolio Connections ---
     { source: "gra_fund", target: "nutrivert", type: "investment", description: "GRA Venture Fund portfolio company developing alternatives to veterinary livestock antibiotics market." },
-    { source: "gra_fund", target: "biocircuit_technologies", type: "investment", description: "GRA Venture Fund backed company through early-stage investment for Nerve Tape development." },
 
     // --- Veranex Connections ---
     { source: "veranex", target: "science_square", type: "tenant", description: "Veranex operates T3 Labs facility in Science Square, Atlanta's growing life sciences hub." },
