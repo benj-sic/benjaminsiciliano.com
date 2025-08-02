@@ -170,133 +170,133 @@ const NetworkVisualization = () => {
           stroke: '#ff6b6b',
           strokeWidth: 6,
           strokeDasharray: 'none',
-          opacity: 0.8
+          opacity: 0.6
         };
       case 'investment':
         return {
           stroke: '#4ecdc4',
           strokeWidth: 6,
           strokeDasharray: '8,4',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'collaboration':
         return {
           stroke: '#45b7d1',
           strokeWidth: 6,
           strokeDasharray: 'none',
-          opacity: 0.6
+          opacity: 0.4
         };
       case 'research_collaboration':
         return {
           stroke: '#45b7d1',
           strokeWidth: 6,
           strokeDasharray: 'none',
-          opacity: 0.6
+          opacity: 0.4
         };
       case 'partnership':
         return {
           stroke: '#96ceb4',
           strokeWidth: 6,
           strokeDasharray: '2,2',
-          opacity: 0.6
+          opacity: 0.4
         };
       case 'service':
         return {
           stroke: '#ff8c42',
           strokeWidth: 6,
           strokeDasharray: '3,3',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'support':
         return {
           stroke: '#dda0dd',
           strokeWidth: 6,
           strokeDasharray: '8,4',
-          opacity: 0.6
+          opacity: 0.4
         };
       case 'affiliation':
         return {
           stroke: '#a8e6cf',
           strokeWidth: 4,
           strokeDasharray: 'none',
-          opacity: 0.5
+          opacity: 0.3
         };
       case 'pilot':
         return {
           stroke: '#ffd93d',
           strokeWidth: 6,
           strokeDasharray: '4,4',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'funding':
         return {
           stroke: '#6c5ce7',
           strokeWidth: 6,
           strokeDasharray: '6,3',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'membership':
         return {
           stroke: '#fd79a8',
           strokeWidth: 4,
           strokeDasharray: '2,2',
-          opacity: 0.5
+          opacity: 0.3
         };
       case 'development':
         return {
           stroke: '#00b894',
           strokeWidth: 6,
           strokeDasharray: 'none',
-          opacity: 0.6
+          opacity: 0.4
         };
       case 'technology':
         return {
           stroke: '#fdcb6e',
           strokeWidth: 6,
           strokeDasharray: '3,3',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'industry':
         return {
           stroke: '#e17055',
           strokeWidth: 6,
           strokeDasharray: 'none',
-          opacity: 0.6
+          opacity: 0.4
         };
       case 'tenant':
         return {
           stroke: '#74b9ff',
           strokeWidth: 4,
           strokeDasharray: 'none',
-          opacity: 0.5
+          opacity: 0.3
         };
       case 'origin':
         return {
           stroke: '#a29bfe',
           strokeWidth: 6,
           strokeDasharray: '8,4',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'founding_support':
         return {
           stroke: '#fd79a8',
           strokeWidth: 6,
           strokeDasharray: '4,4',
-          opacity: 0.7
+          opacity: 0.5
         };
       case 'education_program':
         return {
           stroke: '#9b59b6',
           strokeWidth: 6,
           strokeDasharray: '6,3',
-          opacity: 0.7
+          opacity: 0.5
         };
       default:
         return {
           stroke: '#a0a0a0',
           strokeWidth: 6,
           strokeDasharray: 'none',
-          opacity: 0.4
+          opacity: 0.2
         };
     }
   };
@@ -332,95 +332,6 @@ const NetworkVisualization = () => {
 
   // Center network function with improved visibility
   const centerNetwork = useCallback(() => {
-    // Don't hide the plot since we're showing it immediately
-    // setIsLoading(true);
-    
-    // Don't hide the SVG since we're showing it immediately
-    // if (svgRef.current) {
-    //   const svg = d3.select(svgRef.current);
-    //   svg.style("opacity", "0");
-    // }
-    
-    if (svgRef.current && zoomBehaviorRef.current) {
-      const svg = d3.select(svgRef.current);
-      const width = svg.node().getBoundingClientRect().width;
-      const height = svg.node().getBoundingClientRect().height;
-      
-      // Get the actual bounds of the network nodes
-      const nodes = svg.selectAll(".node").nodes();
-      if (nodes.length > 0) {
-        // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
-        const bounds = nodes.map(n => {
-          const labelPadding = isMobile ? 15 : 25;
-          const nodeRadius = Math.max(parseFloat(n.r.baseVal.value), 16);
-          
-          // Estimate label dimensions based on node data
-          const fontSize = isMobile ? 20 : 28;
-          // We need to get the node name from the data, but we only have the DOM element
-          // For now, use a reasonable estimate
-          const estimatedLabelWidth = 150; // Conservative estimate
-          const estimatedLabelHeight = fontSize * 1.2;
-          
-          // Calculate label radius using same logic as collision detection
-          const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
-          const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
-          const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
-          
-          return {
-            left: n.cx.baseVal.value - totalRadius,
-            right: n.cx.baseVal.value + totalRadius,
-            top: n.cy.baseVal.value - totalRadius,
-            bottom: n.cy.baseVal.value + totalRadius
-          };
-        });
-        
-        // Find the overall bounds
-        const minX = Math.min(...bounds.map(b => b.left));
-        const maxX = Math.max(...bounds.map(b => b.right));
-        const minY = Math.min(...bounds.map(b => b.top));
-        const maxY = Math.max(...bounds.map(b => b.bottom));
-        
-        // Calculate the center of the network
-        const networkCenterX = (minX + maxX) / 2;
-        const networkCenterY = (minY + maxY) / 2;
-        
-        // Calculate the dimensions of the network
-        const networkWidth = maxX - minX;
-        const networkHeight = maxY - minY;
-        
-        // Add minimal padding around the network
-        const padding = 10; // Very minimal padding
-        
-        // Calculate the scale to fit the network in the viewport
-        const scaleX = (width - padding * 2) / networkWidth;
-        const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY);
-        
-        // Calculate the transform to center the network in the viewport
-        // Adjust the Y translation to center properly
-        const transform = d3.zoomIdentity
-          .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
-          .scale(scale);
-        
-        // Apply the transform with a smooth transition
-        svg.transition()
-          .duration(500)
-          .call(zoomBehaviorRef.current.transform, transform);
-      } else {
-        // Fallback to simple centering if no nodes
-        const transform = d3.zoomIdentity
-          .translate(width / 2, height / 2)
-          .scale(0.25); // 25% zoom fallback
-        
-        svg.transition()
-          .duration(500)
-          .call(zoomBehaviorRef.current.transform, transform);
-      }
-    }
-  }, [isMobile]);
-
-  // Manual center network function (doesn't hide the plot)
-  const manualCenterNetwork = useCallback(() => {
     if (svgRef.current && zoomBehaviorRef.current && simulationRef.current) {
       const svg = d3.select(svgRef.current);
       const width = svg.node().getBoundingClientRect().width;
@@ -432,7 +343,7 @@ const NetworkVisualization = () => {
         // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
         const bounds = nodes.map(n => {
           const labelPadding = isMobile ? 15 : 25;
-          const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
+          const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add glow padding
           
           // Estimate label dimensions
           const fontSize = isMobile ? 20 : 28;
@@ -467,8 +378,92 @@ const NetworkVisualization = () => {
         const networkWidth = maxX - minX;
         const networkHeight = maxY - minY;
         
-        // Add minimal padding around the network
-        const padding = 10; // Very minimal padding
+        // Add padding around the network to ensure all nodes are visible
+        const padding = 25; // Increased padding to ensure all nodes are visible
+        
+        // Calculate the scale to fit the network in the viewport
+        const scaleX = (width - padding * 2) / networkWidth;
+        const scaleY = (height - padding * 2) / networkHeight;
+        const scale = Math.min(scaleX, scaleY);
+        
+        // Calculate the transform to center the network in the viewport
+        const transform = d3.zoomIdentity
+          .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
+          .scale(scale);
+        
+        // Apply the transform with a smooth transition
+        svg.transition()
+          .duration(500)
+          .call(zoomBehaviorRef.current.transform, transform);
+        
+        // Update zoom level state
+        setZoomLevel(scale);
+      } else {
+        // Fallback to simple centering if no nodes
+        const transform = d3.zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(0.25); // 25% zoom fallback
+        
+        svg.transition()
+          .duration(500)
+          .call(zoomBehaviorRef.current.transform, transform);
+        
+        // Update zoom level state
+        setZoomLevel(0.25);
+      }
+    }
+  }, [isMobile]);
+
+  // Manual center network function (doesn't hide the plot)
+  const manualCenterNetwork = useCallback(() => {
+    if (svgRef.current && zoomBehaviorRef.current && simulationRef.current) {
+      const svg = d3.select(svgRef.current);
+      const width = svg.node().getBoundingClientRect().width;
+      const height = svg.node().getBoundingClientRect().height;
+      
+      // Get the simulation data for all visible nodes (filtered nodes)
+      const nodes = simulationRef.current.nodes();
+      if (nodes.length > 0) {
+        // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
+        const bounds = nodes.map(n => {
+          const labelPadding = isMobile ? 15 : 25;
+          const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add glow padding
+          
+          // Estimate label dimensions
+          const fontSize = isMobile ? 20 : 28;
+          const avgCharWidth = fontSize * 0.6;
+          const estimatedLabelWidth = Math.max(n.name.length * avgCharWidth, 100);
+          const estimatedLabelHeight = fontSize * 1.2;
+          
+          // Calculate label radius using same logic as collision detection
+          const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+          const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+          const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+          
+          return {
+            left: n.x - totalRadius,
+            right: n.x + totalRadius,
+            top: n.y - totalRadius,
+            bottom: n.y + totalRadius
+          };
+        });
+        
+        // Find the overall bounds
+        const minX = Math.min(...bounds.map(b => b.left));
+        const maxX = Math.max(...bounds.map(b => b.right));
+        const minY = Math.min(...bounds.map(b => b.top));
+        const maxY = Math.max(...bounds.map(b => b.bottom));
+        
+        // Calculate the center of the network
+        const networkCenterX = (minX + maxX) / 2;
+        const networkCenterY = (minY + maxY) / 2;
+        
+        // Calculate the dimensions of the network
+        const networkWidth = maxX - minX;
+        const networkHeight = maxY - minY;
+        
+        // Add padding around the network to ensure all nodes are visible
+        const padding = 25; // Increased padding to ensure all nodes are visible
         
         // Calculate the scale to fit the network in the viewport
         const scaleX = (width - padding * 2) / networkWidth;
@@ -541,7 +536,7 @@ const NetworkVisualization = () => {
     // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
     const bounds = nodes.map(n => {
       const labelPadding = isMobile ? 15 : 25;
-      const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
+      const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add glow padding
       
       // Estimate label dimensions
       const fontSize = isMobile ? 20 : 28;
@@ -572,13 +567,13 @@ const NetworkVisualization = () => {
     const networkWidth = maxX - minX;
     const networkHeight = maxY - minY;
     
-    // Add minimal padding around the network
-    const padding = 10; // Very minimal padding
-    
-    // Calculate the scale to fit the network in the viewport
-    const scaleX = (width - padding * 2) / networkWidth;
-    const scaleY = (height - padding * 2) / networkHeight;
-    const scale = Math.min(scaleX, scaleY);
+            // Add padding around the network to ensure all nodes are visible
+        const padding = 25; // Increased padding to ensure all nodes are visible
+        
+        // Calculate the scale to fit the network in the viewport
+        const scaleX = (width - padding * 2) / networkWidth;
+        const scaleY = (height - padding * 2) / networkHeight;
+        const scale = Math.min(scaleX, scaleY);
     
     return scale;
   }, [isMobile]);
@@ -628,7 +623,7 @@ const NetworkVisualization = () => {
     const bounds = connectedNodes.map(n => {
       // Use the same label radius calculation as collision detection, but with reduced padding for zoom
       const labelPadding = isMobile ? 15 : 25; // Reduced padding for zoom calculation
-      const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16);
+      const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add glow padding
       
       // Estimate label dimensions
       const fontSize = isMobile ? 20 : 28;
@@ -663,8 +658,8 @@ const NetworkVisualization = () => {
     const subnetworkWidth = maxX - minX;
     const subnetworkHeight = maxY - minY;
     
-    // Add minimal padding around the subnetwork - nodes should be just barely within the window
-    const padding = 10; // Very minimal padding to make network more manageable
+    // Add padding around the subnetwork to ensure all nodes are visible
+    const padding = 25; // Increased padding to ensure all nodes are visible
     
     // Calculate the scale to fit the subnetwork in the viewport
     const scaleX = (width - padding * 2) / subnetworkWidth;
@@ -819,7 +814,7 @@ const NetworkVisualization = () => {
       .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280))
       .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 15 : 25)))
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4 + (isMobile ? 15 : 25)))
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1))
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1))
       .alphaDecay(0.1) // Faster decay (default is 0.0228)
@@ -831,17 +826,8 @@ const NetworkVisualization = () => {
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
-    // Apply initial zoom immediately based on estimated bounds
-    const estimatedNodeCount = filteredNodes.length;
-    const estimatedBounds = {
-      width: Math.sqrt(estimatedNodeCount) * 120, // Rough estimate
-      height: Math.sqrt(estimatedNodeCount) * 120
-    };
-    
-    const initialScale = Math.min(
-      width / estimatedBounds.width, 
-      height / estimatedBounds.height
-    ) * 0.8; // 80% of fit to add some padding
+    // Apply initial zoom after simulation has positioned nodes
+    const initialScale = 0.25; // Start with reasonable zoom
     
     const initialTransform = d3.zoomIdentity
       .translate(width / 2, height / 2)
@@ -885,19 +871,30 @@ const NetworkVisualization = () => {
     // Create nodes in zoom group with mobile-optimized sizes
     const nodes = zoomGroup.append("g")
       .attr("class", "nodes")
-      .selectAll("circle")
+      .selectAll("g")
       .data(filteredNodes)
-      .enter().append("circle")
-      .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16)) // Smaller nodes on mobile
-      .attr("fill", d => getNodeColor(d.type))
-      .style("cursor", "pointer")
-      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")) // Remove shadows on mobile
-      .attr("class", d => `node ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
+      .enter().append("g")
+      .attr("class", d => `node-group ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
         console.log('D3 node click event:', d.id);
         handleNodeClick(d, event);
       });
+
+    // Add background glow circle
+    nodes.append("circle")
+      .attr("class", "node-glow")
+      .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4)
+      .attr("fill", "rgba(255, 255, 255, 0.1)")
+      .style("pointer-events", "none");
+
+    // Add main node circle
+    nodes.append("circle")
+      .attr("class", "node-main")
+      .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16))
+      .attr("fill", d => getNodeColor(d.type))
+      .style("cursor", "pointer")
+      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")); // Remove shadows on mobile
 
 
 
@@ -935,7 +932,7 @@ const NetworkVisualization = () => {
     setTimeout(() => {
       // Create a more sophisticated collision detection that accounts for label boundaries
       simulation.force("collision", d3.forceCollide().radius(d => {
-        const nodeRadius = Math.max(d.size * (isMobile ? 2.5 : 3.5), 16);
+        const nodeRadius = Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add extra padding for glow
         const labelPadding = isMobile ? 15 : 25;
         
         // Find the corresponding label element to measure its actual bounds
@@ -1047,8 +1044,7 @@ const NetworkVisualization = () => {
         .attr("y2", d => d.target.y);
 
       nodes
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
+        .attr("transform", d => `translate(${d.x}, ${d.y})`);
 
       labels
         .attr("x", d => d.x)
@@ -1079,13 +1075,13 @@ const NetworkVisualization = () => {
   useEffect(() => {
     if (!isLoading && containerRef.current) {
       const svg = d3.select(containerRef.current).select("svg");
-      const nodes = svg.selectAll(".node");
+      const nodeGroups = svg.selectAll(".node-group");
       const labels = svg.selectAll(".label");
       const links = svg.selectAll(".links line");
       
       // Remove all highlighting and dimming first
-      nodes.classed("node-highlighted", false);
-      nodes.classed("node-dimmed", false);
+      nodeGroups.classed("node-highlighted", false);
+      nodeGroups.classed("node-dimmed", false);
       labels.classed("label-highlighted", false);
       labels.classed("label-dimmed", false);
       links.classed("link-highlighted", false);
@@ -1093,11 +1089,11 @@ const NetworkVisualization = () => {
       
       if (selectedNode) {
         // Highlight only the selected node
-        nodes.filter(d => d.id === selectedNode.id).classed("node-highlighted", true);
+        nodeGroups.filter(d => d.id === selectedNode.id).classed("node-highlighted", true);
         labels.filter(d => d.id === selectedNode.id).classed("label-highlighted", true);
         
         // Dim nodes that are not connected to the selected node
-        nodes.filter(d => !connectedNodes.has(d.id)).classed("node-dimmed", true);
+        nodeGroups.filter(d => !connectedNodes.has(d.id)).classed("node-dimmed", true);
         labels.filter(d => !connectedNodes.has(d.id)).classed("label-dimmed", true);
         links.filter(d => d.source.id !== selectedNode.id && d.target.id !== selectedNode.id)
           .classed("link-dimmed", true);
@@ -1109,11 +1105,11 @@ const NetworkVisualization = () => {
         ).classed("link-highlighted", true);
         
         // Highlight the nodes connected by this edge
-        nodes.filter(d => edgeConnectedNodes.has(d.id)).classed("node-highlighted", true);
+        nodeGroups.filter(d => edgeConnectedNodes.has(d.id)).classed("node-highlighted", true);
         labels.filter(d => edgeConnectedNodes.has(d.id)).classed("label-highlighted", true);
         
         // Dim nodes that are not connected by this edge
-        nodes.filter(d => !edgeConnectedNodes.has(d.id)).classed("node-dimmed", true);
+        nodeGroups.filter(d => !edgeConnectedNodes.has(d.id)).classed("node-dimmed", true);
         labels.filter(d => !edgeConnectedNodes.has(d.id)).classed("label-dimmed", true);
         links.filter(d => 
           !((d.source.id === getSelectedEdge.source && d.target.id === getSelectedEdge.target) ||
