@@ -1076,10 +1076,10 @@ export const atlantaBiotechEcosystem = {
     },
     {
       id: "oralee_foundation",
-      name: "Ora Lee Smith Cancer Research Foundation",
+      name: "Ora Lee Foundation",
       type: "community",
       size: 12,
-      description: "All volunteer-run 501(c)(3) non-profit organization founded by Dr. Hadiyah-Nicole Green to raise funds needed to translate cancer treatments from laboratory into humans. Dr. Green is a multi-disciplinary physicist specializing in targeted cancer therapeutics using laser-activated nanoparticles and immunotherapies to develop biomarker-specific platforms to target, image, and treat malignant tumors.",
+      description: "Ora Lee Smith Cancer Research Foundation - All volunteer-run 501(c)(3) non-profit organization founded by Dr. Hadiyah-Nicole Green to raise funds needed to translate cancer treatments from laboratory into humans. Dr. Green is a multi-disciplinary physicist specializing in targeted cancer therapeutics using laser-activated nanoparticles and immunotherapies to develop biomarker-specific platforms to target, image, and treat malignant tumors.",
       website: "https://oralee.org",
       keyPersonnel: [
         {
@@ -2000,6 +2000,40 @@ export const atlantaBiotechEcosystem = {
       recentNews: "Developing next-generation gene therapy for respiratory disease using biodegradable polymeric nanoparticles for aerosol gene delivery."
     },
     {
+      id: "dr_noze_best",
+      name: "Dr. Noze Best",
+      type: "company",
+      size: 10,
+      description: "Atlanta-based pediatric health and wellness company founded by Pediatric ENT Dr. Steven Goudy. Develops innovative wellness solutions that improve children's health and reduce stress for parents. Best known for the NozeBot electric nasal aspirator - a physician-founded, hospital-level quality device for pediatric nasal congestion relief.",
+      website: "https://drnozebest.com",
+      keyPersonnel: [
+        {
+          "name": "Dr. Steven Goudy, MD, MBA",
+          "linkedin": "https://www.linkedin.com/in/steven-goudy-md-mba-b3ba819/"
+        },
+        {
+          "name": "Christy Brown",
+          "linkedin": "https://www.linkedin.com/in/christy-brown-a54aa0/"
+        }
+      ],
+      recentNews: "Founded in 2016 by Pediatric ENT Dr. Steven Goudy. Products include NozeBot electric nasal aspirator, NozeBot On the Go, and BreatheEZ humidifier. Featured in Forbes, Parents.com, and other major publications. ATDC-funded company."
+    },
+    {
+      id: "codoxo",
+      name: "Codoxo",
+      type: "serviceProvider",
+      size: 16,
+      description: "Atlanta-based healthcare technology company (formerly Fraudscope) developing AI-powered payment integrity and fraud detection solutions. Uses patented Forensic AI Platform with generative AI to identify healthcare fraud, waste, and abuse earlier than traditional methods. Helps healthcare payers, PBMs, and government agencies reduce costs and ensure healthcare dollars go to real patient care.",
+      website: "https://www.codoxo.com",
+      keyPersonnel: [
+        {
+          "name": "Musheer Ahmed",
+          "linkedin": "https://www.linkedin.com/in/musheerahmed/"
+        }
+      ],
+      recentNews: "Named to Inc. 5000 Fastest Growing Companies. CEO Musheer Ahmed recognized in Atlanta Business Chronicle's 40 Under 40. Forensic AI Platform named Fierce Healthcare Innovation Award winner. Serves over 80 million lives across healthcare payers, PBMs, and government agencies."
+    },
+    {
       id: "youngheartvalve",
       name: "YoungHeartValve",
       type: "startup",
@@ -2097,6 +2131,16 @@ export const atlantaBiotechEcosystem = {
         }
       ],
       recentNews: "Founded in 2018. Supported by National Science Foundation funding. Member of Portal Innovations at Science Square. Developing real-time instrument guidance for safer and simpler spinal access."
+    },
+    {
+      id: "veranex",
+      name: "Veranex",
+      type: "serviceProvider",
+      size: 16,
+      description: "Innovation CRO providing comprehensive medical device and diagnostic development services from concept to commercialization. Acquired T3 Labs in 2024, expanding preclinical testing capabilities in Atlanta. Offers integrated services including design & development, preclinical research, clinical research, regulatory consulting, and commercialization support.",
+      website: "https://veranex.com",
+      keyPersonnel: [],
+      recentNews: "Acquired T3 Labs in 2024, expanding preclinical testing capabilities in Atlanta's Science Square. T3 Labs brings 33,000-square-foot facility with expertise in 12 therapeutic areas and over 60 FDA-approved products in the past decade."
     }
   ],
 
@@ -2232,6 +2276,12 @@ export const atlantaBiotechEcosystem = {
     { source: "quadrant_i", target: "emory", type: "collaboration", description: "Collaborates on Emory-affiliated Biolocity projects such as Infinite Loupe and OnCuRNA." },
     { source: "quadrant_i", target: "exvade_bioscience", type: "support", description: "Supported commercialization of continuous glioblastoma biopsy device developed at Georgia Tech." },
     { source: "quadrant_i", target: "oncurna", type: "support", description: "Assisted Georgia Tech researchers in forming OnCuRNA, focused on solid tumor RNAi therapeutics." },
+    { source: "biolocity", target: "oncurna", type: "support", description: "Biolocity-supported startup selected in 2025-26 cohort for ovarian cancer drug delivery platform, receiving mentorship and non-dilutive funding." },
+    { source: "biolocity", target: "cambium_oncology", type: "support", description: "Biolocity portfolio company developing precision oncology therapeutics based on Emory research." },
+    { source: "biolocity", target: "metaclipse", type: "support", description: "Biolocity portfolio company developing VLP vaccine platform technology from Georgia Tech research." },
+    { source: "biolocity", target: "dr_noze_best", type: "support", description: "Biolocity portfolio company developing pediatric health and wellness solutions including the NozeBot nasal aspirator." },
+    { source: "biolocity", target: "codoxo", type: "support", description: "Biolocity portfolio company developing AI-powered healthcare payment integrity and fraud detection solutions." },
+    { source: "atdc", target: "dr_noze_best", type: "funding", description: "ATDC-funded company developing pediatric health and wellness solutions including the NozeBot nasal aspirator." },
     
     // --- VentureLab Relationships ---
     { source: "gatech", target: "venturelab", type: "affiliation", description: "VentureLab is Georgia Tech's startup launch and commercialization support hub." },
@@ -2305,6 +2355,17 @@ export const atlantaBiotechEcosystem = {
 
     // --- Odylia Therapeutics Connections ---
     // Note: No verified connections found yet - will add when confirmed relationships are established
+
+    // --- Missing GRA Portfolio Connections ---
+    { source: "gra_fund", target: "nutrivert", type: "investment", description: "GRA Venture Fund portfolio company developing alternatives to veterinary livestock antibiotics market." },
+    { source: "gra_fund", target: "biocircuit_technologies", type: "investment", description: "GRA Venture Fund backed company through early-stage investment for Nerve Tape development." },
+
+    // --- Veranex Connections ---
+    { source: "veranex", target: "science_square", type: "tenant", description: "Veranex operates T3 Labs facility in Science Square, Atlanta's growing life sciences hub." },
+    { source: "veranex", target: "cdc", type: "collaboration", description: "Strategic community relationship with CDC for preclinical research and public health initiatives." },
+    { source: "veranex", target: "emory", type: "collaboration", description: "Strategic community relationship with Emory University for preclinical research and medical device development." },
+    { source: "veranex", target: "gatech", type: "collaboration", description: "Strategic community relationship with Georgia Tech for preclinical research and medical device development." },
+    { source: "youngheartvalve", target: "veranex", type: "service", description: "YoungHeartValve located at T3 Labs facility (now part of Veranex) for preclinical testing and development support." },
 
     // --- OZ-Link Technologies Connections ---
     { source: "oz_link_technologies", target: "gatech", type: "collaboration", description: "OZ-Link Technologies collaborates with Georgia Tech researchers on polymer chemistry and bioconjugation technologies for controlled release therapeutics." },
