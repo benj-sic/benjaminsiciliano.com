@@ -624,8 +624,6 @@ const NetworkVisualization = () => {
     
     if (connectedNodes.length === 0) return;
     
-
-    
     // Calculate bounds including label radius for each node (using same logic as collision detection)
     const bounds = connectedNodes.map(n => {
       // Use the same label radius calculation as collision detection, but with reduced padding for zoom
@@ -643,8 +641,6 @@ const NetworkVisualization = () => {
       const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
       const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
       
-
-      
       return {
         left: n.x - totalRadius,
         right: n.x + totalRadius,
@@ -652,8 +648,6 @@ const NetworkVisualization = () => {
         bottom: n.y + totalRadius
       };
     });
-    
-
     
     // Find the overall bounds
     const minX = Math.min(...bounds.map(b => b.left));
@@ -684,44 +678,86 @@ const NetworkVisualization = () => {
     scale = Math.max(scale, minScale);
     scale = Math.min(scale, maxScale);
     
-    // Debug logging for subnetworks
-    if (connectedNodes.length > 5) {
-      console.log(`Zooming to subnetwork for ${node.name}:`, {
-        nodeCount: connectedNodes.length,
-        subnetworkWidth: Math.round(subnetworkWidth),
-        subnetworkHeight: Math.round(subnetworkHeight),
-        viewportWidth: width,
-        viewportHeight: height,
-        padding,
-        labelPadding: isMobile ? 15 : 25,
-        bounds: bounds.length,
-        baseZoomLevel,
-        minScale,
-        maxScale,
-        finalScale: scale,
-        originalScaleX: scaleX,
-        originalScaleY: scaleY,
-        sampleBounds: bounds.slice(0, 3).map(b => ({
-          left: Math.round(b.left),
-          right: Math.round(b.right),
-          top: Math.round(b.top),
-          bottom: Math.round(b.bottom)
-        }))
-      });
+    // Get current transform to check if panning is needed
+    const currentTransform = d3.zoomTransform(svg.node());
+    const currentScale = currentTransform.k;
+    const currentTranslateX = currentTransform.x;
+    const currentTranslateY = currentTransform.y;
+    
+    // Calculate the current viewport bounds in data coordinates
+    const currentViewportLeft = -currentTranslateX / currentScale;
+    const currentViewportRight = (width - currentTranslateX) / currentScale;
+    const currentViewportTop = -currentTranslateY / currentScale;
+    const currentViewportBottom = (height - currentTranslateY) / currentScale;
+    
+    // Check if the subnetwork is already fully visible in the current viewport
+    const subnetworkFullyVisible = 
+      minX >= currentViewportLeft && 
+      maxX <= currentViewportRight && 
+      minY >= currentViewportTop && 
+      maxY <= currentViewportBottom;
+    
+    // Check if the scale is already appropriate (within 10% tolerance)
+    const scaleDifference = Math.abs(currentScale - scale) / scale;
+    const scaleAppropriate = scaleDifference < 0.1;
+    
+    // Only pan and zoom if the subnetwork is not fully visible or the scale is not appropriate
+    if (!subnetworkFullyVisible || !scaleAppropriate) {
+      // Debug logging for subnetworks
+      if (connectedNodes.length > 5) {
+        console.log(`Zooming to subnetwork for ${node.name}:`, {
+          nodeCount: connectedNodes.length,
+          subnetworkWidth: Math.round(subnetworkWidth),
+          subnetworkHeight: Math.round(subnetworkHeight),
+          viewportWidth: width,
+          viewportHeight: height,
+          padding,
+          labelPadding: isMobile ? 15 : 25,
+          bounds: bounds.length,
+          baseZoomLevel,
+          minScale,
+          maxScale,
+          finalScale: scale,
+          originalScaleX: scaleX,
+          originalScaleY: scaleY,
+          currentScale,
+          scaleDifference,
+          subnetworkFullyVisible,
+          scaleAppropriate,
+          sampleBounds: bounds.slice(0, 3).map(b => ({
+            left: Math.round(b.left),
+            right: Math.round(b.right),
+            top: Math.round(b.top),
+            bottom: Math.round(b.bottom)
+          }))
+        });
+      }
+      
+      // Calculate the transform to center the subnetwork in the viewport
+      const transform = d3.zoomIdentity
+        .translate(width / 2 - subnetworkCenterX * scale, height / 2 - subnetworkCenterY * scale)
+        .scale(scale);
+      
+      // Apply the transform with a smooth transition
+      svg.transition()
+        .duration(800)
+        .call(zoomBehaviorRef.current.transform, transform);
+      
+      // Update zoom level state
+      setZoomLevel(scale);
+    } else {
+      // Debug logging when no panning is needed
+      if (connectedNodes.length > 5) {
+        console.log(`Subnetwork for ${node.name} already visible, no panning needed:`, {
+          nodeCount: connectedNodes.length,
+          subnetworkFullyVisible,
+          scaleAppropriate,
+          currentScale,
+          targetScale: scale,
+          scaleDifference
+        });
+      }
     }
-    
-    // Calculate the transform to center the subnetwork in the viewport
-    const transform = d3.zoomIdentity
-      .translate(width / 2 - subnetworkCenterX * scale, height / 2 - subnetworkCenterY * scale)
-      .scale(scale);
-    
-    // Apply the transform with a smooth transition
-    svg.transition()
-      .duration(800)
-      .call(zoomBehaviorRef.current.transform, transform);
-    
-    // Update zoom level state
-    setZoomLevel(scale);
   }, [networkData.links, calculateBaseZoomLevel, isMobile]);
 
   useEffect(() => {
@@ -1750,6 +1786,8 @@ const NetworkVisualization = () => {
                         className="details-close"
                         onClick={() => {
                           setSelectedNode(null);
+                          selectedNodeRef.current = null; // Clear the ref as well
+                          setConnectedNodes(new Set()); // Clear connected nodes
                           // Clear highlighting
                           if (containerRef.current) {
                             const svg = d3.select(containerRef.current).select("svg");

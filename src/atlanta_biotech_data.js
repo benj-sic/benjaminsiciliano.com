@@ -26,7 +26,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/polley/"
       }
     ],
-      recentNews: "Emory launches Center for New Medicines to accelerate academic drug discovery. (2024-04-26)"
+      recentNews: "Emory launches Center for New Medicines to accelerate academic drug discovery."
     },
     {
       id: "gatech",
@@ -94,7 +94,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/m-brian-blake/"
       }
     ],
-      recentNews: "GSU and Emory co-lead NIH's Antiviral Countermeasures Development Center (2025-03-01)"
+      recentNews: "GSU and Emory co-lead NIH's Antiviral Countermeasures Development Center"
     },
     {
       id: "cau",
@@ -134,7 +134,7 @@ export const atlantaBiotechEcosystem = {
       description: "One of the largest pediatric healthcare systems in the U.S., CHOA is a leading site for pediatric clinical trials, translational research, and academic partnerships with Emory and Georgia Tech. Hosts the Marcus Autism Center and Children's Center for Clinical and Translational Research.",
       website: "https://www.choa.org/",
       keyPersonnel: [],
-      recentNews: "CHOA and Emory lead NIH-funded national trial to improve outcomes in extremely preterm infants. (2025-07-21)"
+      recentNews: "CHOA and Emory lead NIH-funded national trial to improve outcomes in extremely preterm infants."
     },
     {
       id: "emory_healthcare",
@@ -144,7 +144,7 @@ export const atlantaBiotechEcosystem = {
       description: "Emory's clinical enterprise and the largest health system in Georgia. Operates the Emory Healthcare Innovation Hub (EHIH), which partners with startups and global firms to validate digital health and AI solutions in clinical settings.",
       website: "https://www.emoryhealthcare.org/",
       keyPersonnel: [],
-      recentNews: "Emory Healthcare partners with Galileo to expand primary care access through digital and in-person services. (2025-05-08)"
+      recentNews: "Emory Healthcare partners with Galileo to expand primary care access through digital and in-person services."
     },
     {
       id: "wellstar",
@@ -154,7 +154,7 @@ export const atlantaBiotechEcosystem = {
       description: "One of the largest health systems in Georgia, operating hospitals, urgent care, and specialty centers. Parent organization of Catalyst by Wellstar, the system's innovation and venture arm.",
       website: "https://www.wellstar.org",
       keyPersonnel: [],
-      recentNews: "Wellstar files for new 230-bed hospital in Acworth and invests over $1.4 billion in major expansions statewide. (2025-05-30)"
+      recentNews: "Wellstar files for new 230-bed hospital in Acworth and invests over $1.4 billion in major expansions statewide."
     },
     {
       id: "grady",
@@ -164,7 +164,7 @@ export const atlantaBiotechEcosystem = {
       description: "Atlanta's largest safety-net hospital and trauma center. Key clinical research site and community health partner for Emory, Morehouse, and Georgia CTSA programs.",
       website: "https://www.gradyhealth.org",
       keyPersonnel: [],
-      recentNews: "Grady named as Learning Phase site for NIH Equitable Breakthroughs in Medicine initiative, partnering with Morehouse and Emory. (2024-02-26)"
+      recentNews: "Grady named as Learning Phase site for NIH Equitable Breakthroughs in Medicine initiative, partnering with Morehouse and Emory."
     },
     {
       id: "oak_street_health",
@@ -194,7 +194,7 @@ export const atlantaBiotechEcosystem = {
       description: "Atlanta-based health system operating hospitals and clinics across Georgia. Known for major construction projects including Marcus Tower and partnerships with healthtech providers.",
       website: "https://www.piedmont.org",
       keyPersonnel: [],
-      recentNews: "Piedmont Healthcare completes Phase I of Marcus Tower at Piedmont Atlanta Hospital. (2020-09-28) — OLDER"
+      recentNews: "Piedmont Healthcare completes Phase I of Marcus Tower at Piedmont Atlanta Hospital."
     },
 
     // MAJOR COMPANIES - CLINICAL STAGE
@@ -227,7 +227,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/steven-damon-a1966a5/"
       }
     ],
-      recentNews: "Micron Biomedical completed first-in-human influenza vaccine patch trial and published results (2024-02-15)."
+      recentNews: "Micron Biomedical completed first-in-human influenza vaccine patch trial and published results."
     },
     {
       id: "neurop",
@@ -242,7 +242,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/ray-dingledine-41669821/"
       }
     ],
-      recentNews: "FDA granted Orphan Drug Designation for NP10679 in subarachnoid hemorrhage (SAH). (2021-12-22) — OLDER"
+      recentNews: "FDA granted Orphan Drug Designation for NP10679 in subarachnoid hemorrhage (SAH)."
     },
 
 
@@ -275,7 +275,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/adventurejones/"
       }
     ],
-      recentNews: "Florence Healthcare network surpasses 37,000 research sites globally. (2025-01-18)"
+      recentNews: "Florence Healthcare network surpasses 37,000 research sites globally."
     },
     {
       id: "clearside",
@@ -290,7 +290,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/george-lasezkay-1848679/"
       }
     ],
-      recentNews: "Clearside reports positive 6-month results from Phase 2b OASIS trial in wet AMD. (2025-02-06)"
+      recentNews: "Clearside reports positive 6-month results from Phase 2b OASIS trial in wet AMD."
     },
     {
       id: "vero",
@@ -793,7 +793,7 @@ export const atlantaBiotechEcosystem = {
       description: "Multi-national biotech organization headquartered in Atlanta focused on rapid testing and point-of-care medical device solutions for infectious disease detection, pregnancy, drugs of abuse, and biomarkers. Leverages AI and data science for diagnostic solutions.",
       website: "https://cordx.com/",
       keyPersonnel: [],
-      recentNews: "Cordx showcased 3-in-1 COVID-19/Flu A&B rapid test at ADLM 2025 in Atlanta. (2025-07-28)"
+      recentNews: "Cordx showcased 3-in-1 COVID-19/Flu A&B rapid test at ADLM 2025 in Atlanta."
     },
     {
       id: "lucid_scientific",
@@ -1506,7 +1506,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/patelsamirkumar/"
       }
     ],
-      recentNews: "Received multi-million dollar NIH Fast-Track grant for Phase I trial of MOON101 (peanut allergy immunotherapy), and raised Series A led by Portal Innovations (2023-07-10)."
+      recentNews: "Received multi-million dollar NIH Fast-Track grant for Phase I trial of MOON101 (peanut allergy immunotherapy), and raised Series A led by Portal Innovations."
     },
     {
       id: "andson_biotech",
@@ -1522,7 +1522,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/mason-chil/"
       }
     ],
-      recentNews: "Closed $3.6M seed funding round to accelerate launch of DynaChip mass spec sample prep solution. (2024-04-30)"
+      recentNews: "Closed $3.6M seed funding round to accelerate launch of DynaChip mass spec sample prep solution."
     },
     {
       id: "sanguina",
@@ -1537,7 +1537,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/erika-tyburski-292555b1/"
       }
     ],
-      recentNews: "Received FDA clearance for AnemoCheck Home hemoglobin test kit for at-home anemia screening (2023-10-05)."
+      recentNews: "Received FDA clearance for AnemoCheck Home hemoglobin test kit for at-home anemia screening."
     },
     {
       id: "oxos",
@@ -1556,7 +1556,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/evan-ruff/"
       }
     ],
-      recentNews: "Achieved FDA clearance for MC2 ultraportable x-ray system, expanding the handheld Micro C platform (2025-01-14)."
+      recentNews: "Achieved FDA clearance for MC2 ultraportable x-ray system, expanding the handheld Micro C platform."
     },
     {
       id: "altesa",
@@ -1575,7 +1575,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/dennis-liotta-1b087729/"
       }
     ],
-      recentNews: "Secured exclusive worldwide license from Vaxart for Vapendavir to treat RNA virus infections (2021-07-07)—OLDER"
+      recentNews: "Secured exclusive worldwide license from Vaxart for Vapendavir to treat RNA virus infections."
     },
     {
       id: "braintrust",
@@ -1594,7 +1594,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/nicholas-boulis-73124b39/"
       }
     ],
-      recentNews: "Received approval for Phase I trial of continuous intrathecal drug delivery targeting CNS diseases (2024-03-25)."
+      recentNews: "Received approval for Phase I trial of continuous intrathecal drug delivery targeting CNS diseases."
     },
     {
       id: "synaptrix",
@@ -1609,7 +1609,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/shyamy-sastry-4508922/"
       }
     ],
-      recentNews: "Raised $10M Series A round with Portal Innovations as investor to advance NOVABLOC pain management system (2024-11-18)."
+      recentNews: "Raised $10M Series A round with Portal Innovations as investor to advance NOVABLOC pain management system."
     },
 
     {
@@ -1717,7 +1717,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/ggaltman/"
       }
     ],
-      recentNews: "Secured $5M equity investment from OEP Innovations and awarded NIH Fast-Track grant to advance lead anti-cancer candidate ANT308 to IND (2025-01-20)"
+      recentNews: "Secured $5M equity investment from OEP Innovations and awarded NIH Fast-Track grant to advance lead anti-cancer candidate ANT308 to IND"
     },
     {
       id: "switchboard_md",
@@ -1756,7 +1756,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/yuanda-zhu/"
       }
     ],
-      recentNews: "Surpassed 100 provider clients with AI-driven care team workflow platform; Emory Health pilot expands. (2025-05-12)"
+      recentNews: "Surpassed 100 provider clients with AI-driven care team workflow platform; Emory Health pilot expands."
     },
     {
       id: "armor_medical",
@@ -1766,7 +1766,7 @@ export const atlantaBiotechEcosystem = {
       description: "Atlanta-based medtech startup developing Maternal aRMOR, a wearable for early detection of postpartum hemorrhage.",
       website: "https://armormedical.us",
       keyPersonnel: [],
-      recentNews: "Selected for MedTech Innovator 2025 global showcase; received investment from Catalyst by Wellstar (2025-06-19)"
+      recentNews: "Selected for MedTech Innovator 2025 global showcase; received investment from Catalyst by Wellstar"
     },
     {
       id: "rimidi",
@@ -1781,7 +1781,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/lucienneide/"
       }
     ],
-      recentNews: "Partnered with Emory Healthcare to deploy digital treatment platforms and remote monitoring for chronic disease. (2024-02-21)"
+      recentNews: "Partnered with Emory Healthcare to deploy digital treatment platforms and remote monitoring for chronic disease."
     },
     {
       id: "metaclipse",
