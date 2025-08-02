@@ -332,14 +332,14 @@ const NetworkVisualization = () => {
 
   // Center network function with improved visibility
   const centerNetwork = useCallback(() => {
-    // Hide the plot immediately when centering starts
-    setIsLoading(true);
+    // Don't hide the plot since we're showing it immediately
+    // setIsLoading(true);
     
-    // Also hide the SVG immediately for instant effect
-    if (svgRef.current) {
-      const svg = d3.select(svgRef.current);
-      svg.style("opacity", "0");
-    }
+    // Don't hide the SVG since we're showing it immediately
+    // if (svgRef.current) {
+    //   const svg = d3.select(svgRef.current);
+    //   svg.style("opacity", "0");
+    // }
     
     if (svgRef.current && zoomBehaviorRef.current) {
       const svg = d3.select(svgRef.current);
@@ -765,9 +765,9 @@ const NetworkVisualization = () => {
 
     setIsLoading(true);
     
-    // Hide SVG immediately for instant effect
+    // Show SVG immediately instead of hiding it
     const svg = d3.select(svgRef.current);
-    svg.style("opacity", "0");
+    svg.style("opacity", "1");
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -814,20 +814,42 @@ const NetworkVisualization = () => {
       };
     });
 
-    // Create force simulation
+    // Create force simulation with faster settings
     const simulation = d3.forceSimulation(filteredNodes)
       .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280))
       .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + (isMobile ? 15 : 25)))
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1))
-      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1));
+      .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1))
+      .alphaDecay(0.1) // Faster decay (default is 0.0228)
+      .velocityDecay(0.3); // Faster velocity decay
     
     // Store simulation reference
     simulationRef.current = simulation;
 
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
+
+    // Apply initial zoom immediately based on estimated bounds
+    const estimatedNodeCount = filteredNodes.length;
+    const estimatedBounds = {
+      width: Math.sqrt(estimatedNodeCount) * 120, // Rough estimate
+      height: Math.sqrt(estimatedNodeCount) * 120
+    };
+    
+    const initialScale = Math.min(
+      width / estimatedBounds.width, 
+      height / estimatedBounds.height
+    ) * 0.8; // 80% of fit to add some padding
+    
+    const initialTransform = d3.zoomIdentity
+      .translate(width / 2, height / 2)
+      .scale(initialScale);
+    
+    // Apply initial transform immediately
+    zoomGroup.attr("transform", initialTransform);
+    setZoomLevel(initialScale);
 
     // Create links in zoom group
     const links = zoomGroup.append("g")
@@ -1033,24 +1055,16 @@ const NetworkVisualization = () => {
         .attr("y", d => d.y);
     });
 
-    // Set loading states with mobile-optimized timeouts
+    // Simplified loading with faster simulation
     simulation.on("end", () => {
-      const timeout = isMobile ? 300 : 500; // Faster loading on mobile
+      // Center the network after simulation completes
       setTimeout(() => {
-        // Auto-center the network after it loads
+        centerNetwork();
+        // Mark as loaded after centering
         setTimeout(() => {
-          centerNetwork();
-          // Show the plot again after centering is complete
-          setTimeout(() => {
-            setIsLoading(false);
-            // Restore SVG opacity
-            if (svgRef.current) {
-              const svg = d3.select(svgRef.current);
-              svg.style("opacity", "1");
-            }
-          }, 550); // Wait for centering transition to complete
-        }, 200); // Give more time for the simulation to settle
-      }, timeout);
+          setIsLoading(false);
+        }, 600); // Wait for centering transition to complete
+      }, 100); // Short delay for simulation to settle
     });
 
     return () => {

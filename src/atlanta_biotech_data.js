@@ -1074,6 +1074,53 @@ export const atlantaBiotechEcosystem = {
       keyPersonnel: [],
       recentNews: "368,000 sq ft Phase 1 lab tower completed in Q2 2024."
     },
+    {
+      id: "oralee_foundation",
+      name: "Ora Lee Smith Cancer Research Foundation",
+      type: "community",
+      size: 12,
+      description: "All volunteer-run 501(c)(3) non-profit organization founded by Dr. Hadiyah-Nicole Green to raise funds needed to translate cancer treatments from laboratory into humans. Dr. Green is a multi-disciplinary physicist specializing in targeted cancer therapeutics using laser-activated nanoparticles and immunotherapies to develop biomarker-specific platforms to target, image, and treat malignant tumors.",
+      website: "https://oralee.org",
+      keyPersonnel: [
+        {
+          "name": "Dr. Hadiyah-Nicole Green",
+          "linkedin": "https://www.linkedin.com/in/drhadiyahgreen/"
+        },
+        {
+          "name": "Deirdre Powe",
+          "role": "Director of Development",
+          "linkedin": "https://www.linkedin.com/in/deirdre-powe-1a2b3c4d/"
+        }
+      ],
+      recentNews: "Dr. Green developed Laser-Activated Nano-Therapy (LANT) which completely eliminates tumors in mice over 15 days after a single 10-minute treatment without side effects. Ready for human clinical trials with funding support."
+    },
+    {
+      id: "odylia",
+      name: "Odylia Therapeutics",
+      type: "company",
+      size: 14,
+      description: "Nonprofit biotech developing gene therapies for rare diseases that have no available treatment. Utilizes a unique nonprofit business model to accelerate development of gene therapies for people with rare disease, regardless of prevalence or commercial interest. Focuses on RPGRIP1, USH1C, and NPHP1 gene therapies.",
+      website: "https://odylia.org",
+      keyPersonnel: [
+        {
+          "name": "Arwin Slow",
+          "linkedin": "https://www.linkedin.com/in/arwinslow/"
+        },
+        {
+          "name": "Kathryn Post",
+          "linkedin": "https://www.linkedin.com/in/kathrynpost/"
+        },
+        {
+          "name": "Heather Hart-Greene",
+          "linkedin": "https://www.linkedin.com/in/heather-hart-greene-cfre-7911987/"
+        },
+        {
+          "name": "Jennifer Klein",
+          "linkedin": "https://www.linkedin.com/in/jennifer-klein-38688287/"
+        }
+      ],
+      recentNews: "Announced new pipeline project for NPHP1 retinal dystrophy gene replacement therapy. Partnered with Comend to advance rare disease drug development with innovative patient-driven platform."
+    },
     // GOVERNMENT & TRADE ORGANIZATIONS
     {
       id: "gra",
@@ -2252,6 +2299,12 @@ export const atlantaBiotechEcosystem = {
 
     // --- YoungHeartValve Connections ---
     { source: "youngheartvalve", target: "emory", type: "collaboration", description: "YoungHeartValve collaborates with Emory-affiliated cardiovascular surgeons including Vinod Thourani, MD of Piedmont Heart Institute, for clinical validation of next-generation heart valve technology." },
+
+    // --- Ora Lee Foundation Connections ---
+    // Note: No verified connections found yet - will add when confirmed relationships are established
+
+    // --- Odylia Therapeutics Connections ---
+    // Note: No verified connections found yet - will add when confirmed relationships are established
 
     // --- OZ-Link Technologies Connections ---
     { source: "oz_link_technologies", target: "gatech", type: "collaboration", description: "OZ-Link Technologies collaborates with Georgia Tech researchers on polymer chemistry and bioconjugation technologies for controlled release therapeutics." },
