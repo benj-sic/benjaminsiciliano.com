@@ -927,7 +927,7 @@ const NetworkVisualization = () => {
       .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16))
       .attr("fill", d => getNodeColor(d.type))
       .style("cursor", "pointer")
-      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 8px rgba(0,0,0,0.4))")); // Remove shadows on mobile
+      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 6px rgba(0,0,0,0.3))")); // Remove shadows on mobile
 
 
 
@@ -950,7 +950,7 @@ const NetworkVisualization = () => {
       .style("cursor", "pointer")
       .style("text-shadow", isMobile ? "none" : (theme === 'dark' ? 
         "1px 1px 2px rgba(0,0,0,0.6)" : 
-        "1px 1px 2px rgba(255,255,255,0.7)")) // Reduced text shadows
+        "1px 1px 1px rgba(255,255,255,0.6)")) // Reduced text shadows for better performance
       .style("font-family", "system-ui, -apple-system, sans-serif")
       .style("stroke", theme === 'dark' ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.4)") // Text outline
       .style("stroke-width", "0.3px") // Thinner outline for better contrast

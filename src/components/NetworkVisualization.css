@@ -315,6 +315,10 @@
   user-select: none;
   /* Prevent iOS Safari from interfering with touch events */
   -webkit-overflow-scrolling: touch;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 /* Ensure network canvas background is properly themed immediately */
@@ -348,6 +352,9 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* Additional performance optimizations */
+  contain: layout style paint;
+  backface-visibility: hidden;
 }
 
 /* Enhanced label styling for better readability */
@@ -367,10 +374,14 @@
   stroke-linecap: round;
 }
 
-/* Light theme specific label improvements */
+/* Light theme specific label improvements - optimized for performance */
 [data-theme="light"] .network-canvas text {
-  filter: drop-shadow(0 0px 1px rgba(255,255,255,0.9)) 
-          drop-shadow(0 0px 2px rgba(255,255,255,0.7));
+  filter: drop-shadow(0 0px 1px rgba(255,255,255,0.8));
+  /* Hardware acceleration for better performance */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Optimize rendering */
+  contain: layout style paint;
 }
 
 /* Node highlighting styles */
@@ -433,12 +444,14 @@
 
 
 
-/* Improved node visibility with enhanced shadows */
+/* Improved node visibility with enhanced shadows - optimized for performance */
 .network-canvas .node-main {
   filter: drop-shadow(0 3px 8px var(--network-shadow)) 
-          drop-shadow(0 0 12px rgba(255, 255, 255, 0.3))
-          drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+          drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
   transition: all 0.2s ease;
+  /* Hardware acceleration */
+  will-change: transform;
+  transform: translateZ(0);
   /* Touch interaction improvements */
   touch-action: manipulation;
   -webkit-touch-callout: none;
@@ -448,12 +461,13 @@
   user-select: none;
   /* No stroke for cleaner look */
   stroke: none;
+  /* Optimize rendering */
+  contain: layout style paint;
 }
 
 .network-canvas .node-main:hover {
   filter: drop-shadow(0 5px 15px var(--network-shadow)) 
-          drop-shadow(0 0 20px rgba(255, 255, 255, 0.5))
-          drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
 }
 
 /* Light theme specific node styling */
