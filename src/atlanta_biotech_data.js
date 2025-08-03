@@ -606,7 +606,7 @@ export const atlantaBiotechEcosystem = {
 
     {
       id: "tag_digital_health",
-      name: "TAG Digital Health Society",
+      name: "TAG Digital Health",
       type: "community",
       size: 18,
       description: "Statewide society housed within the Technology Association of Georgia that advances healthcare innovation and digital health across Georgia with events, collaboration, and an ecosystem directory.",
@@ -2031,7 +2031,7 @@ export const atlantaBiotechEcosystem = {
     },
     {
       id: "diasyst",
-      name: "Diasyst - Medication Intelligence",
+      name: "Diasyst",
       type: "company",
       size: 15,
       description: "Introduces the first ever Medication Intelligence solution for chronic disease management, empowering healthcare providers to make timely, quick, safe, and effective treatment decisions. Backed by decades of research at Emory University and the VA, Diasyst gathers, computerizes, and maintains an ever-expanding knowledge base of clinical guidelines, drug labels, research studies, and best practices.",
