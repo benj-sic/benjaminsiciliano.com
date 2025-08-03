@@ -17,7 +17,9 @@ A modern, interactive personal website featuring an Atlanta Biotech Network visu
 
 ### Network Data
 - **116 Organizations**: Comprehensive metro Atlanta biotech ecosystem focused on innovation-generating entities
-- **200+ Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
+- **190 Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
+- **Organization Types**: 6 universities, 7 health systems, 39 startups, 16 companies, 6 VCs, 7 incubators, 16 service providers, 3 government agencies, 6 community organizations
+- **Connection Types**: 40 collaborations, 28 spinouts, 18 investments, 16 services, 13 support relationships, 9 infrastructure links
 - **Major Hubs**: Emory, Georgia Tech, Portal Innovations, ATDC prominently featured
 - **Dual Filtering**: Separate filters for startups vs established companies
 - **Color-Coded Types**: Visual distinction between organization categories
