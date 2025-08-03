@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import NetworkVisualization from './components/NetworkVisualization';
 import ThemeToggle from './components/ThemeToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
+import cacheManager from './utils/cache.js';
+import performanceMonitor from './utils/performance.js';
 import './App.css';
 
 function App() {
@@ -99,12 +101,35 @@ function App() {
     }
   };
 
+  // Initialize caching and performance monitoring
+  useEffect(() => {
+    // Start performance monitoring
+    performanceMonitor.start();
+    
+    // Warm cache on app start
+    cacheManager.warmCache();
+    
+    // Cache user preferences
+    const userPrefs = {
+      theme: localStorage.getItem('theme') || 'dark',
+      lastVisit: Date.now(),
+      visitCount: parseInt(localStorage.getItem('visitCount') || '0') + 1
+    };
+    
+    cacheManager.cacheUserPrefs(userPrefs);
+    localStorage.setItem('visitCount', userPrefs.visitCount.toString());
+    
+    console.log('Caching system initialized');
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
+      const startTime = performance.now();
+      
       // Use Formspree for form submission with cross-browser compatibility
       const formDataToSend = new URLSearchParams();
       formDataToSend.append('name', formData.name);
@@ -120,6 +145,9 @@ function App() {
           'Accept': 'application/json',
         },
       });
+
+      const duration = performance.now() - startTime;
+      performanceMonitor.trackNetworkInteraction('form-submission', duration, response.ok);
 
       // Check if the response is ok (status 200-299)
       if (response.ok) {
@@ -292,6 +320,8 @@ function App() {
               <NetworkVisualization />
             </div>
           </section>
+
+
 
           {/* About Section */}
           <section id="about" className="about-section">

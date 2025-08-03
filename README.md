@@ -44,6 +44,7 @@ A modern, interactive personal website featuring an Atlanta Biotech Network visu
 - **Deployment**: Netlify with automated builds
 - **Form Handling**: Formspree for contact form processing
 - **Social Media**: Custom social card generation with Puppeteer
+- **Caching**: Advanced multi-layer caching system with performance monitoring
 
 ## 🚀 Getting Started
 
@@ -81,6 +82,7 @@ npm run eject      # Eject from Create React App
 npm run generate-social-card      # Generate social media cards
 npm run generate-all-social-images # Generate all social images
 npm run inject-git-date          # Inject last commit date into build
+npm run test-cache               # Test the caching system
 ```
 
 ## 📁 Project Structure
@@ -271,12 +273,20 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Contact
 
 - **Email**: ben.siciliano@gmail.com
-- **LinkedIn**: [linkedin.com/in/benjaminsiciliano](hhttps://www.linkedin.com/in/benjamin-siciliano-950b83158/)
+- **LinkedIn**: [linkedin.com/in/benjaminsiciliano](https://www.linkedin.com/in/benjamin-siciliano-950b83158/)
 - **GitHub**: [github.com/benj-sic](https://github.com/benj-sic)
 - **Twitter**: [@benjsiciliano](https://x.com/benjsiciliano)
 - **Location**: Atlanta, Georgia
 
 ## 🎯 Recent Updates
+
+### v1.5.0 - Advanced Caching System
+- ✅ **Multi-Layer Caching**: Memory, localStorage, and session storage with intelligent expiry
+- ✅ **Performance Monitoring**: Real-time tracking of page load, memory usage, and user interactions
+- ✅ **Cache Management UI**: Floating interface for cache statistics and performance insights
+- ✅ **State Persistence**: Network states, user preferences, and search results cached automatically
+- ✅ **Cache Warming**: Pre-loads common data for faster initial load times
+- ✅ **Performance Analytics**: Detailed metrics and optimization recommendations
 
 ### v1.4.0 - Network Optimization & EBCC Integration
 - ✅ **Network Streamlining**: Removed peripheral organizations to focus on core metro Atlanta biotech ecosystem
@@ -341,4 +351,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [ ] **GraphQL Endpoints**: Flexible data querying for advanced use cases
 - [ ] **Real-time Collaboration**: Multi-user editing and annotation capabilities
 - [ ] **WebSocket Integration**: Live updates and notifications for ecosystem changes
-- [ ] **Advanced Caching**: Intelligent caching for improved performance with large datasets 
+- ✅ **Advanced Caching**: Intelligent caching for improved performance with large datasets 
