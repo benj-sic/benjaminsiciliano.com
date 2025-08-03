@@ -416,6 +416,22 @@ export const atlantaBiotechEcosystem = {
       recentNews: "Co-invests alongside private VCs in Georgia research spinouts, requiring a 3:1 private match."
     },
 
+    {
+      id: "keiretsu_southeast",
+      name: "Keiretsu Forum South-East",
+      type: "vc",
+      size: 16,
+      description: "World's largest accredited investor community with 2,250+ members across 53 chapters. South-East chapter encompasses Miami and Atlanta, investing in software, telecommunications, health/life sciences, biotech, and other high-growth areas.",
+      website: "http://keiretsuforum-southeast.com/",
+      keyPersonnel: [
+      {
+        "name": "Barry Etra",
+        "linkedin": "https://www.linkedin.com/in/barryetra/"
+      }
+    ],
+      recentNews: "Co-hosting Southeast Investor Conference with ATDC and Angel Capital Association (July 29-30, 2025) at Georgia Tech."
+    },
+
 
 
 
@@ -722,7 +738,7 @@ export const atlantaBiotechEcosystem = {
       description: "Integrated diabetes remission program that focuses on the mind, as much as on the body. Uses atomic habits to create incremental progress in the journey. Doctor-led care team designs personalized healing plans based on lifestyle and physical condition, with app syncing to wearables for real-time progress tracking.",
       website: "https://iheald.com/",
       keyPersonnel: [],
-      recentNews: "Founded in 2023. Located in Alpharetta, Georgia with 11-50 employees. Specializes in diabetes, healthcare, healthtech, machine learning, and Gen AI. Now eligible for FSA/HSA coverage."
+      recentNews: "Founded in 2023. Specializes in diabetes, healthcare, healthtech, machine learning, and Gen AI. Now eligible for FSA/HSA coverage."
     },
     {
       id: "emtherapro",
@@ -799,7 +815,7 @@ export const atlantaBiotechEcosystem = {
           "linkedin": ""
         }
       ],
-      recentNews: "Founded in 2021. Selected as one of 6 finalists for the Startup Prize: Focus on Health 2025 competition. Meniscus implant currently undergoing pre-clinical testing. Located in Atlanta, Georgia with 2-10 employees."
+      recentNews: "Founded in 2021. Selected as one of 6 finalists for the Startup Prize: Focus on Health 2025 competition. Meniscus implant currently undergoing pre-clinical testing."
     },
     {
       id: "oridivus",
@@ -818,7 +834,7 @@ export const atlantaBiotechEcosystem = {
           "linkedin": "https://www.linkedin.com/in/steven-goudy-md-mba-b3ba819/"
         }
       ],
-      recentNews: "Founded in 2019. Located in Atlanta, Georgia with 2-10 employees. Focuses on biotechnology research for oral wound healing through innate immune system modulation."
+      recentNews: "Founded in 2019. Focuses on biotechnology research for oral wound healing through innate immune system modulation."
     },
     {
       id: "paint_therapeutics",
@@ -841,7 +857,7 @@ export const atlantaBiotechEcosystem = {
           "linkedin": "https://www.linkedin.com/in/mariah-stewart-unc/"
         }
       ],
-      recentNews: "Founded in 2022. Seeking additional funding partners to continue both lead advancement and further platform development. Industry: Biotechnology Research. Company size: 2-10 employees."
+      recentNews: "Founded in 2022. Seeking additional funding partners to continue both lead advancement and further platform development."
     },
     {
       id: "nutrivert",
@@ -2381,9 +2397,13 @@ export const atlantaBiotechEcosystem = {
     { source: "rowen", target: "gatech", type: "partnership", description: "Georgia Tech partners with Rowen Foundation on technology development and commercialization initiatives in the knowledge community." },
     { source: "rowen", target: "georgia_bio", type: "partnership", description: "Georgia Life Sciences (formerly Georgia Bio) collaborates with Rowen Foundation on statewide biotech ecosystem development and industry partnerships." },
 
+    { source: "gra_fund", target: "earlitec", type: "investment", description: "EarliTec Diagnostics is a GRA Venture Fund portfolio company developing early diagnosis tools for autism and developmental disorders." },
 
+    // --- Keiretsu Forum South-East Connections ---
+    { source: "keiretsu_southeast", target: "atdc", type: "partnership", description: "Co-hosts Southeast Investor Conference (July 2025) with ATDC and Angel Capital Association, featuring startup showcases and angel investment programming for accredited investors." },
+    { source: "keiretsu_southeast", target: "gatech", type: "partnership", description: "Partners with ATDC to host Southeast Investor Conference (July 2025), featuring startup showcases and angel investment programming." },
 
-
+    // --- Accelerator & Incubator Support ---
   ]
 };
 
