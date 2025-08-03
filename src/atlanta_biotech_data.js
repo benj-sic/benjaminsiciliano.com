@@ -235,6 +235,21 @@ export const atlantaBiotechEcosystem = {
     // GROWTH COMPANIES
 
     {
+      id: "maphabit",
+      name: "MapHabit",
+      type: "company",
+      size: 16,
+      description: "Digital health company providing evidence-based cognitive support tools for individuals with intellectual and developmental disabilities (IDD) and dementia-related conditions. Platform uses personalized, step-by-step visual guides to increase independence and improve quality of life.",
+      website: "https://maphabit.com",
+      keyPersonnel: [
+      {
+        "name": "Matt Golden",
+        "linkedin": "https://www.linkedin.com/in/mattgolden756/"
+      }
+    ],
+      recentNews: "Georgia Medicaid now covers MapHabit for individuals with IDD. Partnered with CVS Health, United Healthcare, Avesis, and BCBS. $11M in NIH grant funding awarded in May 2024."
+    },
+    {
       id: "florence",
       name: "Florence Healthcare",
       type: "company",
@@ -402,21 +417,7 @@ export const atlantaBiotechEcosystem = {
     },
 
 
-    {
-      id: "tech_square_ventures",
-      name: "Tech Square Ventures",
-      type: "vc",
-      size: 15,
-      description: "Early-stage VC firm deeply integrated with the Georgia Tech ecosystem. Co-founder of Engage Ventures.",
-      website: "https://techsquareventures.com",
-      keyPersonnel: [
-      {
-        "name": "Blake Patton",
-        "linkedin": "https://www.linkedin.com/in/blakepatton/"
-      }
-    ],
-      recentNews: "Early investor in several Atlanta tech companies."
-    },
+
 
     // ACCELERATORS & INCUBATORS
     {
@@ -2397,6 +2398,14 @@ export const atlantaBiotechEcosystem = {
     // --- Ethos Medical Connections ---
     { source: "ethos_medical", target: "portal", type: "tenant", description: "Ethos Medical is a member of Portal Innovations at Science Square, receiving support for development of the Iris needle guidance system for safer percutaneous access." },
     { source: "ethos_medical", target: "gatech", type: "collaboration", description: "Ethos Medical collaborates with Georgia Tech researchers on ultrasound-guided needle guidance technology and real-time image guidance systems." },
+
+    // --- Rowen Foundation Partner Connections ---
+    { source: "rowen", target: "uga", type: "partnership", description: "University of Georgia is a key academic partner in Rowen Foundation's 2,000-acre knowledge community focused on biotech, agriculture, and environmental tech." },
+    { source: "rowen", target: "emory", type: "partnership", description: "Emory University collaborates with Rowen Foundation on biotech and environmental research initiatives in the 2,000-acre innovation district." },
+    { source: "rowen", target: "gatech", type: "partnership", description: "Georgia Tech partners with Rowen Foundation on technology development and commercialization initiatives in the knowledge community." },
+    { source: "rowen", target: "georgia_bio", type: "partnership", description: "Georgia Life Sciences (formerly Georgia Bio) collaborates with Rowen Foundation on statewide biotech ecosystem development and industry partnerships." },
+
+
 
 
   ]

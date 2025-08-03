@@ -1161,97 +1161,158 @@ const NetworkVisualization = () => {
       return;
     }
     
-    const queryLower = query.toLowerCase();
+    const queryLower = query.toLowerCase().trim();
+    const queryWords = queryLower.split(/\s+/).filter(word => word.length > 0);
     
-    const results = networkData.nodes.filter(node => {
-      // Search in node ID
-      if (node.id.toLowerCase().includes(queryLower)) return true;
+    const results = atlantaBiotechEcosystem.nodes.filter(node => {
+      const nodeId = node.id.toLowerCase();
+      const nodeName = node.name.toLowerCase();
+      const nodeType = typeMap[node.type] ? typeMap[node.type].toLowerCase() : '';
       
-      // Search in node name
-      if (node.name.toLowerCase().includes(queryLower)) return true;
-      
-      // Search in node type
-      if (typeMap[node.type] && typeMap[node.type].toLowerCase().includes(queryLower)) return true;
-      
-      // For short queries and common organization names, be more restrictive with description/news
-      const shortQueryKeywords = ['gra', 'emory', 'gatech', 'uga', 'gsu', 'choa', 'grady', 'atdc', 'ebfi', 'eddf', 'eidd', 'ebcc'];
-      if (queryLower.length <= 3 || shortQueryKeywords.includes(queryLower)) {
-        // Only search in description if it's likely about the node itself
-        if (node.description && node.description.toLowerCase().includes(queryLower)) {
-          const descriptionLower = node.description.toLowerCase();
-          const nodeNameLower = node.name.toLowerCase();
-          
-          // Only include if the match is in the first sentence or mentions the node's own name
-          const firstSentence = descriptionLower.split('.')[0];
-          if (firstSentence.includes(queryLower) || 
-              (descriptionLower.includes(nodeNameLower) && descriptionLower.includes(queryLower))) {
-            return true;
-          }
-        }
-        
-        // Only search in recent news if it's likely about the node itself
-        if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) {
-          const newsLower = node.recentNews.toLowerCase();
-          const nodeNameLower = node.name.toLowerCase();
-          
-          // Only include if the match is in the first part or mentions the node's own name
-          const firstPart = newsLower.split('.')[0];
-          if (firstPart.includes(queryLower) || 
-              (newsLower.includes(nodeNameLower) && newsLower.includes(queryLower))) {
-            return true;
-          }
-        }
-      } else {
-        // For longer queries, search in all fields
-        if (node.description && node.description.toLowerCase().includes(queryLower)) return true;
-        if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) return true;
+      // For very short queries (1-2 chars), be very restrictive
+      if (queryLower.length <= 2) {
+        // Only exact matches or starts with for very short queries
+        if (nodeId === queryLower || nodeName === queryLower) return true;
+        if (nodeId.startsWith(queryLower) || nodeName.startsWith(queryLower)) return true;
+        return false;
       }
       
-      // Search in website URL
-      if (node.website && node.website.toLowerCase().includes(queryLower)) return true;
+      // For short queries (3 chars), be more restrictive
+      if (queryLower.length === 3) {
+        // Primary search fields only
+        if (nodeId === queryLower || nodeName === queryLower) return true;
+        if (nodeId.startsWith(queryLower) || nodeName.startsWith(queryLower)) return true;
+        if (nodeId.includes(queryLower) || nodeName.includes(queryLower)) return true;
+        
+        // Type search for short queries
+        if (nodeType.includes(queryLower)) return true;
+        return false;
+      }
       
-      // Search in key personnel names
-      if (node.keyPersonnel) {
+      // For multi-word queries, check if all words match
+      if (queryWords.length > 1) {
+        const allWordsMatch = queryWords.every(word => {
+          return nodeId.includes(word) || 
+                 nodeName.includes(word) || 
+                 nodeType.includes(word) ||
+                 (node.website && node.website.toLowerCase().includes(word));
+        });
+        if (allWordsMatch) return true;
+      }
+      
+      // Primary search fields (high relevance)
+      if (nodeId === queryLower || nodeName === queryLower) return true;
+      if (nodeId.startsWith(queryLower) || nodeName.startsWith(queryLower)) return true;
+      if (nodeId.includes(queryLower) || nodeName.includes(queryLower)) return true;
+      
+      // Type search (medium relevance) - increased scoring
+      if (nodeType.includes(queryLower)) return true;
+      
+      // Website search (medium relevance) - only if it's a clear match
+      if (node.website && node.website.toLowerCase().includes(queryLower)) {
+        const websiteLower = node.website.toLowerCase();
+        if (websiteLower.includes(queryLower) && 
+            (websiteLower.includes(nodeId) || websiteLower.includes(nodeName.split(' ')[0]))) {
+          return true;
+        }
+      }
+      
+      // Key personnel search (medium relevance) - only for longer queries
+      if (queryLower.length >= 4 && node.keyPersonnel) {
         for (const person of node.keyPersonnel) {
           const personName = typeof person === 'string' ? person : person.name;
           if (personName.toLowerCase().includes(queryLower)) return true;
         }
       }
       
+      // Description/news search (low relevance) - only for longer queries and specific patterns
+      if (queryLower.length >= 4) {
+        // Only search description if query appears in first sentence or with organization name
+        if (node.description) {
+          const descriptionLower = node.description.toLowerCase();
+          const firstSentence = descriptionLower.split('.')[0];
+          
+          if (firstSentence.includes(queryLower) && 
+              (firstSentence.includes(nodeId) || firstSentence.includes(nodeName.split(' ')[0]))) {
+            return true;
+          }
+        }
+        
+        // Only search news if query appears with organization name
+        if (node.recentNews) {
+          const newsLower = node.recentNews.toLowerCase();
+          if (newsLower.includes(queryLower) && 
+              (newsLower.includes(nodeId) || newsLower.includes(nodeName.split(' ')[0]))) {
+            return true;
+          }
+        }
+      }
+      
       return false;
     });
     
-    // Sort results by relevance
-    const sortedResults = results.sort((a, b) => {
-      const aId = a.id.toLowerCase();
-      const bId = b.id.toLowerCase();
-      const aName = a.name.toLowerCase();
-      const bName = b.name.toLowerCase();
-      const queryLower = query.toLowerCase();
+    // Enhanced relevance scoring with improved type scoring
+    const scoredResults = results.map(node => {
+      const nodeId = node.id.toLowerCase();
+      const nodeName = node.name.toLowerCase();
+      const nodeType = typeMap[node.type] ? typeMap[node.type].toLowerCase() : '';
+      let score = 0;
       
-      // Priority 1: Exact ID match
-      if (aId === queryLower && bId !== queryLower) return -1;
-      if (bId === queryLower && aId !== queryLower) return 1;
+      // Exact matches get highest score
+      if (nodeId === queryLower) score += 1000;
+      if (nodeName === queryLower) score += 1000;
       
-      // Priority 2: ID starts with query
-      if (aId.startsWith(queryLower) && !bId.startsWith(queryLower)) return -1;
-      if (bId.startsWith(queryLower) && !aId.startsWith(queryLower)) return 1;
+      // Starts with matches get high score
+      if (nodeId.startsWith(queryLower)) score += 500;
+      if (nodeName.startsWith(queryLower)) score += 500;
       
-      // Priority 3: Exact name match
-      if (aName === queryLower && bName !== queryLower) return -1;
-      if (bName === queryLower && aName !== queryLower) return 1;
+      // Contains matches get medium score
+      if (nodeId.includes(queryLower)) score += 100;
+      if (nodeName.includes(queryLower)) score += 100;
       
-      // Priority 4: Name starts with query
-      if (aName.startsWith(queryLower) && !bName.startsWith(queryLower)) return -1;
-      if (bName.startsWith(queryLower) && !aName.startsWith(queryLower)) return 1;
+      // Type matches get higher score (increased from 50 to 200)
+      if (nodeType.includes(queryLower)) score += 200;
       
-      // Priority 5: Name contains query (for partial matches)
-      if (aName.includes(queryLower) && !bName.includes(queryLower)) return -1;
-      if (bName.includes(queryLower) && !aName.includes(queryLower)) return 1;
+      // Multi-word query bonus
+      if (queryWords.length > 1) {
+        const matchingWords = queryWords.filter(word => 
+          nodeId.includes(word) || nodeName.includes(word) || nodeType.includes(word)
+        );
+        if (matchingWords.length === queryWords.length) {
+          score += 300; // Bonus for matching all words
+        }
+      }
       
-      // Priority 6: Alphabetical by name
-      return aName.localeCompare(bName);
+      // Website matches get lower score
+      if (node.website && node.website.toLowerCase().includes(queryLower)) score += 30;
+      
+      // Personnel matches get lower score
+      if (node.keyPersonnel) {
+        for (const person of node.keyPersonnel) {
+          const personName = typeof person === 'string' ? person : person.name;
+          if (personName.toLowerCase().includes(queryLower)) {
+            score += 20;
+            break;
+          }
+        }
+      }
+      
+      // Description/news matches get lowest score
+      if (node.description && node.description.toLowerCase().includes(queryLower)) score += 10;
+      if (node.recentNews && node.recentNews.toLowerCase().includes(queryLower)) score += 10;
+      
+      return { ...node, relevanceScore: score };
     });
+    
+    // Sort by relevance score, then alphabetically
+    const sortedResults = scoredResults
+      .sort((a, b) => {
+        if (b.relevanceScore !== a.relevanceScore) {
+          return b.relevanceScore - a.relevanceScore;
+        }
+        return a.name.localeCompare(b.name);
+      })
+      .map(({ relevanceScore, ...node }) => node); // Remove score from final results
     
     setSearchResults(sortedResults);
   };
