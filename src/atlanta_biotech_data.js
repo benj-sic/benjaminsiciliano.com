@@ -630,31 +630,7 @@ export const atlantaBiotechEcosystem = {
       recentNews: "Operates a CLIA-certified diagnostics laboratory, supports assay development for public health, and collaborates on pediatric and community health diagnostics translation."
     },
 
-    {
-      id: "hatchbridge",
-      name: "HatchBridge Incubator",
-      type: "incubator",
-      size: 11,
-      description: "Startup incubator located at Kennesaw State University focused on supporting faculty, student, and community ventures across life sciences, software, and deep tech sectors.",
-      website: "https://www.hatchbridge.com/",
-      keyPersonnel: [
-        { "name": "Colin Ake", "linkedin": "https://www.linkedin.com/in/colinake/" },
-        { "name": "Graham Gintz", "linkedin": "https://www.linkedin.com/in/grahamgintz/" },
-        { "name": "Marie Northington", "linkedin": "https://www.linkedin.com/in/marie-northington/" }
-      ],
-      recentNews: "Launched in 2023 and has supported over 50 ventures. Hosts Georgia Startup Launch grants and connects founders with mentors and funders."
-    },
 
-    {
-      id: "kennesaw_state_university",
-      name: "Kennesaw State",
-      type: "university",
-      size: 15,
-      description: "Major public university in Georgia with growing research activity in biosciences, entrepreneurship, and engineering. Hosts the HatchBridge startup incubator.",
-      website: "https://www.kennesaw.edu",
-      keyPersonnel: [],
-      recentNews: "HatchBridge incubator launched in 2023 to support faculty and student-led ventures, with ties to Georgia Startup Launch and GRA programs."
-    },
 
 
     {
@@ -2165,7 +2141,7 @@ export const atlantaBiotechEcosystem = {
 
     { source: "tag_digital_health", target: "georgia_bio", type: "affiliation", description: "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (formerly Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation." },
     { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
-    { source: "hatchbridge", target: "kennesaw_state_university", type: "affiliation", description: "HatchBridge is Kennesaw State University's startup incubator, supporting students, faculty, and community founders." },
+
 
 
     { source: "gatech", target: "piezo_therapeutics", type: "spinout", description: "Georgia Tech spinout focused on energy-based nucleic acid delivery technology." },
