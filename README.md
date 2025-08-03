@@ -271,7 +271,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Contact
 
 - **Email**: ben.siciliano@gmail.com
-- **LinkedIn**: [linkedin.com/in/benjaminsiciliano](https://linkedin.com/in/benjaminsiciliano)
+- **LinkedIn**: [linkedin.com/in/benjaminsiciliano](hhttps://www.linkedin.com/in/benjamin-siciliano-950b83158/)
 - **GitHub**: [github.com/benj-sic](https://github.com/benj-sic)
 - **Twitter**: [@benjsiciliano](https://x.com/benjsiciliano)
 - **Location**: Atlanta, Georgia
