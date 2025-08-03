@@ -96,21 +96,7 @@ export const atlantaBiotechEcosystem = {
     ],
       recentNews: "GSU and Emory co-lead NIH's Antiviral Countermeasures Development Center"
     },
-    {
-      id: "cau",
-      name: "Clark Atlanta University",
-      type: "university",
-      size: 12,
-      description: "Historically Black research university in Atlanta with strengths in cancer research, data science, and biomedical innovation. Participant in Propel Center and NSF-funded STEM programs.",
-      website: "https://www.cau.edu",
-      keyPersonnel: [
-      {
-        "name": "George T. French Jr.",
-        "linkedin": "https://www.linkedin.com/in/gtfrench1898/"
-      }
-    ],
-      recentNews: "Participant in Propel Center and NSF-funded STEM programs."
-    },
+
     {
       id: "cdc",
       name: "CDC",
@@ -247,21 +233,7 @@ export const atlantaBiotechEcosystem = {
 
 
     // GROWTH COMPANIES
-    {
-      id: "sharecare",
-      name: "Sharecare",
-      type: "company",
-      size: 20,
-      description: "Digital health company providing a personalized health platform. A major Atlanta tech exit, demonstrating the region's strength in health IT.",
-      website: "https://sharecare.com",
-      keyPersonnel: [
-      {
-        "name": "Brent Layton",
-        "linkedin": "https://www.linkedin.com/in/brent-layton-514091157/"
-      }
-    ],
-      recentNews: "Acquired by Altaris Capital Partners in Oct 2024. Jeff Arnold continues as Executive Chairman."
-    },
+
     {
       id: "florence",
       name: "Florence Healthcare",
@@ -412,21 +384,7 @@ export const atlantaBiotechEcosystem = {
     ],
       recentNews: "Actively investing across Seed to Series B, with portfolio companies like OncoLens and The Rounds."
     },
-    {
-      id: "noro",
-      name: "Noro-Moseley Partners",
-      type: "vc",
-      size: 15,
-      description: "One of Atlanta's most established VC firms (founded 1983), focusing on healthcare IT and tech-enabled services.",
-      website: "https://noromoseley.com",
-      keyPersonnel: [
-      {
-        "name": "Ryan Collins",
-        "linkedin": "https://www.linkedin.com/in/ryan-collins-661a6547/"
-      }
-    ],
-      recentNews: "Active in healthcare IT, recently backing KODE Health's $27M Series B in Jan 2025."
-    },
+
     {
       id: "gra_fund",
       name: "GRA Venture Fund",
@@ -442,25 +400,7 @@ export const atlantaBiotechEcosystem = {
     ],
       recentNews: "Co-invests alongside private VCs in Georgia research spinouts, requiring a 3:1 private match."
     },
-    {
-      id: "atlanta_ventures",
-      name: "Atlanta Ventures",
-      type: "vc",
-      size: 13,
-      description: "Venture studio that builds and invests in seed-stage SaaS and digital health companies.",
-      website: "https://atlantaventures.com",
-      keyPersonnel: [
-      {
-        "name": "David Cummings",
-        "linkedin": "https://www.linkedin.com/in/davidcummings/"
-      },
-      {
-        "name": "Kathryn O'Day",
-        "linkedin": "https://www.linkedin.com/in/kathrynoday/"
-      }
-    ],
-      recentNews: "Hosts the Atlanta Healthcare Meetup and has a growing health IT portfolio."
-    },
+
 
     {
       id: "tech_square_ventures",
@@ -626,16 +566,7 @@ export const atlantaBiotechEcosystem = {
       ],
       recentNews: "Part of Georgia State's research commercialization initiatives. Located at 58 Edgewood Avenue."
     },
-    {
-      id: "t2c2_gatech",
-      name: "T2C2",
-      type: "community",
-      size: 10,
-      description: "Georgia Tech-based student consulting program supporting translational research and tech transfer initiatives.",
-      website: "https://t2c2gatech.github.io",
-      keyPersonnel: [],
-      recentNews: "Student-led program providing consulting services to support Georgia Tech's translational research and commercialization efforts."
-    },
+
     {
       id: "eidd",
       name: "EIDD",
@@ -724,27 +655,7 @@ export const atlantaBiotechEcosystem = {
       recentNews: "HatchBridge incubator launched in 2023 to support faculty and student-led ventures, with ties to Georgia Startup Launch and GRA programs."
     },
 
-    {
-      id: "mercer_university",
-      name: "Mercer University",
-      type: "university",
-      size: 16,
-      description: "Georgia-based private university with strengths in health sciences, pharmacy, biomedical engineering, and community health. Operates multiple campuses and translational research programs.",
-      website: "https://www.mercer.edu",
-      keyPersonnel: [],
-      recentNews: "Mercer supports entrepreneurship through the Mercer Innovation Center and health innovation through its School of Medicine and College of Pharmacy."
-    },
 
-    {
-      id: "mercer_innovation_center",
-      name: "Mercer Innovation Center",
-      type: "community",
-      size: 12,
-      description: "Entrepreneurship and innovation hub at Mercer University supporting early-stage ventures in healthcare, bioscience, and tech across Georgia with mentorship, incubation, and investor access.",
-      website: "https://mic.mercer.edu",
-      keyPersonnel: [],
-      recentNews: "Operates campus incubators in Macon, Atlanta, and Savannah with programming that includes translational medtech and community health ventures."
-    },
     {
       id: "piezo_therapeutics",
       name: "Piezo Therapeutics",
@@ -775,16 +686,7 @@ export const atlantaBiotechEcosystem = {
       ],
       recentNews: "Part of IndieBio NY06 cohort. Focuses on metabolic disease therapeutics through oral oligonucleotide therapy."
     },
-    {
-      id: "university_bioconnect",
-      name: "University Bioconnect",
-      type: "community",
-      size: 11,
-      description: "Atlanta-based biotech community connecting university students and researchers with local industry professionals through meetups and networking events.",
-      website: "https://www.meetup.com/university-bioconnect/",
-      keyPersonnel: [],
-      recentNews: "Hosts recurring meetups for early-career biotech professionals in the Atlanta region."
-    },
+
     {
       id: "cordx",
       name: "CorDx",
@@ -1175,26 +1077,8 @@ export const atlantaBiotechEcosystem = {
     ],
       recentNews: "Broke ground on infrastructure in 2024 for a new 2,000-acre innovation district."
     },
-    {
-      id: "atlanta_tech_angels",
-      name: "Atlanta Technology Angels",
-      type: "vc",
-      size: 12,
-      description: "Prominent angel investor network that provides capital and mentorship to early-stage tech companies, including life sciences.",
-      website: "https://atlantatechnologyangels.com",
-      keyPersonnel: [],
-      recentNews: "Active in biotech early-stage investments."
-    },
-    {
-      id: "metro_atlanta_chamber",
-      name: "Metro Atlanta Chamber",
-      type: "trade",
-      size: 13,
-      description: "Economic development organization with a dedicated Bioscience/Health team to promote regional growth.",
-      website: "https://metroatlantachamber.com",
-      keyPersonnel: [],
-      recentNews: "Life sciences economic development initiatives."
-    },
+
+
     {
       id: "georgia_ctsa",
       name: "Georgia CTSA",
@@ -1205,21 +1089,7 @@ export const atlantaBiotechEcosystem = {
       keyPersonnel: [],
       recentNews: "Supports clinical trials infrastructure, pilot grant funding, and translational training programs across Atlanta's research universities and hospitals."
     },
-    {
-      id: "georgia_ecd",
-      name: "GDEcD",
-      type: "government",
-      size: 14,
-      description: "Georgia Department of Economic Development - the state's primary arm for business recruitment and economic development.",
-      website: "https://georgia.org",
-      keyPersonnel: [
-        {
-          "name": "Glen Whitley",
-          "linkedin": "https://www.linkedin.com/in/glenwhitley/"
-        }
-      ],
-      recentNews: "Supports biotech through incentive packages and site location assistance."
-    },
+
     {
         id: 'department_of_veterans_affairs',
         name: 'VA',
@@ -1318,31 +1188,8 @@ export const atlantaBiotechEcosystem = {
     ],
       recentNews: "Acquired AKESOgen in 2019; maintains Atlanta operations as part of its national genomics infrastructure for precision medicine and clinical trials."
     },
-    {
-      id: "king_spalding",
-      name: "King & Spalding",
-      type: "serviceProvider",
-      size: 11,
-      description: "Global law firm with a world-renowned FDA regulatory and life sciences practice. Represents major local biotechs like VERO.",
-      website: "https://kslaw.com",
-      keyPersonnel: [
-      {
-        "name": "Mark Brown",
-        "linkedin": "https://www.linkedin.com/in/mark-brown-3b38b93/"
-      }
-    ],
-      recentNews: "Expanded life sciences IP litigation team in 2024."
-    },
-    {
-      id: "kilpatrick_townsend",
-      name: "Kilpatrick",
-      type: "serviceProvider",
-      size: 13,
-      description: "Major law firm with a dominant intellectual property practice serving the Atlanta tech community.",
-      website: "https://kilpatricktownsend.com",
-      keyPersonnel: [],
-      recentNews: "Long-time sponsor and IP counsel at ATDC, serving a majority of its startups."
-    },
+
+
     {
       id: "biotechexec",
       name: "BiotechExec",
@@ -1412,21 +1259,8 @@ export const atlantaBiotechEcosystem = {
     ],
       recentNews: "Rebranded to Woven Health Collective after ClinicalMind acquisition (2024). Continues as Emory Healthcare Innovation Hub partner."
     },
-    {
-      id: "jpmorgan_chase",
-      name: "JPMorgan Chase",
-      type: "serviceProvider",
-      size: 18,
-      description: "Global financial services firm with a strong presence in Atlanta (Buckhead), supporting life sciences banking, commercial banking, wealth management, and technology operations.",
-      website: "https://www.jpmorganchase.com",
-      keyPersonnel: [
-      {
-        "name": "Courtney J. Law",
-        "linkedin": "https://www.linkedin.com/in/courtneyjlaw/"
-      }
-    ],
-      recentNews: "Expanding Atlanta office by 40,000 sq ft; designated as one of JPMorgan's 23 global technology centers; active in life sciences startup banking and biotech client services."
-    },
+
+
 
     {
       id: "vizzia",
@@ -1513,16 +1347,7 @@ export const atlantaBiotechEcosystem = {
       keyPersonnel: [],
       recentNews: "Launched regional events connecting age-related innovators to pilot partners and investors."
     },
-    {
-      id: "ache_georgia",
-      name: "ACHE Georgia",
-      type: "community",
-      size: 12,
-      description: "Professional society for healthcare executives across Georgia. Provides education, networking, and mentorship for clinical innovation leaders across hospitals, payers, and systems.",
-      website: "https://ga.ache.org",
-      keyPersonnel: [],
-      recentNews: "Hosted Georgia Health Leaders Summit and connects hospital innovation teams with startups and vendors."
-    },
+
     {
       id: "emory_biotech_consulting_club",
       name: "EBCC",
@@ -2328,7 +2153,7 @@ export const atlantaBiotechEcosystem = {
     { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
     { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
     { source: "nucleate_atlanta", target: "gsu", type: "collaboration", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
-    { source: "gatech", target: "t2c2_gatech", type: "support", description: "Georgia Tech-based student consulting program supporting translational research and tech transfer." },
+
     { source: "gsu", target: "collabtech_gsu", type: "infrastructure", description: "CollabTech is Georgia State University's life sciences incubator providing lab space and core research facilities." },
 
     { source: "emory", target: "eidd", type: "infrastructure", description: "EIDD is a drug discovery and translational research center established and operated by Emory University." },
@@ -2341,7 +2166,7 @@ export const atlantaBiotechEcosystem = {
     { source: "emory", target: "adjust_center_emory", type: "infrastructure", description: "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities." },
     { source: "hatchbridge", target: "kennesaw_state_university", type: "affiliation", description: "HatchBridge is Kennesaw State University's startup incubator, supporting students, faculty, and community founders." },
 
-    { source: "mercer_innovation_center", target: "mercer_university", type: "affiliation", description: "Mercer Innovation Center is Mercer University's entrepreneurship hub, supporting innovation and startup formation across health, medtech, and community ventures." },
+
     { source: "gatech", target: "piezo_therapeutics", type: "spinout", description: "Georgia Tech spinout focused on energy-based nucleic acid delivery technology." },
     { source: "gatech", target: "orthopreserve", type: "spinout", description: "Georgia Tech spinout founded in 2021 with medical device technology." },
 
@@ -2373,7 +2198,7 @@ export const atlantaBiotechEcosystem = {
     { source: "eddf", target: "allonix", type: "investment", description: "EDDF portfolio investment in IBD therapeutics" },
     { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
-    { source: "noro", target: "sharecare", type: "investment", description: "Early investor" },
+
     { source: "catalyst", target: "armor_medical", type: "investment", description: "Catalyst by Wellstar invested in Armor Medical to support development of Maternal aRMOR wearable (Jun 2025)." },
     {
       "source": "gra_fund",
@@ -2417,7 +2242,7 @@ export const atlantaBiotechEcosystem = {
     { source: "science_square", target: "portal", type: "tenant", description: "Anchor tenant" },
     { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
     { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
-    { source: "portal", target: "jpmorgan_chase", type: "partnership", description: "J.P. Morgan Chase is a corporate partner of Portal Innovations, supporting early-stage life sciences and medtech ventures." },
+
     { source: "portal", target: "radyus", type: "partnership", description: "Radyus Research is a Portal partner providing preclinical CRO services to early-stage life sciences ventures." },
     { source: "portal", target: "armor_medical", type: "member", description: "Armor Medical is a Portal Atlanta member company." },
     { source: "portal", target: "oridivus", type: "member", description: "Oridivus is a Portal Atlanta member company." },
@@ -2482,6 +2307,7 @@ export const atlantaBiotechEcosystem = {
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
     { source: "woven_health_collective", target: "emory_healthcare", type: "collaboration", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
+
     { source: "vizzia", target: "choa", type: "service", description: "Selected by CHOA to deploy RTLS and asset tracking for Arthur M. Blank Hospital (2025)." },
     { source: "vizzia", target: "piedmont_healthcare", type: "service", description: "Deployed RTLS platform at Marcus Tower (16-story, $603M hospital project)." },
     { source: "vizzia", target: "grady", type: "service", description: "Implemented RTLS and environmental monitoring system at Correll Pavilion (10-story surgical center)." },
@@ -2507,6 +2333,15 @@ export const atlantaBiotechEcosystem = {
     { source: "emory_biotech_consulting_club", target: "emory_ott", type: "collaboration", description: "Partners with Emory OTT to support technology assessments and connect student teams to Emory-affiliated startups." },
     { source: "emory_biotech_consulting_club", target: "biolocity", type: "collaboration", description: "Collaborates with Biolocity to provide commercialization strategy support for early-stage medtech projects." },
     { source: "emory_biotech_consulting_club", target: "gra", type: "collaboration", description: "Engages with Georgia Research Alliance through university commercialization programs and startup diligence efforts." },
+    
+    // --- EBCC Client Relationships ---
+    { source: "emory_biotech_consulting_club", target: "switchboard_md", type: "service", description: "EBCC Spring 2024 client - provided commercialization strategy for AI-based triage platform" },
+    { source: "emory_biotech_consulting_club", target: "emtherapro", type: "service", description: "EBCC Fall 2023 client - provided commercialization strategy for proteomics platform" },
+    { source: "emory_biotech_consulting_club", target: "fibronox", type: "service", description: "EBCC Spring 2022 client - provided commercialization strategy for fibrotic disease therapeutics" },
+    { source: "emory_biotech_consulting_club", target: "metaclipse", type: "service", description: "EBCC Spring 2020 client - provided commercialization strategy for cancer immunotherapy platform" },
+    { source: "emory_biotech_consulting_club", target: "cambium_oncology", type: "service", description: "EBCC Fall 2019 client - provided commercialization strategy for immuno-oncology therapeutics" },
+    { source: "emory_biotech_consulting_club", target: "oncospherix", type: "service", description: "EBCC Spring 2019 client - provided commercialization strategy for oncology drug development" },
+    { source: "emory_biotech_consulting_club", target: "nyra_medical", type: "service", description: "EBCC Spring 2020 client - provided commercialization strategy for cardiac device technology" },
     { source: "eddf", target: "emory", type: "funding", description: "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab" },
 
     // --- CollabTech Tenant Relationships ---

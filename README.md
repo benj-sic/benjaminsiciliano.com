@@ -16,13 +16,14 @@ A modern, interactive personal website featuring an Atlanta Biotech Network visu
 - **Mobile Optimized**: Touch-friendly interactions on mobile devices
 
 ### Network Data
-- **40+ Organizations**: Curated Atlanta biotech/healthtech ecosystem focused on innovation-generating entities
-- **200+ Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
+- **35+ Organizations**: Curated metro Atlanta biotech ecosystem focused on innovation-generating entities
+- **180+ Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
 - **Major Hubs**: Emory, Georgia Tech, Portal Innovations, ATDC prominently featured
 - **Dual Filtering**: Separate filters for startups vs established companies
 - **Color-Coded Types**: Visual distinction between organization categories
 - **Rich Metadata**: Detailed descriptions, websites, key personnel, and recent news
 - **LinkedIn Integration**: Direct links to key personnel profiles where available
+- **EBCC Integration**: Emory Biotech Consulting Club connections to supported startups
 
 ### Site Features
 - **Dark/Light Theme Toggle**: Seamless theme switching with persistent preferences
@@ -274,6 +275,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Location**: Atlanta, Georgia
 
 ## 🎯 Recent Updates
+
+### v1.4.0 - Network Optimization & EBCC Integration
+- ✅ **Network Streamlining**: Removed peripheral organizations to focus on core metro Atlanta biotech ecosystem
+- ✅ **EBCC Integration**: Added Emory Biotech Consulting Club connections to supported startups
+- ✅ **VC Focus**: Streamlined to biotech-focused venture capital firms
+- ✅ **Academic Consolidation**: Focused on metro Atlanta academic institutions
+- ✅ **Service Provider Optimization**: Curated service providers to biotech-relevant organizations
 
 ### v1.3.0 - Enhanced Social Features & Performance
 - ✅ **Social Sharing Integration**: Built-in Twitter and LinkedIn sharing

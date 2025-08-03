@@ -360,10 +360,14 @@
 }
 
 /* Node highlighting styles */
-.node-highlighted {
-  stroke: var(--network-highlight-color) !important;
-  stroke-width: 4px !important;
-  filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) !important;
+.node-highlighted .node-main {
+  filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) 
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) !important;
+}
+
+.node-highlighted .node-glow {
+  opacity: 1 !important;
+  fill: rgba(255, 107, 107, 0.3) !important;
 }
 
 .label-highlighted {
@@ -371,13 +375,19 @@
   font-size: 32px !important;
   fill: var(--network-highlight-color) !important;
   stroke: var(--network-highlight-color) !important;
-  stroke-width: 1px !important;
-  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
 }
 
 /* Node dimming styles */
-.node-dimmed {
+.node-dimmed .node-main {
   opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-dimmed .node-glow {
+  opacity: 0.1 !important;
   transition: opacity 0.3s ease;
 }
 
@@ -410,8 +420,10 @@
 
 
 /* Improved node visibility with enhanced shadows */
-.network-canvas circle {
-  filter: drop-shadow(0 3px 8px var(--network-shadow));
+.network-canvas .node-main {
+  filter: drop-shadow(0 3px 8px var(--network-shadow)) 
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.3))
+          drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
   transition: all 0.2s ease;
   /* Touch interaction improvements */
   touch-action: manipulation;
@@ -420,10 +432,47 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* No stroke for cleaner look */
+  stroke: none;
 }
 
-.network-canvas circle:hover {
-  filter: drop-shadow(0 5px 15px var(--network-shadow));
+.network-canvas .node-main:hover {
+  filter: drop-shadow(0 5px 15px var(--network-shadow)) 
+          drop-shadow(0 0 20px rgba(255, 255, 255, 0.5))
+          drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* Light theme specific node styling */
+[data-theme="light"] .network-canvas .node-main {
+  filter: drop-shadow(0 3px 8px var(--network-shadow)) 
+          drop-shadow(0 0 12px rgba(0, 0, 0, 0.1))
+          drop-shadow(0 0 6px rgba(0, 0, 0, 0.05));
+}
+
+[data-theme="light"] .network-canvas .node-main:hover {
+  filter: drop-shadow(0 5px 15px var(--network-shadow)) 
+          drop-shadow(0 0 20px rgba(0, 0, 0, 0.2))
+          drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+}
+
+/* Node glow styling */
+.network-canvas .node-glow {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.network-canvas .node-group:hover .node-glow {
+  opacity: 0.8;
+}
+
+/* Light theme glow styling */
+[data-theme="light"] .network-canvas .node-glow {
+  fill: rgba(0, 0, 0, 0.1);
+  opacity: 0.4;
+}
+
+[data-theme="light"] .network-canvas .node-group:hover .node-glow {
+  opacity: 0.6;
 }
 
 /* Enhanced link visibility */
@@ -441,6 +490,8 @@
   border-radius: 50%;
   pointer-events: none;
 }
+
+
 
 /* Loading and Performance States */
 .loading-overlay {
