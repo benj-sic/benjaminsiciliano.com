@@ -457,7 +457,7 @@ const NetworkVisualization = () => {
         setZoomLevel(0.17);
       }
     }
-  }, [isMobile, calculateOptimalZoomForCurrentNetwork]);
+  }, [calculateOptimalZoomForCurrentNetwork]);
 
   // Manual center network function (doesn't hide the plot)
   const manualCenterNetwork = useCallback(() => {
@@ -496,7 +496,7 @@ const NetworkVisualization = () => {
         setZoomLevel(0.17);
       }
     }
-  }, [isMobile, calculateOptimalZoomForCurrentNetwork]);
+  }, [calculateOptimalZoomForCurrentNetwork]);
 
   // Zoom functions
   const zoomIn = () => {
@@ -1046,6 +1046,7 @@ const NetworkVisualization = () => {
     // Apply optimal zoom and centering after simulation completes
     simulation.on("end", () => {
       // Use cached network center if available, otherwise calculate dynamically
+      // eslint-disable-next-line no-unused-vars
       let networkCenterX, networkCenterY;
       
       // Calculate optimal zoom and center for current filtered network
