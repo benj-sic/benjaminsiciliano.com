@@ -14,6 +14,7 @@ A modern, interactive personal website featuring an Atlanta Biotech Network visu
 - **Auto-Centering**: Network automatically re-centers on filter changes
 - **Force-Directed Layout**: Dynamic positioning with physics simulation
 - **Mobile Optimized**: Touch-friendly interactions on mobile devices
+- **State Persistence**: Network positions and filter states are automatically saved
 
 ### Network Data
 - **116 Organizations**: Comprehensive metro Atlanta biotech ecosystem focused on innovation-generating entities
@@ -33,6 +34,7 @@ A modern, interactive personal website featuring an Atlanta Biotech Network visu
 - **Contact Form**: Professional contact form with Formspree integration
 - **Responsive Design**: Mobile-first approach with touch-optimized interactions
 - **SEO Optimized**: Meta tags, social cards, and structured data
+- **Performance Optimized**: Advanced caching system for faster loading and interactions
 
 ## 🛠️ Tech Stack
 
@@ -72,6 +74,13 @@ npm start
 
 4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### Testing the Caching System
+
+To verify the caching system is working:
+```bash
+npm run test-cache
+```
+
 ### Available Scripts
 
 ```bash
@@ -100,6 +109,9 @@ benjaminsiciliano.com/
 │   │   ├── NetworkVisualization.css   # Network styles
 │   │   ├── ThemeToggle.js             # Theme switcher
 │   │   └── ThemeToggle.css            # Theme styles
+│   ├── utils/                # Utility systems
+│   │   ├── cache.js                  # Advanced caching system
+│   │   └── performance.js            # Performance monitoring
 │   ├── contexts/
 │   │   └── ThemeContext.js            # Theme context provider
 │   ├── App.js                         # Main app component
@@ -110,9 +122,11 @@ benjaminsiciliano.com/
 │   ├── generate-social-card.js        # Social card generator
 │   ├── generate-all-social-images.js  # Batch social image generator
 │   ├── inject-git-date.js            # Git date injection
-│   └── README.md                     # Scripts documentation
+│   ├── calculate-optimal-zoom.js      # Network zoom optimization
+│   └── test-cache.js                  # Cache system testing
 ├── netlify.toml             # Netlify deployment config
 ├── package.json             # Dependencies and scripts
+├── CACHING.md               # Caching system documentation
 └── README.md               # This file
 ```
 
@@ -123,12 +137,14 @@ benjaminsiciliano.com/
 - **Dark/Light Themes**: Modern theme switching with smooth transitions
 - **Biological Network Styling**: Nodes and edges styled like protein interaction networks
 - **Mobile Responsive**: Fully responsive design that works on all devices
+- **Performance-First**: Optimized for speed and smooth interactions
 
 ### User Experience
 - **Intuitive Navigation**: Clear navigation between sections
 - **Interactive Elements**: Hover effects, smooth transitions, and engaging animations
 - **Professional Tone**: Approachable yet professional communication style
 - **Accessibility**: High contrast, readable typography, and keyboard navigation
+- **State Persistence**: Seamless experience with automatic state saving
 
 ## 🔧 Customization
 
@@ -196,6 +212,24 @@ const networkData = {
   ]
 }
 ```
+
+## 🔧 Caching System
+
+The site includes an advanced multi-layer caching system that operates in the background:
+
+### **Cache Types**
+- **Network States**: Zoom levels, pan positions, filter states
+- **User Preferences**: Theme settings, visit history
+- **Search Results**: Cached queries and filtered results
+- **Performance Metrics**: Load times, memory usage, interaction data
+
+### **Cache Management**
+- **Automatic Expiration**: Different expiry times for different data types
+- **Smart Eviction**: Removes oldest entries when cache is full
+- **Cache Warming**: Pre-loads common data for faster initial load
+- **Background Operation**: Runs invisibly for optimal user experience
+
+For detailed caching documentation, see [CACHING.md](./CACHING.md).
 
 ## 🚀 Deployment
 
@@ -280,13 +314,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🎯 Recent Updates
 
-### v1.5.0 - Advanced Caching System
+### v1.5.0 - Advanced Caching System & Performance Optimization
 - ✅ **Multi-Layer Caching**: Memory, localStorage, and session storage with intelligent expiry
 - ✅ **Performance Monitoring**: Real-time tracking of page load, memory usage, and user interactions
-- ✅ **Cache Management UI**: Floating interface for cache statistics and performance insights
+- ✅ **Background Operation**: Caching system runs invisibly for optimal user experience
 - ✅ **State Persistence**: Network states, user preferences, and search results cached automatically
 - ✅ **Cache Warming**: Pre-loads common data for faster initial load times
+- ✅ **Smart Eviction**: Automatic removal of old cache entries to prevent memory bloat
 - ✅ **Performance Analytics**: Detailed metrics and optimization recommendations
+- ✅ **Font & Color Fixes**: Resolved stats display issues with proper Inter font and green colors
 
 ### v1.4.0 - Network Optimization & EBCC Integration
 - ✅ **Network Streamlining**: Removed peripheral organizations to focus on core metro Atlanta biotech ecosystem
@@ -324,6 +360,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [ ] **Funding Flow Visualization**: Investment rounds, funding amounts, and capital flow patterns
 - [ ] **Talent Movement Tracking**: Alumni networks and personnel transitions between organizations
 - [ ] **Geographic Clustering**: Map-based view showing spatial distribution of organizations
+- [ ] **Performance Analytics Dashboard**: Real-time performance metrics and optimization insights
 
 ### **User Experience**
 - [ ] **Advanced Search & Filtering**: Multi-criteria search (funding stage, technology area, location)
@@ -351,4 +388,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [ ] **GraphQL Endpoints**: Flexible data querying for advanced use cases
 - [ ] **Real-time Collaboration**: Multi-user editing and annotation capabilities
 - [ ] **WebSocket Integration**: Live updates and notifications for ecosystem changes
-- ✅ **Advanced Caching**: Intelligent caching for improved performance with large datasets 
+- ✅ **Advanced Caching**: Multi-layer caching system with performance monitoring
+- ✅ **Performance Monitoring**: Real-time analytics and optimization recommendations 
