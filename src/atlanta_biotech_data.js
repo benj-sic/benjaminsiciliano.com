@@ -1797,7 +1797,7 @@ export const atlantaBiotechEcosystem = {
     },
     {
       id: "synthbiome",
-      name: "SynthBiome Inc.",
+      name: "SynthBiome",
       type: "startup",
       size: 10,
       description: "Atlanta-based biotechnology company developing synthetic environments to mimic physiological conditions for drug development and treatment selection. Focuses on creating accurate synthetic models for cystic fibrosis research (SCFM1, SCFM2) and chronic wound infection research (LCWB).",
@@ -2358,7 +2358,7 @@ export const atlantaBiotechEcosystem = {
     { source: "arc_proteomics", target: "jones_day", type: "service", description: "Uses Jones Day for legal counsel." },
 
     // --- SynthBiome Connections ---
-    { source: "synthbiome", target: "gatech", type: "spinout", description: "SynthBiome Inc. founded by Georgia Tech faculty Marvin Whiteley, developing synthetic environments for drug development and treatment selection. Whiteley's 10-year research program on bacterial behavior in human environments led to the creation of synthetic media that accurately replicate human infection conditions." },
+    { source: "synthbiome", target: "gatech", type: "spinout", description: "SynthBiome founded by Georgia Tech faculty Marvin Whiteley, developing synthetic environments for drug development and treatment selection. Whiteley's 10-year research program on bacterial behavior in human environments led to the creation of synthetic media that accurately replicate human infection conditions." },
     { source: "synthbiome", target: "biospark_labs", type: "tenant", description: "SynthBiome is one of five startups based at BioSpark Labs, where it develops synthetic environments to accelerate antibiotic drug discovery and overcome the challenge of translating lab discoveries to clinical success." },
     { source: "orthopreserve", target: "biospark_labs", type: "tenant", description: "OrthoPreserve is based at BioSpark Labs, a life sciences incubator space in Georgia Tech's Science Square district." },
 

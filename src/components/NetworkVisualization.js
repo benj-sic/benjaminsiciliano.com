@@ -31,9 +31,35 @@ const NetworkVisualization = () => {
     }
   }, []);
 
-  // Fetch last commit date on component mount
+  // Fetch last commit date and cached network data on component mount
   useEffect(() => {
     fetchLastCommitDate();
+    
+    // Fetch cached network data (zoom, center, bounds)
+    const fetchCachedNetworkData = async () => {
+      try {
+        const response = await fetch('/optimal-zoom.json');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.optimalZoom) {
+            setZoomLevel(data.optimalZoom);
+          }
+          // Store cached network center and bounds for later use
+          if (data.networkCenter && data.networkBounds) {
+            window.cachedNetworkData = {
+              center: data.networkCenter,
+              bounds: data.networkBounds,
+              viewport: data.viewport
+            };
+          }
+        }
+      } catch (error) {
+        console.log('Could not fetch cached network data:', error);
+        // Keep default zoom if fetch fails
+      }
+    };
+    
+    fetchCachedNetworkData();
   }, [fetchLastCommitDate]);
   
   // Sidebar state
@@ -77,11 +103,11 @@ const NetworkVisualization = () => {
     console.log('Controls open by default on all screen sizes');
   }, [isMobile]);
 
-  // Initialize zoom level from URL parameters
+  // Initialize zoom level from URL parameters or pre-calculated optimal zoom
   const getInitialZoomLevel = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const zoomParam = urlParams.get('zoom');
-    return zoomParam ? parseFloat(zoomParam) : 0.25; // Start at 25% zoom for better initial view
+    return zoomParam ? parseFloat(zoomParam) : 0.17; // Use pre-calculated optimal zoom as default
   };
 
   const [zoomLevel, setZoomLevel] = useState(getInitialZoomLevel);
@@ -399,17 +425,17 @@ const NetworkVisualization = () => {
         // Update zoom level state
         setZoomLevel(scale);
       } else {
-        // Fallback to simple centering if no nodes
+        // Fallback to optimal zoom if no nodes
         const transform = d3.zoomIdentity
           .translate(width / 2, height / 2)
-          .scale(0.25); // 25% zoom fallback
+          .scale(0.17); // 17% optimal zoom fallback
         
         svg.transition()
           .duration(500)
           .call(zoomBehaviorRef.current.transform, transform);
         
         // Update zoom level state
-        setZoomLevel(0.25);
+        setZoomLevel(0.17);
       }
     }
   }, [isMobile]);
@@ -458,22 +484,13 @@ const NetworkVisualization = () => {
         const networkCenterX = (minX + maxX) / 2;
         const networkCenterY = (minY + maxY) / 2;
         
-        // Calculate the dimensions of the network
-        const networkWidth = maxX - minX;
-        const networkHeight = maxY - minY;
-        
-        // Add padding around the network to ensure all nodes are visible
-        const padding = 25; // Increased padding to ensure all nodes are visible
-        
-        // Calculate the scale to fit the network in the viewport
-        const scaleX = (width - padding * 2) / networkWidth;
-        const scaleY = (height - padding * 2) / networkHeight;
-        const scale = Math.min(scaleX, scaleY);
+        // Use the pre-calculated optimal zoom level for consistency
+        const optimalZoom = 0.17; // Same as the pre-calculated value
         
         // Calculate the transform to center the network in the viewport
         const transform = d3.zoomIdentity
-          .translate(width / 2 - networkCenterX * scale, height / 2 - networkCenterY * scale)
-          .scale(scale);
+          .translate(width / 2 - networkCenterX * optimalZoom, height / 2 - networkCenterY * optimalZoom)
+          .scale(optimalZoom);
         
         // Apply the transform with a smooth transition
         svg.transition()
@@ -481,19 +498,19 @@ const NetworkVisualization = () => {
           .call(zoomBehaviorRef.current.transform, transform);
         
         // Update zoom level state
-        setZoomLevel(scale);
+        setZoomLevel(optimalZoom);
       } else {
-        // Fallback to simple centering if no nodes
+        // Fallback to optimal zoom if no nodes
         const transform = d3.zoomIdentity
           .translate(width / 2, height / 2)
-          .scale(0.25); // 25% zoom fallback
+          .scale(0.17); // 17% optimal zoom fallback
         
         svg.transition()
           .duration(500)
           .call(zoomBehaviorRef.current.transform, transform);
         
         // Update zoom level state
-        setZoomLevel(0.25);
+        setZoomLevel(0.17);
       }
     }
   }, [isMobile]);
@@ -523,7 +540,7 @@ const NetworkVisualization = () => {
 
   // Helper function to calculate base zoom level using outermost node/label plus padding method
   const calculateBaseZoomLevel = useCallback(() => {
-    if (!svgRef.current || !simulationRef.current) return 0.25; // Fallback
+    if (!svgRef.current || !simulationRef.current) return 0.17; // Fallback to optimal zoom
     
     const svg = d3.select(svgRef.current);
     const width = svg.node().getBoundingClientRect().width;
@@ -531,7 +548,7 @@ const NetworkVisualization = () => {
     
     // Get the simulation data for all visible nodes
     const nodes = simulationRef.current.nodes();
-    if (nodes.length === 0) return 0.25; // Fallback
+    if (nodes.length === 0) return 0.17; // Fallback to optimal zoom
     
     // Calculate bounds including label radius for each node (same method as zoomToSubnetwork)
     const bounds = nodes.map(n => {
@@ -826,16 +843,49 @@ const NetworkVisualization = () => {
     // Create a zoom group that contains all the network elements
     const zoomGroup = svg.append("g").attr("class", "zoom-group");
 
-    // Apply initial zoom after simulation has positioned nodes
-    const initialScale = 0.25; // Start with reasonable zoom
-    
-    const initialTransform = d3.zoomIdentity
-      .translate(width / 2, height / 2)
-      .scale(initialScale);
-    
-    // Apply initial transform immediately
-    zoomGroup.attr("transform", initialTransform);
-    setZoomLevel(initialScale);
+    // Apply initial zoom and centering after simulation has positioned nodes
+    // We'll set up the zoom behavior first, then apply the optimal transform
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 1.0]) // Zoom range from 10% to 100%
+      .wheelDelta(event => -event.deltaY * (event.deltaMode ? 120 : 1) / 100) // Faster wheel zoom for desktop
+      .on("zoom", (event) => {
+        // Direct DOM update for faster response on desktop
+        zoomGroup.attr("transform", event.transform);
+        setZoomLevel(event.transform.k);
+      })
+      .on("start", (event) => {
+        // Prevent default only for non-touch events to allow native iOS gestures
+        if (!event.sourceEvent || event.sourceEvent.type !== 'touchstart') {
+          event.sourceEvent?.preventDefault();
+        }
+      });
+
+    // Store reference to zoom behavior
+    zoomBehaviorRef.current = zoom;
+
+    // Enable zoom for both desktop and mobile, but with different configurations
+    if (!isMobile) {
+      // Desktop: full zoom functionality
+      svg.call(zoom);
+    } else {
+      // Mobile: enable zoom with iOS Safari compatibility
+      svg.call(zoom);
+      
+      // Add passive touch listeners to improve iOS Safari performance
+      svg.on("touchstart", function(event) {
+        // Don't prevent default - let native gestures work
+        // D3 will handle the zoom behavior
+      }, { passive: true });
+      
+      svg.on("touchmove", function(event) {
+        // Don't prevent default - let native gestures work
+        // D3 will handle the zoom behavior
+      }, { passive: true });
+      
+      svg.on("touchend", function(event) {
+        // Don't prevent default - let native gestures work
+      }, { passive: true });
+    }
 
     // Create links in zoom group
     const links = zoomGroup.append("g")
@@ -991,48 +1041,7 @@ const NetworkVisualization = () => {
       simulation.alpha(0.3).restart();
     }, 100); // Small delay to ensure labels are rendered
 
-    // Add zoom behavior with enhanced controls and mobile optimization
-    const zoom = d3.zoom()
-      .scaleExtent([0.1, 1.0]) // Zoom range from 10% to 100%
-      .wheelDelta(event => -event.deltaY * (event.deltaMode ? 120 : 1) / 100) // Faster wheel zoom for desktop
-      .on("zoom", (event) => {
-        // Direct DOM update for faster response on desktop
-        zoomGroup.attr("transform", event.transform);
-        setZoomLevel(event.transform.k);
-      })
-      .on("start", (event) => {
-        // Prevent default only for non-touch events to allow native iOS gestures
-        if (!event.sourceEvent || event.sourceEvent.type !== 'touchstart') {
-          event.sourceEvent?.preventDefault();
-        }
-      });
 
-    // Enable zoom for both desktop and mobile, but with different configurations
-    if (!isMobile) {
-      // Desktop: full zoom functionality
-      svg.call(zoom);
-    } else {
-      // Mobile: enable zoom with iOS Safari compatibility
-      svg.call(zoom);
-      
-      // Add passive touch listeners to improve iOS Safari performance
-      svg.on("touchstart", function(event) {
-        // Don't prevent default - let native gestures work
-        // D3 will handle the zoom behavior
-      }, { passive: true });
-      
-      svg.on("touchmove", function(event) {
-        // Don't prevent default - let native gestures work
-        // D3 will handle the zoom behavior
-      }, { passive: true });
-      
-      svg.on("touchend", function(event) {
-        // Don't prevent default - let native gestures work
-      }, { passive: true });
-    }
-    
-    // Store reference to zoom behavior
-    zoomBehaviorRef.current = zoom;
 
     // Update positions on simulation tick with performance optimization
     simulation.on("tick", () => {
@@ -1051,16 +1060,128 @@ const NetworkVisualization = () => {
         .attr("y", d => d.y);
     });
 
-    // Simplified loading with faster simulation
+    // Apply optimal zoom and centering after simulation completes
     simulation.on("end", () => {
-      // Center the network after simulation completes
+      // Use cached network center if available, otherwise calculate dynamically
+      let networkCenterX, networkCenterY;
+      
+      // Always calculate network center dynamically for accurate positioning
+      const nodes = simulation.nodes();
+      if (nodes.length > 0) {
+        // Calculate bounds including label radius for each node
+        const bounds = nodes.map(n => {
+          const labelPadding = isMobile ? 15 : 25;
+          const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add glow padding
+          
+          // Estimate label dimensions
+          const fontSize = isMobile ? 20 : 28;
+          const avgCharWidth = fontSize * 0.6;
+          const estimatedLabelWidth = Math.max(n.name.length * avgCharWidth, 100);
+          const estimatedLabelHeight = fontSize * 1.2;
+          
+          // Calculate label radius using same logic as collision detection
+          const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+          const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+          const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+          
+          return {
+            left: n.x - totalRadius,
+            right: n.x + totalRadius,
+            top: n.y - totalRadius,
+            bottom: n.y + totalRadius
+          };
+        });
+        
+        // Find the overall bounds
+        const minX = Math.min(...bounds.map(b => b.left));
+        const maxX = Math.max(...bounds.map(b => b.right));
+        const minY = Math.min(...bounds.map(b => b.top));
+        const maxY = Math.max(...bounds.map(b => b.bottom));
+        
+        // Calculate the center of the network
+        networkCenterX = (minX + maxX) / 2;
+        networkCenterY = (minY + maxY) / 2;
+        console.log('Calculated network center dynamically:', { x: networkCenterX, y: networkCenterY });
+      }
+      
+      if (networkCenterX !== undefined && networkCenterY !== undefined) {
+        // Apply the optimal transform with proper centering
+        const optimalTransform = d3.zoomIdentity
+          .translate(width / 2 - networkCenterX * zoomLevel, height / 2 - networkCenterY * zoomLevel)
+          .scale(zoomLevel);
+        
+        // Apply the transform immediately without transition to avoid 100% flash
+        svg.call(zoomBehaviorRef.current.transform, optimalTransform);
+      }
+      
+      // Mark as loaded immediately
+      setIsLoading(false);
+      
+      // Re-center after a short delay to ensure simulation is fully settled
       setTimeout(() => {
-        centerNetwork();
-        // Mark as loaded after centering
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 600); // Wait for centering transition to complete
-      }, 100); // Short delay for simulation to settle
+        if (svgRef.current && zoomBehaviorRef.current && simulationRef.current) {
+          const svg = d3.select(svgRef.current);
+          const width = svg.node().getBoundingClientRect().width;
+          const height = svg.node().getBoundingClientRect().height;
+          
+          const nodes = simulationRef.current.nodes();
+          if (nodes.length > 0) {
+            // Recalculate bounds with settled positions
+            const bounds = nodes.map(n => {
+              const labelPadding = isMobile ? 15 : 25;
+              const nodeRadius = Math.max(n.size * (isMobile ? 2.5 : 3.5), 16) + 4;
+              
+              const fontSize = isMobile ? 20 : 28;
+              const avgCharWidth = fontSize * 0.6;
+              const estimatedLabelWidth = Math.max(n.name.length * avgCharWidth, 100);
+              const estimatedLabelHeight = fontSize * 1.2;
+              
+              const labelRadiusX = (estimatedLabelWidth / 2) + labelPadding;
+              const labelRadiusY = (estimatedLabelHeight / 2) + labelPadding;
+              const totalRadius = Math.max(labelRadiusX, labelRadiusY, nodeRadius + labelPadding);
+              
+              return {
+                left: n.x - totalRadius,
+                right: n.x + totalRadius,
+                top: n.y - totalRadius,
+                bottom: n.y + totalRadius
+              };
+            });
+            
+            const minX = Math.min(...bounds.map(b => b.left));
+            const maxX = Math.max(...bounds.map(b => b.right));
+            const minY = Math.min(...bounds.map(b => b.top));
+            const maxY = Math.max(...bounds.map(b => b.bottom));
+            
+            const settledCenterX = (minX + maxX) / 2;
+            const settledCenterY = (minY + maxY) / 2;
+            
+            // Only re-center if the position has changed significantly
+            const currentTransform = d3.zoomTransform(svg.node());
+            const currentCenterX = (width / 2 - currentTransform.x) / currentTransform.k;
+            const currentCenterY = (height / 2 - currentTransform.y) / currentTransform.k;
+            
+            const centerDiffX = Math.abs(settledCenterX - currentCenterX);
+            const centerDiffY = Math.abs(settledCenterY - currentCenterY);
+            
+            if (centerDiffX > 10 || centerDiffY > 10) {
+              console.log('Re-centering after simulation settled:', {
+                settledCenter: { x: settledCenterX, y: settledCenterY },
+                currentCenter: { x: currentCenterX, y: currentCenterY },
+                diff: { x: centerDiffX, y: centerDiffY }
+              });
+              
+              const settledTransform = d3.zoomIdentity
+                .translate(width / 2 - settledCenterX * zoomLevel, height / 2 - settledCenterY * zoomLevel)
+                .scale(zoomLevel);
+              
+              svg.transition()
+                .duration(300)
+                .call(zoomBehaviorRef.current.transform, settledTransform);
+            }
+          }
+        }
+      }, 100);
     });
 
     return () => {

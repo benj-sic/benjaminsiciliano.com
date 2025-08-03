@@ -12,12 +12,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node scripts/inject-git-date.js && react-scripts build",
+    "build": "node scripts/inject-git-date.js && node scripts/calculate-optimal-zoom.js && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-social-card": "node scripts/generate-social-card.js",
     "generate-all-social-images": "node scripts/generate-all-social-images.js",
-    "inject-git-date": "node scripts/inject-git-date.js"
+    "inject-git-date": "node scripts/inject-git-date.js",
+    "calculate-optimal-zoom": "node scripts/calculate-optimal-zoom.js"
   },
   "eslintConfig": {
     "extends": [
