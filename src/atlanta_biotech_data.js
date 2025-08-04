@@ -1087,12 +1087,11 @@ export const atlantaBiotechEcosystem = {
         id: 'department_of_veterans_affairs',
         name: 'VA',
         type: 'government',
-        size: 14,
-        description: "Federal agency providing healthcare services to military veterans. A key partner for medtech pilot programs.",
-        website: 'https://www.va.gov/',
+        size: 18,
+        description: "Atlanta Department of Veterans Affairs - Federal agency providing healthcare to military veterans. Atlanta VA is a key hub for clinical research, pilot testing for biotech/medtech startups, and translational medicine partnerships with universities and local innovators.",
+        website: 'https://www.va.gov/atlanta-health-care/',
         keyPersonnel: [],
-        funding: 'N/A',
-        recentNews: 'Partnered with OXOS Medical to pilot handheld X-ray devices in VA hospitals.',
+        recentNews: "Partnered with OXOS Medical for portable X-ray pilots; active collaborator via Georgia CTSA, Emory, and Morehouse."
     },
 
     // SERVICE PROVIDERS & SUPPORT
@@ -2142,6 +2141,12 @@ export const atlantaBiotechEcosystem = {
     { source: "georgia_ctsa", target: "grady", type: "infrastructure", description: "Operates clinical research units within Grady for translational and population health research." },
     { source: "georgia_ctsa", target: "choa", type: "infrastructure", description: "Supports pediatric clinical research infrastructure at CHOA sites." },
 
+    // --- VA Academic & Clinical Research Partnerships ---
+    { source: "department_of_veterans_affairs", target: "emory", type: "collaboration", description: "Joint clinical research, many dual-appointed physician-scientists, major partner in translational medicine and clinical trials." },
+    { source: "department_of_veterans_affairs", target: "morehouse", type: "collaboration", description: "NIH-funded clinical and translational science, joint community health studies as part of Georgia CTSA." },
+    { source: "department_of_veterans_affairs", target: "gatech", type: "collaboration", description: "Device testing, digital health, and engineering partnerships on medtech pilots and translational projects." },
+    { source: "department_of_veterans_affairs", target: "georgia_ctsa", type: "affiliation", description: "Formal affiliate of the Georgia Clinical & Translational Science Alliance (Georgia CTSA), Atlanta's NIH translational research consortium." },
+
     { source: "nucleate_atlanta", target: "gatech", type: "collaboration", description: "Nucleate Atlanta recruits founders and fellows from Georgia Tech graduate programs." },
     { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
     { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
@@ -2288,6 +2293,10 @@ export const atlantaBiotechEcosystem = {
     { source: "venturelab", target: "quadrant_i", type: "collaboration", description: "VentureLab works upstream of Quadrant-i to identify and nurture promising tech transfer opportunities." },
     { source: "venturelab", target: "biolocity", type: "collaboration", description: "Refers high-potential GT teams to Biolocity for translational medtech support and funding." },
     { source: "gatech", target: "cambium_oncology", type: "research_collaboration", description: "Georgia Tech bioengineering and drug manufacturing support" },
+    // --- VA Company & Startup Connections ---
+    { source: "department_of_veterans_affairs", target: "oxos", type: "pilot", description: "Pilot program with OXOS Medical for handheld X-ray devices in VA hospitals." },
+    { source: "department_of_veterans_affairs", target: "diasyst", type: "collaboration", description: "Clinical implementation and validation of diabetes management software, building on joint Emory/VA research." },
+    { source: "department_of_veterans_affairs", target: "tempus", type: "research", description: "Tempus (via acquired AKESOgen) conducted genomics work for VA's Million Veteran Program." },
     { source: "oxos", target: "department_of_veterans_affairs", type: "partnership", description: "Pilot program partnership" },
     { source: "micron", target: "cdc", type: "partnership", description: "Research and clinical trial collaboration" },
     { source: "iqvia_atlanta", target: "cdc", type: "partnership", description: "Real-world data partnership" },
@@ -2396,6 +2405,9 @@ export const atlantaBiotechEcosystem = {
     { source: "rowen", target: "emory", type: "partnership", description: "Emory University collaborates with Rowen Foundation on biotech and environmental research initiatives in the 2,000-acre innovation district." },
     { source: "rowen", target: "gatech", type: "partnership", description: "Georgia Tech partners with Rowen Foundation on technology development and commercialization initiatives in the knowledge community." },
     { source: "rowen", target: "georgia_bio", type: "partnership", description: "Georgia Life Sciences (formerly Georgia Bio) collaborates with Rowen Foundation on statewide biotech ecosystem development and industry partnerships." },
+
+    // --- VA Broader Ecosystem Connection ---
+    { source: "department_of_veterans_affairs", target: "georgia_bio", type: "affiliation", description: "Ecosystem stakeholder and clinical/policy partner for workforce and translational initiatives." },
 
     { source: "gra_fund", target: "earlitec", type: "investment", description: "EarliTec Diagnostics is a GRA Venture Fund portfolio company developing early diagnosis tools for autism and developmental disorders." },
 
