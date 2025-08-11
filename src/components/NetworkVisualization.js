@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import * as d3 from 'd3';
-import { atlantaBiotechEcosystem, nodeTypeMap, nodeColors } from '../atlanta_biotech_data.js';
 import { useTheme } from '../contexts/ThemeContext';
 import './NetworkVisualization.css';
 
-const NetworkVisualization = () => {
+const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
   const { theme } = useTheme();
   const svgRef = useRef();
   const containerRef = useRef();
@@ -16,6 +15,29 @@ const NetworkVisualization = () => {
   const [isLoading, setIsLoading] = useState(true);
   const selectedNodeRef = useRef(null);
   const [lastCommitDate, setLastCommitDate] = useState('July 2025');
+  const [networkData, setNetworkData] = useState({ nodes: [], links: [] });
+  const [nodeTypeMap, setNodeTypeMap] = useState({});
+  const [nodeColors, setNodeColors] = useState({});
+  
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      if (dataFile === 'emory') {
+        const { nodes, links } = await import('../emory_biotech_data.js');
+        const { nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
+        setNetworkData({ nodes, links });
+        setNodeTypeMap(ntm);
+        setNodeColors(nc);
+      } else {
+        const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
+        setNetworkData(atlantaBiotechEcosystem);
+        setNodeTypeMap(ntm);
+        setNodeColors(nc);
+      }
+      setIsLoading(false);
+    };
+    loadData();
+  }, [dataFile]);
   
   // Function to fetch last git commit date
   const fetchLastCommitDate = useCallback(async () => {
@@ -212,15 +234,12 @@ const NetworkVisualization = () => {
   // Store zoom behavior reference
   const zoomBehaviorRef = useRef(null);
 
-  // Real Atlanta Biotech ecosystem data
-  const networkData = atlantaBiotechEcosystem;
-  
   // Helper function to get the selected edge object from the ID
   const getSelectedEdge = useMemo(() => {
     if (!selectedEdgeId) return null;
     return networkData.links.find(link => {
-      const sourceId = link.source;
-      const targetId = link.target;
+      const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+      const targetId = typeof link.target === 'object' ? link.target.id : link.target;
       const linkId = sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
       return linkId === selectedEdgeId;
     });
@@ -1212,7 +1231,7 @@ const NetworkVisualization = () => {
     const queryLower = query.toLowerCase().trim();
     const queryWords = queryLower.split(/\s+/).filter(word => word.length > 0);
     
-    const results = atlantaBiotechEcosystem.nodes.filter(node => {
+    const results = networkData.nodes.filter(node => {
       const nodeId = node.id.toLowerCase();
       const nodeName = node.name.toLowerCase();
       const nodeType = typeMap[node.type] ? typeMap[node.type].toLowerCase() : '';

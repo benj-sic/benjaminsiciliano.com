@@ -2451,5 +2451,7 @@ export const nodeColors = {
     'Service Provider': '#545454', // Gray
     'Startup': '#00AEEF', // Light Blue
     'Provider & Health System': '#7C9A7A', // Sage
-    'Community Builder': '#669999', // muted teal-gray for connective nodes
+    'Community Builder': '#E67300', // Orange
 };
+
+export default atlantaBiotechEcosystem;
