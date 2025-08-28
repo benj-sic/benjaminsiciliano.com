@@ -19,6 +19,50 @@
   pointer-events: auto;
 }
 
+/* Override styles when used in NetworkOnly context - Remove all conflicts */
+.network-only .theme-toggle {
+  all: unset !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  background: var(--bg-tertiary) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid var(--border-primary) !important;
+  color: var(--text-primary) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+.network-only .theme-toggle:hover {
+  background: var(--bg-quinary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-accent) !important;
+  transform: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+.network-only .theme-icon {
+  width: 16px !important;
+  height: 16px !important;
+  transition: none !important;
+  color: currentColor !important;
+}
+
+.network-only .theme-toggle:hover .theme-icon {
+  color: var(--text-accent) !important;
+  transform: none !important;
+}
+
 @media (max-width: 1200px) {
   .theme-toggle {
     right: 1rem;
@@ -77,6 +121,19 @@
     width: 18px;
     height: 18px;
   }
+  
+  /* NetworkOnly responsive styles */
+  .network-only .theme-toggle {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  
+  .network-only .theme-icon {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -88,5 +145,17 @@
   .header-buttons .theme-icon {
     width: 16px;
     height: 16px;
+  }
+  
+  /* NetworkOnly responsive styles */
+  .network-only .theme-toggle {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+  
+  .network-only .theme-icon {
+    width: 12px;
+    height: 12px;
   }
 } 

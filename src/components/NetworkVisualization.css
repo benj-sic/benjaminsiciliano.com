@@ -81,6 +81,46 @@
   flex-shrink: 0;
 }
 
+/* When UI is hidden, make network take full height */
+.network-visualization.hide-ui {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+.network-visualization.hide-ui .network-layout {
+  min-height: 100vh !important;
+  height: 100vh !important;
+  max-height: none !important;
+}
+
+.network-visualization.hide-ui .network-main {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+.network-visualization.hide-ui .network-canvas {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+/* Override desktop height constraints when UI is hidden */
+@media (min-width: 1025px) {
+  .network-visualization.hide-ui .network-layout {
+    height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  .network-visualization.hide-ui .network-sidebar-left {
+    max-height: 100vh !important;
+  }
+}
+
+/* Ensure SVG takes full height when UI is hidden */
+.network-visualization.hide-ui .network-canvas svg {
+  height: 100vh !important;
+  min-height: 100vh !important;
+}
+
 .network-header h2 {
   font-size: 1.6rem;
   margin-bottom: 1rem;
@@ -160,6 +200,8 @@
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
+
+
 
 /* Mobile responsive styling for stats */
 @media (max-width: 768px) {
@@ -393,6 +435,29 @@
 .node-highlighted .node-glow {
   opacity: 1 !important;
   fill: rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Additional highlighting for NetworkOnly page */
+.node-group.highlighted .node-main {
+  filter: drop-shadow(0 0 20px var(--network-highlight-shadow)) 
+          drop-shadow(0 0 30px rgba(255, 255, 255, 0.9)) !important;
+  transform: scale(1.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.node-group.highlighted .node-glow {
+  opacity: 1 !important;
+  fill: rgba(255, 107, 107, 0.5) !important;
+}
+
+.node-group.highlighted .label {
+  font-weight: 900 !important;
+  font-size: 32px !important;
+  fill: var(--network-highlight-color) !important;
+  stroke: var(--network-highlight-color) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.8)) !important;
 }
 
 .label-highlighted {
@@ -855,6 +920,8 @@
   justify-content: center;
   width: 36px;
   height: 36px;
+  line-height: 1;
+  position: relative;
   /* Touch improvements for mobile */
   touch-action: manipulation;
   -webkit-touch-callout: none;
@@ -880,6 +947,11 @@
 .control-button svg {
   width: 16px;
   height: 16px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .center-button {
@@ -1171,8 +1243,6 @@
 .org-item:hover {
   background-color: var(--network-hover-bg);
   border-radius: 6px;
-  padding: 4px;
-  margin: -4px;
 }
 
 .org-node-color {
@@ -1851,12 +1921,10 @@
 .connection-item:hover {
   background: var(--network-hover-bg);
   border-color: var(--network-border-secondary);
-  transform: translateY(-1px);
   box-shadow: 0 2px 8px var(--network-shadow);
 }
 
 .connection-item:active {
-  transform: translateY(0);
   box-shadow: 0 1px 4px var(--network-shadow);
 }
 
@@ -1998,4 +2066,6 @@
   .connection-description {
     font-size: 9px;
   }
-} 
+}
+
+ 

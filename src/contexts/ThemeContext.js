@@ -12,6 +12,7 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('dark');
+  const [isThemeChanging, setIsThemeChanging] = useState(false);
 
   // Function to get system preference
   const getSystemPreference = () => {
@@ -65,14 +66,18 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const toggleTheme = () => {
+    setIsThemeChanging(true);
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
     applyTheme(newTheme);
+    // Reset the theme changing state after a brief delay to allow the network to re-render
+    setTimeout(() => setIsThemeChanging(false), 100);
   };
 
   const value = {
     theme,
     toggleTheme,
+    isThemeChanging,
     isDark: theme === 'dark',
     isLight: theme === 'light'
   };

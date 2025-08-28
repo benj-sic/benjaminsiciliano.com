@@ -1,0 +1,1950 @@
+/* CSS Variables for Network Highlighting */
+:root {
+  --network-highlight-color: #ff6b6b;
+  --network-highlight-shadow: rgba(255, 107, 107, 0.6);
+}
+
+/*
+ * ============================================================================
+ * NETWORKONLY COMPONENT STYLES - ISOLATED STYLING SYSTEM
+ * ============================================================================
+ * 
+ * 🚨 CRITICAL: This file contains styles ONLY for the NetworkOnly page (/network)
+ * 
+ * IMPORTANT RULES:
+ * 1. ALL CSS classes in this file MUST be prefixed with '.network-only'
+ * 2. This prevents conflicts with the main page styling system
+ * 3. NEVER use bare class names (e.g., '.control-button') - always scope them
+ * 
+ * FILE RESPONSIBILITIES:
+ * - NetworkOnly page layout and styling
+ * - NetworkOnly page share popup (simple version)
+ * - NetworkOnly page controls, legend, filters
+ * - NetworkOnly page responsive behavior
+ * 
+ * WHAT NOT TO CHANGE HERE:
+ * - Main page styling (use src/App.css instead)
+ * - Global theme system (use ThemeToggle.css instead)
+ * - Network visualization (use NetworkVisualization.css instead)
+ * 
+ * MODIFICATION GUIDE:
+ * - To change NetworkOnly page: Edit this file
+ * - To change main page: Edit src/App.css
+ * - To change both pages: Edit NetworkVisualization.css
+ * 
+ * See STYLING_ARCHITECTURE.md for complete documentation
+ * ============================================================================
+ */
+
+/* NetworkOnly Component Styles */
+.network-only {
+  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+  transition: background 0.3s ease;
+}
+
+/* Edge and Node Highlighting Styles */
+.network-only .link.link-highlighted {
+  stroke-width: 8px !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 8px var(--network-highlight-shadow)) !important;
+  transition: all 0.3s ease;
+}
+
+.network-only .link.link-dimmed {
+  opacity: 0.1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.network-only .node-group.node-highlighted .node-main {
+  filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) 
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) !important;
+}
+
+.network-only .node-group.node-highlighted .node-glow {
+  opacity: 1 !important;
+  fill: rgba(255, 107, 107, 0.3) !important;
+}
+
+.network-only .node-group.node-dimmed .node-main {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+.network-only .node-group.node-dimmed .node-glow {
+  opacity: 0.1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.network-only .label.label-highlighted {
+  font-weight: 900 !important;
+  font-size: 32px !important;
+  fill: var(--network-highlight-color) !important;
+  stroke: var(--network-highlight-color) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
+}
+
+.network-only .label.label-dimmed {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Edge hover effect for better interactivity */
+.network-only .link:hover {
+  stroke-width: 8px !important;
+  opacity: 0.9 !important;
+  filter: drop-shadow(0 0 4px var(--network-highlight-shadow)) !important;
+  transition: all 0.2s ease;
+}
+
+/* Top Right Corner Controls */
+.network-only .top-right-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.network-only .top-right-controls .network-share-button,
+.network-only .top-right-controls .theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: var(--bg-tertiary) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary) !important;
+  border-radius: 8px !important;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+  width: 36px;
+  height: 36px;
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.network-only .top-right-controls .network-share-button:hover,
+.network-only .top-right-controls .theme-toggle:hover {
+  background: var(--bg-quinary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-accent) !important;
+  transform: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+.network-only .top-right-controls .network-share-button:hover .network-share-icon,
+.network-only .top-right-controls .theme-toggle:hover .theme-icon {
+  color: var(--text-accent) !important;
+  transform: none !important;
+}
+
+.network-only .top-right-controls .network-share-button.expanded {
+  background: var(--bg-quinary) !important;
+  border-color: var(--text-accent) !important;
+  color: var(--text-accent) !important;
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: min(280px, calc(100vw - 120px)) !important;
+  height: auto !important;
+  min-height: 36px !important;
+  max-height: calc(100vh - 120px) !important;
+  padding: 12px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  position: relative !important;
+  z-index: 1002 !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease, max-height 0.3s ease-in-out, max-width 0.3s ease-in-out !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.network-only .top-right-controls .network-share-button.expanded .network-share-icon {
+  color: var(--text-accent) !important;
+}
+
+/* Inline share dropdown content - appears within the expanded button */
+.network-only .network-share-dropdown-content-inline {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 0;
+  flex: 1;
+  min-width: 0;
+  padding-right: 8px;
+}
+
+/* Custom scrollbar for share dropdown content */
+.network-only .network-share-dropdown-content-inline::-webkit-scrollbar {
+  width: 6px;
+}
+
+.network-only .network-share-dropdown-content-inline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.network-only .network-share-dropdown-content-inline::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.network-only .network-share-dropdown-content-inline::-webkit-scrollbar-thumb:hover {
+  background: var(--text-accent);
+}
+
+/* Original positioned share dropdown content - kept for backward compatibility */
+.network-only .network-share-dropdown-content {
+  position: absolute;
+  top: 0;
+  right: 44px;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 200px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1002;
+}
+
+.network-only .network-share-icon,
+.network-only .top-right-controls .theme-icon {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* Ensure theme toggle is perfectly aligned with share button */
+.network-only .top-right-controls .theme-toggle {
+  position: relative !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Main Controls Panel - Top Left */
+.network-only .main-controls-panel {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual Control Buttons */
+/* Square buttons */
+.network-only .control-button,
+.network-only .top-right-controls .network-share-button,
+.network-only .top-right-controls .theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Legend button - rectangular */
+.network-only .legend-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  min-width: 80px !important;
+  width: auto !important;
+  flex-shrink: 0 !important;
+  gap: 6px;
+}
+
+.network-only .control-button:hover {
+  background: var(--bg-quinary);
+  border-color: var(--border-secondary);
+  color: var(--text-accent);
+}
+
+.network-only .control-button:hover svg {
+  color: var(--text-accent);
+}
+
+.network-only .control-button svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* Control Dropdowns */
+.network-only .control-dropdown {
+  position: relative;
+  isolation: isolate; /* Create stacking context */
+  z-index: 1000;
+}
+
+.network-only .control-dropdown-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  position: relative;
+  flex-shrink: 0 !important;
+  z-index: 1000;
+}
+
+.network-only .control-dropdown-button:hover {
+  background: var(--bg-quinary);
+  border-color: var(--border-secondary);
+  color: var(--text-accent);
+}
+
+.network-only .control-dropdown-button:hover svg {
+  color: var(--text-accent);
+}
+
+.network-only .control-dropdown-button svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 0;
+}
+
+.network-only .control-dropdown-button:not(.expanded) svg {
+  position: static;
+  opacity: 1;
+}
+
+.network-only .control-dropdown-button.expanded {
+  background: var(--bg-quinary);
+  border-color: var(--text-accent);
+  color: var(--text-accent);
+  width: auto !important;
+  height: auto !important;
+  min-width: 280px !important;
+  min-height: 36px !important;
+  max-width: 280px !important;
+  max-height: calc(100vh - 120px) !important;
+  padding: 16px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  position: relative !important;
+  z-index: 1002 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.network-only .control-dropdown-button.expanded svg {
+  color: var(--text-accent);
+}
+
+/* Inline dropdown content - appears within the expanded button */
+.network-only .control-dropdown-content-inline,
+.network-only .legend-content-inline,
+.network-only .network-share-dropdown-content-inline {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  min-width: 0;
+  margin-top: 8px;
+  padding-right: 8px;
+}
+
+/* Custom scrollbar for dropdown content */
+.network-only .control-dropdown-content-inline::-webkit-scrollbar {
+  width: 6px;
+}
+
+.network-only .control-dropdown-content-inline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.network-only .control-dropdown-content-inline::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.network-only .control-dropdown-content-inline::-webkit-scrollbar-thumb:hover {
+  background: var(--text-accent);
+}
+
+/* Original positioned dropdown content - kept for backward compatibility */
+.network-only .control-dropdown-content {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 280px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+}
+
+/* Search Input */
+.network-only .search-dropdown-title {
+  color: var(--text-accent);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.network-only .search-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.network-only .search-input:focus {
+  outline: none;
+  border-color: var(--text-accent);
+  background: var(--bg-quinary);
+}
+
+.network-only .search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Filter Groups */
+.network-only .filter-group {
+  margin-bottom: 20px;
+  width: 100%;
+  overflow: hidden;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.network-only .filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.network-only .filter-group h5,
+.network-only .legend-section h5,
+.network-only .network-share-dropdown-title,
+.network-only .search-results h5,
+.network-only .search-dropdown-title {
+  color: var(--text-accent);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: block;
+  text-align: center;
+}
+
+.network-only .filter-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.network-only .filter-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.network-only .filter-checkbox:hover {
+  background: var(--bg-quinary);
+}
+
+.network-only .filter-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.network-only .checkbox-custom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-secondary);
+  border-radius: 4px;
+  background: transparent;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.network-only .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+  background: var(--text-accent);
+  border-color: var(--text-accent);
+}
+
+.network-only .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.network-only .checkbox-label,
+.network-only .legend-item span {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.network-only .filter-checkbox:hover .checkbox-label {
+  color: var(--text-primary);
+}
+
+.network-only .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom + .checkbox-label {
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* Search Results */
+.network-only .search-results {
+  margin-top: 0;
+}
+
+
+
+.network-only .search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.network-only .search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.network-only .result-type-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--border-primary);
+}
+
+.network-only .search-result-item:hover {
+  background: var(--bg-quinary);
+  border-color: var(--border-secondary);
+}
+
+.network-only .search-result-item.clickable {
+  cursor: pointer;
+}
+
+.network-only .result-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.network-only .result-name {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.network-only .result-type {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Collapsible Legend */
+.network-only .fixed-legend {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.network-only .legend-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: auto;
+  min-width: 80px;
+  height: 36px;
+  gap: 6px;
+  position: relative;
+}
+
+.network-only .legend-toggle-button span {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.network-only .legend-toggle-button:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-accent);
+}
+
+.network-only .legend-toggle-button:hover svg {
+  color: var(--text-accent);
+}
+
+.network-only .legend-toggle-button:hover span {
+  color: var(--text-accent);
+}
+
+.network-only .legend-toggle-button.expanded {
+  background: var(--bg-quinary) !important;
+  border-color: var(--text-accent) !important;
+  color: var(--text-accent) !important;
+  width: auto !important;
+  min-width: 280px !important;
+  max-width: calc(100vw - 120px) !important;
+  height: auto !important;
+  min-height: 36px !important;
+  max-height: calc(100vh - 120px) !important;
+  padding: 16px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  position: relative !important;
+  z-index: 1002 !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease, max-height 0.3s ease-in-out, max-width 0.3s ease-in-out !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.network-only .legend-toggle-button.expanded span {
+  color: var(--text-accent);
+}
+
+/* Inline legend content - appears within the expanded button */
+.network-only .legend-content-inline {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 8px;
+  padding-right: 8px; /* Add space for scrollbar */
+  min-height: 100px; /* Ensure minimum content visibility */
+  flex: 1;
+  min-width: 0;
+}
+
+/* Custom scrollbar for legend content */
+.network-only .legend-content-inline::-webkit-scrollbar {
+  width: 6px;
+}
+
+.network-only .legend-content-inline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.network-only .legend-content-inline::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.network-only .legend-content-inline::-webkit-scrollbar-thumb:hover {
+  background: var(--text-accent);
+}
+
+.network-only .legend-toggle-button svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.network-only .legend-toggle-button span {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Original positioned legend content - kept for backward compatibility */
+.network-only .legend-content {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 280px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+}
+
+.network-only .legend-section {
+  margin-bottom: 20px;
+  width: 100%;
+  min-height: min-content;
+  overflow: hidden;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.network-only .legend-section:last-child {
+  margin-bottom: 0;
+}
+
+.network-only .legend-section h5 {
+  color: var(--text-accent);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: block;
+}
+
+.network-only .legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.network-only .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.network-only .legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-secondary);
+}
+
+.network-only .legend-items span {
+  color: var(--text-primary) !important;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+}
+
+/* Full Screen Network */
+.network-only .network-fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.network-only .network-fullscreen > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ensure network visualization takes full screen when hideHeader is true */
+.network-only .network-fullscreen .network-visualization {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  overflow: hidden;
+}
+
+.network-only .network-fullscreen .network-visualization .network-main {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+.network-only .network-fullscreen .network-visualization .network-canvas {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 100vw !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+/* Network Stats - Bottom Right */
+.network-only .network-stats-bottom-right {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  max-width: min(300px, calc(100vw - 40px));
+  transition: all 0.3s ease;
+}
+
+.network-only .network-stats-bottom-right .stats-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.network-only .network-stats-bottom-right .stat-label {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.network-only .network-stats-bottom-right .stat-value {
+  font-weight: 700;
+  color: var(--text-accent) !important;
+  font-size: 14px;
+}
+
+/* Network Share Dropdown */
+.network-share-dropdown {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1001;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  min-width: 200px;
+}
+
+.network-share-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.network-share-dropdown-title {
+  color: var(--text-accent);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.network-share-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  min-width: 0;
+  overflow: hidden;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  margin: 0;
+}
+
+.network-share-option:hover {
+  color: var(--text-accent);
+  background: var(--bg-quinary);
+}
+
+.network-share-option-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-primary);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.network-share-option:hover .network-share-option-icon {
+  color: var(--text-accent);
+}
+
+/* Share Toast */
+.network-share-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1002;
+  background: var(--success-bg);
+  border: 1px solid var(--text-accent);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-accent);
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease;
+}
+
+.network-share-toast-icon {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Hide the non-floating stats display on network-only page */
+.network-only .stats-display {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Also hide the header and sidebar on network-only page */
+.network-only .network-header,
+.network-only .network-sidebar-left {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Remove any bottom margin/padding that might create a color block */
+.network-only .network-visualization {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+/* Ensure network-layout takes full height */
+.network-only .network-layout {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  height: 100% !important;
+}
+
+/* Ensure network-main takes full height */
+.network-only .network-main {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  height: 100% !important;
+}
+
+/* Ensure network-canvas takes full height */
+.network-only .network-canvas {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  height: 100% !important;
+}
+
+/* Force all network-related containers to have no bottom space */
+.network-only .network-visualization > *:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  height: auto !important;
+}
+
+/* Ensure the SVG canvas itself takes full height */
+.network-only .network-canvas svg {
+  height: 100% !important;
+  max-height: none !important;
+}
+
+/* Remove any potential bottom spacing from the network-fullscreen container */
+.network-only .network-fullscreen {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Ensure all SVG icons in buttons don't interfere with clicks */
+.network-only button svg {
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Consistent spacing for all controls */
+  .network-only .top-right-controls,
+  .network-only .main-controls-panel {
+    top: 15px;
+    gap: 8px;
+  }
+  
+  .network-only .top-right-controls {
+    right: 15px;
+  }
+  
+  .network-only .main-controls-panel {
+    left: 15px;
+  }
+  
+  /* Unified button sizing for ALL buttons except legend */
+  .network-only .control-button,
+  .network-only .control-dropdown-button,
+  .network-only .top-right-controls .network-share-button,
+  .network-only .top-right-controls .theme-toggle {
+    padding: 6px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+  }
+
+  /* Legend button sizing */
+  .network-only .legend-toggle-button {
+    padding: 6px 10px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    min-width: 75px !important;
+    width: auto !important;
+    gap: 5px;
+  }
+
+  .network-only .legend-toggle-button span {
+    font-size: 12px;
+  }
+  
+  /* Unified icon sizing */
+  .network-only .control-button svg,
+  .network-only .control-dropdown-button svg,
+  .network-only .top-right-controls .network-share-icon,
+  .network-only .top-right-controls .theme-icon,
+  .network-only .legend-toggle-button svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  /* Unified expanded states */
+  .network-only .control-dropdown-button.expanded,
+  .network-only .legend-toggle-button.expanded,
+  .network-only .top-right-controls .network-share-button.expanded {
+    min-width: 240px !important;
+    max-width: calc(100vw - 60px) !important;
+    max-height: calc(100vh - 180px) !important;
+    padding: 12px !important;
+  }
+  
+  /* Stats panel */
+  .network-only .network-stats-bottom-right {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 14px;
+    max-width: min(260px, calc(100vw - 50px));
+  }
+  
+  .network-only .network-stats-bottom-right .stats-item {
+    font-size: 11px;
+  }
+  
+  .network-only .network-stats-bottom-right .stat-value {
+    font-size: 13px;
+  }
+  
+  .network-only .fixed-legend {
+    bottom: 15px;
+    left: 15px;
+  }
+}
+  
+  .network-only .network-share-dropdown-content {
+    top: 0;
+    right: 40px;
+    min-width: 180px;
+  }
+  
+  .network-only .network-share-toast {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 14px;
+  }
+
+@media (max-width: 600px) {
+  /* Consistent spacing for all controls */
+  .network-only .top-right-controls,
+  .network-only .main-controls-panel {
+    top: 12px;
+    gap: 6px;
+  }
+  
+  .network-only .top-right-controls {
+    right: 12px;
+  }
+  
+  .network-only .main-controls-panel {
+    left: 12px;
+  }
+  
+  /* Unified button sizing for ALL buttons except legend */
+  .network-only .control-button,
+  .network-only .control-dropdown-button,
+  .network-only .top-right-controls .network-share-button,
+  .network-only .top-right-controls .theme-toggle {
+    padding: 5px !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+  }
+
+  /* Legend button sizing */
+  .network-only .legend-toggle-button {
+    padding: 5px 9px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    min-width: 70px !important;
+    width: auto !important;
+    gap: 4px;
+  }
+
+  .network-only .legend-toggle-button span {
+    font-size: 11px;
+  }
+  
+  /* Unified icon sizing */
+  .network-only .control-button svg,
+  .network-only .control-dropdown-button svg,
+  .network-only .top-right-controls .network-share-icon,
+  .network-only .top-right-controls .theme-icon,
+  .network-only .legend-toggle-button svg {
+    width: 13px;
+    height: 13px;
+  }
+  
+  /* Unified expanded states */
+  .network-only .control-dropdown-button.expanded,
+  .network-only .legend-toggle-button.expanded,
+  .network-only .top-right-controls .network-share-button.expanded {
+    min-width: 100px !important;
+    max-width: min(260px, calc(100vw - 50px)) !important;
+    max-height: calc(100vh - 200px) !important;
+    padding: 8px !important;
+  }
+
+  /* Adjust font sizes in expanded dropdowns */
+  .network-only .control-dropdown-button.expanded .filter-group h5,
+  .network-only .legend-toggle-button.expanded .legend-section h5,
+  .network-only .top-right-controls .network-share-button.expanded h5 {
+    font-size: 11px;
+  }
+
+  .network-only .control-dropdown-button.expanded .checkbox-label,
+  .network-only .legend-toggle-button.expanded .legend-item span {
+    font-size: 11px;
+  }
+  
+  /* Stats panel */
+  .network-only .network-stats-bottom-right {
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 12px;
+    max-width: min(240px, calc(100vw - 45px));
+  }
+  
+  .network-only .network-stats-bottom-right .stats-item {
+    font-size: 10px;
+  }
+  
+  .network-only .network-stats-bottom-right .stat-value {
+    font-size: 12px;
+  }
+  
+  .network-only .fixed-legend {
+    bottom: 12px;
+    left: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Consistent spacing for all controls */
+  .network-only .top-right-controls,
+  .network-only .main-controls-panel {
+    top: 10px;
+    gap: 5px;
+  }
+  
+  .network-only .top-right-controls {
+    right: 10px;
+  }
+  
+  .network-only .main-controls-panel {
+    left: 10px;
+  }
+  
+  /* Unified button sizing for ALL buttons except legend */
+  .network-only .control-button,
+  .network-only .control-dropdown-button,
+  .network-only .top-right-controls .network-share-button,
+  .network-only .top-right-controls .theme-toggle {
+    padding: 4px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+  }
+
+  /* Legend button sizing */
+  .network-only .legend-toggle-button {
+    padding: 4px 8px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    min-width: 65px !important;
+    width: auto !important;
+    gap: 3px;
+  }
+
+  .network-only .legend-toggle-button span {
+    font-size: 10px;
+  }
+  
+  /* Unified icon sizing */
+  .network-only .control-button svg,
+  .network-only .control-dropdown-button svg,
+  .network-only .top-right-controls .network-share-icon,
+  .network-only .top-right-controls .theme-icon,
+  .network-only .legend-toggle-button svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  /* Unified expanded states */
+  .network-only .control-dropdown-button.expanded,
+  .network-only .legend-toggle-button.expanded,
+  .network-only .top-right-controls .network-share-button.expanded {
+    min-width: 200px !important;
+    max-width: calc(100vw - 40px) !important;
+    max-height: calc(100vh - 220px) !important;
+    padding: 10px !important;
+  }
+
+  /* Adjust font sizes in expanded dropdowns */
+  .network-only .control-dropdown-button.expanded .filter-group h5,
+  .network-only .legend-toggle-button.expanded .legend-section h5,
+  .network-only .top-right-controls .network-share-button.expanded h5 {
+    font-size: 10px;
+  }
+
+  .network-only .control-dropdown-button.expanded .checkbox-label,
+  .network-only .legend-toggle-button.expanded .legend-item span {
+    font-size: 10px;
+  }
+  
+  /* Stats panel */
+  .network-only .network-stats-bottom-right {
+    bottom: 10px;
+    right: 10px;
+    padding: 7px 10px;
+    max-width: min(200px, calc(100vw - 35px));
+  }
+  
+  .network-only .network-stats-bottom-right .stats-item {
+    font-size: 9px;
+  }
+  
+  .network-only .network-stats-bottom-right .stat-value {
+    font-size: 11px;
+  }
+  
+  .network-only .fixed-legend {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .network-only .network-share-dropdown-content {
+    top: 0;
+    right: 36px;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 360px) {
+  /* Consistent spacing for all controls */
+  .network-only .top-right-controls,
+  .network-only .main-controls-panel {
+    top: 8px;
+    gap: 4px;
+  }
+  
+  .network-only .top-right-controls {
+    right: 8px;
+  }
+  
+  .network-only .main-controls-panel {
+    left: 8px;
+  }
+  
+  /* Unified button sizing for ALL buttons except legend */
+  .network-only .control-button,
+  .network-only .control-dropdown-button,
+  .network-only .top-right-controls .network-share-button,
+  .network-only .top-right-controls .theme-toggle {
+    padding: 3px !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    max-width: 26px !important;
+    max-height: 26px !important;
+  }
+
+  /* Legend button sizing */
+  .network-only .legend-toggle-button {
+    padding: 3px 7px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    max-height: 26px !important;
+    min-width: 60px !important;
+    width: auto !important;
+    gap: 2px;
+  }
+
+  .network-only .legend-toggle-button span {
+    font-size: 9px;
+  }
+  
+  /* Unified icon sizing */
+  .network-only .control-button svg,
+  .network-only .control-dropdown-button svg,
+  .network-only .top-right-controls .network-share-icon,
+  .network-only .top-right-controls .theme-icon,
+  .network-only .legend-toggle-button svg {
+    width: 11px;
+    height: 11px;
+  }
+  
+  /* Unified expanded states */
+  .network-only .control-dropdown-button.expanded,
+  .network-only .legend-toggle-button.expanded,
+  .network-only .top-right-controls .network-share-button.expanded {
+    min-width: 180px !important;
+    max-width: calc(100vw - 20px) !important;
+    max-height: calc(100vh - 240px) !important;
+    padding: 8px !important;
+    overflow: hidden !important;
+  }
+
+  /* Adjust font sizes and spacing in expanded dropdowns */
+  .network-only .control-dropdown-button.expanded .filter-group h5,
+  .network-only .legend-toggle-button.expanded .legend-section h5,
+  .network-only .top-right-controls .network-share-button.expanded h5 {
+    font-size: 9px;
+    margin-bottom: 8px;
+    padding-right: 4px;
+  }
+
+  .network-only .control-dropdown-button.expanded .checkbox-label,
+  .network-only .legend-toggle-button.expanded .legend-item span {
+    font-size: 9px;
+    line-height: 1.2;
+  }
+
+  .network-only .control-dropdown-content-inline {
+    gap: 12px;
+    padding-right: 4px;
+  }
+
+  .network-only .filter-group {
+    margin-bottom: 12px;
+  }
+
+  .network-only .filter-checkboxes {
+    gap: 6px;
+  }
+
+  .network-only .filter-checkbox {
+    padding: 3px;
+  }
+
+  .network-only .checkbox-custom {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  
+  /* Stats panel */
+  .network-only .network-stats-bottom-right {
+    bottom: 8px;
+    right: 8px;
+    padding: 6px 8px;
+    max-width: min(160px, calc(100vw - 25px));
+  }
+  
+  .network-only .network-stats-bottom-right .stats-item {
+    font-size: 8px;
+  }
+  
+  .network-only .network-stats-bottom-right .stat-value {
+    font-size: 10px;
+  }
+  
+  .network-only .fixed-legend {
+    bottom: 8px;
+    left: 8px;
+  }
+  
+  .network-only .network-share-dropdown-content {
+    top: 0;
+    right: 34px;
+    min-width: 120px;
+  }
+}
+
+/* Ensure all expanded buttons have smooth transitions and proper overflow handling */
+.network-only .control-dropdown-button.expanded,
+.network-only .legend-toggle-button.expanded,
+.network-only .top-right-controls .network-share-button.expanded {
+  transition: all 0.3s ease, max-width 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  overflow: hidden;
+  will-change: max-height, max-width;
+}
+
+/* Ensure content inside expanded buttons scrolls smoothly */
+.network-only .control-dropdown-content-inline,
+.network-only .legend-content-inline,
+.network-only .network-share-dropdown-content-inline {
+  transition: max-height 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-secondary) transparent;
+}
+
+/* Firefox scrollbar styling */
+.network-only .control-dropdown-content-inline::-moz-scrollbar,
+.network-only .legend-content-inline::-moz-scrollbar,
+.network-only .network-share-dropdown-content-inline::-moz-scrollbar {
+  width: 6px;
+}
+
+.network-only .control-dropdown-content-inline::-moz-scrollbar-track,
+.network-only .legend-content-inline::-moz-scrollbar-track,
+.network-only .network-share-dropdown-content-inline::-moz-scrollbar-track {
+  background: transparent;
+}
+
+.network-only .control-dropdown-content-inline::-moz-scrollbar-thumb,
+.network-only .legend-content-inline::-moz-scrollbar-thumb,
+.network-only .network-share-dropdown-content-inline::-moz-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.network-only .control-dropdown-content-inline::-moz-scrollbar-thumb:hover,
+.network-only .legend-content-inline::-moz-scrollbar-thumb:hover,
+.network-only .network-share-dropdown-content-inline::-moz-scrollbar-thumb:hover {
+  background: var(--text-accent);
+}
+
+/* Node Details */
+.network-only .node-details {
+  margin-top: 8px;
+  border-top: none;
+  padding-top: 0;
+}
+
+.network-only .details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.network-only .details-header h3 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  margin-right: 12px;
+  text-align: left;
+}
+
+.network-only .details-close {
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 4px 8px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.network-only .details-close:hover {
+  background: var(--bg-quinary);
+  color: var(--text-primary);
+}
+
+.network-only .details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.network-only .node-type {
+  color: var(--text-accent);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  margin: 0;
+  text-align: left;
+}
+
+.network-only .node-type.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.network-only .node-type.clickable:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.network-only .node-description {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+}
+
+.network-only .details-section {
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.network-only .details-section h4 {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  text-align: left;
+}
+
+.network-only .website-link {
+  color: var(--text-accent);
+  text-decoration: none;
+  word-break: break-all;
+  text-align: left !important;
+}
+
+.network-only .website-link:hover {
+  text-decoration: underline;
+}
+
+.network-only .personnel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.network-only .personnel-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.network-only .linkedin-link {
+  color: var(--text-accent);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 2px 6px;
+  border: 1px solid var(--border-primary);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.network-only .linkedin-link:hover {
+  background: var(--bg-quinary);
+  border-color: var(--border-secondary);
+}
+
+.network-only .recent-news {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+  text-align: left;
+}
+
+.network-only .connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.network-only .connection-item {
+  padding: 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.network-only .connection-item.clickable {
+  cursor: pointer;
+}
+
+.network-only .connection-item.clickable:hover {
+  background: var(--bg-quinary);
+  border-color: var(--border-secondary);
+}
+
+.network-only .connection-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.network-only .connection-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.network-only .connection-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.network-only .connection-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.network-only .connection-website-link {
+  color: var(--text-accent);
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.network-only .connection-website-link:hover {
+  text-decoration: underline;
+}
+
+.network-only .connection-type {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.network-only .connection-relationship {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.network-only .relationship-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.network-only .relationship-type {
+  color: var(--text-accent);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.network-only .connection-description {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+}
+
+.network-only .no-connections {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-style: italic;
+  margin: 0;
+  text-align: left;
+}
+
+
+
+.network-only .section-header-with-close {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.network-only .section-header-with-close h4 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.network-only .connected-organizations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.network-only .org-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  transition: background-color 0.2s ease;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.network-only .org-item.clickable {
+  cursor: pointer;
+}
+
+.network-only .org-item.clickable:hover {
+  background-color: var(--bg-quinary);
+}
+
+.network-only .org-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.network-only .org-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.network-only .org-name {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.network-only .org-website-link {
+  color: var(--text-accent);
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.network-only .org-website-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.network-only .org-type {
+  color: var(--text-secondary);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.network-only .relationship-description {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+}
+

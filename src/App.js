@@ -1,12 +1,45 @@
+/*
+ * ============================================================================
+ * MAIN APPLICATION COMPONENT - MAIN PAGE COMPONENT
+ * ============================================================================
+ * 
+ * 🚨 CRITICAL: This component is ONLY for the main page (/)
+ * 
+ * IMPORTANT RULES:
+ * 1. This component should NOT import or use NetworkOnly-specific styles
+ * 2. All main page styling should be handled by App.css
+ * 3. This component is completely isolated from the NetworkOnly page
+ * 
+ * COMPONENT RESPONSIBILITIES:
+ * - Main page layout and functionality
+ * - Main page share popup (sophisticated version with backdrop)
+ * - Main page sections (welcome, about, contact, etc.)
+ * - Main page responsive behavior
+ * 
+ * WHAT NOT TO CHANGE HERE:
+ * - NetworkOnly page functionality (use NetworkOnly.js instead)
+ * - Global theme system (use ThemeContext instead)
+ * - Network visualization (use NetworkVisualization component)
+ * 
+ * MODIFICATION GUIDE:
+ * - To change main page: Edit this file and App.css
+ * - To change NetworkOnly page: Edit NetworkOnly.js and NetworkOnly.css
+ * - To change both pages: Edit NetworkVisualization component
+ * 
+ * See STYLING_ARCHITECTURE.md for complete documentation
+ * ============================================================================
+ */
+
 import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NetworkVisualization from './components/NetworkVisualization';
+import NetworkOnly from './components/NetworkOnly';
 import ThemeToggle from './components/ThemeToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
 import cacheManager from './utils/cache.js';
 import performanceMonitor from './utils/performance.js';
 import './App.css';
-import EmoryNetwork from './components/EmoryNetwork';
+
 
 function App() {
   const [formData, setFormData] = useState({
@@ -184,7 +217,8 @@ function App() {
     <Router>
       <ThemeProvider>
         <Routes>
-          <Route path="/emory" element={<EmoryNetwork />} />
+
+          <Route path="/network" element={<NetworkOnly />} />
           <Route path="/" element={
             <div className="App">
               <header className="header">

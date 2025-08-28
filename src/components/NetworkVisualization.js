@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback, forwardRef, useImperativeHandle } from 'react';
 import * as d3 from 'd3';
 import { useTheme } from '../contexts/ThemeContext';
 import './NetworkVisualization.css';
 
-const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
-  const { theme } = useTheme();
+const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false, onNodeClick, onEdgeClick }, ref) => {
+  const { theme, isThemeChanging } = useTheme();
   const svgRef = useRef();
   const containerRef = useRef();
   const simulationRef = useRef();
@@ -22,18 +22,10 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      if (dataFile === 'emory') {
-        const { nodes, links } = await import('../emory_biotech_data.js');
-        const { nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
-        setNetworkData({ nodes, links });
-        setNodeTypeMap(ntm);
-        setNodeColors(nc);
-      } else {
-        const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
-        setNetworkData(atlantaBiotechEcosystem);
-        setNodeTypeMap(ntm);
-        setNodeColors(nc);
-      }
+      const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
+      setNetworkData(atlantaBiotechEcosystem);
+      setNodeTypeMap(ntm);
+      setNodeColors(nc);
       setIsLoading(false);
     };
     loadData();
@@ -91,6 +83,120 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
   const [showSearch, setShowSearch] = useState(false); // Collapsed by default
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  
+  // Expose methods to parent component via ref
+  useImperativeHandle(ref, () => ({
+    getNetworkData: () => ({ nodes: networkData.nodes, links: networkData.links, nodeTypeMap: typeMap }),
+    setFilters,
+    setSearchQuery,
+    setSearchResults,
+    manualCenterNetwork,
+    centerNetwork,
+    zoomIn,
+    zoomOut,
+    zoomToSubnetwork,
+    getSearchResults: () => searchResults,
+    setSelectedNode: (node) => {
+      // Set the selected node and update connected nodes
+      setSelectedNode(node);
+      if (node) {
+        // Find all connected nodes
+        const connected = new Set();
+        connected.add(node.id);
+        networkData.links.forEach(link => {
+          const linkSource = typeof link.source === 'string' ? link.source : link.source.id;
+          const linkTarget = typeof link.target === 'string' ? link.target : link.target.id;
+          if (linkSource === node.id) {
+            connected.add(linkTarget);
+          } else if (linkTarget === node.id) {
+            connected.add(linkSource);
+          }
+        });
+        setConnectedNodes(connected);
+      } else {
+        setConnectedNodes(new Set());
+      }
+    },
+    setConnectedNodes: (connected) => {
+      setConnectedNodes(connected);
+    },
+    highlightNode: (nodeId) => {
+      // Highlight a specific node by ID
+      console.log('highlightNode called with nodeId:', nodeId);
+      if (svgRef.current) {
+        const svg = d3.select(svgRef.current);
+        console.log('SVG ref available, clearing previous highlights');
+        // Remove previous highlights
+        svg.selectAll('.node-group').classed('highlighted', false);
+        console.log('Adding highlight to node:', nodeId);
+        // Add highlight to specific node
+        const targetNode = svg.selectAll('.node-group').filter(d => d.id === nodeId);
+        console.log('Found target node elements:', targetNode.size());
+        targetNode.classed('highlighted', true);
+        console.log('Highlight applied');
+      } else {
+        console.log('SVG ref not available');
+      }
+    },
+    highlightConnection: (sourceId, targetId) => {
+      // Highlight a specific connection/edge
+      if (svgRef.current) {
+        const svg = d3.select(svgRef.current);
+        // Remove previous connection highlights
+        svg.selectAll('.link').classed('link-highlighted', false);
+        // Add highlight to specific connection
+        svg.selectAll('.link').filter(d => {
+          const dSourceId = typeof d.source === 'object' ? d.source.id : d.source;
+          const dTargetId = typeof d.target === 'object' ? d.target.id : d.target;
+          return (dSourceId === sourceId && dTargetId === targetId) || 
+                 (dSourceId === targetId && dTargetId === sourceId);
+        }).classed('link-highlighted', true);
+      }
+    },
+    setSelectedEdge: (sourceId, targetId) => {
+      // Create a unique edge identifier (sorted to handle both directions)
+      const edgeId = sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
+      setSelectedEdgeId(edgeId);
+      
+      // Set the connected nodes for this edge
+      const connected = new Set();
+      connected.add(sourceId);
+      connected.add(targetId);
+      setEdgeConnectedNodes(connected);
+    },
+    clearHighlight: () => {
+      // Clear all highlights
+      if (svgRef.current) {
+        const svg = d3.select(svgRef.current);
+        svg.selectAll('.node-group').classed('highlighted', false);
+        svg.selectAll('.node-group').classed('node-highlighted', false);
+        svg.selectAll('.node-group').classed('node-dimmed', false);
+        svg.selectAll('.label').classed('label-highlighted', false);
+        svg.selectAll('.label').classed('label-dimmed', false);
+        svg.selectAll('.link').classed('link-highlighted', false);
+        svg.selectAll('.link').classed('link-dimmed', false);
+      }
+      // Also clear the internal state
+      setSelectedEdgeId(null);
+      setEdgeConnectedNodes(new Set());
+      setSelectedNode(null);
+    },
+    clearNodeSelection: () => {
+      // Clear node selection state
+      setSelectedNode(null);
+      setConnectedNodes(new Set());
+      
+      // Also clear visual highlighting classes
+      if (svgRef.current) {
+        const svg = d3.select(svgRef.current);
+        svg.selectAll('.node-group').classed('highlighted', false);
+        svg.selectAll('.node-group').classed('node-highlighted', false);
+        svg.selectAll('.node-group').classed('node-dimmed', false);
+        svg.selectAll('.label').classed('label-highlighted', false);
+        svg.selectAll('.label').classed('label-dimmed', false);
+      }
+    }
+  }));
   
   // Detect mobile device
   const isMobile = useMemo(() => {
@@ -1395,6 +1501,12 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
     
+    // Call the onEdgeClick callback if provided (for NetworkOnly page)
+    if (onEdgeClick) {
+      onEdgeClick(edge);
+      return; // Return early to let the parent component handle the edge click
+    }
+    
     // Clear node selection when clicking an edge
     setSelectedNode(null);
     selectedNodeRef.current = null;
@@ -1476,29 +1588,37 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
           }
         }, 100); // Small delay to ensure state updates
         
-        // Auto-scroll to the search & details section
-        setTimeout(() => {
-          const sidebar = document.querySelector('.network-sidebar-left');
-          const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
-          if (sidebar && searchDropdownButton) {
-            const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
-            sidebar.scrollTo({
-              top: scrollTop,
-              behavior: 'smooth'
-            });
-          }
-        }, 100); // Small delay to ensure the dropdown is rendered
+        // Auto-scroll to the search & details section (only when sidebar is visible)
+        if (!hideUI) {
+          setTimeout(() => {
+            const sidebar = document.querySelector('.network-sidebar-left');
+            const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
+            if (sidebar && searchDropdownButton) {
+              const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
+              sidebar.scrollTo({
+                top: scrollTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 100); // Small delay to ensure the dropdown is rendered
+        }
         
         return clickedEdgeId;
       }
     });
-  }, [selectedEdgeId, setSelectedEdgeId, setEdgeConnectedNodes, setSearchQuery, setSearchResults, setShowSearch, manualCenterNetwork, zoomToSubnetwork]);
+  }, [selectedEdgeId, setSelectedEdgeId, setEdgeConnectedNodes, setSearchQuery, setSearchResults, setShowSearch, manualCenterNetwork, zoomToSubnetwork, hideUI, onEdgeClick]);
 
   const handleNodeClick = useCallback((node, event) => {
     console.log('Node clicked:', node.id, 'Current selected:', selectedNode?.id);
     
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
+    
+    // Call the onNodeClick callback if provided (for NetworkOnly page)
+    // But don't return early - let the main logic execute for network state
+    if (onNodeClick) {
+      onNodeClick(node);
+    }
     
     // Clear edge selection when clicking a node
     setSelectedEdgeId(null);
@@ -1547,46 +1667,55 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
     setSelectedNode(node);
     selectedNodeRef.current = node;
     setConnectedNodes(connected);
-    setSearchQuery('');
-    setSearchResults([]);
-    setShowSearch(true); // Auto-open the search & details dropdown
+    
+    // Only set UI state if onNodeClick is not provided (main page behavior)
+    if (!onNodeClick) {
+      setSearchQuery('');
+      setSearchResults([]);
+      setShowSearch(true); // Auto-open the search & details dropdown
+      
+      // Auto-scroll to the search & details section (only when sidebar is visible)
+      if (!hideUI) {
+        setTimeout(() => {
+          const sidebar = document.querySelector('.network-sidebar-left');
+          const searchDropdownButton = document.querySelector('.dropdown-container:last-child .control-dropdown-button');
+          if (sidebar && searchDropdownButton) {
+            const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
+            sidebar.scrollTo({
+              top: scrollTop,
+              behavior: 'smooth'
+            });
+          }
+        }, 100); // Small delay to ensure the dropdown is rendered
+      }
+    }
     
     // Zoom to the subnetwork after a short delay to ensure state updates and simulation has settled
     setTimeout(() => {
       zoomToSubnetwork(node);
     }, 100);
-    
-    // Auto-scroll to the search & details section
-    setTimeout(() => {
-      const sidebar = document.querySelector('.network-sidebar-left');
-      const searchDropdownButton = document.querySelector('.dropdown-container:last-child .dropdown-button');
-      if (sidebar && searchDropdownButton) {
-        const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
-        sidebar.scrollTo({
-          top: scrollTop,
-          behavior: 'smooth'
-        });
-      }
-    }, 100); // Small delay to ensure the dropdown is rendered
-  }, [isMobile, selectedNode, networkData.links, zoomToSubnetwork, manualCenterNetwork]);
+  }, [isMobile, selectedNode, networkData.links, zoomToSubnetwork, manualCenterNetwork, hideUI, onNodeClick]);
 
   return (
-    <div className="network-visualization">
-      {/* Title and Description */}
-      <div className="network-header">
-        <h2>Atlanta Biotech Network</h2>
-        <p>
-          An interactive visualization of the organizations powering innovation in Georgia biotech — including startups, academic institutions, VCs, incubators, and service providers. Use the filters to focus on 
-          specific organization types. Click on nodes and connections for detailed information and website links.
-        </p>
-        <div className="header-spacer"></div>
-      </div>
+    <div className={`network-visualization ${hideUI ? 'hide-ui' : ''}`}>
+      {/* Title and Description - Only show when not hiding UI */}
+      {!hideUI && (
+        <div className="network-header">
+          <h2>Atlanta Biotech Network</h2>
+          <p>
+            An interactive visualization of the organizations powering innovation in Georgia biotech — including startups, academic institutions, VCs, incubators, and service providers. Use the filters to focus on 
+            specific organization types. Click on nodes and connections for detailed information and website links.
+          </p>
+          <div className="header-spacer"></div>
+        </div>
+      )}
 
       {/* Main Layout with Sidebars */}
       <div className="network-layout">
         
-        {/* Left Sidebar - Controls */}
-        <div className="network-sidebar-left">
+        {/* Left Sidebar - Controls - Only show when not hiding UI */}
+        {!hideUI && (
+          <div className="network-sidebar-left">
           {/* Controls Section */}
           <div className="dropdown-container">
             <button className="dropdown-button" onClick={() => setShowControls(!showControls)}>
@@ -2195,11 +2324,12 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
             )}
           </div>
         </div>
+        )}
 
         {/* Main Network Canvas */}
         <div className="network-main">
           {/* Loading Overlay */}
-          {isLoading && (
+          {(isLoading || isThemeChanging) && (
             <div className="loading-overlay">
               <div className="loading-spinner"></div>
               <p>Loading network...</p>
@@ -2208,7 +2338,7 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
           
           {/* Network Canvas */}
           <div 
-            className={`network-canvas ${isLoading ? 'repositioning' : ''}`}
+            className={`network-canvas ${(isLoading || isThemeChanging) ? 'repositioning' : ''}`}
             ref={containerRef}
             onClick={(e) => {
               // Clear selection if clicking on empty space (not on nodes, labels, or links)
@@ -2236,26 +2366,28 @@ const NetworkVisualization = ({ dataFile = 'atlanta' }) => {
 
       </div>
       
-             {/* Stats Display */}
-       <div className="stats-display">
-         <div className="stats-item">
-           <span className="stat-label">Organizations:</span>
-           <span className="stat-value">{networkData.nodes.length}</span>
-         </div>
-         <div className="stats-item">
-           <span className="stat-label">Connections:</span>
-           <span className="stat-value">{networkData.links.length}</span>
-         </div>
-         <div className="stats-item">
-           <span className="stat-label">Last Update:</span>
-           <span className="stat-value">{lastCommitDate}</span>
-         </div>
-       </div>
+      {/* Stats Display - Only show when not hiding UI */}
+      {!hideUI && (
+        <div className="stats-display">
+          <div className="stats-item">
+            <span className="stat-label">Organizations:</span>
+            <span className="stat-value">{networkData.nodes.length}</span>
+          </div>
+          <div className="stats-item">
+            <span className="stat-label">Connections:</span>
+            <span className="stat-value">{networkData.links.length}</span>
+          </div>
+          <div className="stats-item">
+            <span className="stat-label">Last Update:</span>
+            <span className="stat-value">{lastCommitDate}</span>
+          </div>
+        </div>
+      )}
 
 
 
     </div>
   );
-};
+});
 
 export default NetworkVisualization; 

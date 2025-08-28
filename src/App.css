@@ -1,3 +1,35 @@
+/*
+ * ============================================================================
+ * MAIN APPLICATION STYLES - MAIN PAGE STYLING SYSTEM
+ * ============================================================================
+ * 
+ * 🚨 CRITICAL: This file contains styles ONLY for the main page (/)
+ * 
+ * IMPORTANT RULES:
+ * 1. These styles affect ONLY the main page, not the NetworkOnly page
+ * 2. NetworkOnly page has its own isolated styling system
+ * 3. Global components (ThemeToggle) may affect both pages
+ * 
+ * FILE RESPONSIBILITIES:
+ * - Main page layout and styling
+ * - Main page share popup (sophisticated version with backdrop)
+ * - Main page sections (welcome, about, contact, etc.)
+ * - Main page responsive behavior
+ * 
+ * WHAT NOT TO CHANGE HERE:
+ * - NetworkOnly page styling (use NetworkOnly.css instead)
+ * - Network visualization (use NetworkVisualization.css instead)
+ * - Global theme system (use ThemeToggle.css instead)
+ * 
+ * MODIFICATION GUIDE:
+ * - To change main page: Edit this file
+ * - To change NetworkOnly page: Edit NetworkOnly.css
+ * - To change both pages: Edit NetworkVisualization.css
+ * 
+ * See STYLING_ARCHITECTURE.md for complete documentation
+ * ============================================================================
+ */
+
 /* CSS Custom Properties for theming */
 :root {
   /* Dark theme (default) */
