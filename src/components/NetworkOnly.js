@@ -1046,10 +1046,10 @@ function NetworkOnly() {
     };
   }, []);
 
-  // Handle window resize to recalculate collision detection
+  // Handle window resize to recalculate preset sizing
   useEffect(() => {
     const handleResize = () => {
-      // Recalculate collision detection for any open dropdowns
+      // Recalculate preset sizing for any open dropdowns
       if (showShareDropdown) applyDropdownSizing('share');
       if (showFilters) applyDropdownSizing('filters');
       if (showSearch) applyDropdownSizing('search');
@@ -1070,12 +1070,11 @@ function NetworkOnly() {
     };
   }, [showShareDropdown, showFilters, showSearch, showLegend, applyDropdownSizing]);
 
-  // Ensure collision detection runs whenever search state changes
+  // Ensure preset sizing runs whenever search state changes
   useEffect(() => {
     if (showSearch) {
-      // Apply collision detection after search dropdown opens
-      // Use immediate timing for consistent behavior
-      setTimeout(() => applyDropdownSizing('search'), 0);
+      // Apply preset sizing immediately to prevent flash
+      applyDropdownSizing('search');
     }
   }, [showSearch, applyDropdownSizing]);
 
@@ -1303,7 +1302,7 @@ function NetworkOnly() {
                 ) : (
                   <div></div> /* Empty div to maintain layout when no back button needed */
                 )}
-                  <h5 className="search-dropdown-title">{getSearchDropdownTitle()}</h5>
+                  <h5 className="dropdown-title">{getSearchDropdownTitle()}</h5>
                   
                   <div 
                     className="network-only-details-close"

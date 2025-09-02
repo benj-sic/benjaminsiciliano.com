@@ -546,7 +546,9 @@
   height: auto !important;
   min-width: 200px !important; /* Reduced from 280px to allow collision detection to work */
   min-height: 36px !important;
-  /* max-width and max-height removed - let collision detection handle sizing */
+  /* Default max dimensions to prevent flash - will be overridden by JavaScript */
+  max-width: 400px !important;
+  max-height: 600px !important;
   padding: 12px !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
@@ -695,8 +697,7 @@
 }
 
 .network-only .network-share-dropdown-title,
-.network-only .search-results h5,
-.network-only .search-dropdown-title {
+.network-only .search-results h5 {
   color: var(--text-accent);
   font-size: 14px;
   font-weight: 600;
@@ -1478,7 +1479,9 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 240px !important;
-    /* max-width and max-height removed - let collision detection handle sizing */
+    /* Default max dimensions to prevent flash - will be overridden by JavaScript */
+    max-width: 400px !important;
+    max-height: 600px !important;
     padding: 12px !important;
   }
   
@@ -1601,7 +1604,9 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 100px !important;
-    /* max-width and max-height removed - let collision detection handle sizing */
+    /* Default max dimensions to prevent flash - will be overridden by JavaScript */
+    max-width: 300px !important;
+    max-height: 400px !important;
     padding: 8px !important;
   }
   
@@ -1703,7 +1708,9 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 200px !important;
-    /* max-width and max-height removed - let collision detection handle sizing */
+    /* Default max dimensions to prevent flash - will be overridden by JavaScript */
+    max-width: 250px !important;
+    max-height: 300px !important;
     padding: 10px !important;
   }
   
@@ -1811,7 +1818,9 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 180px !important;
-    /* max-width and max-height removed - let collision detection handle sizing */
+    /* Default max dimensions to prevent flash - will be overridden by JavaScript */
+    max-width: 200px !important;
+    max-height: 250px !important;
     padding: 8px !important;
     overflow: hidden !important;
   }
@@ -2318,7 +2327,7 @@
 .network-only .control-dropdown-content-inline .dropdown-header,
 .network-only .legend-content-inline .dropdown-header,
 .network-only .network-share-dropdown-content-inline .dropdown-header {
-  position: static;
+  position: relative; /* Changed from static to relative for absolute positioning of titles */
   background: none; /* Remove background */
   z-index: 10;
   padding: 4px 0;
@@ -2327,6 +2336,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* Consistent styling for ALL dropdown titles - uppercase and centered */
+.network-only .dropdown-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Styling for dropdown close buttons (now div elements) */
@@ -2370,12 +2392,7 @@
   background: none;
 }
 
-.network-only .search-dropdown-header .search-dropdown-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-}
+/* search-dropdown-title styling removed - now using consistent dropdown-title class */
 
 /* Ensure close button positioning is correct */
 .network-only .search-dropdown-header .network-only-details-close {
