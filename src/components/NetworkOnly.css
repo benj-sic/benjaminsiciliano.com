@@ -1,6 +1,15 @@
-/* CSS Variables for Network Highlighting */
+/* ============================================================================
+ * CSS VARIABLES - NETWORK HIGHLIGHTING
+ * ============================================================================
+ * 
+ * These variables define the visual appearance of highlighted network elements
+ * when users interact with nodes or connections. They provide consistent
+ * highlighting colors and shadow effects across the network visualization.
+ */
 :root {
+  /* Primary highlight color for network elements (coral red) */
   --network-highlight-color: #ff6b6b;
+  /* Semi-transparent shadow color for highlight effects */
   --network-highlight-shadow: rgba(255, 107, 107, 0.6);
 }
 
@@ -36,98 +45,190 @@
  * ============================================================================
  */
 
-/* NetworkOnly Component Styles */
+/* ============================================================================
+ * MAIN COMPONENT CONTAINER
+ * ============================================================================
+ * 
+ * The root container for the entire NetworkOnly page. This creates a full-screen
+ * layout that takes up the entire viewport and provides the foundation for
+ * all other elements.
+ */
 .network-only {
+  /* Full viewport dimensions */
   min-height: 100vh;
   height: 100vh;
   width: 100vw;
+  /* Positioning and layout */
   position: relative;
   overflow: hidden;
+  /* Visual styling */
   background: var(--bg-primary);
   transition: background 0.3s ease;
 }
 
-/* Edge and Node Highlighting Styles */
+/* ============================================================================
+ * NETWORK ELEMENT HIGHLIGHTING - LINKS/CONNECTIONS
+ * ============================================================================
+ * 
+ * These styles control the visual appearance of network connections (links)
+ * when they are highlighted or dimmed during user interactions.
+ * 
+ * Highlighted links become more prominent with increased stroke width,
+ * full opacity, and a glowing shadow effect.
+ * 
+ * Dimmed links fade to near-invisibility to focus attention on
+ * the highlighted elements.
+ */
 .network-only .link.link-highlighted {
+  /* Make highlighted connections more prominent */
   stroke-width: 8px !important;
   opacity: 1 !important;
+  /* Add glowing shadow effect using CSS variables */
   filter: drop-shadow(0 0 8px var(--network-highlight-shadow)) !important;
   transition: all 0.3s ease;
 }
 
 .network-only .link.link-dimmed {
+  /* Fade out non-highlighted connections */
   opacity: 0.1 !important;
   transition: opacity 0.3s ease;
 }
 
+/* ============================================================================
+ * NETWORK ELEMENT HIGHLIGHTING - NODES/ORGANIZATIONS
+ * ============================================================================
+ * 
+ * These styles control the visual appearance of network nodes (organizations)
+ * when they are highlighted or dimmed during user interactions.
+ * 
+ * Highlighted nodes get a prominent glow effect with multiple shadow layers
+ * and enhanced visual prominence.
+ * 
+ * Dimmed nodes fade to reduce visual noise and focus attention.
+ */
 .network-only .node-group.node-highlighted .node-main {
+  /* Add multiple shadow layers for dramatic glow effect */
   filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) 
           drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) !important;
 }
 
 .network-only .node-group.node-highlighted .node-glow {
+  /* Make the glow element fully visible with highlight color */
   opacity: 1 !important;
   fill: rgba(255, 107, 107, 0.3) !important;
 }
 
 .network-only .node-group.node-dimmed .node-main {
+  /* Fade out non-highlighted nodes */
   opacity: 0.3 !important;
   transition: opacity 0.3s ease;
 }
 
 .network-only .node-group.node-dimmed .node-glow {
+  /* Hide the glow effect for dimmed nodes */
   opacity: 0.1 !important;
   transition: opacity 0.3s ease;
 }
 
+/* ============================================================================
+ * NETWORK ELEMENT HIGHLIGHTING - LABELS/TEXT
+ * ============================================================================
+ * 
+ * These styles control the visual appearance of network labels (organization names)
+ * when they are highlighted or dimmed during user interactions.
+ * 
+ * Highlighted labels become much larger, bolder, and get a glowing effect
+ * to make them highly prominent and readable.
+ * 
+ * Dimmed labels fade to reduce visual clutter.
+ */
 .network-only .label.label-highlighted {
+  /* Make highlighted labels extremely prominent */
   font-weight: 900 !important;
   font-size: 32px !important;
+  /* Use highlight color for both fill and stroke */
   fill: var(--network-highlight-color) !important;
   stroke: var(--network-highlight-color) !important;
   stroke-width: 2px !important;
+  /* Add glowing shadow effect for dramatic appearance */
   filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
           drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
 }
 
 .network-only .label.label-dimmed {
+  /* Fade out non-highlighted labels */
   opacity: 0.3 !important;
   transition: opacity 0.3s ease;
 }
 
-/* Edge hover effect for better interactivity */
+/* ============================================================================
+ * INTERACTIVE HOVER EFFECTS - NETWORK CONNECTIONS
+ * ============================================================================
+ * 
+ * These styles provide immediate visual feedback when users hover over
+ * network connections, improving the interactive experience.
+ */
 .network-only .link:hover {
+  /* Increase stroke width on hover for better visibility */
   stroke-width: 8px !important;
   opacity: 0.9 !important;
   filter: drop-shadow(0 0 4px var(--network-highlight-shadow)) !important;
   transition: all 0.2s ease;
 }
 
-/* Top Right Corner Controls */
+/* ============================================================================
+ * TOP RIGHT CORNER CONTROLS
+ * ============================================================================
+ * 
+ * This section contains the primary control buttons positioned in the
+ * top-right corner of the screen. These controls provide access to
+ * network sharing functionality and theme switching.
+ * 
+ * The controls are fixed positioned to remain accessible regardless
+ * of scroll position and have a high z-index to stay above other content.
+ */
 .network-only .top-right-controls {
+  /* Fixed positioning in top-right corner */
   position: fixed;
   top: 20px;
   right: 20px;
+  /* Ensure controls appear above other content */
   z-index: 1000;
+  /* Vertical stack layout */
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
 }
 
+/* ============================================================================
+ * CONTROL BUTTON STYLING - SHARE & THEME TOGGLE
+ * ============================================================================
+ * 
+ * These styles define the appearance of the network share and theme toggle
+ * buttons. They use a modern glassmorphism design with backdrop blur
+ * and subtle borders for a premium feel.
+ * 
+ * The buttons are designed to be easily clickable while maintaining
+ * visual consistency with the overall design system.
+ */
 .network-only .top-right-controls .network-share-button,
 .network-only .top-right-controls .theme-toggle {
+  /* Center content within buttons */
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Consistent padding for touch targets */
   padding: 8px;
-  background: var(--bg-tertiary) !important;
+  /* Glassmorphism background with blur effect */
+  background: var(--bg-tertiary);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--border-primary) !important;
-  border-radius: 8px !important;
+  /* Subtle border for definition */
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
   color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.2s ease !important;
+  transition: all 0.2s ease;
   width: 36px;
   height: 36px;
   position: relative;
@@ -135,11 +236,23 @@
   margin: 0;
 }
 
+/* ============================================================================
+ * CONTROL BUTTON HOVER EFFECTS
+ * ============================================================================
+ * 
+ * These styles define the visual feedback when users hover over the
+ * control buttons. The hover state provides immediate visual confirmation
+ * of interactivity and changes the color scheme to highlight the button.
+ */
 .network-only .top-right-controls .network-share-button:hover,
 .network-only .top-right-controls .theme-toggle:hover {
+  /* Change background to highlight color */
   background: var(--bg-quinary) !important;
+  /* Update border color for better contrast */
   border-color: var(--border-secondary) !important;
+  /* Change text/icon color to accent */
   color: var(--text-accent) !important;
+  /* Prevent unwanted transformations */
   transform: none !important;
   box-shadow: none !important;
   margin: 0 !important;
@@ -151,22 +264,38 @@
   transform: none !important;
 }
 
+/* ============================================================================
+ * EXPANDED SHARE BUTTON STATE
+ * ============================================================================
+ * 
+ * When the share button is expanded, it transforms from a small icon button
+ * into a full dropdown panel. This state provides space for sharing options
+ * and maintains the visual hierarchy while expanding functionality.
+ * 
+ * The expanded state uses responsive dimensions to ensure it fits within
+ * the viewport constraints and provides smooth animations.
+ */
 .network-only .top-right-controls .network-share-button.expanded {
+  /* Visual styling for expanded state */
   background: var(--bg-quinary) !important;
   border-color: var(--text-accent) !important;
   color: var(--text-accent) !important;
+  /* Responsive width constraints */
   width: auto !important;
   min-width: 200px !important;
-  max-width: min(280px, calc(100vw - 120px)) !important;
+  /* max-width and max-height removed - let collision detection handle sizing */
+  /* Responsive height constraints */
   height: auto !important;
   min-height: 36px !important;
-  max-height: calc(100vh - 120px) !important;
+  /* Layout adjustments for expanded content */
   padding: 12px !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
+  /* Positioning and layering */
   position: relative !important;
   z-index: 1002 !important;
   overflow: hidden !important;
+  /* Smooth transition animations */
   transition: all 0.3s ease, max-height 0.3s ease-in-out, max-width 0.3s ease-in-out !important;
   display: flex !important;
   flex-direction: column !important;
@@ -176,23 +305,16 @@
   color: var(--text-accent) !important;
 }
 
-/* Inline share dropdown content - appears within the expanded button */
-.network-only .network-share-dropdown-content-inline {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-height: calc(100vh - 160px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-top: 0;
-  flex: 1;
-  min-width: 0;
-  padding-right: 8px;
-}
-
-/* Custom scrollbar for share dropdown content */
+/* ============================================================================
+ * CUSTOM SCROLLBAR STYLING - WEBKIT BROWSERS
+ * ============================================================================
+ * 
+ * These styles create a custom, minimal scrollbar for webkit-based browsers
+ * (Chrome, Safari, Edge). The scrollbar is thin and styled to match
+ * the overall design aesthetic while maintaining functionality.
+ */
 .network-only .network-share-dropdown-content-inline::-webkit-scrollbar {
+  /* Thin scrollbar width */
   width: 6px;
 }
 
@@ -231,75 +353,105 @@
   pointer-events: none;
 }
 
-/* Ensure theme toggle is perfectly aligned with share button */
-.network-only .top-right-controls .theme-toggle {
-  position: relative !important;
-  transform: none !important;
-  margin: 0 !important;
-  padding: 8px !important;
-  width: 36px !important;
-  height: 36px !important;
-  border-radius: 8px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
 
-/* Main Controls Panel - Top Left */
+
+/* ============================================================================
+ * MAIN CONTROLS PANEL - TOP LEFT
+ * ============================================================================
+ * 
+ * This panel contains the primary control buttons for the network visualization,
+ * positioned in the top-left corner. It includes filters, search, and legend
+ * controls that allow users to interact with and customize the network view.
+ * 
+ * The panel is fixed positioned to remain accessible and uses a vertical
+ * stack layout for organized button arrangement.
+ */
 .network-only .main-controls-panel {
+  /* Fixed positioning in top-left corner */
   position: fixed;
   top: 20px;
   left: 20px;
+  /* Ensure controls appear above other content */
   z-index: 1000;
+  /* Vertical stack layout for organized arrangement */
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Individual Control Buttons */
-/* Square buttons */
-.network-only .control-button,
-.network-only .top-right-controls .network-share-button,
-.network-only .top-right-controls .theme-toggle {
+/* ============================================================================
+ * CONTROL BUTTON STYLING - SQUARE BUTTONS
+ * ============================================================================
+ * 
+ * These styles define the appearance of square control buttons used for
+ * filters, search, and other network controls. They maintain consistent
+ * dimensions and styling with the top-right control buttons.
+ * 
+ * All buttons use the same glassmorphism design with backdrop blur and
+ * subtle borders for visual consistency.
+ */
+.network-only .control-button {
+  /* Center content within buttons */
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Consistent padding for touch targets */
   padding: 8px;
+  /* Glassmorphism background with blur effect */
   background: var(--bg-tertiary);
   backdrop-filter: blur(10px);
+  /* Subtle border for definition */
   border: 1px solid var(--border-primary);
   border-radius: 8px;
+  /* Text and cursor styling */
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  min-height: 36px !important;
-  max-width: 36px !important;
-  max-height: 36px !important;
-  flex-shrink: 0 !important;
+  /* Fixed square dimensions for consistency */
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  flex-shrink: 0;
 }
 
-/* Legend button - rectangular */
+/* ============================================================================
+ * LEGEND BUTTON STYLING - RECTANGULAR BUTTON
+ * ============================================================================
+ * 
+ * The legend button has a rectangular shape to accommodate text labels
+ * alongside the icon. It maintains the same visual style as other controls
+ * but with flexible width to fit the content.
+ * 
+ * This button toggles the network legend which explains node types and
+ * relationship categories.
+ */
 .network-only .legend-toggle-button {
+  /* Center content within button */
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Horizontal padding for text labels */
   padding: 8px 12px;
+  /* Glassmorphism background with blur effect */
   background: var(--bg-tertiary);
   backdrop-filter: blur(10px);
+  /* Subtle border for definition */
   border: 1px solid var(--border-primary);
   border-radius: 8px;
+  /* Text and cursor styling */
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
-  height: 36px !important;
-  min-height: 36px !important;
-  max-height: 36px !important;
-  min-width: 80px !important;
-  width: auto !important;
-  flex-shrink: 0 !important;
+  /* Fixed height, flexible width */
+  height: 36px;
+  min-height: 36px;
+  max-height: 36px;
+  min-width: 80px;
+  width: auto;
+  flex-shrink: 0;
   gap: 6px;
 }
 
@@ -319,10 +471,23 @@
   pointer-events: none;
 }
 
-/* Control Dropdowns */
+/* ============================================================================
+ * CONTROL DROPDOWN CONTAINERS
+ * ============================================================================
+ * 
+ * These containers hold dropdown content that appears when control buttons
+ * are clicked. They use relative positioning and create their own stacking
+ * context to ensure proper layering of dropdown content.
+ * 
+ * Each dropdown can contain filters, search results, or other interactive
+ * content that expands the functionality of the control buttons.
+ */
 .network-only .control-dropdown {
+  /* Relative positioning for dropdown content */
   position: relative;
-  isolation: isolate; /* Create stacking context */
+  /* Create stacking context for proper layering */
+  isolation: isolate;
+  /* Ensure dropdowns appear above other content */
   z-index: 1000;
 }
 
@@ -338,14 +503,13 @@
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  min-height: 36px !important;
-  max-width: 36px !important;
-  max-height: 36px !important;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  /* max-width and max-height removed - let collision detection handle expanded state */
   position: relative;
-  flex-shrink: 0 !important;
+  flex-shrink: 0;
   z-index: 1000;
 }
 
@@ -380,11 +544,10 @@
   color: var(--text-accent);
   width: auto !important;
   height: auto !important;
-  min-width: 280px !important;
+  min-width: 200px !important; /* Reduced from 280px to allow collision detection to work */
   min-height: 36px !important;
-  max-width: 280px !important;
-  max-height: calc(100vh - 120px) !important;
-  padding: 16px !important;
+  /* max-width and max-height removed - let collision detection handle sizing */
+  padding: 12px !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
   position: relative !important;
@@ -394,25 +557,43 @@
   flex-direction: column !important;
 }
 
+/* Search dropdown will use preset sizing and expand right and down like other dropdowns */
+
 .network-only .control-dropdown-button.expanded svg {
   color: var(--text-accent);
 }
 
-/* Inline dropdown content - appears within the expanded button */
-.network-only .control-dropdown-content-inline,
-.network-only .legend-content-inline,
-.network-only .network-share-dropdown-content-inline {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: calc(100vh - 160px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  flex: 1;
-  min-width: 0;
-  margin-top: 8px;
-  padding-right: 8px;
+/* Style section headers (Organization Type, Node Types, etc.) */
+.network-only .control-dropdown-content-inline .filter-group h5,
+.network-only .legend-content-inline .legend-section h5 {
+  text-align: left;
+  margin: 0 0 6px 0;
+  padding: 0;
+  font-size: 13px; /* Smaller than dropdown title (12px) but larger than body text */
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: none; /* Remove uppercase */
+  letter-spacing: normal; /* Remove letter spacing */
+}
+
+/* Remove any extra margins from the first elements after headers */
+.network-only .filter-group:first-child,
+.network-only .legend-section:first-child {
+  margin-top: 0;
+}
+
+/* Specific styling for the filter and legend sections in NetworkOnly */
+.network-only .control-dropdown-content-inline .filter-group {
+  margin-top: 0;
+}
+
+.network-only .legend-content-inline .legend-section {
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+.network-only .legend-content-inline .legend-section:first-child {
+  margin-top: 0;
 }
 
 /* Custom scrollbar for dropdown content */
@@ -421,11 +602,12 @@
 }
 
 .network-only .control-dropdown-content-inline::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-secondary);
+  border-radius: 3px;
 }
 
 .network-only .control-dropdown-content-inline::-webkit-scrollbar-thumb {
-  background: var(--border-secondary);
+  background: var(--text-secondary);
   border-radius: 3px;
 }
 
@@ -448,26 +630,31 @@
   z-index: 1001;
 }
 
-/* Search Input */
-.network-only .search-dropdown-title {
-  color: var(--text-accent);
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  margin-top: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  text-align: center;
-}
-
+/* ============================================================================
+ * SEARCH INPUT FIELD
+ * ============================================================================
+ * 
+ * The search input allows users to find specific organizations or
+ * relationship types within the network. It provides real-time filtering
+ * and search results as users type.
+ * 
+ * The input uses consistent styling with other form elements and
+ * includes focus states for better user experience.
+ */
 .network-only .search-input {
+  /* Full width within container */
   width: 100%;
+  /* Comfortable padding for text input */
   padding: 10px 12px;
+  /* Subtle background that contrasts with text */
   background: var(--input-bg);
+  /* Border that becomes prominent on focus */
   border: 1px solid var(--border-primary);
   border-radius: 6px;
+  /* Text color and sizing */
   color: var(--text-primary);
   font-size: 14px;
+  /* Smooth transitions for interactive states */
   transition: all 0.2s ease;
 }
 
@@ -481,11 +668,24 @@
   color: var(--text-secondary);
 }
 
-/* Filter Groups */
+/* ============================================================================
+ * FILTER GROUPS
+ * ============================================================================
+ * 
+ * Filter groups organize network filtering options by category (e.g., 
+ * Companies, Universities, VCs). Each group contains checkboxes that
+ * allow users to show/hide specific types of organizations in the network.
+ * 
+ * These groups help users focus on relevant parts of the network
+ * and reduce visual clutter by hiding irrelevant organization types.
+ */
 .network-only .filter-group {
+  /* Spacing between filter groups */
   margin-bottom: 20px;
+  /* Full width within container */
   width: 100%;
-  overflow: hidden;
+  /* Handle overflow gracefully */
+  /* overflow: hidden; */
   min-width: 0;
   flex-shrink: 1;
 }
@@ -494,13 +694,11 @@
   margin-bottom: 0;
 }
 
-.network-only .filter-group h5,
-.network-only .legend-section h5,
 .network-only .network-share-dropdown-title,
 .network-only .search-results h5,
 .network-only .search-dropdown-title {
   color: var(--text-accent);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   margin-bottom: 8px;
   margin-top: 0;
@@ -518,57 +716,62 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-height: 0;
 }
 
+/* Ensure all filter checkboxes are visible */
 .network-only .filter-checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
+  flex-shrink: 0; /* Prevent checkboxes from being cut off */
+  min-height: 20px; /* Ensure minimum height for each checkbox */
 }
 
-.network-only .filter-checkbox:hover {
-  background: var(--bg-quinary);
-}
-
+/* Custom checkbox styling for NetworkOnly */
 .network-only .filter-checkbox input[type="checkbox"] {
-  display: none;
+  display: none; /* Hide the native checkbox */
 }
 
-.network-only .checkbox-custom {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--border-secondary);
-  border-radius: 4px;
+.network-only .filter-checkbox .checkbox-custom {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--text-accent); /* Green border */
+  border-radius: 3px;
   background: transparent;
   position: relative;
+  cursor: pointer;
   transition: all 0.2s ease;
-  flex-shrink: 0;
+}
+
+
+.network-only .filter-checkbox .checkbox-custom:hover {
+  background: rgba(34, 197, 94, 0.1); /* Light green background on hover */
 }
 
 .network-only .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom {
-  background: var(--text-accent);
+  background: var(--text-accent); /* Green background when checked */
   border-color: var(--text-accent);
 }
 
-.network-only .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
-  content: '✓';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
+.network-only .filter-checkbox .checkbox-label {
   font-size: 12px;
-  font-weight: bold;
+  color: var(--text-secondary);
+  margin-left: 8px;
 }
 
-.network-only .checkbox-label,
+/* SVG checkmark styling for NetworkOnly checkboxes */
+.network-only .filter-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  content: '';
+  position: absolute;
+  top: -1;
+  left: -1;
+  width: 100%;
+  height: 100%;
+}
+
 .network-only .legend-item span {
   color: var(--text-primary);
   font-size: 13px;
@@ -583,6 +786,27 @@
   text-align: left;
 }
 
+/* Single rule for ALL dropdown containers */
+.network-only .control-dropdown-content-inline,
+.network-only .legend-content-inline,
+.network-only .network-share-dropdown-content-inline {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  min-width: 0;
+  margin-top: 0;
+  padding-right: 8px;
+  position: relative;
+  transition: max-height 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-secondary) transparent;
+}
+
 .network-only .filter-checkbox:hover .checkbox-label {
   color: var(--text-primary);
 }
@@ -592,29 +816,77 @@
   font-weight: 400;
 }
 
-/* Search Results */
+/* ============================================================================
+ * SEARCH RESULTS CONTAINER
+ * ============================================================================
+ * 
+ * The search results container displays organizations that match the
+ * user's search query. Results are shown as clickable items with
+ * organization names, types, and visual indicators.
+ * 
+ * This container appears below the search input when results are found
+ * and provides an easy way for users to select and explore specific
+ * organizations in the network.
+ */
 .network-only .search-results {
-  margin-top: 0;
+  /* Layout positioning */
+  margin-top: 8px;
+  /* Full width within container */
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  /* Handle overflow gracefully */
+  overflow: hidden;
+  margin-bottom: 16px;
+  text-align: left;
+  max-height: 400px; /* Increased from 250px to show more results */
+  overflow-y: auto;
 }
 
-
-
+/* ============================================================================
+ * SEARCH RESULTS LIST
+ * ============================================================================
+ * 
+ * The search results list contains individual search result items
+ * in a vertical stack. Each item represents a matching organization
+ * and can be clicked to select that organization in the network.
+ */
 .network-only .search-results-list {
+  /* Vertical stack layout for results */
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Consistent spacing between results */
+  gap: 10px; /* Increased from 8px for better visual separation */
 }
 
+/* ============================================================================
+ * SEARCH RESULT ITEM
+ * ============================================================================
+ * 
+ * Each search result item represents a single organization that matches
+ * the search query. Items include a color indicator, organization name,
+ * and type, and can be clicked to select that organization.
+ * 
+ * The items use consistent styling with other interactive elements
+ * and include hover effects for better user experience.
+ */
 .network-only .search-result-item {
+  /* Horizontal layout for item content */
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px;
+  gap: 10px; /* Increased from 8px for better spacing */
+  /* Comfortable padding for clickable area */
+  padding: 12px; /* Increased from 10px for better touch targets */
+  /* Subtle background that contrasts with text */
   background: var(--input-bg);
+  /* Border for definition and hover effects */
   border: 1px solid var(--border-primary);
   border-radius: 6px;
+  /* Interactive cursor and smooth transitions */
   cursor: pointer;
   transition: all 0.2s ease;
+  /* Ensure minimum height for better readability */
+  min-height: 48px; /* Added minimum height for consistent item sizing */
 }
 
 .network-only .result-type-color {
@@ -643,49 +915,46 @@
   color: var(--text-primary);
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 2px;
+  margin-bottom: 2px; /* Increased from 1px for better spacing */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.3; /* Added line height for better readability */
 }
 
 .network-only .result-type {
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: none;
   letter-spacing: 0.5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.2; /* Added line height for better readability */
 }
 
-/* Collapsible Legend */
+/* ============================================================================
+ * COLLAPSIBLE LEGEND - BOTTOM LEFT
+ * ============================================================================
+ * 
+ * The legend provides a visual reference for understanding the network
+ * visualization. It shows the color coding for different organization
+ * types and relationship categories.
+ * 
+ * The legend is positioned in the bottom-left corner and can be
+ * expanded/collapsed to show detailed information or just a toggle button.
+ */
 .network-only .fixed-legend {
+  /* Fixed positioning in bottom-left corner */
   position: fixed;
   bottom: 20px;
   left: 20px;
+  /* Ensure legend appears above other content */
   z-index: 1000;
 }
 
-.network-only .legend-toggle-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  background: var(--bg-tertiary);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-primary);
-  border-radius: 8px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: auto;
-  min-width: 80px;
-  height: 36px;
-  gap: 6px;
-  position: relative;
-}
+
 
 .network-only .legend-toggle-button span {
   font-size: 13px;
@@ -717,10 +986,9 @@
   color: var(--text-accent) !important;
   width: auto !important;
   min-width: 280px !important;
-  max-width: calc(100vw - 120px) !important;
+  /* max-width and max-height removed - let collision detection handle sizing */
   height: auto !important;
   min-height: 36px !important;
-  max-height: calc(100vh - 120px) !important;
   padding: 16px !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
@@ -776,12 +1044,7 @@
   pointer-events: none;
 }
 
-.network-only .legend-toggle-button span {
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  pointer-events: none;
-}
+
 
 /* Original positioned legend content - kept for backward compatibility */
 .network-only .legend-content {
@@ -799,7 +1062,7 @@
 }
 
 .network-only .legend-section {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   width: 100%;
   min-height: min-content;
   overflow: hidden;
@@ -811,20 +1074,7 @@
   margin-bottom: 0;
 }
 
-.network-only .legend-section h5 {
-  color: var(--text-accent);
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  margin-top: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
-  display: block;
-}
+
 
 .network-only .legend-items {
   display: flex;
@@ -851,6 +1101,16 @@
   font-size: 13px;
   font-weight: 400;
   transition: all 0.2s ease;
+}
+
+.network-only .legend-content-inline .legend-items {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.network-only .legend-content-inline .legend-item {
+  margin: 0 0 6px 0 !important; /* Only keep bottom margin between items */
+  padding: 0 !important;
 }
 
 /* Full Screen Network */
@@ -896,21 +1156,37 @@
   background: transparent !important;
 }
 
-/* Network Stats - Bottom Right */
+/* ============================================================================
+ * NETWORK STATISTICS PANEL - BOTTOM RIGHT
+ * ============================================================================
+ * 
+ * The network statistics panel displays key metrics about the current
+ * network view, including the total number of organizations and connections.
+ * 
+ * This panel provides users with a quick overview of the network scale
+ * and complexity, helping them understand the scope of the data they're
+ * exploring.
+ */
 .network-only .network-stats-bottom-right {
+  /* Fixed positioning in bottom-right corner */
   position: fixed;
   bottom: 20px;
   right: 20px;
+  /* Ensure stats appear above other content */
   z-index: 1000;
+  /* Glassmorphism background with blur effect */
   background: var(--bg-tertiary);
   backdrop-filter: blur(10px);
+  /* Subtle border and rounded corners */
   border: 1px solid var(--border-primary);
   border-radius: 8px;
+  /* Comfortable padding and layout */
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  /* No box-shadow to match other buttons */
+  /* Responsive width constraints */
   max-width: min(300px, calc(100vw - 40px));
   transition: all 0.3s ease;
 }
@@ -935,7 +1211,7 @@
 }
 
 /* Network Share Dropdown */
-.network-share-dropdown {
+.network-only .network-share-dropdown {
   position: fixed;
   top: 80px;
   right: 20px;
@@ -948,7 +1224,7 @@
   min-width: 200px;
 }
 
-.network-share-backdrop {
+.network-only .network-share-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -958,7 +1234,7 @@
   z-index: 1000;
 }
 
-.network-share-dropdown-title {
+.network-only .network-share-dropdown-title {
   color: var(--text-accent);
   font-size: 12px;
   font-weight: 600;
@@ -969,12 +1245,12 @@
   text-align: center;
 }
 
-.network-share-option {
+.network-only .network-share-option {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 4px;
+  padding: 8px 12px !important;
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -989,15 +1265,16 @@
   text-decoration: none;
   background: transparent;
   border: none;
-  margin: 0;
+  border-radius: 6px;
+  margin: 0 !important;
 }
 
-.network-share-option:hover {
+.network-only .network-share-option:hover {
   color: var(--text-accent);
   background: var(--bg-quinary);
 }
 
-.network-share-option-icon {
+.network-only .network-share-option-icon {
   width: 16px;
   height: 16px;
   color: var(--text-primary);
@@ -1005,12 +1282,12 @@
   transition: all 0.2s ease;
 }
 
-.network-share-option:hover .network-share-option-icon {
+.network-only .network-share-option:hover .network-share-option-icon {
   color: var(--text-accent);
 }
 
 /* Share Toast */
-.network-share-toast {
+.network-only .network-share-toast {
   position: fixed;
   bottom: 30px;
   right: 30px;
@@ -1028,7 +1305,7 @@
   animation: slideIn 0.3s ease;
 }
 
-.network-share-toast-icon {
+.network-only .network-share-toast-icon {
   width: 18px;
   height: 18px;
 }
@@ -1044,6 +1321,16 @@
   }
 }
 
+/* ============================================================================
+ * NETWORK VISUALIZATION LAYOUT OVERRIDES
+ * ============================================================================
+ * 
+ * These styles ensure the network visualization takes up the full viewport
+ * without any unwanted spacing or layout elements from the main page.
+ * 
+ * The NetworkOnly page is designed to be a clean, full-screen experience
+ * focused entirely on the network visualization.
+ */
 /* Hide the non-floating stats display on network-only page */
 .network-only .stats-display {
   display: none !important;
@@ -1118,7 +1405,20 @@
   pointer-events: none;
 }
 
-/* Responsive adjustments */
+/* ============================================================================
+ * RESPONSIVE DESIGN - TABLET BREAKPOINT (768px)
+ * ============================================================================
+ * 
+ * These styles adjust the layout and sizing for tablet-sized devices.
+ * The changes focus on reducing button sizes, adjusting spacing,
+ * and ensuring controls remain accessible on smaller screens.
+ * 
+ * Key adjustments:
+ * - Reduced button dimensions from 36px to 32px
+ * - Adjusted control panel positioning and spacing
+ * - Modified expanded dropdown dimensions for better fit
+ * - Updated font sizes for improved readability
+ */
 @media (max-width: 768px) {
   /* Consistent spacing for all controls */
   .network-only .top-right-controls,
@@ -1145,8 +1445,7 @@
     height: 32px !important;
     min-width: 32px !important;
     min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
+    /* max-width and max-height removed - let collision detection handle expanded state */
   }
 
   /* Legend button sizing */
@@ -1179,9 +1478,32 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 240px !important;
-    max-width: calc(100vw - 60px) !important;
-    max-height: calc(100vh - 180px) !important;
+    /* max-width and max-height removed - let collision detection handle sizing */
     padding: 12px !important;
+  }
+  
+  /* Search dropdown uses collision detection for responsive sizing */
+  
+  /* Search results responsive adjustments for tablet */
+  .network-only .search-results {
+    max-height: 300px; /* Reduced from 400px for tablet screens */
+  }
+  
+  .network-only .search-result-item {
+    padding: 10px; /* Slightly reduced padding for tablet */
+    min-height: 44px; /* Slightly reduced minimum height */
+  }
+  
+  /* Adjust font sizes in expanded dropdowns */
+  .network-only .control-dropdown-button.expanded .filter-group h5,
+  .network-only .legend-toggle-button.expanded .legend-section h5,
+  .network-only .top-right-controls .network-share-button.expanded h5 {
+    font-size: 12px;
+  }
+
+  .network-only .control-dropdown-button.expanded .checkbox-label,
+  .network-only .legend-toggle-button.expanded .legend-item span {
+    font-size: 12px;
   }
   
   /* Stats panel */
@@ -1193,7 +1515,7 @@
   }
   
   .network-only .network-stats-bottom-right .stats-item {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .network-only .network-stats-bottom-right .stat-value {
@@ -1205,19 +1527,21 @@
     left: 15px;
   }
 }
-  
-  .network-only .network-share-dropdown-content {
-    top: 0;
-    right: 40px;
-    min-width: 180px;
-  }
-  
-  .network-only .network-share-toast {
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 14px;
-  }
 
+/* ============================================================================
+ * RESPONSIVE DESIGN - LARGE MOBILE BREAKPOINT (600px)
+ * ============================================================================
+ * 
+ * These styles adjust the layout for large mobile devices and small tablets.
+ * Further reduces button sizes and spacing to accommodate smaller screens
+ * while maintaining usability and visual hierarchy.
+ * 
+ * Key adjustments:
+ * - Reduced button dimensions from 32px to 30px
+ * - Further reduced control panel spacing
+ * - Adjusted expanded dropdown dimensions for mobile screens
+ * - Updated stats panel positioning and sizing
+ */
 @media (max-width: 600px) {
   /* Consistent spacing for all controls */
   .network-only .top-right-controls,
@@ -1244,8 +1568,7 @@
     height: 30px !important;
     min-width: 30px !important;
     min-height: 30px !important;
-    max-width: 30px !important;
-    max-height: 30px !important;
+    /* max-width and max-height removed - let collision detection handle expanded state */
   }
 
   /* Legend button sizing */
@@ -1260,7 +1583,7 @@
   }
 
   .network-only .legend-toggle-button span {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   /* Unified icon sizing */
@@ -1278,21 +1601,25 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 100px !important;
-    max-width: min(260px, calc(100vw - 50px)) !important;
-    max-height: calc(100vh - 200px) !important;
+    /* max-width and max-height removed - let collision detection handle sizing */
     padding: 8px !important;
   }
-
-  /* Adjust font sizes in expanded dropdowns */
-  .network-only .control-dropdown-button.expanded .filter-group h5,
-  .network-only .legend-toggle-button.expanded .legend-section h5,
-  .network-only .top-right-controls .network-share-button.expanded h5 {
-    font-size: 11px;
+  
+  /* Search dropdown uses collision detection for responsive sizing */
+  
+  /* Search results responsive adjustments for mobile */
+  .network-only .search-results {
+    max-height: 250px; /* Further reduced for mobile screens */
   }
-
-  .network-only .control-dropdown-button.expanded .checkbox-label,
-  .network-only .legend-toggle-button.expanded .legend-item span {
-    font-size: 11px;
+  
+  .network-only .search-result-item {
+    padding: 8px; /* Reduced padding for mobile */
+    min-height: 40px; /* Reduced minimum height for mobile */
+    gap: 8px; /* Reduced gap for mobile */
+  }
+  
+  .network-only .search-results-list {
+    gap: 8px; /* Reduced gap between items for mobile */
   }
   
   /* Stats panel */
@@ -1304,7 +1631,7 @@
   }
   
   .network-only .network-stats-bottom-right .stats-item {
-    font-size: 10px;
+    font-size: 11px;
   }
   
   .network-only .network-stats-bottom-right .stat-value {
@@ -1343,8 +1670,7 @@
     height: 28px !important;
     min-width: 28px !important;
     min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+    /* max-width and max-height removed - let collision detection handle expanded state */
   }
 
   /* Legend button sizing */
@@ -1359,7 +1685,7 @@
   }
 
   .network-only .legend-toggle-button span {
-    font-size: 10px;
+    font-size: 11px;
   }
   
   /* Unified icon sizing */
@@ -1377,21 +1703,25 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 200px !important;
-    max-width: calc(100vw - 40px) !important;
-    max-height: calc(100vh - 220px) !important;
+    /* max-width and max-height removed - let collision detection handle sizing */
     padding: 10px !important;
   }
-
-  /* Adjust font sizes in expanded dropdowns */
-  .network-only .control-dropdown-button.expanded .filter-group h5,
-  .network-only .legend-toggle-button.expanded .legend-section h5,
-  .network-only .top-right-controls .network-share-button.expanded h5 {
-    font-size: 10px;
+  
+  /* Search dropdown uses collision detection for responsive sizing */
+  
+  /* Search results responsive adjustments for small mobile */
+  .network-only .search-results {
+    max-height: 200px; /* Further reduced for small mobile screens */
   }
-
-  .network-only .control-dropdown-button.expanded .checkbox-label,
-  .network-only .legend-toggle-button.expanded .legend-item span {
-    font-size: 10px;
+  
+  .network-only .search-result-item {
+    padding: 6px; /* Further reduced padding for small mobile */
+    min-height: 36px; /* Further reduced minimum height */
+    gap: 6px; /* Further reduced gap */
+  }
+  
+  .network-only .search-results-list {
+    gap: 6px; /* Further reduced gap between items */
   }
   
   /* Stats panel */
@@ -1403,11 +1733,11 @@
   }
   
   .network-only .network-stats-bottom-right .stats-item {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   .network-only .network-stats-bottom-right .stat-value {
-    font-size: 11px;
+    font-size: 12px;
   }
   
   .network-only .fixed-legend {
@@ -1448,8 +1778,7 @@
     height: 26px !important;
     min-width: 26px !important;
     min-height: 26px !important;
-    max-width: 26px !important;
-    max-height: 26px !important;
+    /* max-width and max-height removed - let collision detection handle expanded state */
   }
 
   /* Legend button sizing */
@@ -1464,7 +1793,7 @@
   }
 
   .network-only .legend-toggle-button span {
-    font-size: 9px;
+    font-size: 10px;
   }
   
   /* Unified icon sizing */
@@ -1482,42 +1811,30 @@
   .network-only .legend-toggle-button.expanded,
   .network-only .top-right-controls .network-share-button.expanded {
     min-width: 180px !important;
-    max-width: calc(100vw - 20px) !important;
-    max-height: calc(100vh - 240px) !important;
+    /* max-width and max-height removed - let collision detection handle sizing */
     padding: 8px !important;
     overflow: hidden !important;
   }
-
-  /* Adjust font sizes and spacing in expanded dropdowns */
-  .network-only .control-dropdown-button.expanded .filter-group h5,
-  .network-only .legend-toggle-button.expanded .legend-section h5,
-  .network-only .top-right-controls .network-share-button.expanded h5 {
-    font-size: 9px;
-    margin-bottom: 8px;
-    padding-right: 4px;
+  
+  /* Search dropdown uses collision detection for responsive sizing */
+  
+  /* Search results responsive adjustments for very small screens */
+  .network-only .search-results {
+    max-height: 180px; /* Minimum height for very small screens */
   }
-
-  .network-only .control-dropdown-button.expanded .checkbox-label,
-  .network-only .legend-toggle-button.expanded .legend-item span {
-    font-size: 9px;
-    line-height: 1.2;
+  
+  .network-only .search-result-item {
+    padding: 5px; /* Minimum padding for very small screens */
+    min-height: 32px; /* Minimum height for very small screens */
+    gap: 5px; /* Minimum gap */
   }
-
-  .network-only .control-dropdown-content-inline {
-    gap: 12px;
-    padding-right: 4px;
+  
+  .network-only .search-results-list {
+    gap: 5px; /* Minimum gap between items */
   }
 
   .network-only .filter-group {
     margin-bottom: 12px;
-  }
-
-  .network-only .filter-checkboxes {
-    gap: 6px;
-  }
-
-  .network-only .filter-checkbox {
-    padding: 3px;
   }
 
   .network-only .checkbox-custom {
@@ -1539,7 +1856,7 @@
   }
   
   .network-only .network-stats-bottom-right .stat-value {
-    font-size: 10px;
+    font-size: 11px;
   }
   
   .network-only .fixed-legend {
@@ -1561,15 +1878,6 @@
   transition: all 0.3s ease, max-width 0.3s ease-in-out, max-height 0.3s ease-in-out;
   overflow: hidden;
   will-change: max-height, max-width;
-}
-
-/* Ensure content inside expanded buttons scrolls smoothly */
-.network-only .control-dropdown-content-inline,
-.network-only .legend-content-inline,
-.network-only .network-share-dropdown-content-inline {
-  transition: max-height 0.2s ease;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-secondary) transparent;
 }
 
 /* Firefox scrollbar styling */
@@ -1598,18 +1906,496 @@
   background: var(--text-accent);
 }
 
-/* Node Details */
-.network-only .node-details {
+/* ============================================================================
+ * NODE AND CONNECTION DETAILS STYLING
+ * ============================================================================
+ * 
+ * These styles define the appearance of detailed information panels
+ * that appear when users select nodes or connections in the network.
+ * 
+ * Key features:
+ * - Left-aligned text for better readability
+ * - Theme-aware colors using CSS variables
+ * - Emerald green accent color for highlights
+ * - Distinguished section headers with proper typography
+ * - Consistent spacing and layout
+ */
+
+/* Node Details Container */
+.network-only .network-only-node-details {
   margin-top: 8px;
   border-top: none;
   padding-top: 0;
+  text-align: left; /* Ensure left alignment for all content */
 }
+
+/* Connection Details Container */
+.network-only .network-only-connection-details {
+  margin-top: 8px;
+  border-top: none;
+  padding-top: 0;
+  text-align: left; /* Ensure left alignment for all content */
+}
+
+/* Details Content Container */
+.network-only .network-only-details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left; /* Force left alignment */
+  padding: 0;
+  margin: 0;
+}
+
+/* Organization Title */
+.network-only .network-only-org-title {
+  color: var(--text-primary);
+  font-size: 16px; /* Largest - this is the focus of the details dropdown */
+  font-weight: 600; /* Semi-bold for prominence */
+  margin: 0 0 4px 0; /* Tight spacing for cohesive section */
+  text-align: left;
+  line-height: 1.3;
+}
+
+/* Node Type Styling */
+.network-only .network-only-node-type {
+  color: var(--text-accent); /* Emerald green accent color */
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  margin: 0 0 3px 0;
+  text-align: left;
+}
+
+/* Removed clickable styling - organization types are no longer interactive */
+
+/* Node Description */
+.network-only .network-only-node-description {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 4px 0;
+  text-align: left;
+}
+
+/* Details Sections */
+.network-only .network-only-details-section {
+  margin-bottom: 0;
+  text-align: left;
+}
+
+/* Section Headers - Distinguished Typography */
+.network-only .network-only-details-section h4,
+.network-only .network-only-section-header h4 {
+  color: var(--text-primary);
+  font-size: 13px; /* Smaller than dropdown title (14px) for proper hierarchy */
+  font-weight: 600; /* Semi-bold weight for distinction */
+  margin: 0 0 6px 0;
+  text-align: left;
+  text-transform: none; /* Remove uppercase styling */
+  letter-spacing: 0.5px; /* Reduced letter spacing */
+}
+
+/* Website Link Styling */
+.network-only .network-only-website-link {
+  color: var(--text-accent); /* Emerald green accent color */
+  text-decoration: none;
+  word-break: break-all;
+  font-size: 12px;
+  text-align: left;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.network-only .network-only-website-link:hover {
+  text-decoration: underline;
+  color: var(--text-primary);
+}
+
+/* Personnel List */
+.network-only .network-only-personnel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.network-only .network-only-personnel-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  text-align: left;
+  font-size: 12px;
+}
+
+/* LinkedIn Link Styling */
+.network-only .network-only-linkedin-link {
+  color: var(--text-accent); /* Emerald green accent color */
+  text-decoration: none;
+  font-size: 12px;
+  padding: 1px 4px;
+  border: 1px solid var(--text-accent);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.network-only .network-only-linkedin-link:hover {
+  background: var(--text-accent);
+  color: var(--bg-primary);
+  border-color: var(--text-accent);
+}
+
+/* Recent News */
+.network-only .network-only-recent-news {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+  text-align: left;
+}
+
+/* Connections List */
+.network-only .network-only-connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+/* Connection Item */
+.network-only .network-only-connection-item {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid transparent; /* Prevent hover shift */
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.network-only .network-only-connection-item.clickable {
+  cursor: pointer;
+}
+
+.network-only .network-only-connection-item.clickable:hover {
+  background-color: var(--bg-quinary);
+  border: 1px solid var(--text-accent); /* Emerald green accent on hover */
+}
+
+/* Connection Header */
+.network-only .network-only-connection-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* Connection Node Color */
+.network-only .network-only-connection-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Connection Content */
+.network-only .network-only-connection-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Connection Name */
+.network-only .network-only-connection-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 1px;
+  text-align: left;
+}
+
+/* Connection Website Link */
+.network-only .network-only-connection-website-link {
+  color: var(--text-accent); /* Emerald green accent color */
+  text-decoration: none;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.network-only .network-only-connection-website-link:hover {
+  text-decoration: underline;
+}
+
+/* Connection Type */
+.network-only .network-only-connection-type {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Connection Relationship */
+.network-only .network-only-connection-relationship {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* Relationship Label */
+.network-only .network-only-relationship-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: left;
+}
+
+/* Relationship Type */
+.network-only .network-only-relationship-type {
+  color: var(--text-accent); /* Emerald green accent color */
+  font-size: 11px;
+  font-weight: 500;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+/* Connection Description */
+.network-only .network-only-connection-description {
+  color: var(--text-secondary);
+  font-size: 10px;
+  line-height: 1.4;
+  margin: 0;
+  text-align: left;
+}
+
+/* No Connections Message */
+.network-only .network-only-no-connections {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-style: italic;
+  margin: 0;
+  text-align: left;
+}
+
+/* Connected Organizations */
+.network-only .network-only-connected-organizations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+/* Organization Item */
+.network-only .network-only-org-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  transition: background-color 0.2s ease;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid transparent; /* Prevent hover shift */
+  text-align: left;
+}
+
+.network-only .network-only-org-item.clickable {
+  cursor: pointer;
+}
+
+.network-only .network-only-org-item.clickable:hover {
+  background-color: var(--bg-quinary);
+  border: 1px solid var(--text-accent); /* Emerald green accent on hover */
+}
+
+/* Organization Node Color */
+.network-only .network-only-org-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Organization Content */
+.network-only .network-only-org-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Organization Name */
+.network-only .network-only-org-name {
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+}
+
+/* Organization Website Link */
+.network-only .network-only-org-website-link {
+  color: var(--text-accent); /* Emerald green accent color */
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.network-only .network-only-org-website-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* Organization Type */
+.network-only .network-only-org-type {
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+
+
+/* Relationship Description */
+.network-only .network-only-relationship-description {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+  text-align: left;
+}
+
+/* ============================================================================
+ * DROPDOWN HEADERS AND NAVIGATION
+ * ============================================================================
+ * 
+ * These styles handle the dropdown headers, back buttons, and close buttons
+ * that appear in the search dropdown when viewing node or connection details.
+ */
 
 .network-only .details-header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 16px;
+}
+
+.network-only .network-share-dropdown-content-inline .dropdown-title {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Consistent styling for ALL dropdown headers - NO backgrounds */
+.network-only .search-dropdown-header,
+.network-only .dropdown-header,
+.network-only .control-dropdown-content-inline .dropdown-header,
+.network-only .legend-content-inline .dropdown-header,
+.network-only .network-share-dropdown-content-inline .dropdown-header {
+  position: static;
+  background: none; /* Remove background */
+  z-index: 10;
+  padding: 4px 0;
+  margin: 0 0 8px 0;
+  border-bottom: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Styling for dropdown close buttons (now div elements) */
+.network-only .dropdown-close {
+  background: none !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+  flex-shrink: 0 !important;
+  display: inline-block; /* Ensure proper display for div */
+}
+
+.network-only .dropdown-close:hover {
+  color: var(--text-secondary) !important;
+  background: none !important;
+}
+
+/* Remove any background pseudo-elements */
+.network-only .dropdown-header::before {
+  display: none;
+}
+
+/* Remove background from back button */
+.network-only .search-dropdown-header .search-dropdown-back {
+  background: none !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+  flex-shrink: 0 !important;
+  display: inline-block; /* Ensure proper display for div */
+}
+
+.network-only .search-dropdown-header .search-dropdown-back:hover {
+  color: var(--text-secondary);
+  background: none;
+}
+
+.network-only .search-dropdown-header .search-dropdown-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+/* Ensure close button positioning is correct */
+.network-only .search-dropdown-header .network-only-details-close {
+  position: static !important;
+  margin-left: auto !important;
+  transform: none !important;
+  background: none !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+  flex-shrink: 0 !important;
+  display: inline-block; /* Ensure proper display for div */
+}
+
+.network-only .search-dropdown-header .network-only-details-close:hover {
+  color: var(--text-secondary); /* Theme reactive hover color */
+  background: none;
 }
 
 .network-only .details-header h3 {
@@ -1640,311 +2426,27 @@
   color: var(--text-primary);
 }
 
-.network-only .details-content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.5;
-  text-align: left;
-}
-
-.network-only .node-type {
-  color: var(--text-accent);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0.5px;
-  margin: 0;
-  text-align: left;
-}
-
-.network-only .node-type.clickable {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.network-only .node-type.clickable:hover {
-  color: var(--text-primary);
-  text-decoration: underline;
-}
-
-.network-only .node-description {
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.5;
-  margin: 0;
-  text-align: left;
-}
-
-.network-only .details-section {
-  margin-bottom: 0;
-  text-align: left;
-}
-
-.network-only .details-section h4 {
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0 0 8px 0;
-  text-align: left;
-}
-
-.network-only .website-link {
-  color: var(--text-accent);
-  text-decoration: none;
-  word-break: break-all;
-  text-align: left !important;
-}
-
-.network-only .website-link:hover {
-  text-decoration: underline;
-}
-
-.network-only .personnel-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.network-only .personnel-list li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-secondary);
-}
-
-.network-only .linkedin-link {
-  color: var(--text-accent);
-  text-decoration: none;
-  font-size: 12px;
-  padding: 2px 6px;
-  border: 1px solid var(--border-primary);
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.network-only .linkedin-link:hover {
-  background: var(--bg-quinary);
-  border-color: var(--border-secondary);
-}
-
-.network-only .recent-news {
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.5;
-  margin: 0;
-  font-style: italic;
-  text-align: left;
-}
-
-.network-only .connections-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.network-only .connection-item {
-  padding: 12px;
-  background: var(--input-bg);
-  border: 1px solid var(--border-primary);
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.network-only .connection-item.clickable {
-  cursor: pointer;
-}
-
-.network-only .connection-item.clickable:hover {
-  background: var(--bg-quinary);
-  border-color: var(--border-secondary);
-}
-
-.network-only .connection-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.network-only .connection-node-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.network-only .connection-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.network-only .connection-name {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-
-.network-only .connection-website-link {
-  color: var(--text-accent);
-  text-decoration: none;
-  font-size: 12px;
-}
-
-.network-only .connection-website-link:hover {
-  text-decoration: underline;
-}
-
-.network-only .connection-type {
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-}
-
-.network-only .connection-relationship {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.network-only .relationship-label {
-  color: var(--text-secondary);
-  font-size: 12px;
-}
-
-.network-only .relationship-type {
-  color: var(--text-accent);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.network-only .connection-description {
-  color: var(--text-secondary);
-  font-size: 12px;
-  line-height: 1.4;
-  margin: 0;
-  text-align: left;
-}
-
-.network-only .no-connections {
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-style: italic;
-  margin: 0;
-  text-align: left;
-}
-
-
-
-.network-only .section-header-with-close {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.network-only .section-header-with-close h4 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.network-only .connected-organizations {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.network-only .org-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  transition: background-color 0.2s ease;
-  padding: 8px;
-  border-radius: 6px;
-}
-
-.network-only .org-item.clickable {
-  cursor: pointer;
-}
-
-.network-only .org-item.clickable:hover {
-  background-color: var(--bg-quinary);
-}
-
-.network-only .org-node-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.network-only .org-content {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.network-only .org-name {
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.network-only .org-website-link {
-  color: var(--text-accent);
-  text-decoration: none;
-  font-size: 12px;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
-  flex-shrink: 0;
-}
-
-.network-only .org-website-link:hover {
-  opacity: 1;
-  text-decoration: none;
-}
-
-.network-only .org-type {
-  color: var(--text-secondary);
-  font-size: 11px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.network-only .relationship-description {
-  color: var(--text-secondary);
-  font-size: 12px;
-  line-height: 1.4;
-  margin: 0;
-  font-style: italic;
-}
-
+/* ============================================================================
+ * END OF NETWORKONLY.CSS
+ * ============================================================================
+ * 
+ * This file contains all the styling for the NetworkOnly page (/network),
+ * providing a comprehensive, isolated styling system that prevents
+ * conflicts with the main page styling.
+ * 
+ * Key features implemented:
+ * - Full-screen network visualization layout
+ * - Responsive control panels and dropdowns
+ * - Interactive highlighting and filtering
+ * - Mobile-first responsive design
+ * - Consistent glassmorphism design language
+ * - Comprehensive organization details display
+ * 
+ * For modifications:
+ * - NetworkOnly page changes: Edit this file
+ * - Main page changes: Edit src/App.css
+ * - Shared network visualization: Edit NetworkVisualization.css
+ * 
+ * See STYLING_ARCHITECTURE.md for complete documentation
+ * ============================================================================
+ */

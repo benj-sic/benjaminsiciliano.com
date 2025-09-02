@@ -31,12 +31,16 @@
  */
 
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+// CRITICAL FIX: Import NetworkVisualization without its CSS to prevent style conflicts
+// We'll handle all styling in NetworkOnly.css to prevent horizontal expansion issues
 import NetworkVisualization from './NetworkVisualization';
 import ThemeToggle from './ThemeToggle';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import cacheManager from '../utils/cache.js';
 import performanceMonitor from '../utils/performance.js';
 import { nodeTypeMap, nodeColors } from '../atlanta_biotech_data.js';
+// CRITICAL: Import CSS after NetworkVisualization.js to ensure it takes precedence
+// Note: This import order ensures our styles override NetworkVisualization.css
 import './NetworkOnly.css';
 
 function NetworkOnly() {
@@ -63,8 +67,13 @@ function NetworkOnly() {
     facilities: true,
     communityBuilders: true
   });
+  const [networkData, setNetworkData] = useState({ nodes: [], links: [] });
+  const [lastCommitDate, setLastCommitDate] = useState('July 2025');
 
   const networkRef = useRef(null);
+  const selectedNodeRef = useRef(null); // Track selected node for deselection detection
+  // Track selected edge ID for deselection detection (same as main page network)
+  // We'll get this from NetworkVisualization via a getter method
 
 
 
@@ -98,6 +107,19 @@ function NetworkOnly() {
     return nodeColors[formattedType] || '#666666'; // Default gray if no color found
   };
 
+  // Get the display name for an organization (full name instead of abbreviation)
+  const getOrganizationDisplayName = (node) => {
+    const nameMapping = {
+      'CHOA': 'Children\'s Healthcare of Atlanta',
+      'GSU': 'Georgia State University',
+      'GT': 'Georgia Institute of Technology',
+      'UGA': 'University of Georgia',
+      'MSM': 'Morehouse School of Medicine'
+    };
+    
+    return nameMapping[node.name] || node.name;
+  };
+
   // Get the appropriate search dropdown title based on current state
   const getSearchDropdownTitle = () => {
     if (selectedConnection) {
@@ -111,102 +133,151 @@ function NetworkOnly() {
     }
   };
 
-  // Update directions object to include both horizontal and vertical
-  const directions = useMemo(() => ({
-    filters: { horizontal: 'right', vertical: 'down' },
-    search: { horizontal: 'right', vertical: 'down' },
-    legend: { horizontal: 'right', vertical: 'up' },
-    share: { horizontal: 'left', vertical: 'down' }
-  }), []);
-
-  // Update calculateAvailableSpace to handle directions and blocking elements
-  const calculateAvailableSpace = useCallback((buttonElement, horizontal, vertical, dropdownType) => {
-    if (!buttonElement) return { width: 280, height: 400 };
-    
-    const rect = buttonElement.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    
-    // Get blocking elements based on dropdownType
-    let blocking = {};
-    if (dropdownType === 'legend') {
-      const stats = document.querySelector('.network-stats-bottom-right');
-      if (stats) blocking.right = stats.getBoundingClientRect().left;
-      
-      const search = document.querySelector('.main-controls-panel .control-dropdown:last-child .control-dropdown-button');
-      if (search) blocking.up = search.getBoundingClientRect().bottom;
-    } else if (dropdownType === 'filters' || dropdownType === 'search') {
-      const share = document.querySelector('.top-right-controls .network-share-button');
-      if (share) blocking.right = share.getBoundingClientRect().left;
-      
-      const legend = document.querySelector('.fixed-legend .legend-toggle-button');
-      if (legend) {
-        // Only add margin if there's actual overlap risk
-        const legendTop = legend.getBoundingClientRect().top;
-        const buttonBottom = rect.bottom;
-        if (buttonBottom + 400 > legendTop) { // If dropdown would overlap legend
-          blocking.down = legendTop - 20;
-        }
-      }
-    } else if (dropdownType === 'share') {
-      const search = document.querySelector('.main-controls-panel .control-dropdown:last-child .control-dropdown-button');
-      if (search) blocking.left = search.getBoundingClientRect().right;
-      
-      const stats = document.querySelector('.network-stats-bottom-right');
-      if (stats) blocking.down = stats.getBoundingClientRect().top;
-    }
-    
-    let availableWidth, availableHeight;
-    
-    // Horizontal calculation
-    if (horizontal === 'right') {
-      availableWidth = (blocking.right ? blocking.right - rect.right : viewportWidth - rect.right) - 40;
-    } else if (horizontal === 'left') {
-      availableWidth = (blocking.left ? rect.left - blocking.left : rect.left) - 40;
-    }
-    
-    // Vertical calculation
-    if (vertical === 'down') {
-      availableHeight = (blocking.down ? blocking.down - rect.bottom : viewportHeight - rect.bottom) - 40;
-    } else if (vertical === 'up') {
-      availableHeight = (blocking.up ? rect.bottom - blocking.up : rect.top) - 40;
-    }
-    
-    // For search dropdown, be more aggressive about finding available space
-    if (dropdownType === 'search') {
-      // Allow more height by default, only constrain if absolutely necessary
-      const minHeight = 300; // Minimum height for comfortable reading
-      const maxHeight = 600; // Maximum height before scrolling
-      
-      // If we're being constrained by legend, try to find a better balance
-      if (blocking.down) {
-        const legendTop = document.querySelector('.fixed-legend .legend-toggle-button')?.getBoundingClientRect().top;
-        if (legendTop) {
-          const potentialHeight = legendTop - rect.bottom - 20;
-          // Use the larger of the two heights, but ensure we don't go below minimum
-          availableHeight = Math.max(availableHeight, potentialHeight, minHeight);
-        }
-      }
-      
-      // Ensure we never go below minimum height
-      availableHeight = Math.max(availableHeight, minHeight);
-      
-      return {
-        width: Math.max(280, Math.min(availableWidth, 400)),
-        height: Math.max(minHeight, Math.min(availableHeight, maxHeight))
-      };
-    }
-    
-    return {
-      width: Math.max(200, Math.min(availableWidth, 400)),
-      height: Math.max(200, Math.min(availableHeight, 500))
+  // Preset dropdown sizing system for different screen sizes
+  const getDropdownDimensions = useMemo(() => {
+    // Define screen size breakpoints and corresponding dropdown dimensions
+    // More granular breakpoints for better responsive design
+    const getScreenSize = () => {
+      const width = window.innerWidth;
+      if (width <= 360) return 'xs';      // Very small mobile
+      if (width <= 480) return 'sm';      // Small mobile
+      if (width <= 600) return 'md';      // Large mobile
+      if (width <= 768) return 'lg';      // Tablet
+      if (width <= 1024) return 'xl';     // Small desktop
+      if (width <= 1366) return 'xxl';    // Medium desktop
+      if (width <= 1600) return 'xxxl';   // Large desktop
+      return 'xxxxl';                     // Extra large desktop
     };
+
+    // Preset dimensions for each dropdown type and screen size
+    // Based on actual button positions and collision analysis
+    const dropdownPresets = {
+      filters: {
+        // Filters button is at top-left, expands right and down
+        // Has plenty of space to the right, limited by screen height
+        xs: { width: 200, height: 250 },  // Very small mobile - conservative
+        sm: { width: 250, height: 300 },  // Small mobile
+        md: { width: 280, height: 350 },  // Large mobile
+        lg: { width: 300, height: 400 },  // Tablet
+        xl: { width: 320, height: 450 },  // Small desktop
+        xxl: { width: 350, height: 500 }, // Medium desktop
+        xxxl: { width: 380, height: 550 }, // Large desktop
+        xxxxl: { width: 400, height: 600 } // Extra large desktop
+      },
+      search: {
+        // Search button is below filters, expands right and down
+        // CRITICAL: Must not collide with legend button at bottom-left
+        // Legend is at (20px, bottom-20px), search is at (20px, ~66px)
+        // Available height = viewport height - 66px (search top) - 20px (legend bottom) - 20px (margin)
+        // Desktop screens often have shorter heights (768px), so be more conservative
+        xs: { width: 200, height: 200 },  // Very small mobile - limited height
+        sm: { width: 240, height: 250 },  // Small mobile
+        md: { width: 280, height: 300 },  // Large mobile
+        lg: { width: 300, height: 350 },  // Tablet
+        xl: { width: 320, height: 300 },  // Small desktop - very conservative height
+        xxl: { width: 350, height: 320 }, // Medium desktop - very conservative height
+        xxxl: { width: 380, height: 340 }, // Large desktop - very conservative height
+        xxxxl: { width: 400, height: 360 } // Extra large desktop - very conservative height
+      },
+      legend: {
+        // Legend button is at bottom-left, expands right and up
+        // Limited by screen width and height
+        // Desktop screens often have shorter heights (768px), so be more conservative
+        xs: { width: 160, height: 200 },  // Very small mobile
+        sm: { width: 200, height: 250 },  // Small mobile
+        md: { width: 240, height: 300 },  // Large mobile
+        lg: { width: 280, height: 350 },  // Tablet
+        xl: { width: 300, height: 300 },  // Small desktop - reduced height
+        xxl: { width: 320, height: 320 }, // Medium desktop - reduced height
+        xxxl: { width: 350, height: 340 }, // Large desktop - reduced height
+        xxxxl: { width: 380, height: 360 } // Extra large desktop - reduced height
+      },
+      share: {
+        // Share button is at top-right, expands left and down
+        // Limited by screen width and height
+        xs: { width: 140, height: 180 },  // Very small mobile
+        sm: { width: 160, height: 200 },  // Small mobile
+        md: { width: 180, height: 220 },  // Large mobile
+        lg: { width: 200, height: 240 },  // Tablet
+        xl: { width: 220, height: 260 },  // Small desktop
+        xxl: { width: 240, height: 280 }, // Medium desktop
+        xxxl: { width: 260, height: 300 }, // Large desktop
+        xxxxl: { width: 280, height: 320 } // Extra large desktop
+      }
+    };
+
+    // Get dimensions for a specific dropdown type
+    const getDimensions = (dropdownType) => {
+      const screenSize = getScreenSize();
+      const preset = dropdownPresets[dropdownType];
+      
+      if (!preset) {
+        console.warn(`No preset dimensions found for dropdown type: ${dropdownType}`);
+        return { width: 300, height: 400 }; // Fallback dimensions
+      }
+      
+      const dimensions = preset[screenSize];
+      console.log(`📐 ${dropdownType} dropdown preset (${screenSize}):`, dimensions);
+      
+      return dimensions;
+    };
+
+    return { getDimensions };
   }, []);
 
-  // Update applyCollisionDetection to pass directions
-  const applyCollisionDetection = useCallback((dropdownType) => {
-    // Use immediate execution for better responsiveness
-    requestAnimationFrame(() => {
+  // Debug function to log all UI element positions
+  const logAllElementPositions = useCallback(() => {
+    const elements = {
+      'top-right-controls': document.querySelector('.top-right-controls'),
+      'main-controls-panel': document.querySelector('.main-controls-panel'),
+      'network-stats-bottom-right': document.querySelector('.network-stats-bottom-right'),
+      'fixed-legend': document.querySelector('.fixed-legend'),
+      'theme-toggle': document.querySelector('.theme-toggle'),
+      'filter-button': document.querySelector('.main-controls-panel .control-dropdown:first-child .control-dropdown-button'),
+      'search-button': document.querySelector('.main-controls-panel .control-dropdown:last-child .control-dropdown-button'),
+      'legend-button': document.querySelector('.fixed-legend .legend-toggle-button'),
+      'share-button': document.querySelector('.top-right-controls .network-share-button')
+    };
+    
+    console.log('🗺️ All UI Element Positions:', {
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      },
+      elements: Object.entries(elements).reduce((acc, [key, element]) => {
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          acc[key] = {
+            left: Math.round(rect.left),
+            top: Math.round(rect.top),
+            right: Math.round(rect.right),
+            bottom: Math.round(rect.bottom),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+            isExpanded: element.classList.contains('expanded')
+          };
+        } else {
+          acc[key] = null;
+        }
+        return acc;
+      }, {})
+    });
+  }, []);
+
+  // Apply preset dropdown sizing
+  const applyDropdownSizing = useCallback((dropdownType) => {
+    // Prevent excessive sizing calls
+    const timeoutKey = `sizing_${dropdownType}`;
+    if (window[timeoutKey]) {
+      clearTimeout(window[timeoutKey]);
+    }
+    
+    // Use requestAnimationFrame for better timing
+    window[timeoutKey] = requestAnimationFrame(() => {
+      // Get preset dimensions for the current screen size
+      const dimensions = getDropdownDimensions.getDimensions(dropdownType);
+      
+      // Find the dropdown button element
       const buttonSelectors = {
         filters: '.control-dropdown-button.expanded',
         search: '.control-dropdown-button.expanded',
@@ -215,46 +286,25 @@ function NetworkOnly() {
       };
       
       const buttonElement = document.querySelector(buttonSelectors[dropdownType]);
-      if (!buttonElement) return;
-      
-      const dir = directions[dropdownType];
-      if (!dir) return;
-      
-      const { width, height } = calculateAvailableSpace(buttonElement, dir.horizontal, dir.vertical, dropdownType);
-      
-      // Apply calculated dimensions
-      buttonElement.style.maxWidth = `${width}px`;
-      
-      // For search dropdown, be more conservative with height constraints
-      if (dropdownType === 'search') {
-        // Only apply height constraint if it's significantly smaller than natural height
-        const contentElement = buttonElement.querySelector('[class*="content-inline"]');
-        if (contentElement) {
-          const naturalHeight = contentElement.scrollHeight;
-          const constrainedHeight = Math.min(height, naturalHeight + 50); // Allow some natural expansion
-          
-          // Force our calculated dimensions with !important to override any other constraints
-          buttonElement.style.setProperty('max-height', `${constrainedHeight}px`, 'important');
-          contentElement.style.setProperty('max-height', `${constrainedHeight - 32}px`, 'important');
-          
-          // Only add scroll if absolutely necessary
-          if (constrainedHeight < naturalHeight) {
-            contentElement.style.overflowY = 'auto';
-          } else {
-            contentElement.style.overflowY = 'visible';
-          }
+      if (!buttonElement) {
+        console.warn(`Dropdown button not found for ${dropdownType}`);
+          return;
         }
-      } else {
-        // For other dropdowns, apply constraints as before
-        buttonElement.style.maxHeight = `${height}px`;
-        const contentElement = buttonElement.querySelector('[class*="content-inline"]');
-        if (contentElement) {
-          contentElement.style.maxHeight = `${height - 32}px`;
-          contentElement.style.overflowY = 'auto';
-        }
+      
+      // Apply the preset dimensions with !important to override CSS
+      buttonElement.style.setProperty('max-width', `${dimensions.width}px`, 'important');
+      buttonElement.style.setProperty('max-height', `${dimensions.height}px`, 'important');
+      
+      // Apply content constraints
+      const contentElement = buttonElement.querySelector('[class*="content-inline"]');
+      if (contentElement) {
+        contentElement.style.maxHeight = `${dimensions.height - 40}px`;
+        contentElement.style.overflowY = 'auto';
       }
+      
+      console.log(`✅ ${dropdownType} dropdown: Applied preset dimensions ${dimensions.width}x${dimensions.height}px`);
     });
-  }, [directions, calculateAvailableSpace]);
+  }, [getDropdownDimensions]);
 
   // Helper functions to manage dropdown states - only one can be open at a time
   const closeAllDropdowns = () => {
@@ -277,8 +327,8 @@ function NetworkOnly() {
       // If legend is closed, open it and close other dropdowns
       closeAllDropdowns();
       setShowLegend(true);
-      // Apply collision detection after state update
-      setTimeout(() => applyCollisionDetection('legend'), 0);
+      // Apply preset sizing after state update
+      setTimeout(() => applyDropdownSizing('legend'), 0);
     }
   };
 
@@ -292,8 +342,8 @@ function NetworkOnly() {
           // Open and close others
           closeAllDropdowns();
           setShowShareDropdown(true);
-          // Apply collision detection after state update
-          setTimeout(() => applyCollisionDetection('share'), 0);
+          // Apply preset sizing after state update
+          setTimeout(() => applyDropdownSizing('share'), 0);
         }
         break;
       case 'filters':
@@ -304,8 +354,8 @@ function NetworkOnly() {
           // Open and close others
           closeAllDropdowns();
           setShowFilters(true);
-          // Apply collision detection after state update
-          setTimeout(() => applyCollisionDetection('filters'), 0);
+          // Apply preset sizing after state update
+          setTimeout(() => applyDropdownSizing('filters'), 0);
         }
         break;
       case 'search':
@@ -316,8 +366,11 @@ function NetworkOnly() {
           // Open and close others
           closeAllDropdowns();
           setShowSearch(true);
-          // Apply collision detection after state update
-          setTimeout(() => applyCollisionDetection('search'), 0);
+          
+          // Apply preset sizing after state update
+          setTimeout(() => {
+            applyDropdownSizing('search');
+          }, 0);
         }
         break;
       default:
@@ -544,9 +597,34 @@ function NetworkOnly() {
     
     console.log('selectNode called with:', node);
     
+    // Check if this node is already selected - if so, deselect it
+    // BUT: If we're in connection details mode, allow selection to explore the node
+    if (selectedNodeRef.current && selectedNodeRef.current.id === node.id) {
+      // If we're showing connection details, allow selection to explore the node
+      if (selectedConnection) {
+        console.log('Node already selected but in connection details, allowing selection to explore');
+      } else {
+        console.log('Node already selected, deselecting it');
+        handleCloseNodeDetails();
+        return;
+      }
+    }
+    
+    // Close all other dropdowns when opening node details
+    closeAllDropdowns();
+    
     setSelectedNodeDetails(node);
     setSelectedConnection(null); // Clear connection selection when selecting a node
     setShowSearch(true);
+    
+    // Update the selected node ref for deselection detection
+    selectedNodeRef.current = node;
+    
+    // Clear the selected edge ID when selecting a node (same as main page network)
+    // Use NetworkVisualization's clearHighlight method to clear edge selection
+    if (networkRef.current && networkRef.current.clearHighlight) {
+      networkRef.current.clearHighlight(false); // Don't clear edge selection
+    }
     
     // Clear edge highlighting and highlight the selected node
     if (networkRef.current) {
@@ -554,12 +632,14 @@ function NetworkOnly() {
         console.log('Network ref available, highlighting node:', node.id);
         
         if (networkRef.current.clearHighlight) {
-          networkRef.current.clearHighlight();
+          networkRef.current.clearHighlight(false); // Don't clear edge selection
           console.log('Cleared highlights');
         }
+        
+        // Call setSelectedNode to enable proper highlighting, but don't let it manage UI state
         if (networkRef.current.setSelectedNode) {
           networkRef.current.setSelectedNode(node);
-          console.log('Set selected node');
+          console.log('Set selected node for highlighting');
         }
         
         // Zoom to the subnetwork to focus on the selected node
@@ -576,9 +656,9 @@ function NetworkOnly() {
       console.log('Network ref not available');
     }
     
-    // Apply collision detection immediately for consistent behavior
+    // Apply preset sizing immediately for consistent behavior
     // Use the same timing as direct button clicks (0ms delay)
-    setTimeout(() => applyCollisionDetection('search'), 0);
+    setTimeout(() => applyDropdownSizing('search'), 0);
   };
 
   const handleNodeSelect = (node) => {
@@ -590,38 +670,109 @@ function NetworkOnly() {
   };
 
   const handleCloseNodeDetails = () => {
+    console.log('handleCloseNodeDetails called');
     setSelectedNodeDetails(null);
     setSelectedConnection(null); // Clear connection selection when closing details
     
-    // Clear the highlight in the network visualization
+    // Close the search dropdown when closing details
+    setShowSearch(false);
+    
+    // Clear the selected node ref for deselection detection
+    selectedNodeRef.current = null;
+    
+    // Clear the selected edge ID for deselection detection
+    // Use NetworkVisualization's clearHighlight method to clear edge selection
     if (networkRef.current && networkRef.current.clearHighlight) {
-      networkRef.current.clearHighlight();
+      networkRef.current.clearHighlight(true); // Clear edge selection when closing details
     }
     
-    // Reset to full network view when closing details
-    if (networkRef.current && networkRef.current.manualCenterNetwork) {
-      setTimeout(() => {
-        networkRef.current.manualCenterNetwork();
-      }, 100);
+    // Clear the highlight in the network visualization
+    if (networkRef.current && networkRef.current.clearHighlight) {
+      networkRef.current.clearHighlight(true); // Clear edge selection when closing details
     }
+    
+    // Reset all edge processed flags so edges can be selected again after closing details
+    // Use a simpler approach - just clear the selectedEdgeId state
+    // The _processed flags will be handled by the click logic
+    console.log('Clearing edge selection state');
+    
+    // Don't reset the view - just clear highlights and keep current zoom/position
+    // This prevents unwanted zoom out when closing details
+    console.log('handleCloseNodeDetails completed');
+  };
+
+  const handleBackToSearch = () => {
+    console.log('handleBackToSearch called');
+    // Clear the selected node/connection details but keep the search dropdown open
+    setSelectedNodeDetails(null);
+    setSelectedConnection(null);
+    
+    // Clear the selected node ref for deselection detection
+    selectedNodeRef.current = null;
+    
+    // Clear highlights in the network visualization
+    if (networkRef.current && networkRef.current.clearHighlight) {
+      networkRef.current.clearHighlight(true); // Clear edge selection when going back
+    }
+    
+    // Keep the search dropdown open and show the search interface
+    // The search dropdown will automatically show the search input and results
+    console.log('handleBackToSearch completed');
   };
 
   const handleConnectionClick = (connectedNode, connection) => {
+    // Use the exact same pattern as the main page network for edge deselection
+    // Create a unique edge identifier (sorted to handle both directions)
+    const createEdgeId = (connection) => {
+      const sourceId = typeof connection.source === 'object' ? connection.source.id : connection.source;
+      const targetId = typeof connection.target === 'object' ? connection.target.id : connection.target;
+      const edgeId = sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
+      console.log('createEdgeId debug:', { sourceId, targetId, edgeId, connection });
+      return edgeId;
+    };
+    
+    const clickedEdgeId = createEdgeId(connection);
+    
+    console.log('=== CONNECTION CLICK DEBUG ===');
+    console.log('Connection clicked:', connection.source, '->', connection.target);
+    console.log('Connection object:', connection);
+    const currentSelectedEdgeId = networkRef.current?.getSelectedEdgeId?.() || null;
+    console.log('Clicked edge ID:', clickedEdgeId);
+    console.log('Selected edge ID:', currentSelectedEdgeId);
+    console.log('Is same edge?', clickedEdgeId === currentSelectedEdgeId);
+    console.log('Current selectedConnection:', selectedConnection);
+    
+    // Toggle selection: if clicking the same edge, deselect it
+    if (clickedEdgeId === currentSelectedEdgeId && selectedConnection) {
+      console.log('Deselecting connection:', connection.source, '->', connection.target);
+      handleCloseNodeDetails();
+      return;
+    }
+    
     // When a connection is clicked, show connection details
+    // Close all other dropdowns when opening connection details
+    closeAllDropdowns();
+    
     setSelectedConnection(connection);
     setSelectedNodeDetails(null);
     
-
+    // Update the selected edge ID for deselection detection (same as main page network)
+    // Use NetworkVisualization's setSelectedEdge method to sync the state
+    if (networkRef.current && networkRef.current.setSelectedEdge) {
+      networkRef.current.setSelectedEdge(connection.source, connection.target);
+    }
     
-    // Clear node selection in the network visualization
+    // Clear node selection and highlight the connection in the network visualization
     if (networkRef.current && networkRef.current.clearNodeSelection) {
       networkRef.current.clearNodeSelection();
     }
     
-    // Highlight the connection in the network visualization
-    if (networkRef.current && networkRef.current.setSelectedEdge) {
-      networkRef.current.setSelectedEdge(connection.source, connection.target);
-    }
+    // Debug: Log the current state after setting
+    console.log('Connection selected, current state:', {
+      selectedConnection: connection,
+      selectedEdgeId: networkRef.current?.getSelectedEdgeId?.() || null,
+      showSearch: true
+    });
     
     setShowSearch(true);
     
@@ -654,25 +805,77 @@ function NetworkOnly() {
     }
     
     // Apply collision detection immediately for consistent behavior
-    setTimeout(() => applyCollisionDetection('search'), 0);
+    setTimeout(() => applyDropdownSizing('search'), 0);
   };
 
   const handleEdgeClick = (edge) => {
+    // Remove duplicate click prevention for edges - it's causing more problems than it solves
+    // The deselection logic below will handle toggling behavior properly
+    
+    // Use the exact same pattern as the main page network for edge deselection
+    // Create a unique edge identifier (sorted to handle both directions)
+    const createEdgeId = (edge) => {
+      const sourceId = edge.source.id;
+      const targetId = edge.target.id;
+      const edgeId = sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
+      console.log('createEdgeId debug (edge):', { sourceId, targetId, edgeId, edge });
+      return edgeId;
+    };
+    
+    const clickedEdgeId = createEdgeId(edge);
+    
+    console.log('=== EDGE CLICK DEBUG ===');
+    console.log('Edge clicked:', edge.source.id, '->', edge.target.id);
+    console.log('Edge object:', edge);
+    const currentSelectedEdgeId = networkRef.current?.getSelectedEdgeId?.() || null;
+    console.log('Clicked edge ID:', clickedEdgeId);
+    console.log('Selected edge ID:', currentSelectedEdgeId);
+    console.log('Is same edge?', clickedEdgeId === currentSelectedEdgeId);
+    console.log('Current selectedConnection:', selectedConnection);
+    
+    // Toggle selection: if clicking the same edge, deselect it
+    console.log('Deselection check:', {
+      clickedEdgeId,
+      currentSelectedEdgeId,
+      selectedConnection,
+      isSameEdge: clickedEdgeId === currentSelectedEdgeId,
+      hasSelectedConnection: !!selectedConnection
+    });
+    
+    if (clickedEdgeId === currentSelectedEdgeId) {
+      console.log('Deselecting edge:', edge.source.id, '->', edge.target.id);
+      console.log('Calling handleCloseNodeDetails and returning early');
+      // Reset the processed flag so this edge can be selected again
+      edge._processed = false;
+      handleCloseNodeDetails();
+      return;
+    }
+    
     // When an edge is clicked directly in the network, show connection details
+    // Close all other dropdowns when opening connection details
+    closeAllDropdowns();
+    
+    console.log('Setting selectedConnection to:', edge);
     setSelectedConnection(edge);
     setSelectedNodeDetails(null);
     
-
+    // Update the selected edge ID for deselection detection (same as main page network)
+    // Use NetworkVisualization's setSelectedEdge method to sync the state
+    if (networkRef.current && networkRef.current.setSelectedEdge) {
+      networkRef.current.setSelectedEdge(edge.source.id, edge.target.id);
+    }
     
-    // Clear node selection in the network visualization
+    // Clear node selection and highlight the connection in the network visualization
     if (networkRef.current && networkRef.current.clearNodeSelection) {
       networkRef.current.clearNodeSelection();
     }
     
-    // Highlight the connection in the network visualization
-    if (networkRef.current && networkRef.current.setSelectedEdge) {
-      networkRef.current.setSelectedEdge(edge.source.id, edge.target.id);
-    }
+    // Debug: Log the current state after setting
+    console.log('Edge selected, current state:', {
+      selectedConnection: edge,
+      selectedEdgeId: networkRef.current?.getSelectedEdgeId?.() || null,
+      showSearch: true
+    });
     
     setShowSearch(true);
     
@@ -705,7 +908,7 @@ function NetworkOnly() {
     }
     
     // Apply collision detection immediately for consistent behavior
-    setTimeout(() => applyCollisionDetection('search'), 0);
+    setTimeout(() => applyDropdownSizing('search'), 0);
   };
 
 
@@ -728,7 +931,88 @@ function NetworkOnly() {
     cacheManager.cacheUserPrefs(userPrefs);
     localStorage.setItem('visitCount', userPrefs.visitCount.toString());
     
+    // Expose debugging functions to global scope
+    window.debugDropdownSizing = {
+      logAllPositions: logAllElementPositions,
+      testDropdownSizing: (dropdownType) => {
+        console.log(`🧪 Testing dropdown sizing for ${dropdownType}`);
+        applyDropdownSizing(dropdownType);
+      },
+      getDropdownDimensions: () => getDropdownDimensions,
+      showAllDropdownSizes: () => {
+        console.log('🔍 Showing preset dimensions for all dropdowns...');
+        ['filters', 'search', 'legend', 'share'].forEach(dropdownType => {
+          console.log(`\n=== ${dropdownType.toUpperCase()} DROPDOWN ===`);
+          const dimensions = getDropdownDimensions.getDimensions(dropdownType);
+          console.log(`Preset dimensions:`, dimensions);
+        });
+      },
+      getCurrentScreenSize: () => {
+        const width = window.innerWidth;
+        let screenSize;
+        if (width <= 360) screenSize = 'xs';
+        else if (width <= 480) screenSize = 'sm';
+        else if (width <= 600) screenSize = 'md';
+        else if (width <= 768) screenSize = 'lg';
+        else if (width <= 1024) screenSize = 'xl';
+        else if (width <= 1366) screenSize = 'xxl';
+        else if (width <= 1600) screenSize = 'xxxl';
+        else screenSize = 'xxxxl';
+        
+        console.log(`📱 Current screen size: ${screenSize} (${width}px wide)`);
+        return screenSize;
+      },
+      expandLogs: () => {
+        console.log('🔍 Expanding all console logs...');
+        // Override console.log to show full objects
+        const originalLog = console.log;
+        console.log = function(...args) {
+          args.forEach(arg => {
+            if (typeof arg === 'object' && arg !== null) {
+              originalLog(JSON.stringify(arg, null, 2));
+            } else {
+              originalLog(arg);
+            }
+          });
+        };
+        console.log('✅ Console logs expanded - objects will now show full details');
+      },
+      collapseLogs: () => {
+        console.log('🔍 Collapsing console logs...');
+        // Restore original console.log (this is just a placeholder)
+        console.log('✅ Console logs collapsed');
+      }
+    };
+    
     console.log('Caching system initialized');
+    console.log('🔧 Dropdown sizing debugging available: window.debugDropdownSizing');
+  }, [logAllElementPositions, applyDropdownSizing, getDropdownDimensions]);
+
+  // Load network data and last commit date
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Load network data
+        const { atlantaBiotechEcosystem } = await import('../atlanta_biotech_data.js');
+        setNetworkData(atlantaBiotechEcosystem);
+        
+        // Fetch last commit date
+        try {
+          const response = await fetch('/last-commit-date.json');
+          if (response.ok) {
+            const data = await response.json();
+            setLastCommitDate(data.lastCommitDate);
+          }
+        } catch (error) {
+          console.log('Could not fetch last commit date:', error);
+          // Keep default date if fetch fails
+        }
+      } catch (error) {
+        console.error('Error loading network data:', error);
+      }
+    };
+    
+    loadData();
   }, []);
 
   // Close dropdowns when clicking outside
@@ -766,17 +1050,17 @@ function NetworkOnly() {
   useEffect(() => {
     const handleResize = () => {
       // Recalculate collision detection for any open dropdowns
-      if (showShareDropdown) applyCollisionDetection('share');
-      if (showFilters) applyCollisionDetection('filters');
-      if (showSearch) applyCollisionDetection('search');
-      if (showLegend) applyCollisionDetection('legend');
+      if (showShareDropdown) applyDropdownSizing('share');
+      if (showFilters) applyDropdownSizing('filters');
+      if (showSearch) applyDropdownSizing('search');
+      if (showLegend) applyDropdownSizing('legend');
     };
 
-    // Debounce resize events for better performance
+    // Debounce resize events for better performance and to handle mobile detection changes
     let resizeTimeout;
     const debouncedResize = () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(handleResize, 100);
+      resizeTimeout = setTimeout(handleResize, 150); // Increased debounce time
     };
 
     window.addEventListener('resize', debouncedResize);
@@ -784,52 +1068,78 @@ function NetworkOnly() {
       window.removeEventListener('resize', debouncedResize);
       clearTimeout(resizeTimeout);
     };
-  }, [showShareDropdown, showFilters, showSearch, showLegend, applyCollisionDetection]);
+  }, [showShareDropdown, showFilters, showSearch, showLegend, applyDropdownSizing]);
 
   // Ensure collision detection runs whenever search state changes
   useEffect(() => {
     if (showSearch) {
       // Apply collision detection after search dropdown opens
       // Use immediate timing for consistent behavior
-      setTimeout(() => applyCollisionDetection('search'), 0);
+      setTimeout(() => applyDropdownSizing('search'), 0);
     }
-  }, [showSearch, applyCollisionDetection]);
+  }, [showSearch, applyDropdownSizing]);
 
+
+
+  // ============================================================================
+  // MAIN COMPONENT RENDER
+  // ============================================================================
+  
   return (
     <ThemeProvider>
       <div className="network-only">
         {/* Top Right Corner Controls */}
+        {/* These controls are positioned in the top-right corner for easy access */}
         <div className="top-right-controls">
+          {/* Theme Toggle - Allows users to switch between light and dark themes */}
           <ThemeToggle />
-          {/* Share Button */}
+          
+          {/* Share Button - Provides social sharing functionality */}
           <button 
             className={`network-share-button ${showShareDropdown ? 'expanded' : ''}`}
             onClick={() => toggleDropdown('share')}
             title="Share"
           >
             {!showShareDropdown && (
+              // Share icon when dropdown is closed
               <svg className="network-share-icon" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
               </svg>
             )}
             
             {showShareDropdown && (
+              // Share dropdown content when button is expanded
               <div className="network-share-dropdown-content-inline" onClick={handleDropdownContentClick}>
-                <h5 className="network-share-dropdown-title">Share</h5>
-                <button 
+                <div className="dropdown-header">
+                  <h5 className="dropdown-title">Share</h5>
+                  <div
+                    className="dropdown-close"
+                    onClick={() => setShowShareDropdown(false)}
+                    title="Close"
+                  >
+                    ×
+                  </div>
+                </div>
+                  
+                {/* Copy Link Button */}
+                <div 
                   className="network-share-option" 
                   onClick={handleCopyLink}
                 >
                   <svg className="network-share-option-icon" viewBox="0 0 24 24" fill="currentColor">
                     {linkCopied ? (
+                      // Checkmark icon when link is copied
                       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                     ) : (
+                      // Copy icon when link hasn't been copied
                       <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                     )}
                   </svg>
                   {linkCopied ? 'Link Copied!' : 'Copy Link'}
-                </button>
-                <button 
+                </div>
+                
+                {/* Twitter Share Button */}
+                <div 
                   className="network-share-option" 
                   onClick={handleTwitterShare}
                 >
@@ -837,8 +1147,10 @@ function NetworkOnly() {
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                   Share on Twitter
-                </button>
-                <button 
+                </div>
+                
+                {/* LinkedIn Share Button */}
+                <div 
                   className="network-share-option" 
                   onClick={handleLinkedInShare}
                 >
@@ -846,15 +1158,16 @@ function NetworkOnly() {
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                   Share on LinkedIn
-                </button>
+                </div>
               </div>
             )}
           </button>
         </div>
 
-        {/* Main Controls - Top Left */}
+        {/* Main Controls Panel - Top Left */}
+        {/* These controls provide the primary network interaction functionality */}
         <div className="main-controls-panel">
-          {/* Center Network Button */}
+          {/* Center Network Button - Resets the network view to show all nodes */}
           <button 
             className="control-button center-button"
             onClick={() => {
@@ -877,7 +1190,7 @@ function NetworkOnly() {
             </svg>
           </button>
 
-          {/* Zoom In Button */}
+          {/* Zoom In Button - Increases the zoom level of the network view */}
           <button 
             className="control-button zoom-button"
             onClick={() => {
@@ -893,7 +1206,7 @@ function NetworkOnly() {
             </svg>
           </button>
 
-          {/* Zoom Out Button */}
+          {/* Zoom Out Button - Decreases the zoom level of the network view */}
           <button 
             className="control-button zoom-button"
             onClick={() => {
@@ -908,7 +1221,7 @@ function NetworkOnly() {
             </svg>
           </button>
 
-          {/* Filters Dropdown */}
+          {/* Filters Dropdown - Controls which organization types are visible */}
           <div className="control-dropdown">
             <button 
               className={`control-dropdown-button ${showFilters ? 'expanded' : ''}`}
@@ -916,16 +1229,30 @@ function NetworkOnly() {
               title="Filters"
             >
               {!showFilters && (
+                // Filter icon when dropdown is closed
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/>
                 </svg>
               )}
               
               {showFilters && (
+                // Filter dropdown content when expanded
                 <div className="control-dropdown-content-inline" onClick={handleDropdownContentClick}>
+                  <div className="dropdown-header">
+                    <h5 className="dropdown-title">Filters</h5>
+                    <div
+                      className="dropdown-close"
+                      onClick={()=> setShowFilters(false)}
+                      title="Close"
+                      >
+                        ×
+                      </div>
+                  </div>
+
                   <div className="filter-group">
                     <h5>Organization Type</h5>
                     <div className="filter-checkboxes">
+                      {/* Render checkboxes for each organization type filter */}
                       {Object.entries(filters).map(([key, value]) => (
                         <label key={key} className="filter-checkbox">
                           <input
@@ -944,7 +1271,7 @@ function NetworkOnly() {
             </button>
           </div>
 
-          {/* Search Dropdown */}
+          {/* Search Dropdown - Provides search functionality and displays results/details */}
           <div className="control-dropdown">
             <button 
               className={`control-dropdown-button ${showSearch ? 'expanded' : ''}`}
@@ -952,6 +1279,7 @@ function NetworkOnly() {
               title="Search"
             >
               {!showSearch && (
+                // Search icon when dropdown is closed
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="8"/>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -959,11 +1287,38 @@ function NetworkOnly() {
               )}
               
               {showSearch && (
+                // Search dropdown content when expanded
                 <div className="control-dropdown-content-inline" onClick={handleDropdownContentClick}>
+                  <div className="search-dropdown-header">
+                  {selectedNodeDetails || selectedConnection ? (
+                    <div 
+                    className="search-dropdown-back"
+                    onClick={() => {
+                      handleBackToSearch();
+                    }}
+                    title="Back to search"
+                   >
+                    ‹
+                  </div>
+                ) : (
+                  <div></div> /* Empty div to maintain layout when no back button needed */
+                )}
                   <h5 className="search-dropdown-title">{getSearchDropdownTitle()}</h5>
                   
+                  <div 
+                    className="network-only-details-close"
+                    onClick={handleCloseNodeDetails}
+                    title="Close"
+                  >
+
+                    ×
+                  </div>
+                </div>
+
+                  {/* Search Interface - Show when no node or connection is selected */}
                   {!selectedNodeDetails && !selectedConnection ? (
                     <>
+                      {/* Search Input Field */}
                       <input
                         type="text"
                         className="search-input"
@@ -971,6 +1326,8 @@ function NetworkOnly() {
                         value={searchQuery}
                         onChange={(e) => handleSearch(e.target.value)}
                       />
+                      
+                      {/* Search Results List */}
                       {searchResults.length > 0 && (
                         <div className="search-results">
                           <div className="search-results-list">
@@ -980,6 +1337,7 @@ function NetworkOnly() {
                                 className="search-result-item clickable"
                                 onClick={() => handleNodeSelect(result)}
                               >
+                                {/* Color indicator for organization type */}
                                 <div className="result-type-color" style={{backgroundColor: getOrganizationTypeColor(result.type)}}></div>
                                 <div className="result-content">
                                   <div className="result-name">{result.name}</div>
@@ -992,20 +1350,14 @@ function NetworkOnly() {
                       )}
                     </>
                   ) : selectedConnection ? (
-                      <div className="connection-details">
-                        <div className="details-content">
-                          <div className="details-section">
-                            <div className="section-header-with-close">
+                      // Connection Details View - Show when a connection is selected
+                      <div className="network-only-connection-details">
+                        <div className="network-only-details-content">
+                          <div className="network-only-details-section">
+                            <div className="network-only-section-header">
                               <h4>Connected Organizations</h4>
-                              <button 
-                                className="details-close"
-                                onClick={handleCloseNodeDetails}
-                                title="Close"
-                              >
-                                ×
-                              </button>
                             </div>
-                            <div className="connected-organizations">
+                            <div className="network-only-connected-organizations">
                               {(() => {
                                 // Get network data to find the connected nodes
                                 if (networkRef.current && networkRef.current.getNetworkData) {
@@ -1018,128 +1370,123 @@ function NetworkOnly() {
                                 
                                   return (
                                     <>
+                                      {/* Source Organization */}
                                       <div 
-                                        className="org-item clickable"
+                                        className="network-only-org-item clickable"
                                         onClick={() => selectNode(sourceNode)}
                                         style={{ cursor: 'pointer' }}
                                         title="Click to highlight this organization"
                                       >
-                                        <div className="org-node-color" style={{backgroundColor: getOrganizationTypeColor(sourceNode?.type)}}></div>
-                                        <div className="org-content">
-                                          <div className="org-name">
+                                        <div className="network-only-org-node-color" style={{backgroundColor: getOrganizationTypeColor(sourceNode?.type)}}></div>
+                                        <div className="network-only-org-content">
+                                          <div className="network-only-org-name">
                                             {sourceNode?.name || sourceId}
                                             {sourceNode?.website && (
                                               <a 
                                                 href={sourceNode.website} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
-                                                className="org-website-link"
+                                                className="network-only-org-website-link"
                                                 onClick={(e) => e.stopPropagation()}
                                               >
                                                 ↗
                                               </a>
                                             )}
                                           </div>
-                                          <div className="org-type">{formatOrganizationType(sourceNode?.type)}</div>
+                                          <div className="network-only-org-type">{formatOrganizationType(sourceNode?.type)}</div>
                                         </div>
                                       </div>
+                                      
+                                      {/* Target Organization */}
                                       <div 
-                                        className="org-item clickable"
+                                        className="network-only-org-item clickable"
                                         onClick={() => selectNode(targetNode)}
                                         style={{ cursor: 'pointer' }}
                                         title="Click to highlight this organization"
                                       >
-                                        <div className="org-node-color" style={{backgroundColor: getOrganizationTypeColor(targetNode?.type)}}></div>
-                                        <div className="org-content">
-                                          <div className="org-name">
+                                        <div className="network-only-org-node-color" style={{backgroundColor: getOrganizationTypeColor(targetNode?.type)}}></div>
+                                        <div className="network-only-org-content">
+                                          <div className="network-only-org-name">
                                             {targetNode?.name || targetId}
                                             {targetNode?.website && (
                                               <a 
                                                 href={targetNode.website} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
-                                                className="org-website-link"
+                                                className="network-only-org-website-link"
                                                 onClick={(e) => e.stopPropagation()}
                                               >
                                                 ↗
                                               </a>
                                             )}
                                           </div>
-                                          <div className="org-type">{formatOrganizationType(targetNode?.type)}</div>
+                                          <div className="network-only-org-type">{formatOrganizationType(targetNode?.type)}</div>
                                         </div>
                                       </div>
                                     </>
                                   );
                                 }
                                 
-                                return <p className="no-connections">Loading organizations...</p>;
+                                return <p className="network-only-no-connections">Loading organizations...</p>;
                               })()}
                             </div>
                           </div>
                           
-                          <div className="details-section">
+                          {/* Relationship Type Section */}
+                          <div className="network-only-details-section">
                             <h4>Relationship Type</h4>
-                            <p className="relationship-type">
+                            <p className="network-only-relationship-type">
                               {selectedConnection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                             </p>
                           </div>
                           
+                          {/* Relationship Description Section (if available) */}
                           {selectedConnection.description && (
-                            <div className="details-section">
+                            <div className="network-only-details-section">
                               <h4>Description</h4>
-                              <p className="relationship-description">{selectedConnection.description}</p>
+                              <p className="network-only-relationship-description">{selectedConnection.description}</p>
                             </div>
                           )}
                         </div>
                       </div>
                   ) : (
-                    <div className="node-details">
-                      <div className="details-header">
-                        <h3>{selectedNodeDetails.name}</h3>
-                        <button 
-                          className="details-close"
-                          onClick={handleCloseNodeDetails}
-                          title="Close"
-                        >
-                          ×
-                        </button>
+                    // Node Details View - Show when a node is selected
+                    <div className="network-only-node-details">
+                      <div className="network-only-details-header">
                       </div>
                       
-                      <div className="details-content">
-                        <p 
-                          className="node-type clickable" 
-                          onClick={() => {
-                            // Search for all organizations of this type
-                            const typeQuery = formatOrganizationType(selectedNodeDetails.type);
-                            setSearchQuery(typeQuery);
-                            handleSearch(typeQuery);
-                          }}
-                          title={`Click to see all ${formatOrganizationType(selectedNodeDetails.type)} organizations`}
-                        >
+                      <div className="network-only-details-content">
+                        {/* Organization Title and Type */}
+                        <h3 className="network-only-org-title">{getOrganizationDisplayName(selectedNodeDetails)}</h3>
+                        <p className="network-only-node-type">
                           {formatOrganizationType(selectedNodeDetails.type)}
                         </p>
+                        
+                        {/* Organization Description (if available) */}
                         {selectedNodeDetails.description && (
-                          <p className="node-description">{selectedNodeDetails.description}</p>
+                          <p className="network-only-node-description">{selectedNodeDetails.description}</p>
                         )}
                         
+                        {/* Website Link (if available) */}
                         {selectedNodeDetails.website && (
-                          <div className="details-section">
+                          <div className="network-only-details-section">
                             <h4>Website</h4>
                             <a 
                               href={selectedNodeDetails.website} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="website-link"
+                              className="network-only-website-link"
                             >
                               {selectedNodeDetails.website.replace(/^https?:\/\//, '')}
                             </a>
                           </div>
                         )}
                         
+                        {/* Key Personnel List (if available) */}
                         {selectedNodeDetails.keyPersonnel && selectedNodeDetails.keyPersonnel.length > 0 && (
-                          <div className="details-section">
+                          <div className="network-only-details-section">
                             <h4>Key Personnel</h4>
-                            <ul className="personnel-list">
+                            <ul className="network-only-personnel-list">
                                                               {selectedNodeDetails.keyPersonnel.map((person, index) => (
                                   <li key={index}>
                                     {typeof person === 'string' ? person : person.name}
@@ -1148,7 +1495,7 @@ function NetworkOnly() {
                                         href={person.linkedin} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="linkedin-link"
+                                        className="network-only-linkedin-link"
                                       >
                                         LinkedIn
                                       </a>
@@ -1159,15 +1506,16 @@ function NetworkOnly() {
                           </div>
                         )}
                         
+                        {/* Recent News/Developments (if available) */}
                         {selectedNodeDetails.recentNews && (
-                          <div className="details-section">
+                          <div className="network-only-details-section">
                             <h4>Recent Developments</h4>
-                            <p className="recent-news">{selectedNodeDetails.recentNews}</p>
+                            <p className="network-only-recent-news">{selectedNodeDetails.recentNews}</p>
                           </div>
                         )}
                         
-                        {/* Connections List */}
-                        <div className="details-section">
+                        {/* Connections List - Show all organizations connected to this node */}
+                        <div className="network-only-details-section">
                           <h4>Connections</h4>
                           {(() => {
                             // Get network data to find connections
@@ -1180,11 +1528,11 @@ function NetworkOnly() {
                               );
                               
                               if (nodeConnections.length === 0) {
-                                return <p className="no-connections">No connections found.</p>;
+                                return <p className="network-only-no-connections">No connections found.</p>;
                               }
                               
                               return (
-                                <div className="connections-list">
+                                <div className="network-only-connections-list">
                                   {nodeConnections.map((connection, index) => {
                                     // Determine the connected node (not the selected one)
                                     const connectedNodeId = connection.source === selectedNodeDetails.id ? connection.target : connection.source;
@@ -1195,37 +1543,37 @@ function NetworkOnly() {
                                     return (
                                       <div 
                                         key={index} 
-                                        className="connection-item clickable"
+                                        className="network-only-connection-item clickable"
                                         onClick={() => handleConnectionClick(connectedNode, connection)}
                                       >
-                                        <div className="connection-header">
-                                          <div className="connection-node-color" style={{backgroundColor: getOrganizationTypeColor(connectedNode.type)}}></div>
-                                          <div className="connection-content">
-                                            <div className="connection-name">
+                                        <div className="network-only-connection-header">
+                                          <div className="network-only-connection-node-color" style={{backgroundColor: getOrganizationTypeColor(connectedNode.type)}}></div>
+                                          <div className="network-only-connection-content">
+                                            <div className="network-only-connection-name">
                                               {connectedNode.name}
                                               {connectedNode.website && (
                                                 <a 
                                                   href={connectedNode.website} 
                                                   target="_blank" 
                                                   rel="noopener noreferrer"
-                                                  className="connection-website-link"
+                                                  className="network-only-connection-website-link"
                                                   onClick={(e) => e.stopPropagation()}
                                                 >
                                                   ↗
                                                 </a>
                                               )}
                                             </div>
-                                            <div className="connection-type">{formatOrganizationType(connectedNode.type)}</div>
+                                            <div className="network-only-connection-type">{formatOrganizationType(connectedNode.type)}</div>
                                           </div>
                                         </div>
-                                        <div className="connection-relationship">
-                                          <span className="relationship-label">Relationship:</span>
-                                          <span className="relationship-type">
+                                        <div className="network-only-connection-relationship">
+                                          <span className="network-only-relationship-label">Relationship:</span>
+                                          <span className="network-only-relationship-type">
                                             {connection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                                           </span>
                                         </div>
                                         {connection.description && (
-                                          <div className="connection-description">
+                                          <div className="network-only-connection-description">
                                             {connection.description}
                                           </div>
                                         )}
@@ -1236,7 +1584,7 @@ function NetworkOnly() {
                               );
                             }
                             
-                            return <p className="no-connections">Loading connections...</p>;
+                            return <p className="network-only-no-connections">Loading connections...</p>;
                           })()}
                         </div>
                       </div>
@@ -1248,23 +1596,25 @@ function NetworkOnly() {
           </div>
         </div>
 
-        {/* Network Stats - Bottom Right */}
+        {/* Network Stats Panel - Bottom Right */}
+        {/* This panel displays key statistics about the network */}
         <div className="network-stats-bottom-right">
           <div className="stats-item">
             <span className="stat-label">Organizations:</span>
-            <span className="stat-value">117</span>
+            <span className="stat-value">{networkData.nodes.length}</span>
           </div>
           <div className="stats-item">
             <span className="stat-label">Connections:</span>
-            <span className="stat-value">203</span>
+            <span className="stat-value">{networkData.links.length}</span>
           </div>
           <div className="stats-item">
             <span className="stat-label">Updated:</span>
-            <span className="stat-value">August 2025</span>
+            <span className="stat-value">{lastCommitDate}</span>
           </div>
         </div>
 
         {/* Collapsible Legend - Bottom Left */}
+        {/* This panel provides a visual guide to the network's color coding */}
         <div className="fixed-legend">
           <button 
             className={`legend-toggle-button ${showLegend ? 'expanded' : ''}`}
@@ -1274,7 +1624,20 @@ function NetworkOnly() {
             {!showLegend && <span>Legend</span>}
             
             {showLegend && (
+              // Legend content when expanded
               <div className="legend-content-inline" onClick={handleDropdownContentClick}>
+                <div className="dropdown-header">
+                  <h5 className="dropdown-title">Legend</h5>
+                  <div
+                    className="dropdown-close"
+                    onClick={() => setShowLegend(false)}
+                    title="Close"
+                  >
+                    ×
+                  </div>
+                </div>  
+                
+                {/* Node Types Section - Shows colors for different organization types */}
                 <div className="legend-section">
                   <h5>Node Types</h5>
                   <div className="legend-items">
@@ -1287,35 +1650,57 @@ function NetworkOnly() {
                   </div>
                 </div>
                 
+                {/* Relationship Types Section - Shows colors for different connection types */}
                 <div className="legend-section">
                   <h5>Relationship Types</h5>
                   <div className="legend-items">
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#ff6b6b', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#ff6b6b',
+                        borderStyle: 'solid'
+                      }}></div>
                       <span>Spinout</span>
                     </div>
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#4ecdc4', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#4ecdc4',
+                        borderStyle: 'dashed'
+                      }}></div>
                       <span>Investment</span>
                     </div>
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#45b7d1', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#45b7d1',
+                        borderStyle: 'solid'
+                      }}></div>
                       <span>Collaboration</span>
                     </div>
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#96ceb4', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#96ceb4',
+                        borderStyle: 'dotted'
+                      }}></div>
                       <span>Partnership</span>
                     </div>
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#ffeaa7', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#ffeaa7',
+                        borderStyle: 'solid'
+                      }}></div>
                       <span>Service</span>
                     </div>
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#dda0dd', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#dda0dd',
+                        borderStyle: 'dashed'
+                      }}></div>
                       <span>Support</span>
                     </div>
                     <div className="legend-item">
-                      <div className="legend-color" style={{ backgroundColor: '#9b59b6', width: '20px', height: '3px' }}></div>
+                      <div className="legend-line" style={{
+                        borderColor: '#9b59b6',
+                        borderStyle: 'dashed'
+                      }}></div>
                       <span>Education Program</span>
                     </div>
                   </div>
@@ -1326,12 +1711,13 @@ function NetworkOnly() {
         </div>
 
         {/* Full Screen Network Visualization - No Box */}
+        {/* This is the main network visualization component that renders the interactive network */}
         <div className="network-fullscreen">
           <NetworkVisualization 
-            hideUI={true}
-            ref={networkRef}
-            onNodeClick={handleNetworkNodeClick}
-            onEdgeClick={handleEdgeClick}
+            hideUI={true} // Hide the built-in UI since we have our own controls
+            ref={networkRef} // Reference to access network methods
+            onNodeClick={handleNetworkNodeClick} // Handle clicks on network nodes
+            onEdgeClick={handleEdgeClick} // Handle clicks on network edges
             onCenterNetwork={() => {
               if (networkRef.current) {
                 networkRef.current.centerNetwork();
