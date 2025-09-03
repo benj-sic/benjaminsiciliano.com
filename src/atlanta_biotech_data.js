@@ -2115,6 +2115,105 @@ export const atlantaBiotechEcosystem = {
         }
       ],
       recentNews: "Founded in 2021. Proprietary Cardiac Leaflet Enhancer (CARLEN) technology designed to address unmet need through sutureless, single-leaflet device that augments native valve anatomy. Licensed core technology from Emory University in 2021, raised Series A in 2022."
+    },
+    {
+      id: "metanoi",
+      name: "Metanoi Therapeutics",
+      type: "startup",
+      size: 14,
+      description: "Pioneering cancer treatment company developing non-toxic oral therapies that selectively destroy cancer cells while sparing healthy tissue. Novel mechanism exploits cancer cells' inefficient energy production by depleting glucose and glutamine and disrupting mitochondrial integrity.",
+      website: "https://www.metanoitherapeutics.com",
+      keyPersonnel: [
+        {
+          "name": "Guilherme Cantuaria",
+          "linkedin": "https://www.linkedin.com/in/guilherme-cantuaria-3bb27718b/"
+        },
+        {
+          "name": "Stephan Jackman",
+          "linkedin": "https://www.linkedin.com/in/stephan-jackman-4578328a/"
+        },
+        {
+          "name": "Brad Sullivan",
+          "linkedin": "https://www.linkedin.com/in/brad-sullivan-caia-cmt-45bbb36/"
+        },
+        {
+          "name": "Dan King",
+          "linkedin": "https://www.linkedin.com/in/dan-king-694601/"
+        }
+      ],
+      recentNews: "Developing VET001 for animals targeting INAD submission and MET001 for humans targeting IND submission for Phase I trials. Company focuses on broad efficacy across multiple cancers including prostate, breast, and colon."
+    },
+    {
+      id: "alzamend",
+      name: "Alzamend Neuro",
+      type: "public_company",
+      size: 16,
+      description: "Clinical-stage biopharmaceutical company focused on developing novel treatments for Alzheimer's disease, Bipolar disorder, Major Depressive Disorder, and PTSD. Pipeline includes AL001 (ionic cocrystal technology) and ALZN002 (cell-based therapeutic vaccine).",
+      website: "https://alzamend.com/",
+      keyPersonnel: [
+        {
+          "name": "Stephan Jackman",
+          "linkedin": "https://www.linkedin.com/in/stephan-jackman-4578328a/"
+        },
+        {
+          "name": "David Katzoff",
+          "linkedin": "https://www.linkedin.com/in/davidjkatzoff/"
+        },
+        {
+          "name": "Henry Nisser",
+          "linkedin": "https://www.linkedin.com/in/henry-nisser-900a3221/"
+        },
+        {
+          "name": "Ken Cragun",
+          "linkedin": "https://www.linkedin.com/in/kencragun/"
+        }
+      ],
+      recentNews: "NASDAQ-listed company (ALZN) currently dosing first patient in Phase II clinical trial of AL001 'Lithium in Brain' study at Massachusetts General Hospital. Successfully raised $5 million in private placement ahead of schedule."
+    },
+    {
+      id: "arnav",
+      name: "ARNAV Biotech",
+      type: "company",
+      size: 15,
+      description: "mRNA manufacturing and contract research company offering high quality, custom and catalogued mRNA with expertise in mRNA design and optimization. Helps academic and industry scientists develop mRNA-based therapeutics and vaccines for therapeutic, vaccine, diagnostic and agricultural applications.",
+      website: "http://www.arnavbiotech.com/",
+      keyPersonnel: [
+        {
+          "name": "Pooja Tiwari",
+          "linkedin": "https://www.linkedin.com/in/poojamtiwari/"
+        }
+      ],
+      recentNews: "Secured exclusive license for cutting-edge Anti-RSV inhibitor from Alabama State University. Entered collaboration with Sartorius BIA Separations to develop mRNA synthesis and purification platform with PATfix in-process analytical solution."
+    },
+    {
+      id: "synthbiome",
+      name: "SynthBiome",
+      type: "startup",
+      size: 14,
+      description: "Designs synthetic environments to mimic physiological conditions that microorganisms encounter in their natural environments. Manufactures specialized growth media including synthetic media that imitate CF-sputum and chronic wound environments for better drug development and treatment selection.",
+      website: "https://www.synthbiome.com/",
+      keyPersonnel: [
+        {
+          "name": "Marvin Whiteley",
+          "linkedin": "https://www.linkedin.com/in/marvin-whiteley-895997194/"
+        }
+      ],
+      recentNews: "Founded by Marvin Whiteley, PhD from Georgia Tech. Focuses on creating accurate synthetic models for drug development and treatment selection, moving beyond traditional clinical models to provide adaptive, scalable simulations of human physiology."
+    },
+    {
+      id: "artpharmacy",
+      name: "Art Pharmacy",
+      type: "company",
+      size: 16,
+      description: "America's leader in healthcare-grade social prescribing, delivering evidence-based solutions for the dual mental health and loneliness epidemics. Enables personalized social prescribing services with healthcare, university, corporate, and government partners to address the nation's most intractable health challenges.",
+      website: "https://www.artpharmacy.co/",
+      keyPersonnel: [
+        {
+          "name": "Chris Appleton",
+          "linkedin": "https://www.linkedin.com/in/chris-appleton-atl/"
+        }
+      ],
+      recentNews: "Partners with major health systems including UnitedHealthcare, Stanford, Grady, Mass General Brigham, Emory, and Wellstar. Provides end-to-end social prescribing solutions for health plans, universities, and health systems to address mental health, social isolation, and loneliness."
     }
   ],
 
