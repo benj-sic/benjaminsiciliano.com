@@ -379,14 +379,15 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     if (theme === 'light') {
       // Convert dark colors to lighter versions for better readability
       const colorMap = {
-        '#0033A0': '#4A90E2', // Academia & Research - Lighter Blue
+        '#0033A0': '#4A90E2', // Academia & Research / University - Lighter Blue
         '#0D6A42': '#4CAF50', // Company - Lighter Green
-        '#F2A900': '#FFD54F', // Investor - Lighter Gold
+        '#F2A900': '#FFD54F', // Investor / Venture Capital - Lighter Gold
         '#A43533': '#E57373', // Accelerator & Incubator - Lighter Red
         '#5A2D81': '#BA68C8', // Government & Trade Org - Lighter Purple
         '#545454': '#9E9E9E', // Service Provider - Lighter Gray
         '#00AEEF': '#81D4FA', // Startup - Lighter Blue
-        '#7C9A7A': '#A5D6A7', // Provider & Health System - Lighter Sage
+        '#7C9A7A': '#A5D6A7', // Provider & Health System / Facilities - Lighter Sage
+        '#E67300': '#FFB74D', // Community Builders - Lighter Orange
       };
       return colorMap[baseColor] || baseColor;
     }
@@ -1718,9 +1719,9 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       {/* Title and Description - Only show when not hiding UI */}
       {!hideUI && (
         <div className="network-header">
-          <h2>Atlanta Biotech Network</h2>
+          <h2>{dataFile === 'tech' ? 'Atlanta Tech Network' : 'Atlanta Biotech Network'}</h2>
           <p>
-            An interactive visualization of the organizations powering innovation in Georgia biotech — including startups, academic institutions, VCs, incubators, and service providers. Use the filters to focus on 
+            An interactive visualization of the organizations powering innovation in Atlanta {dataFile === 'tech' ? 'tech' : 'biotech'} — including {dataFile === 'tech' ? 'startups, VCs, and innovation hubs' : 'startups, academic institutions, VCs, incubators, and service providers'}. Use the filters to focus on 
             specific organization types. Click on nodes and connections for detailed information and website links.
           </p>
           <div className="header-spacer"></div>
@@ -1735,14 +1736,14 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
           <div className="network-sidebar-left">
           {/* Controls Section */}
           <div className="dropdown-container">
-            <button className="dropdown-button" onClick={() => setShowControls(!showControls)}>
+            <button className={`dropdown-button ${showControls ? 'expanded' : ''}`} onClick={() => setShowControls(!showControls)}>
               <span>Controls</span>
               <svg className={`dropdown-arrow ${showControls ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="6,9 12,15 18,9"></polyline>
               </svg>
             </button>
             {showControls && (
-              <div className="dropdown-content control-dropdown">
+              <div className="dropdown-content control-dropdown expanded">
                 {/* All Controls in One Row */}
                 <div className="control-group">
                   <button 
@@ -1798,14 +1799,14 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
           
           {/* Filters Section */}
           <div className="dropdown-container">
-            <button className="dropdown-button" onClick={() => setShowFilters(!showFilters)}>
+            <button className={`dropdown-button ${showFilters ? 'expanded' : ''}`} onClick={() => setShowFilters(!showFilters)}>
               <span>Filters</span>
               <svg className={`dropdown-arrow ${showFilters ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="6,9 12,15 18,9"></polyline>
               </svg>
             </button>
             {showFilters && (
-              <div className="dropdown-content filter-dropdown">
+              <div className="dropdown-content filter-dropdown expanded">
 
               <label className="filter-checkbox">
                 <input 
@@ -1932,14 +1933,14 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
           
           {/* Legend Section */}
           <div className="dropdown-container">
-            <button className="dropdown-button" onClick={() => setShowLegend(!showLegend)}>
+            <button className={`dropdown-button ${showLegend ? 'expanded' : ''}`} onClick={() => setShowLegend(!showLegend)}>
               <span>Legend</span>
               <svg className={`dropdown-arrow ${showLegend ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="6,9 12,15 18,9"></polyline>
               </svg>
             </button>
             {showLegend && (
-              <div className="dropdown-content legend-dropdown">
+              <div className="dropdown-content legend-dropdown expanded">
 
                 <div className="legend-section">
                   <h5>Node Types</h5>
@@ -2022,14 +2023,14 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
           
           {/* Search & Details Section */}
           <div className="dropdown-container">
-            <button className="dropdown-button" onClick={() => setShowSearch(!showSearch)}>
+            <button className={`dropdown-button ${showSearch ? 'expanded' : ''}`} onClick={() => setShowSearch(!showSearch)}>
               <span>Search & Details</span>
               <svg className={`dropdown-arrow ${showSearch ? 'expanded' : ''}`} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="6,9 12,15 18,9"></polyline>
               </svg>
             </button>
             {showSearch && (
-              <div className="dropdown-content search-dropdown">
+              <div className="dropdown-content search-dropdown expanded">
                 {/* Search Input */}
                 <div className="search-container">
                   <input
@@ -2042,24 +2043,33 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
                 </div>
                 
                 {/* Search Results */}
-                {searchResults.length > 0 && (
+                {searchQuery.trim() && (
                   <div className="search-results">
-                    <h5>Search Results</h5>
-                    <div className="search-results-list">
-                      {searchResults.map((node, index) => (
-                        <div 
-                          key={node.id} 
-                          className="search-result-item"
-                          onClick={() => handleNodeClick(node)}
-                        >
-                          <div className="result-node-color" style={{backgroundColor: getNodeColor(node.type)}}></div>
-                          <div className="result-content">
-                            <div className="result-name">{node.name}</div>
-                            <div className="result-type">{typeMap[node.type] || node.type}</div>
-                          </div>
+                    {searchResults.length > 0 ? (
+                      <>
+                        <h5>Search Results</h5>
+                        <div className="search-results-list">
+                          {searchResults.map((node, index) => (
+                            <div 
+                              key={node.id} 
+                              className="search-result-item"
+                              onClick={() => handleNodeClick(node)}
+                            >
+                              <div className="result-node-color" style={{backgroundColor: getNodeColor(node.type)}}></div>
+                              <div className="result-content">
+                                <div className="result-name">{node.name}</div>
+                                <div className="result-type">{typeMap[node.type] || node.type}</div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
+                      </>
+                    ) : (
+                      <div className="no-results">
+                        <p>No organizations found matching "{searchQuery}"</p>
+                        <p className="no-results-hint">Try a different search term or check the spelling</p>
+                      </div>
+                    )}
                   </div>
                 )}
                 

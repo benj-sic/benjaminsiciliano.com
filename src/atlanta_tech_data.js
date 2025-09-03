@@ -38,20 +38,20 @@ export const nodeTypeMap = {
   'communityBuilders': 'Community Builders'
 };
 
-// Color mapping for different node types
+// Color mapping for different node types (theme-aware)
 export const nodeColors = {
-  'Venture Capital': '#ff6b6b',
-  'Startup': '#4ecdc4',
-  'Company': '#45b7d1',
-  'University': '#96ceb4',
-  'Incubator': '#ffeaa7',
-  'Accelerator': '#dda0dd',
-  'Service Provider': '#a8e6cf',
-  'Government': '#ffd3a5',
-  'Trade Organization': '#fd79a8',
-  'Development': '#6c5ce7',
-  'Facilities': '#74b9ff',
-  'Community Builders': '#00b894'
+  'Venture Capital': '#F2A900', // Gold
+  'Startup': '#00AEEF', // Light Blue
+  'Company': '#0D6A42', // Green
+  'University': '#0033A0', // Dark Blue
+  'Incubator': '#A43533', // Red
+  'Accelerator': '#A43533', // Red
+  'Service Provider': '#545454', // Gray
+  'Government': '#5A2D81', // Purple
+  'Trade Organization': '#5A2D81', // Purple
+  'Development': '#5A2D81', // Purple
+  'Facilities': '#7C9A7A', // Sage
+  'Community Builders': '#E67300' // Orange
 };
 
 // Atlanta Tech Ecosystem Network Data

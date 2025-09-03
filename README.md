@@ -4,26 +4,30 @@ Bridging science, software, and strategy to accelerate biotech innovation.
 
 ## 🌟 **Project Overview**
 
-This is a comprehensive personal website featuring an interactive **Atlanta Biotech Network visualization** that maps the entire Georgia biotech ecosystem. The project showcases the interconnected network of universities, startups, VCs, research institutions, and key personnel driving innovation in the region.
+This is a comprehensive personal website featuring interactive network visualizations that map both the **Atlanta Biotech** and **Atlanta Tech ecosystems**. The project showcases the interconnected networks of universities, startups, VCs, research institutions, and key personnel driving innovation in Georgia.
 
 ### **Key Features**
-- **Interactive Network Visualization**: D3.js-powered network graph with 117+ organizations and 206+ connections
-- **Dual-Page Architecture**: Main page with portfolio sections + dedicated network exploration page
+- **Dual Ecosystem Visualizations**: Interactive D3.js-powered network graphs for both biotech and tech ecosystems
+- **Biotech Network**: 117+ organizations and 206+ connections in the life sciences sector
+- **Tech Network**: 50+ organizations including VCs (Mosley Ventures, Atlanta Ventures, Valor Ventures, Zane Venture Fund) and their portfolio companies
+- **Multi-Page Architecture**: Main page with portfolio sections + dedicated network exploration pages
 - **Social Media Integration**: Automated generation of social cards and meta images
 - **Performance Optimization**: Intelligent caching system and optimal zoom calculations
 - **Responsive Design**: Mobile-optimized with theme switching capabilities
-- **Data-Driven**: Comprehensive dataset of Atlanta's biotech ecosystem
+- **Data-Driven**: Comprehensive datasets of Atlanta's innovation ecosystems
 
 ## 🏗️ **Project Architecture**
 
 ### **Core Components**
-- **Main Page (`/`)**: Portfolio, about, contact sections with embedded network preview
-- **Network Page (`/network`)**: Full-screen interactive network visualization
+- **Main Page (`/`)**: Portfolio, about, contact sections with embedded biotech network preview
+- **Biotech Network Page (`/biotech`)**: Full-screen interactive biotech ecosystem visualization
+- **Tech Network Page (`/tech`)**: Full-screen interactive tech ecosystem visualization
 - **Network Visualization**: D3.js-powered force-directed graph with filtering and search
 - **Theme System**: Dark/light mode with global context management
 
 ### **Data & Analytics**
 - **Atlanta Biotech Dataset**: 117+ organizations with detailed metadata
+- **Atlanta Tech Dataset**: 50+ organizations including VCs, startups, and innovation hubs
 - **Network Analysis**: Community detection algorithms and relationship mapping
 - **Performance Monitoring**: Caching strategies and optimization metrics
 
@@ -44,16 +48,16 @@ This is a comprehensive personal website featuring an interactive **Atlanta Biot
 |----------------|------------------|-------------------|
 | **Main page styling** | `src/App.css` | `NetworkOnly.css` |
 | **Main page functionality** | `src/App.js` | `NetworkOnly.js` |
-| **NetworkOnly page styling** | `NetworkOnly.css` | `src/App.css` |
-| **NetworkOnly page functionality** | `NetworkOnly.js` | `src/App.js` |
+| **NetworkOnly pages styling** | `NetworkOnly.css` | `src/App.css` |
+| **NetworkOnly pages functionality** | `NetworkOnly.js` | `src/App.js` |
 | **Both pages** | `NetworkVisualization.*` | Main page files |
 | **Global elements** | `ThemeToggle.*` | Page-specific files |
 
 ### **Why This Matters:**
-- **Main page (`/`)** and **NetworkOnly page (`/network`)** have completely separate styling systems
-- **CSS conflicts can break functionality** on either page
+- **Main page (`/`)** and **NetworkOnly pages (`/biotech`, `/tech`)** have completely separate styling systems
+- **CSS conflicts can break functionality** on any page
 - **Always scope NetworkOnly styles** with `.network-only` prefix
-- **Test both pages** after any modification
+- **Test all pages** after any modification
 
 ---
 
@@ -65,9 +69,10 @@ benjaminsiciliano.com/
 │   ├── App.css                    ← Main page styles ONLY
 │   ├── App.js                     ← Main page layout & share popup
 │   ├── atlanta_biotech_data.js    ← Complete biotech ecosystem dataset
+│   ├── atlanta_tech_data.js       ← Complete tech ecosystem dataset
 │   ├── components/
 │   │   ├── NetworkOnly.css        ← NetworkOnly page styles ONLY
-│   │   ├── NetworkOnly.js         ← NetworkOnly page component
+│   │   ├── NetworkOnly.js         ← NetworkOnly page component (handles both /biotech and /tech)
 │   │   ├── NetworkVisualization.css ← Network visualization (both pages)
 │   │   ├── NetworkVisualization.js  ← Network visualization component
 │   │   ├── ThemeToggle.css        ← Global theme toggle styles
@@ -108,8 +113,9 @@ benjaminsiciliano.com/
 
 ## 📱 **Available Routes**
 
-- **`/`** - Main page with welcome, about, contact sections + network preview
-- **`/network`** - Full-screen network visualization with advanced controls
+- **`/`** - Main page with welcome, about, contact sections + biotech network preview
+- **`/biotech`** - Full-screen biotech network visualization with advanced controls
+- **`/tech`** - Full-screen tech network visualization with advanced controls
 
 ## 🎨 **Styling Systems**
 
@@ -118,10 +124,11 @@ benjaminsiciliano.com/
 - **Features:** Sophisticated share popup with backdrop, full layout
 - **Isolation:** Completely separate from NetworkOnly styling
 
-### **NetworkOnly Page (`/network`)**
+### **NetworkOnly Pages (`/biotech` and `/tech`)**
 - **File:** `src/components/NetworkOnly.css`
 - **Features:** Simple share popup, full-screen controls, isolated styling
 - **Isolation:** All styles scoped with `.network-only` prefix
+- **Data Sources:** Dynamically loads biotech or tech data based on route
 
 ### **Shared Components**
 - **Network Visualization:** `src/components/NetworkVisualization.css`
@@ -151,7 +158,8 @@ benjaminsiciliano.com/
 - **Cache Busting**: Version control for social media previews
 
 ### **Data Management**
-- **Comprehensive Dataset**: 100+ organizations with detailed metadata
+- **Biotech Dataset**: 117+ organizations with detailed metadata in life sciences
+- **Tech Dataset**: 50+ organizations including VCs and their portfolio companies
 - **Relationship Mapping**: Connections between entities with context
 - **Real-time Updates**: Git integration for version tracking
 
@@ -164,4 +172,4 @@ benjaminsiciliano.com/
 
 ---
 
-**Remember:** This project has two separate styling systems that must remain isolated. When in doubt, scope NetworkOnly styles with `.network-only` and test both pages! 
+**Remember:** This project has separate styling systems that must remain isolated. When in doubt, scope NetworkOnly styles with `.network-only` and test all pages! 

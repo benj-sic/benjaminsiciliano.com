@@ -34,6 +34,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NetworkVisualization from './components/NetworkVisualization';
 import NetworkOnly from './components/NetworkOnly';
+import NetworkSwitcher from './components/NetworkSwitcher';
 import ThemeToggle from './components/ThemeToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
 import cacheManager from './utils/cache.js';
@@ -51,6 +52,7 @@ function App() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [showShareToast, setShowShareToast] = useState(false);
   const [showShareDropdown, setShowShareDropdown] = useState(false);
+  const [currentNetwork, setCurrentNetwork] = useState('biotech');
   const shareDropdownRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -59,6 +61,15 @@ function App() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleNetworkChange = (newNetwork) => {
+    setCurrentNetwork(newNetwork);
+  };
+
+  const handleNavigateToNetwork = () => {
+    const targetPath = currentNetwork === 'biotech' ? '/biotech' : '/tech';
+    window.location.href = targetPath;
   };
 
 
@@ -344,11 +355,11 @@ function App() {
                   <div className="container">
                     <div className="welcome-content">
                       <p>
-                        Hi, I'm Ben — a neuropharmacologist and computational biologist working at the intersection of science, strategy, and systems to accelerate biotech innovation. I built this interactive network to help shine a light on Atlanta's fast-growing but often under-recognized biotech ecosystem.
+                        Hi, I'm Ben — a neuropharmacologist and computational biologist working at the intersection of science, strategy, and systems to accelerate biotech innovation. I built these interactive networks to help shine a light on Atlanta's fast-growing but often under-recognized innovation ecosystems.
                       </p>
                       <div className="welcome-cta">
                         <p>
-                          Explore the map below to discover key organizations, partnerships, and investment relationships driving the region's life sciences momentum — and uncover opportunities to collaborate, invest, or get involved.
+                          Explore the network below to discover key organizations, partnerships, and investment relationships driving the region's innovation momentum — and uncover opportunities to collaborate, invest, or get involved.
                         </p>
                       </div>
                     </div>
@@ -357,10 +368,28 @@ function App() {
 
                 {/* Network Visualization - Front and Center */}
                 <section id="network" className="network-section">
+                  <NetworkSwitcher 
+                    currentNetwork={currentNetwork} 
+                    onNetworkChange={handleNetworkChange} 
+                  />
                   <div className="container">
-                    <NetworkVisualization dataFile="biotech" />
+                    <NetworkVisualization dataFile={currentNetwork} />
                   </div>
                 </section>
+
+                {/* Network Navigation Button - Below Network */}
+                <div className="network-navigation">
+                  <button 
+                    className="network-nav-button"
+                    onClick={handleNavigateToNetwork}
+                    aria-label={`Navigate to full ${currentNetwork} network page`}
+                  >
+                    <span>Explore Full {currentNetwork === 'biotech' ? 'Biotech' : 'Tech'} Network</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                    </svg>
+                  </button>
+                </div>
 
 
 
@@ -396,7 +425,7 @@ function App() {
                     <div className="motivation-content">
                       <h3 id="why-built">Why I Built This Network</h3>
                       <p>
-                        Atlanta's biotech ecosystem is growing fast — but often flies under the radar. I created this interactive network to visualize the key players, partnerships, and innovation hubs fueling Georgia's life sciences revolution. By mapping these relationships, we can identify collaboration, investment, and commercialization opportunities that drive next-gen therapeutic development and translational success.
+                        Atlanta's innovation ecosystem is growing fast — but often flies under the radar. I created this interactive network to visualize the key players, partnerships, and innovation hubs fueling Atlanta's technology and life sciences revolution. By mapping these relationships, we can identify collaboration, investment, and commercialization opportunities that drive next-gen product development and market success.
                       </p>
                     </div>
                   </div>

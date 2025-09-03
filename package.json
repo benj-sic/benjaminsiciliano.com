@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "d3": "^7.8.5",
+    "lucide-react": "^0.542.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.8.0",
