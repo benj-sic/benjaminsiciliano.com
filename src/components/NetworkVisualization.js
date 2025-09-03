@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { useTheme } from '../contexts/ThemeContext';
 import './NetworkVisualization.css';
 
-const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false, onNodeClick, onEdgeClick }, ref) => {
+const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false, onNodeClick, onEdgeClick }, ref) => {
   const { theme, isThemeChanging } = useTheme();
   const svgRef = useRef();
   const containerRef = useRef();
@@ -22,10 +22,17 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
-      setNetworkData(atlantaBiotechEcosystem);
-      setNodeTypeMap(ntm);
-      setNodeColors(nc);
+      if (dataFile === 'tech') {
+        const { atlantaTechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_tech_data.js');
+        setNetworkData(atlantaTechEcosystem);
+        setNodeTypeMap(ntm);
+        setNodeColors(nc);
+      } else {
+        const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
+        setNetworkData(atlantaBiotechEcosystem);
+        setNodeTypeMap(ntm);
+        setNodeColors(nc);
+      }
       setIsLoading(false);
     };
     loadData();
@@ -156,7 +163,10 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
     setSelectedEdge: (sourceId, targetId) => {
       // Create a unique edge identifier (sorted to handle both directions)
       const edgeId = sourceId < targetId ? `${sourceId}-${targetId}` : `${targetId}-${sourceId}`;
+      console.log('setSelectedEdge called with:', { sourceId, targetId, edgeId });
+      console.log('Previous selectedEdgeId:', selectedEdgeId);
       setSelectedEdgeId(edgeId);
+      console.log('setSelectedEdgeId called with:', edgeId);
       
       // Set the connected nodes for this edge
       const connected = new Set();
@@ -164,7 +174,7 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
       connected.add(targetId);
       setEdgeConnectedNodes(connected);
     },
-    clearHighlight: () => {
+    clearHighlight: (clearEdgeSelection = true) => {
       // Clear all highlights
       if (svgRef.current) {
         const svg = d3.select(svgRef.current);
@@ -176,9 +186,12 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
         svg.selectAll('.link').classed('link-highlighted', false);
         svg.selectAll('.link').classed('link-dimmed', false);
       }
-      // Also clear the internal state
-      setSelectedEdgeId(null);
-      setEdgeConnectedNodes(new Set());
+      // Only clear edge selection if explicitly requested
+      if (clearEdgeSelection) {
+        setSelectedEdgeId(null);
+        setEdgeConnectedNodes(new Set());
+      }
+      // Always clear node selection
       setSelectedNode(null);
     },
     clearNodeSelection: () => {
@@ -195,6 +208,10 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
         svg.selectAll('.label').classed('label-highlighted', false);
         svg.selectAll('.label').classed('label-dimmed', false);
       }
+    },
+    getSelectedEdgeId: () => {
+      console.log('getSelectedEdgeId called, returning:', selectedEdgeId);
+      return selectedEdgeId;
     }
   }));
   
@@ -900,7 +917,8 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
 
     // Filter nodes based on current filters
     const filteredNodes = networkData.nodes.filter(node => {
-      return debouncedFilters[filterMapping[node.type]];
+      const filterKey = filterMapping[node.type];
+      return filterKey ? debouncedFilters[filterKey] : true; // Show node if no filter mapping exists
     });
 
     const filteredLinks = networkData.links.filter(link => {
@@ -1614,17 +1632,17 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
     // Stop event propagation to prevent container click handler from firing
     event?.stopPropagation();
     
-    // Call the onNodeClick callback if provided (for NetworkOnly page)
-    // But don't return early - let the main logic execute for network state
+    // If onNodeClick is provided, let the parent component handle everything
     if (onNodeClick) {
       onNodeClick(node);
+      return; // Return early to prevent any internal logic from executing
     }
     
-    // Clear edge selection when clicking a node
+    // Clear edge selection when clicking a node (only for main page behavior)
     setSelectedEdgeId(null);
     setEdgeConnectedNodes(new Set());
     
-    // Toggle selection: if clicking the same node, deselect it
+    // Toggle selection: if clicking the same node, deselect it (main page behavior only)
     if (selectedNodeRef.current && selectedNodeRef.current.id === node.id) {
       console.log('Deselecting node:', node.id);
       setSelectedNode(null);
@@ -1633,7 +1651,8 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
       setSearchQuery('');
       setSearchResults([]);
       setShowSearch(false);
-      // Reset to full network view when deselecting - use manual center to avoid reload
+      
+      // Reset to full network view when deselecting
       setTimeout(() => {
         manualCenterNetwork();
       }, 100);
@@ -1668,26 +1687,24 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
     selectedNodeRef.current = node;
     setConnectedNodes(connected);
     
-    // Only set UI state if onNodeClick is not provided (main page behavior)
-    if (!onNodeClick) {
-      setSearchQuery('');
-      setSearchResults([]);
-      setShowSearch(true); // Auto-open the search & details dropdown
-      
-      // Auto-scroll to the search & details section (only when sidebar is visible)
-      if (!hideUI) {
-        setTimeout(() => {
-          const sidebar = document.querySelector('.network-sidebar-left');
-          const searchDropdownButton = document.querySelector('.dropdown-container:last-child .control-dropdown-button');
-          if (sidebar && searchDropdownButton) {
-            const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
-            sidebar.scrollTo({
-              top: scrollTop,
-              behavior: 'smooth'
-            });
-          }
-        }, 100); // Small delay to ensure the dropdown is rendered
-      }
+    // Set UI state for main page behavior
+    setSearchQuery('');
+    setSearchResults([]);
+    setShowSearch(true); // Auto-open the search & details dropdown
+    
+    // Auto-scroll to the search & details section (only when sidebar is visible)
+    if (!hideUI) {
+      setTimeout(() => {
+        const sidebar = document.querySelector('.network-sidebar-left');
+        const searchDropdownButton = document.querySelector('.dropdown-container:last-child .control-dropdown-button');
+        if (sidebar && searchDropdownButton) {
+          const scrollTop = searchDropdownButton.offsetTop - sidebar.offsetTop - 5; // 5px gap from top
+          sidebar.scrollTo({
+            top: scrollTop,
+            behavior: 'smooth'
+          });
+        }
+      }, 100); // Small delay to ensure the dropdown is rendered
     }
     
     // Zoom to the subnetwork after a short delay to ensure state updates and simulation has settled
@@ -1789,6 +1806,7 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
             </button>
             {showFilters && (
               <div className="dropdown-content filter-dropdown">
+
               <label className="filter-checkbox">
                 <input 
                   type="checkbox" 
@@ -1922,6 +1940,7 @@ const NetworkVisualization = forwardRef(({ dataFile = 'atlanta', hideUI = false,
             </button>
             {showLegend && (
               <div className="dropdown-content legend-dropdown">
+
                 <div className="legend-section">
                   <h5>Node Types</h5>
                   <div className="legend-item">

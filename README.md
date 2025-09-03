@@ -1,392 +1,167 @@
-# Benjamin Siciliano - Personal Website
+# Benjamin Siciliano, PhD - Personal Website
 
-A modern, interactive personal website featuring an Atlanta Biotech Network visualization built with React and D3.js. This project showcases Benjamin's expertise in computational biology and biotech innovation through an engaging, data-driven interface.
+Bridging science, software, and strategy to accelerate biotech innovation.
 
-## 🌟 Features
+## 🌟 **Project Overview**
 
-### Interactive Network Visualization
-- **Biological Network Styling**: Inspired by STRING/BioGRID protein interaction networks
-- **Interactive Nodes**: Clickable organizations with detailed information panels
-- **Smart Highlighting**: Click a node to highlight it and dim non-connected nodes
-- **Toggle Selection**: Click the same node again to deselect it
-- **Advanced Filtering**: Filter by organization type (companies, startups, universities, incubators, VCs, service providers)
-- **Zoom & Pan**: Natural zoom range from 10% to 100% with smooth transitions
-- **Auto-Centering**: Network automatically re-centers on filter changes
-- **Force-Directed Layout**: Dynamic positioning with physics simulation
-- **Mobile Optimized**: Touch-friendly interactions on mobile devices
-- **State Persistence**: Network positions and filter states are automatically saved
+This is a comprehensive personal website featuring an interactive **Atlanta Biotech Network visualization** that maps the entire Georgia biotech ecosystem. The project showcases the interconnected network of universities, startups, VCs, research institutions, and key personnel driving innovation in the region.
 
-### Network Data
-- **116 Organizations**: Comprehensive metro Atlanta biotech ecosystem focused on innovation-generating entities
-- **190 Connections**: Partnerships, shared talent, co-location, spinouts, investor relationships
-- **Organization Types**: 6 universities, 7 health systems, 39 startups, 16 companies, 6 VCs, 7 incubators, 16 service providers, 3 government agencies, 6 community organizations
-- **Connection Types**: 40 collaborations, 28 spinouts, 18 investments, 16 services, 13 support relationships, 9 infrastructure links
-- **Major Hubs**: Emory, Georgia Tech, Portal Innovations, ATDC prominently featured
-- **Dual Filtering**: Separate filters for startups vs established companies
-- **Color-Coded Types**: Visual distinction between organization categories
-- **Rich Metadata**: Detailed descriptions, websites, key personnel, and recent news
-- **LinkedIn Integration**: Direct links to key personnel profiles where available
-- **EBCC Integration**: Emory Biotech Consulting Club connections to supported startups
+### **Key Features**
+- **Interactive Network Visualization**: D3.js-powered network graph with 117+ organizations and 206+ connections
+- **Dual-Page Architecture**: Main page with portfolio sections + dedicated network exploration page
+- **Social Media Integration**: Automated generation of social cards and meta images
+- **Performance Optimization**: Intelligent caching system and optimal zoom calculations
+- **Responsive Design**: Mobile-optimized with theme switching capabilities
+- **Data-Driven**: Comprehensive dataset of Atlanta's biotech ecosystem
 
-### Site Features
-- **Dark/Light Theme Toggle**: Seamless theme switching with persistent preferences
-- **Social Sharing**: Built-in sharing functionality for Twitter and LinkedIn
-- **Contact Form**: Professional contact form with Formspree integration
-- **Responsive Design**: Mobile-first approach with touch-optimized interactions
-- **SEO Optimized**: Meta tags, social cards, and structured data
-- **Performance Optimized**: Advanced caching system for faster loading and interactions
+## 🏗️ **Project Architecture**
 
-## 🛠️ Tech Stack
+### **Core Components**
+- **Main Page (`/`)**: Portfolio, about, contact sections with embedded network preview
+- **Network Page (`/network`)**: Full-screen interactive network visualization
+- **Network Visualization**: D3.js-powered force-directed graph with filtering and search
+- **Theme System**: Dark/light mode with global context management
 
-- **Frontend**: React 18 with modern hooks
-- **Visualization**: D3.js v7 for network graphics
-- **Styling**: CSS3 with modern features (backdrop-filter, gradients, CSS Grid)
-- **Typography**: Inter font family
-- **Build Tools**: Create React App with custom build scripts
-- **Deployment**: Netlify with automated builds
-- **Form Handling**: Formspree for contact form processing
-- **Social Media**: Custom social card generation with Puppeteer
-- **Caching**: Advanced multi-layer caching system with performance monitoring
+### **Data & Analytics**
+- **Atlanta Biotech Dataset**: 117+ organizations with detailed metadata
+- **Network Analysis**: Community detection algorithms and relationship mapping
+- **Performance Monitoring**: Caching strategies and optimization metrics
 
-## 🚀 Getting Started
+### **Build & Automation**
+- **Social Media Generation**: Automated creation of platform-specific images
+- **Git Integration**: Last commit date injection and version tracking
+- **Optimal Zoom Calculation**: Automated network positioning for best viewing experience
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
+## 🚨 **Critical: Styling Architecture & Modification Guide**
 
-### Installation
+**Before making ANY changes to styling or functionality, please read the comprehensive guide:**
 
-1. Clone the repository:
-```bash
-git clone https://github.com/benjaminsiciliano/benjaminsiciliano.com.git
-cd benjaminsiciliano.com
-```
+📖 **[STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md)**
 
-2. Install dependencies:
-```bash
-npm install
-```
+### **Quick Reference - Which Files to Edit:**
 
-3. Start the development server:
-```bash
-npm start
-```
+| What to Change | Edit These Files | Don't Touch These |
+|----------------|------------------|-------------------|
+| **Main page styling** | `src/App.css` | `NetworkOnly.css` |
+| **Main page functionality** | `src/App.js` | `NetworkOnly.js` |
+| **NetworkOnly page styling** | `NetworkOnly.css` | `src/App.css` |
+| **NetworkOnly page functionality** | `NetworkOnly.js` | `src/App.js` |
+| **Both pages** | `NetworkVisualization.*` | Main page files |
+| **Global elements** | `ThemeToggle.*` | Page-specific files |
 
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### **Why This Matters:**
+- **Main page (`/`)** and **NetworkOnly page (`/network`)** have completely separate styling systems
+- **CSS conflicts can break functionality** on either page
+- **Always scope NetworkOnly styles** with `.network-only` prefix
+- **Test both pages** after any modification
 
-### Testing the Caching System
+---
 
-To verify the caching system is working:
-```bash
-npm run test-cache
-```
-
-### Available Scripts
-
-```bash
-npm start          # Start development server
-npm run build      # Build for production (includes git date injection)
-npm test           # Run tests
-npm run eject      # Eject from Create React App
-npm run generate-social-card      # Generate social media cards
-npm run generate-all-social-images # Generate all social images
-npm run inject-git-date          # Inject last commit date into build
-npm run test-cache               # Test the caching system
-```
-
-## 📁 Project Structure
+## 🏗️ **Project Structure**
 
 ```
 benjaminsiciliano.com/
-├── public/                    # Static assets
-│   ├── index.html            # Main HTML file
-│   ├── favicon.svg           # Site favicon
-│   ├── BS_headshot.jpeg      # Profile image
-│   └── social-cards/         # Generated social media images
 ├── src/
-│   ├── components/           # React components
-│   │   ├── NetworkVisualization.js    # Main D3.js network
-│   │   ├── NetworkVisualization.css   # Network styles
-│   │   ├── ThemeToggle.js             # Theme switcher
-│   │   └── ThemeToggle.css            # Theme styles
-│   ├── utils/                # Utility systems
-│   │   ├── cache.js                  # Advanced caching system
-│   │   └── performance.js            # Performance monitoring
+│   ├── App.css                    ← Main page styles ONLY
+│   ├── App.js                     ← Main page layout & share popup
+│   ├── atlanta_biotech_data.js    ← Complete biotech ecosystem dataset
+│   ├── components/
+│   │   ├── NetworkOnly.css        ← NetworkOnly page styles ONLY
+│   │   ├── NetworkOnly.js         ← NetworkOnly page component
+│   │   ├── NetworkVisualization.css ← Network visualization (both pages)
+│   │   ├── NetworkVisualization.js  ← Network visualization component
+│   │   ├── ThemeToggle.css        ← Global theme toggle styles
+│   │   └── ThemeToggle.js         ← Global theme toggle component
 │   ├── contexts/
-│   │   └── ThemeContext.js            # Theme context provider
-│   ├── App.js                         # Main app component
-│   ├── App.css                        # App styles
-│   ├── index.js                       # React entry point
-│   └── index.css                      # Global styles
-├── scripts/                  # Build and utility scripts
-│   ├── generate-social-card.js        # Social card generator
-│   ├── generate-all-social-images.js  # Batch social image generator
-│   ├── inject-git-date.js            # Git date injection
-│   ├── calculate-optimal-zoom.js      # Network zoom optimization
-│   └── test-cache.js                  # Cache system testing
-├── netlify.toml             # Netlify deployment config
-├── package.json             # Dependencies and scripts
-├── CACHING.md               # Caching system documentation
-└── README.md               # This file
+│   │   └── ThemeContext.js        ← Global theme context
+│   └── utils/                     ← Global utility functions
+│       ├── cache.js               ← Caching system for network data
+│       ├── louvain.js             ← Community detection algorithms
+│       └── performance.js         ← Performance monitoring utilities
+├── scripts/                       ← Build automation & utilities
+│   ├── generate-social-card.js    ← Social media image generation
+│   ├── generate-all-social-images.js ← Comprehensive social media setup
+│   ├── calculate-optimal-zoom.js  ← Network positioning optimization
+│   ├── inject-git-date.js        ← Git integration for versioning
+│   ├── demo-community-detection.js ← Community detection examples
+│   └── SOCIAL_IMAGES_GUIDE.md    ← Social media setup guide
+├── STYLING_ARCHITECTURE.md        ← COMPREHENSIVE MODIFICATION GUIDE
+└── README.md                      ← This file
 ```
 
-## 🎨 Design Philosophy
+## 🚀 **Getting Started**
 
-### Visual Design
-- **Scientific Aesthetic**: Clean, professional design inspired by biological networks
-- **Dark/Light Themes**: Modern theme switching with smooth transitions
-- **Biological Network Styling**: Nodes and edges styled like protein interaction networks
-- **Mobile Responsive**: Fully responsive design that works on all devices
-- **Performance-First**: Optimized for speed and smooth interactions
-
-### User Experience
-- **Intuitive Navigation**: Clear navigation between sections
-- **Interactive Elements**: Hover effects, smooth transitions, and engaging animations
-- **Professional Tone**: Approachable yet professional communication style
-- **Accessibility**: High contrast, readable typography, and keyboard navigation
-- **State Persistence**: Seamless experience with automatic state saving
-
-## 🔧 Customization
-
-### Adding New Organizations
-To add new organizations to the network:
-
-1. Edit the `networkData` object in `src/components/NetworkVisualization.js`
-2. Add new nodes to the `nodes` array with required fields:
-   ```javascript
-   {
-     id: "unique-id",
-     name: "Organization Name",
-     type: "company|university|incubator|vc|serviceProvider",
-     size: 10, // Node size (6-20)
-     description: "Organization description"
-   }
-   ```
-3. Add corresponding links to the `links` array:
-   ```javascript
-   {
-     source: "source-node-id",
-     target: "target-node-id",
-     type: "collaboration|investment|spinout|partnership"
-   }
+1. **Install dependencies:**
+   ```bash
+   npm install
    ```
 
-### Styling Changes
-- **Global styles**: `src/index.css`
-- **Component-specific styles**: Individual `.css` files in `src/components/`
-- **App-wide styles**: `src/App.css`
-- **Theme variables**: Defined in `src/contexts/ThemeContext.js`
-
-### Network Configuration
-- **Node colors**: Modify `nodeColors` object in `NetworkVisualization.js`
-- **Force simulation parameters**: Adjust D3.js force simulation settings
-- **Filter options**: Update the `filters` state and filter buttons
-
-## 📊 Network Data Structure
-
-The network visualization uses a graph structure with nodes (organizations) and links (relationships):
-
-```javascript
-const networkData = {
-  nodes: [
-    {
-      id: "unique-id",
-      name: "Organization Name",
-      type: "company|university|incubator|vc|serviceProvider",
-      size: 10, // Node size (6-20)
-      x: 400, // Initial x position (optional)
-      y: 300, // Initial y position (optional)
-      description: "Organization description",
-      website: "https://example.com",
-      keyPersonnel: ["Person 1", "Person 2"],
-      linkedInProfiles: ["https://linkedin.com/in/person1"]
-    }
-  ],
-  links: [
-    {
-      source: "source-node-id",
-      target: "target-node-id",
-      type: "collaboration|investment|spinout|partnership",
-      description: "Relationship description"
-    }
-  ]
-}
-```
-
-## 🔧 Caching System
-
-The site includes an advanced multi-layer caching system that operates in the background:
-
-### **Cache Types**
-- **Network States**: Zoom levels, pan positions, filter states
-- **User Preferences**: Theme settings, visit history
-- **Search Results**: Cached queries and filtered results
-- **Performance Metrics**: Load times, memory usage, interaction data
-
-### **Cache Management**
-- **Automatic Expiration**: Different expiry times for different data types
-- **Smart Eviction**: Removes oldest entries when cache is full
-- **Cache Warming**: Pre-loads common data for faster initial load
-- **Background Operation**: Runs invisibly for optimal user experience
-
-For detailed caching documentation, see [CACHING.md](./CACHING.md).
-
-## 🚀 Deployment
-
-### Netlify (Current Setup)
-The site is deployed on Netlify with automatic builds:
-
-1. **Build Command**: `npm run build`
-2. **Publish Directory**: `build`
-3. **Environment**: Production with optimized assets
-4. **Custom Domain**: benjaminsiciliano.com
-
-### Build Process
-The build process includes:
-- React app compilation
-- Git date injection for freshness indicators
-- Social card generation
-- Asset optimization
-
-### Alternative Deployment Options
-
-#### Vercel
-```bash
-npm i -g vercel
-vercel
-```
-
-#### GitHub Pages
-1. Add `"homepage": "https://username.github.io/repo-name"` to package.json
-2. Install gh-pages: `npm install --save-dev gh-pages`
-3. Add scripts to package.json:
-   ```json
-   "predeploy": "npm run build",
-   "deploy": "gh-pages -d build"
+2. **Start development server:**
+   ```bash
+   npm start
    ```
-4. Run: `npm run deploy`
 
-## 🛠️ Development Tools
+3. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
-### Social Media Cards
-The project includes automated social media card generation:
+## 📱 **Available Routes**
 
-```bash
-npm run generate-social-card      # Generate single social card
-npm run generate-all-social-images # Generate all social images
-```
+- **`/`** - Main page with welcome, about, contact sections + network preview
+- **`/network`** - Full-screen network visualization with advanced controls
 
-### Git Integration
-- **Date Injection**: Automatically injects last commit date into builds
-- **Version Tracking**: Builds include git metadata for freshness indicators
+## 🎨 **Styling Systems**
 
-### Performance Optimization
-- **Code Splitting**: React.lazy for component loading
-- **Asset Optimization**: Compressed images and optimized bundles
-- **Caching**: Proper cache headers for static assets
+### **Main Page (`/`)**
+- **File:** `src/App.css`
+- **Features:** Sophisticated share popup with backdrop, full layout
+- **Isolation:** Completely separate from NetworkOnly styling
 
-## 🤝 Contributing
+### **NetworkOnly Page (`/network`)**
+- **File:** `src/components/NetworkOnly.css`
+- **Features:** Simple share popup, full-screen controls, isolated styling
+- **Isolation:** All styles scoped with `.network-only` prefix
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and test thoroughly
-4. Commit changes: `git commit -am 'Add feature'`
-5. Push to branch: `git push origin feature-name`
-6. Submit a pull request
+### **Shared Components**
+- **Network Visualization:** `src/components/NetworkVisualization.css`
+- **Theme Toggle:** `src/components/ThemeToggle.css`
+- **Global Context:** `src/contexts/ThemeContext.js`
 
-### Development Guidelines
-- Follow React best practices and hooks patterns
-- Maintain responsive design principles
-- Test on multiple devices and browsers
-- Update documentation for new features
+## 🔧 **Development Guidelines**
 
-## 📝 License
+1. **Always read [STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md) first**
+2. **Test both routes** after any modification
+3. **Scope NetworkOnly styles** with `.network-only` prefix
+4. **Keep shared components minimal** and well-documented
+5. **Document any new dependencies** or shared functionality
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🎯 **Key Features & Capabilities**
 
-## 📞 Contact
+### **Network Visualization**
+- **Interactive Graph**: Force-directed layout with D3.js
+- **Node Types**: Universities, startups, VCs, research institutions, key personnel
+- **Filtering System**: Type-based, search-based, and relationship filtering
+- **Community Detection**: Louvain algorithm for identifying ecosystem clusters
+- **Performance Optimization**: Intelligent caching and optimal zoom calculations
 
-- **Email**: ben.siciliano@gmail.com
-- **LinkedIn**: [linkedin.com/in/benjaminsiciliano](https://www.linkedin.com/in/benjamin-siciliano-950b83158/)
-- **GitHub**: [github.com/benj-sic](https://github.com/benj-sic)
-- **Twitter**: [@benjsiciliano](https://x.com/benjsiciliano)
-- **Location**: Atlanta, Georgia
+### **Social Media Integration**
+- **Automated Generation**: Scripts for creating platform-specific images
+- **Meta Tag Management**: Open Graph, Twitter Cards, LinkedIn optimization
+- **Cache Busting**: Version control for social media previews
 
-## 🎯 Recent Updates
+### **Data Management**
+- **Comprehensive Dataset**: 100+ organizations with detailed metadata
+- **Relationship Mapping**: Connections between entities with context
+- **Real-time Updates**: Git integration for version tracking
 
-### v1.5.0 - Advanced Caching System & Performance Optimization
-- ✅ **Multi-Layer Caching**: Memory, localStorage, and session storage with intelligent expiry
-- ✅ **Performance Monitoring**: Real-time tracking of page load, memory usage, and user interactions
-- ✅ **Background Operation**: Caching system runs invisibly for optimal user experience
-- ✅ **State Persistence**: Network states, user preferences, and search results cached automatically
-- ✅ **Cache Warming**: Pre-loads common data for faster initial load times
-- ✅ **Smart Eviction**: Automatic removal of old cache entries to prevent memory bloat
-- ✅ **Performance Analytics**: Detailed metrics and optimization recommendations
-- ✅ **Font & Color Fixes**: Resolved stats display issues with proper Inter font and green colors
+## 🆘 **Need Help?**
 
-### v1.4.0 - Network Optimization & EBCC Integration
-- ✅ **Network Streamlining**: Removed peripheral organizations to focus on core metro Atlanta biotech ecosystem
-- ✅ **EBCC Integration**: Added Emory Biotech Consulting Club connections to supported startups
-- ✅ **VC Focus**: Streamlined to biotech-focused venture capital firms
-- ✅ **Academic Consolidation**: Focused on metro Atlanta academic institutions
-- ✅ **Service Provider Optimization**: Curated service providers to biotech-relevant organizations
+- **Styling conflicts?** Check [STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md)
+- **Unsure which file to edit?** Use the Quick Reference table above
+- **Social media issues?** Check [SOCIAL_IMAGES_GUIDE.md](./scripts/SOCIAL_IMAGES_GUIDE.md)
+- **Still having issues?** Check the troubleshooting section in the architecture guide
 
-### v1.3.0 - Enhanced Social Features & Performance
-- ✅ **Social Sharing Integration**: Built-in Twitter and LinkedIn sharing
-- ✅ **Theme Toggle**: Dark/light theme switching with persistent preferences
-- ✅ **Performance Optimization**: Improved loading times and mobile responsiveness
-- ✅ **Contact Form Enhancement**: Better error handling and user feedback
-- ✅ **SEO Improvements**: Enhanced meta tags and social cards
+---
 
-### v1.2.0 - Enhanced Filtering & Network Scope
-- ✅ **Dual Organization Filtering**: Separate filters for startups vs established companies
-- ✅ **Network Scope Optimization**: Curated to focus on innovation-generating entities
-- ✅ **Updated Node Descriptions**: Clarified affiliations and relationships
-- ✅ **Enhanced Legend**: Updated to distinguish between startups and companies
-
-### v1.1.0 - Enhanced Network Interaction
-- ✅ **Smart Node Highlighting**: Click a node to highlight it and dim non-connected nodes
-- ✅ **Toggle Selection**: Click the same node again to deselect it
-- ✅ **Natural Zoom Range**: Reduced max zoom from 250% to 100% for more realistic interaction
-- ✅ **Auto-Centering**: Network automatically re-centers before reappearing on filter changes
-- ✅ **LinkedIn Integration**: Direct links to key personnel profiles
-- ✅ **Mobile Optimization**: Enhanced touch interactions and performance on mobile devices
-
-## 🎯 Future Enhancements
-
-### **Data & Analytics**
-- [ ] **Network Analytics Dashboard**: Centrality metrics, clustering analysis, and ecosystem health indicators
-- [ ] **Temporal Network Views**: Historical evolution of the ecosystem (2019-2024)
-- [ ] **Funding Flow Visualization**: Investment rounds, funding amounts, and capital flow patterns
-- [ ] **Talent Movement Tracking**: Alumni networks and personnel transitions between organizations
-- [ ] **Geographic Clustering**: Map-based view showing spatial distribution of organizations
-- [ ] **Performance Analytics Dashboard**: Real-time performance metrics and optimization insights
-
-### **User Experience**
-- [ ] **Advanced Search & Filtering**: Multi-criteria search (funding stage, technology area, location)
-- [ ] **Interactive Tutorials**: Guided tours explaining ecosystem dynamics and key relationships
-- [ ] **Export Functionality**: High-resolution PNG/PDF exports for presentations and reports
-- [ ] **Mobile App**: Native mobile application for ecosystem exploration
-- [ ] **Personalized Dashboards**: User-customizable views and saved searches
-
-### **Data Integration**
-- [ ] **Real-time Updates**: API integration with Crunchbase, PitchBook, and LinkedIn for live data
-- [ ] **Clinical Trial Integration**: Connect with ClinicalTrials.gov for therapeutic pipeline visibility
-- [ ] **Patent Database**: USPTO integration to show intellectual property relationships
-- [ ] **Publication Network**: PubMed integration to visualize research collaboration networks
-- [ ] **Regulatory Tracking**: FDA approval status and regulatory pathway visualization
-
-### **Advanced Features**
-- [ ] **Predictive Analytics**: Machine learning models to identify emerging trends and opportunities
-- [ ] **Collaboration Recommendations**: AI-powered suggestions for potential partnerships
-- [ ] **Ecosystem Health Metrics**: Automated scoring of ecosystem maturity and growth indicators
-- [ ] **Comparative Analysis**: Side-by-side comparison with other biotech hubs (Boston, San Diego)
-- [ ] **Interactive Storytelling**: Narrative-driven exploration of ecosystem success stories
-
-### **Technical Infrastructure**
-- [ ] **RESTful API**: Public API for third-party integrations and data access
-- [ ] **GraphQL Endpoints**: Flexible data querying for advanced use cases
-- [ ] **Real-time Collaboration**: Multi-user editing and annotation capabilities
-- [ ] **WebSocket Integration**: Live updates and notifications for ecosystem changes
-- ✅ **Advanced Caching**: Multi-layer caching system with performance monitoring
-- ✅ **Performance Monitoring**: Real-time analytics and optimization recommendations 
+**Remember:** This project has two separate styling systems that must remain isolated. When in doubt, scope NetworkOnly styles with `.network-only` and test both pages! 

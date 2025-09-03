@@ -87,7 +87,7 @@ export const atlantaBiotechEcosystem = {
       type: "university",
       size: 16,
       description: "Research university with growing programs in infectious disease and neuroscience. Key collaborator on public health initiatives.",
-      website: "https://gsu.edu",
+      website: "https://www.gsu.edu",
       keyPersonnel: [
       {
         "name": "M. Brian Blake",
@@ -2198,18 +2198,8 @@ export const atlantaBiotechEcosystem = {
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
 
     { source: "catalyst", target: "armor_medical", type: "investment", description: "Catalyst by Wellstar invested in Armor Medical to support development of Maternal aRMOR wearable (Jun 2025)." },
-    {
-      "source": "gra_fund",
-      "target": "huxley_medical",
-      "type": "investment",
-      "description": "Portfolio investment in Huxley's SANSA patch platform for cardio-sleep diagnostics."
-    },
-    {
-      "source": "gra_fund",
-      "target": "biocircuit_technologies",
-      "type": "investment",
-      "description": "Early-stage investment in BioCircuit's Nerve Tape® nerve repair technology."
-    },
+    { source: "gra_fund", target: "huxley_medical", type: "investment", description: "Portfolio investment in Huxley's SANSA patch platform for cardio-sleep diagnostics." },
+    { source: "gra_fund", target: "biocircuit_technologies", type: "investment", description: "Early-stage investment in BioCircuit's Nerve Tape® nerve repair technology." },
     { source: "gra_fund", target: "geovax", type: "investment", description: "GeoVax is in the GRA Venture Fund portfolio" },
     { source: "gra_fund", target: "clearside", type: "investment", description: "GRA Venture Fund held a 7.2% stake pre-IPO" },
     { source: "gra_fund", target: "axion_biosystems", type: "investment", description: "GRA VF led Axion's early-stage round" },

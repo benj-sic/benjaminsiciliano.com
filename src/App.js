@@ -218,7 +218,8 @@ function App() {
       <ThemeProvider>
         <Routes>
 
-          <Route path="/network" element={<NetworkOnly />} />
+          <Route path="/biotech" element={<NetworkOnly dataType="biotech" />} />
+          <Route path="/tech" element={<NetworkOnly dataType="tech" />} />
           <Route path="/" element={
             <div className="App">
               <header className="header">
@@ -357,7 +358,7 @@ function App() {
                 {/* Network Visualization - Front and Center */}
                 <section id="network" className="network-section">
                   <div className="container">
-                    <NetworkVisualization />
+                    <NetworkVisualization dataFile="biotech" />
                   </div>
                 </section>
 

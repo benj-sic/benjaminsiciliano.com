@@ -38,12 +38,12 @@ import ThemeToggle from './ThemeToggle';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import cacheManager from '../utils/cache.js';
 import performanceMonitor from '../utils/performance.js';
-// Import will be dynamic based on dataType
+import { nodeTypeMap, nodeColors } from '../atlanta_biotech_data.js';
 // CRITICAL: Import CSS after NetworkVisualization.js to ensure it takes precedence
 // Note: This import order ensures our styles override NetworkVisualization.css
 import './NetworkOnly.css';
 
-function NetworkOnly({ dataType = 'biotech' }) {
+function NetworkOnly() {
   const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -69,8 +69,6 @@ function NetworkOnly({ dataType = 'biotech' }) {
   });
   const [networkData, setNetworkData] = useState({ nodes: [], links: [] });
   const [lastCommitDate, setLastCommitDate] = useState('July 2025');
-  const [nodeTypeMap, setNodeTypeMap] = useState({});
-  const [nodeColors, setNodeColors] = useState({});
 
   const networkRef = useRef(null);
   const selectedNodeRef = useRef(null); // Track selected node for deselection detection
@@ -389,12 +387,10 @@ function NetworkOnly({ dataType = 'biotech' }) {
     
     // For LinkedIn, use a public URL if we're on localhost
     const linkedInUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-      ? `https://benjaminsiciliano.com/${dataType}` 
+      ? 'https://benjaminsiciliano.com' 
       : cleanShareUrl;
     
-    const twitterShareText = dataType === 'tech' 
-      ? "Explore this interactive map of Atlanta's tech ecosystem — built by @benjsiciliano — featuring Mosley Ventures portfolio companies, startups, VCs, and innovation hubs driving technology in Georgia."
-      : "Explore this interactive map of Atlanta's biotech ecosystem — built by @benjsiciliano — featuring startups, spinouts, VCs, and research hubs driving innovation in Georgia.";
+    const twitterShareText = "Explore this interactive map of Atlanta's biotech ecosystem — built by @benjsiciliano — featuring startups, spinouts, VCs, and research hubs driving innovation in Georgia.";
     
     let socialUrl;
     
@@ -462,7 +458,6 @@ function NetworkOnly({ dataType = 'biotech' }) {
     // Apply filters to the network visualization
     if (networkRef.current && networkRef.current.setFilters) {
       // Map NetworkOnly filter keys to NetworkVisualization filter keys
-      // This mapping should match the one in NetworkVisualization.js
       const filterMapping = {
         companies: 'companies',
         startups: 'startups',
@@ -997,18 +992,9 @@ function NetworkOnly({ dataType = 'biotech' }) {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Load network data based on dataType
-        if (dataType === 'tech') {
-          const { atlantaTechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_tech_data.js');
-          setNetworkData(atlantaTechEcosystem);
-          setNodeTypeMap(ntm);
-          setNodeColors(nc);
-        } else {
-          const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
-          setNetworkData(atlantaBiotechEcosystem);
-          setNodeTypeMap(ntm);
-          setNodeColors(nc);
-        }
+        // Load network data
+        const { atlantaBiotechEcosystem } = await import('../atlanta_biotech_data.js');
+        setNetworkData(atlantaBiotechEcosystem);
         
         // Fetch last commit date
         try {
@@ -1027,7 +1013,7 @@ function NetworkOnly({ dataType = 'biotech' }) {
     };
     
     loadData();
-  }, [dataType]);
+  }, []);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -1727,7 +1713,6 @@ function NetworkOnly({ dataType = 'biotech' }) {
         {/* This is the main network visualization component that renders the interactive network */}
         <div className="network-fullscreen">
           <NetworkVisualization 
-            dataFile={dataType} // Use data based on dataType prop
             hideUI={true} // Hide the built-in UI since we have our own controls
             ref={networkRef} // Reference to access network methods
             onNodeClick={handleNetworkNodeClick} // Handle clicks on network nodes
