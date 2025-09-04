@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2025 Benjamin Siciliano
+ * All rights reserved.
+ * 
+ * This file is part of the benjaminsiciliano.com project.
+ * Unauthorized copying, modification, distribution, or use is strictly prohibited.
+ * For licensing inquiries, contact: ben.siciliano@gmail.com
+ */
+
 // Performance Monitoring and Optimization for Benjamin Siciliano Website
 // Tracks loading times, user interactions, and network performance
 

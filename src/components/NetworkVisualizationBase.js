@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2025 Benjamin Siciliano
+ * All rights reserved.
+ * 
+ * This file is part of the benjaminsiciliano.com project.
+ * Unauthorized copying, modification, distribution, or use is strictly prohibited.
+ * For licensing inquiries, contact: ben.siciliano@gmail.com
+ */
+
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import * as d3 from 'd3';
 import { nodeTypeMap, nodeColors } from '../atlanta_biotech_data.js';

@@ -1,9 +1,18 @@
 /*
+ * Copyright (c) 2025 Benjamin Siciliano
+ * All rights reserved.
+ * 
+ * This file is part of the benjaminsiciliano.com project.
+ * Unauthorized copying, modification, distribution, or use is strictly prohibited.
+ * For licensing inquiries, contact: ben.siciliano@gmail.com
+ */
+
+/*
  * ============================================================================
  * MAIN APPLICATION COMPONENT - MAIN PAGE COMPONENT
  * ============================================================================
  * 
- * 🚨 CRITICAL: This component is ONLY for the main page (/)
+ * CRITICAL: This component is ONLY for the main page (/)
  * 
  * IMPORTANT RULES:
  * 1. This component should NOT import or use NetworkOnly-specific styles

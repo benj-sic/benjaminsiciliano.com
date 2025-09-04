@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2025 Benjamin Siciliano
+ * All rights reserved.
+ * 
+ * This file is part of the benjaminsiciliano.com project.
+ * Unauthorized copying, modification, distribution, or use is strictly prohibited.
+ * For licensing inquiries, contact: ben.siciliano@gmail.com
+ */
+
 // Advanced Caching System for Benjamin Siciliano Website
 // Handles network data, user preferences, performance metrics, and asset caching
 
