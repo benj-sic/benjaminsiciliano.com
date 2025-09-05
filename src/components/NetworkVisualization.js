@@ -10,6 +10,8 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback, forwardRef, useImperativeHandle } from 'react';
 import * as d3 from 'd3';
 import { useTheme } from '../contexts/ThemeContext';
+import cacheManager from '../utils/cache.js';
+import performanceMonitor from '../utils/performance.js';
 import './NetworkVisualization.css';
 
 const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false, onNodeClick, onEdgeClick }, ref) => {
@@ -61,16 +63,59 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     }
   }, []);
 
+  // Initialize caching and performance monitoring
+  useEffect(() => {
+    // Start performance monitoring
+    performanceMonitor.start();
+    
+    // Warm cache on component start
+    cacheManager.warmCache();
+    
+    // Cache user preferences
+    const userPrefs = {
+      theme: localStorage.getItem('theme') || 'dark',
+      lastVisit: Date.now(),
+      visitCount: parseInt(localStorage.getItem('visitCount') || '0') + 1
+    };
+    
+    cacheManager.cacheUserPrefs(userPrefs);
+    localStorage.setItem('visitCount', userPrefs.visitCount.toString());
+    
+    console.log('Caching system initialized in NetworkVisualization');
+  }, []);
+
   // Fetch last commit date and cached network data on component mount
   useEffect(() => {
     fetchLastCommitDate();
     
     // Fetch cached network data (zoom, center, bounds)
     const fetchCachedNetworkData = async () => {
+      // Check cache first
+      const cached = cacheManager.get('assets', 'optimal-zoom');
+      if (cached) {
+        if (cached.optimalZoom) {
+          setZoomLevel(cached.optimalZoom);
+        }
+        if (cached.networkCenter && cached.networkBounds) {
+          window.cachedNetworkData = {
+            center: cached.networkCenter,
+            bounds: cached.networkBounds,
+            viewport: cached.viewport
+          };
+        }
+        return;
+      }
+
+      const startTime = performance.now();
       try {
         const response = await fetch('/optimal-zoom.json');
         if (response.ok) {
           const data = await response.json();
+          const duration = performance.now() - startTime;
+          
+          performanceMonitor.trackNetworkInteraction('fetch-optimal-zoom', duration, true);
+          cacheManager.set('assets', 'optimal-zoom', data);
+          
           if (data.optimalZoom) {
             setZoomLevel(data.optimalZoom);
           }
@@ -84,6 +129,8 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
           }
         }
       } catch (error) {
+        const duration = performance.now() - startTime;
+        performanceMonitor.trackNetworkInteraction('fetch-optimal-zoom', duration, false);
         console.log('Could not fetch cached network data:', error);
         // Keep default zoom if fetch fails
       }
@@ -651,27 +698,45 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
   }, [calculateOptimalZoomForCurrentNetwork]);
 
   // Zoom functions
-  const zoomIn = () => {
+  const zoomIn = useCallback(() => {
+    const startTime = performance.now();
+    
     if (svgRef.current && zoomBehaviorRef.current && zoomLevel < 1.0) {
       const newZoomLevel = Math.min(zoomLevel + 0.1, 1.0); // 10% step, max 100%
       setZoomLevel(newZoomLevel);
+      
+      // Cache zoom level
+      cacheManager.setSession('zoom', 'level', newZoomLevel);
+      
       d3.select(svgRef.current)
         .transition()
         .duration(300)
         .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
+      
+      const duration = performance.now() - startTime;
+      performanceMonitor.trackUserInteraction('zoom-in', duration);
     }
-  };
+  }, [zoomLevel]);
 
-  const zoomOut = () => {
+  const zoomOut = useCallback(() => {
+    const startTime = performance.now();
+    
     if (svgRef.current && zoomBehaviorRef.current && zoomLevel > 0.1) {
       const newZoomLevel = Math.max(zoomLevel - 0.1, 0.1); // 10% step, minimum 10%
       setZoomLevel(newZoomLevel);
+      
+      // Cache zoom level
+      cacheManager.setSession('zoom', 'level', newZoomLevel);
+      
       d3.select(svgRef.current)
         .transition()
         .duration(300)
         .call(zoomBehaviorRef.current.scaleTo, newZoomLevel);
+      
+      const duration = performance.now() - startTime;
+      performanceMonitor.trackUserInteraction('zoom-out', duration);
     }
-  };
+  }, [zoomLevel]);
 
   // Helper function to calculate base zoom level using outermost node/label plus padding method
   const calculateBaseZoomLevel = useCallback(() => {
@@ -1347,18 +1412,38 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     };
   }, [filters, zoomLevel, selectedNode]);
 
-  const toggleFilter = (filterType) => {
-    setFilters(prev => ({
-      ...prev,
-      [filterType]: !prev[filterType]
-    }));
-  };
+  const toggleFilter = useCallback((filterType) => {
+    const startTime = performance.now();
+    
+    setFilters(prev => {
+      const newFilters = { ...prev, [filterType]: !prev[filterType] };
+      
+      // Cache the new filter state
+      cacheManager.setSession('filters', 'current', newFilters);
+      
+      const duration = performance.now() - startTime;
+      performanceMonitor.trackUserInteraction('filter-toggle', duration);
+      
+      return newFilters;
+    });
+  }, []);
 
-  // Search functionality
-  const handleSearch = (query) => {
+  // Search functionality with caching
+  const handleSearch = useCallback((query) => {
+    const startTime = performance.now();
+    
     setSearchQuery(query);
     if (!query.trim()) {
       setSearchResults([]);
+      return;
+    }
+
+    // Check cache first
+    const cachedResults = cacheManager.getSearchResults(query);
+    if (cachedResults) {
+      setSearchResults(cachedResults);
+      const duration = performance.now() - startTime;
+      performanceMonitor.trackUserInteraction('search-cached', duration);
       return;
     }
     
@@ -1515,8 +1600,13 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       })
       .map(({ relevanceScore, ...node }) => node); // Remove score from final results
     
+    // Cache results
+    cacheManager.cacheSearchResults(query, sortedResults);
     setSearchResults(sortedResults);
-  };
+    
+    const duration = performance.now() - startTime;
+    performanceMonitor.trackUserInteraction('search-new', duration);
+  }, [networkData.nodes, typeMap]);
 
   const handleEdgeClick = useCallback((edge, event) => {
     console.log('=== EDGE CLICK DEBUG ===');

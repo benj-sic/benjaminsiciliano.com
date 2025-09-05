@@ -4,7 +4,7 @@
 
 The website now includes a comprehensive caching system that significantly improves performance, user experience, and data management. This system provides intelligent caching for network data, user preferences, performance metrics, and assets.
 
-## 🚀 Features
+## Features
 
 ### **Multi-Layer Caching**
 - **Memory Cache**: Fast in-memory storage for frequently accessed data
@@ -30,7 +30,7 @@ The website now includes a comprehensive caching system that significantly impro
 - **Offline Capabilities**: Basic functionality without internet connection
 - **Progressive Loading**: Loads data progressively for better perceived performance
 
-## 📁 File Structure
+## File Structure
 
 ```
 src/
@@ -45,7 +45,7 @@ src/
     └── test-cache.js         # Cache testing script
 ```
 
-## 🛠️ Usage
+## Usage
 
 ### **Basic Caching**
 
@@ -87,7 +87,7 @@ The cache manager provides a floating UI button (⚙️) that allows users to:
 - Warm cache
 - View performance recommendations
 
-## 📊 Cache Types
+## Cache Types
 
 ### **Network Cache**
 - **Purpose**: Store network visualization states
@@ -119,7 +119,7 @@ The cache manager provides a floating UI button (⚙️) that allows users to:
 - **Expiry**: 7 days
 - **Data**: Images, API responses, external data
 
-## 🔧 Configuration
+## Configuration
 
 ### **Cache Expiry Times**
 
@@ -140,7 +140,7 @@ const cacheExpiry = {
 const maxCacheSize = 50; // Maximum number of cached items
 ```
 
-## 📈 Performance Benefits
+## Performance Benefits
 
 ### **Faster Loading**
 - **Network States**: Instant restoration of previous network views
@@ -162,7 +162,7 @@ const maxCacheSize = 50; // Maximum number of cached items
 - **Optimization Recommendations**: Get suggestions for improvements
 - **Historical Data**: Analyze performance trends over time
 
-## 🧪 Testing
+## Testing
 
 Run the cache testing script to verify the system:
 
@@ -180,7 +180,7 @@ This will test:
 - Cache expiration
 - Cache clearing
 
-## 🔍 Monitoring
+## Monitoring
 
 ### **Cache Statistics**
 - Memory cache size
@@ -200,7 +200,7 @@ This will test:
 - Error monitoring
 - Performance recommendations
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### **Common Issues**
 
@@ -228,7 +228,7 @@ Enable debug logging:
 localStorage.setItem('cache-debug', 'true');
 ```
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 ### **Planned Features**
 - **WebSocket Integration**: Real-time cache synchronization
@@ -242,7 +242,7 @@ localStorage.setItem('cache-debug', 'true');
 - **Persistence**: Backup cache to cloud storage
 - **Sharing**: Share cache between users
 
-## 📚 API Reference
+## API Reference
 
 ### **CacheManager Methods**
 
@@ -305,7 +305,7 @@ performanceMonitor.measureExecution(func, name)
 performanceMonitor.clear()
 ```
 
-## 🎯 Best Practices
+## Best Practices
 
 ### **Cache Strategy**
 1. **Cache Frequently Accessed Data**: Network states, user preferences
@@ -325,7 +325,7 @@ performanceMonitor.clear()
 3. **Handle Errors Gracefully**: Fallback when cache fails
 4. **Respect User Privacy**: Don't cache sensitive data
 
-## 📞 Support
+## Support
 
 For questions or issues with the caching system:
 

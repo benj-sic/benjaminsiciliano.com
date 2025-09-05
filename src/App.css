@@ -562,6 +562,8 @@ main {
 .network-switcher-icon {
   color: white;
   transition: all 0.3s ease;
+  width: 14px;
+  height: 14px;
 }
 
 
@@ -1212,6 +1214,11 @@ noscript .submit-error {
     font-size: 0.8rem;
   }
   
+  .network-switcher-icon {
+    width: 11px;
+    height: 11px;
+  }
+  
   .network-switcher-track {
     width: 2.5rem;
     height: 1.25rem;
@@ -1225,6 +1232,11 @@ noscript .submit-error {
   
   .network-switcher-toggle.tech .network-switcher-thumb {
     transform: translateX(1.125rem);
+  }
+  
+  .network-switcher-icon {
+    width: 12px;
+    height: 12px;
   }
 
   .about-section {
@@ -1259,5 +1271,26 @@ noscript .submit-error {
   .header-buttons .share-icon {
     width: 16px;
     height: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .network-switcher-icon {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .network-switcher-track {
+    width: 2.25rem;
+    height: 1.125rem;
+  }
+  
+  .network-switcher-thumb {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  
+  .network-switcher-toggle.tech .network-switcher-thumb {
+    transform: translateX(1rem);
   }
 } 

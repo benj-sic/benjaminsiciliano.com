@@ -56,9 +56,9 @@ function NetworkSwitcher({ currentNetwork, onNetworkChange }) {
         <div className="network-switcher-track">
           <div className="network-switcher-thumb">
             {isBiotech ? (
-              <FlaskConical className="network-switcher-icon" size={16} />
+              <FlaskConical className="network-switcher-icon" />
             ) : (
-              <Code className="network-switcher-icon" size={16} />
+              <Code className="network-switcher-icon" />
             )}
           </div>
         </div>

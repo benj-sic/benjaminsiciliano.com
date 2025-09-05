@@ -2,7 +2,7 @@
 
 Bridging science, software, and strategy to accelerate biotech innovation.
 
-## 🌟 **Project Overview**
+## **Project Overview**
 
 This is a comprehensive personal website featuring interactive network visualizations that map both the **Atlanta Biotech** and **Atlanta Tech ecosystems**. The project showcases the interconnected networks of universities, startups, VCs, research institutions, and key personnel driving innovation in Georgia.
 
@@ -16,7 +16,7 @@ This is a comprehensive personal website featuring interactive network visualiza
 - **Responsive Design**: Mobile-optimized with theme switching capabilities
 - **Data-Driven**: Comprehensive datasets of Atlanta's innovation ecosystems
 
-## 🏗️ **Project Architecture**
+## **Project Architecture**
 
 ### **Core Components**
 - **Main Page (`/`)**: Portfolio, about, contact sections with embedded biotech network preview
@@ -36,7 +36,7 @@ This is a comprehensive personal website featuring interactive network visualiza
 - **Git Integration**: Last commit date injection and version tracking
 - **Optimal Zoom Calculation**: Automated network positioning for best viewing experience
 
-## 🚨 **Critical: Styling Architecture & Modification Guide**
+## **Critical: Styling Architecture & Modification Guide**
 
 **Before making ANY changes to styling or functionality, please read the comprehensive guide:**
 
@@ -61,7 +61,7 @@ This is a comprehensive personal website featuring interactive network visualiza
 
 ---
 
-## 🏗️ **Project Structure**
+## **Project Structure**
 
 ```
 benjaminsiciliano.com/
@@ -94,7 +94,7 @@ benjaminsiciliano.com/
 └── README.md                      ← This file
 ```
 
-## 🚀 **Getting Started**
+## **Getting Started**
 
 1. **Install dependencies:**
    ```bash
@@ -111,13 +111,13 @@ benjaminsiciliano.com/
    npm run build
    ```
 
-## 📱 **Available Routes**
+## **Available Routes**
 
 - **`/`** - Main page with welcome, about, contact sections + biotech network preview
 - **`/biotech`** - Full-screen biotech network visualization with advanced controls
 - **`/tech`** - Full-screen tech network visualization with advanced controls
 
-## 🎨 **Styling Systems**
+## **Styling Systems**
 
 ### **Main Page (`/`)**
 - **File:** `src/App.css`
@@ -135,7 +135,7 @@ benjaminsiciliano.com/
 - **Theme Toggle:** `src/components/ThemeToggle.css`
 - **Global Context:** `src/contexts/ThemeContext.js`
 
-## 🔧 **Development Guidelines**
+## **Development Guidelines**
 
 1. **Always read [STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md) first**
 2. **Test both routes** after any modification
@@ -143,7 +143,7 @@ benjaminsiciliano.com/
 4. **Keep shared components minimal** and well-documented
 5. **Document any new dependencies** or shared functionality
 
-## 🎯 **Key Features & Capabilities**
+## **Key Features & Capabilities**
 
 ### **Network Visualization**
 - **Interactive Graph**: Force-directed layout with D3.js
@@ -163,7 +163,7 @@ benjaminsiciliano.com/
 - **Relationship Mapping**: Connections between entities with context
 - **Real-time Updates**: Git integration for version tracking
 
-## 🆘 **Need Help?**
+## **Need Help?**
 
 - **Styling conflicts?** Check [STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md)
 - **Unsure which file to edit?** Use the Quick Reference table above
