@@ -495,6 +495,71 @@
   transition: opacity 0.3s ease;
 }
 
+/* Explore mode node visibility styles */
+.node-hidden {
+  display: none !important;
+}
+
+.node-visible .node-main {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-visible .node-glow {
+  opacity: 0.2 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-visible .label {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-selected .node-main {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-selected .node-glow {
+  opacity: 0.6 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-selected .label {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Explore mode label visibility styles */
+.label-hidden {
+  display: none !important;
+}
+
+.label-visible {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.label-selected {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Explore mode link visibility styles */
+.link-hidden {
+  display: none !important;
+}
+
+.link-visible {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.link-selected {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
 /* Link highlighting and dimming styles */
 .link-highlighted {
   stroke-width: 8px !important;

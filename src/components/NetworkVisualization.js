@@ -14,7 +14,7 @@ import cacheManager from '../utils/cache.js';
 import performanceMonitor from '../utils/performance.js';
 import './NetworkVisualization.css';
 
-const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false, onNodeClick, onEdgeClick }, ref) => {
+const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false, onNodeClick, onEdgeClick, exploreMode = false, exploreState = null, onNodeToggle = null }, ref) => {
   const { theme, isThemeChanging } = useTheme();
   const svgRef = useRef();
   const containerRef = useRef();
@@ -990,20 +990,11 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     // Update SVG dimensions to match container
     svg.attr("width", width).attr("height", height);
 
-    // Filter nodes based on current filters
-    const filteredNodes = networkData.nodes.filter(node => {
-      const filterKey = filterMapping[node.type];
-      return filterKey ? debouncedFilters[filterKey] : true; // Show node if no filter mapping exists
-    });
+    // Use all nodes initially - filtering will be handled by visibility
+    const filteredNodes = networkData.nodes;
 
-    const filteredLinks = networkData.links.filter(link => {
-      const sourceNode = filteredNodes.find(n => n.id === link.source);
-      const targetNode = filteredNodes.find(n => n.id === link.target);
-      return sourceNode && targetNode;
-    });
-
-    // Process links to ensure they reference valid nodes
-    const processedLinks = filteredLinks.map(link => {
+    // Use all links initially - filtering will be handled by visibility
+    const processedLinks = networkData.links.map(link => {
       const sourceNode = filteredNodes.find(n => n.id === link.source);
       const targetNode = filteredNodes.find(n => n.id === link.target);
       return {
@@ -1032,7 +1023,7 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280))
       .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4 + (isMobile ? 15 : 25)))
+      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4 + (isMobile ? 30 : 50)))
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1))
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1))
       .alphaDecay(0.1) // Faster decay (default is 0.0228)
@@ -1111,7 +1102,31 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
         if (isHighlighted) {
           console.log('Highlighting edge:', d.source.id, '->', d.target.id, 'with ID:', currentEdgeId);
         }
-        return `link ${isHighlighted ? 'link-highlighted' : ''}`;
+        
+        let classes = 'link';
+        if (isHighlighted) {
+          classes += ' link-highlighted';
+        }
+        
+        if (exploreMode && exploreState) {
+          const sourceSelected = exploreState.selectedNodes.has(d.source.id);
+          const targetSelected = exploreState.selectedNodes.has(d.target.id);
+          const sourceVisible = exploreState.visibleNodes.has(d.source.id);
+          const targetVisible = exploreState.visibleNodes.has(d.target.id);
+          
+          // Show link only if:
+          // 1. Both nodes are selected, OR
+          // 2. One node is selected and the other is visible (first-degree connection)
+          if (sourceSelected && targetSelected) {
+            classes += ' link-selected';
+          } else if ((sourceSelected && targetVisible) || (targetSelected && sourceVisible)) {
+            classes += ' link-visible';
+          } else {
+            classes += ' link-hidden';
+          }
+        }
+        
+        return classes;
       })
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
@@ -1125,11 +1140,30 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       .selectAll("g")
       .data(filteredNodes)
       .enter().append("g")
-      .attr("class", d => `node-group ${selectedNode && selectedNode.id === d.id ? 'node-highlighted' : ''}`)
+      .attr("class", d => {
+        let classes = 'node-group';
+        if (selectedNode && selectedNode.id === d.id) {
+          classes += ' node-highlighted';
+        }
+        if (exploreMode && exploreState) {
+          if (exploreState.selectedNodes.has(d.id)) {
+            classes += ' node-selected';
+          } else if (exploreState.visibleNodes.has(d.id)) {
+            classes += ' node-visible';
+          } else {
+            classes += ' node-hidden';
+          }
+        }
+        return classes;
+      })
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
         console.log('D3 node click event:', d.id);
-        handleNodeClick(d, event);
+        if (exploreMode && onNodeToggle) {
+          onNodeToggle(d.id, event);
+        } else {
+          handleNodeClick(d, event);
+        }
       });
 
     // Add background glow circle
@@ -1172,11 +1206,30 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       .style("font-family", "system-ui, -apple-system, sans-serif")
       .style("stroke", theme === 'dark' ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.4)") // Text outline
       .style("stroke-width", "0.3px") // Thinner outline for better contrast
-      .attr("class", d => `label ${selectedNode && selectedNode.id === d.id ? 'label-highlighted' : ''}`)
+      .attr("class", d => {
+        let classes = 'label';
+        if (selectedNode && selectedNode.id === d.id) {
+          classes += ' label-highlighted';
+        }
+        if (exploreMode && exploreState) {
+          if (exploreState.selectedNodes.has(d.id)) {
+            classes += ' label-selected';
+          } else if (exploreState.visibleNodes.has(d.id)) {
+            classes += ' label-visible';
+          } else {
+            classes += ' label-hidden';
+          }
+        }
+        return classes;
+      })
       .on("click", function(event, d) {
         event.stopPropagation(); // Prevent bubbling to container
         console.log('D3 label click event:', d.id);
-        handleNodeClick(d, event);
+        if (exploreMode && onNodeToggle) {
+          onNodeToggle(d.id, event);
+        } else {
+          handleNodeClick(d, event);
+        }
       });
 
     // Update collision detection with actual label measurements after labels are rendered
@@ -1184,7 +1237,7 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       // Create a more sophisticated collision detection that accounts for label boundaries
       simulation.force("collision", d3.forceCollide().radius(d => {
         const nodeRadius = Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4; // Add extra padding for glow
-        const labelPadding = isMobile ? 15 : 25;
+        const labelPadding = isMobile ? 30 : 50;
         
         // Find the corresponding label element to measure its actual bounds
         const labelElement = labels.filter(labelD => labelD.id === d.id).node();
@@ -1335,7 +1388,121 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       svg.selectAll("*").remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedFilters, networkData, typeMap, theme, filterMapping, isMobile, calculateOptimalZoomForCurrentNetwork]);
+  }, [networkData, typeMap, theme, filterMapping, isMobile, calculateOptimalZoomForCurrentNetwork, exploreMode]);
+
+  // Dynamic filtering - toggle node visibility without regenerating network
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const svg = d3.select(containerRef.current).select("svg");
+    if (svg.empty()) return;
+    
+    // Update node visibility based on current filters
+    svg.selectAll(".node-group")
+      .each(function(d) {
+        const nodeGroup = d3.select(this);
+        const filterKey = filterMapping[d.type];
+        const shouldShow = filterKey ? debouncedFilters[filterKey] : true;
+        
+        if (shouldShow) {
+          nodeGroup.style("opacity", 1).style("display", "block");
+        } else {
+          nodeGroup.style("opacity", 0).style("display", "none");
+        }
+      });
+    
+    // Update label visibility based on current filters
+    svg.selectAll(".label")
+      .each(function(d) {
+        const label = d3.select(this);
+        const filterKey = filterMapping[d.type];
+        const shouldShow = filterKey ? debouncedFilters[filterKey] : true;
+        
+        if (shouldShow) {
+          label.style("opacity", 1).style("display", "block");
+        } else {
+          label.style("opacity", 0).style("display", "none");
+        }
+      });
+    
+    // Update link visibility based on current filters
+    svg.selectAll(".link")
+      .each(function(d) {
+        const link = d3.select(this);
+        const sourceFilterKey = filterMapping[d.source.type];
+        const targetFilterKey = filterMapping[d.target.type];
+        const sourceShouldShow = sourceFilterKey ? debouncedFilters[sourceFilterKey] : true;
+        const targetShouldShow = targetFilterKey ? debouncedFilters[targetFilterKey] : true;
+        const shouldShow = sourceShouldShow && targetShouldShow;
+        
+        if (shouldShow) {
+          link.style("opacity", 1).style("display", "block");
+        } else {
+          link.style("opacity", 0).style("display", "none");
+        }
+      });
+  }, [debouncedFilters, filterMapping]);
+
+  // Update explore mode visibility without re-rendering the entire network
+  useEffect(() => {
+    if (!exploreMode || !exploreState || !containerRef.current) return;
+    
+    const svg = d3.select(containerRef.current).select("svg");
+    if (svg.empty()) return;
+    
+    // Update node visibility classes
+    svg.selectAll(".node-group")
+      .classed("node-hidden", false)
+      .classed("node-visible", false)
+      .classed("node-selected", false)
+      .each(function(d) {
+        const nodeGroup = d3.select(this);
+        if (exploreState.selectedNodes.has(d.id)) {
+          nodeGroup.classed("node-selected", true);
+        } else if (exploreState.visibleNodes.has(d.id)) {
+          nodeGroup.classed("node-visible", true);
+        } else {
+          nodeGroup.classed("node-hidden", true);
+        }
+      });
+    
+    // Update label visibility classes
+    svg.selectAll(".label")
+      .classed("label-hidden", false)
+      .classed("label-visible", false)
+      .classed("label-selected", false)
+      .each(function(d) {
+        const label = d3.select(this);
+        if (exploreState.selectedNodes.has(d.id)) {
+          label.classed("label-selected", true);
+        } else if (exploreState.visibleNodes.has(d.id)) {
+          label.classed("label-visible", true);
+        } else {
+          label.classed("label-hidden", true);
+        }
+      });
+    
+    // Update link visibility classes
+    svg.selectAll(".link")
+      .classed("link-hidden", false)
+      .classed("link-visible", false)
+      .classed("link-selected", false)
+      .each(function(d) {
+        const link = d3.select(this);
+        const sourceSelected = exploreState.selectedNodes.has(d.source.id);
+        const targetSelected = exploreState.selectedNodes.has(d.target.id);
+        const sourceVisible = exploreState.visibleNodes.has(d.source.id);
+        const targetVisible = exploreState.visibleNodes.has(d.target.id);
+        
+        if (sourceSelected && targetSelected) {
+          link.classed("link-selected", true);
+        } else if ((sourceSelected && targetVisible) || (targetSelected && sourceVisible)) {
+          link.classed("link-visible", true);
+        } else {
+          link.classed("link-hidden", true);
+        }
+      });
+  }, [exploreMode, exploreState]);
 
   // Update node and edge highlighting when selections change
   useEffect(() => {

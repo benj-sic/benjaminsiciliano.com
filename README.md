@@ -40,7 +40,7 @@ This is a comprehensive personal website featuring interactive network visualiza
 
 **Before making ANY changes to styling or functionality, please read the comprehensive guide:**
 
-📖 **[STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md)**
+**[STYLING_ARCHITECTURE.md](./STYLING_ARCHITECTURE.md)**
 
 ### **Quick Reference - Which Files to Edit:**
 

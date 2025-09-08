@@ -240,6 +240,7 @@ function App() {
 
           <Route path="/biotech" element={<NetworkOnly dataType="biotech" />} />
           <Route path="/tech" element={<NetworkOnly dataType="tech" />} />
+          <Route path="/explore" element={<NetworkOnly dataType="biotech" exploreMode={true} />} />
           <Route path="/" element={
             <div className="App">
               <header className="header">

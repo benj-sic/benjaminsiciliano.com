@@ -72,6 +72,26 @@
   transform: none !important;
 }
 
+/* Disabled state for theme toggle in NetworkOnly */
+.network-only .theme-toggle:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.network-only .theme-toggle:disabled:hover {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-primary) !important;
+  color: var(--text-primary) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.network-only .theme-toggle:disabled .theme-icon {
+  color: var(--text-primary) !important;
+  transform: none !important;
+}
+
 @media (max-width: 1200px) {
   .theme-toggle {
     right: 1rem;

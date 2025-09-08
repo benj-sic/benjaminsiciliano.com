@@ -40,7 +40,6 @@
  */
 
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { createPortal } from 'react-dom';
 // CRITICAL FIX: Import NetworkVisualization without its CSS to prevent style conflicts
 // We'll handle all styling in NetworkOnly.css to prevent horizontal expansion issues
 import NetworkVisualization from './NetworkVisualization';
@@ -53,7 +52,7 @@ import performanceMonitor from '../utils/performance.js';
 // Note: This import order ensures our styles override NetworkVisualization.css
 import './NetworkOnly.css';
 
-function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
+function NetworkOnly({ dataType = 'biotech' }) {
   const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -82,28 +81,8 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
   const [nodeTypeMap, setNodeTypeMap] = useState({});
   const [nodeColors, setNodeColors] = useState({});
 
-  // Explore mode state
-  const [exploreState, setExploreState] = useState({
-    selectedNodes: new Set(),
-    visibleNodes: new Set(),
-    startingNode: null,
-    isInitialized: false
-  });
-
-  // Node popup state for first-degree connections
-  const [nodePopup, setNodePopup] = useState({
-    isVisible: false,
-    node: null,
-    position: { x: 0, y: 0 }
-  });
-  const [showStartingNodeSelector, setShowStartingNodeSelector] = useState(false);
-  const [startingNodeSearchQuery, setStartingNodeSearchQuery] = useState('');
-  const [startingNodeSearchResults, setStartingNodeSearchResults] = useState([]);
-  const [searchResultsKey, setSearchResultsKey] = useState(0); // Force re-render
-
   const networkRef = useRef(null);
   const selectedNodeRef = useRef(null); // Track selected node for deselection detection
-  const exploreStateRef = useRef(exploreState); // Track current explore state for closures
   // Track selected edge ID for deselection detection (same as main page network)
   // We'll get this from NetworkVisualization via a getter method
 
@@ -235,18 +214,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
         xxl: { width: 240, height: 280 }, // Medium desktop
         xxxl: { width: 260, height: 300 }, // Large desktop
         xxxxl: { width: 280, height: 320 } // Extra large desktop
-      },
-      explore: {
-        // Explore mode UI - centered on screen, positioned to avoid control panels
-        // Width and height based on screen size, positioned to avoid control panels
-        xs: { width: 280, height: 300, top: 160, left: 50 },  // Very small mobile - more centered
-        sm: { width: 320, height: 350, top: 180, left: 50 },  // Small mobile - more centered
-        md: { width: 360, height: 400, top: 200, left: 50 },  // Large mobile - more centered
-        lg: { width: 400, height: 450, top: 150, left: 50 },  // Tablet - more centered
-        xl: { width: 450, height: 500, top: 120, left: 50 },  // Small desktop - more centered
-        xxl: { width: 500, height: 550, top: 100, left: 50 }, // Medium desktop - more centered
-        xxxl: { width: 550, height: 600, top: 80, left: 50 }, // Large desktop - more centered
-        xxxxl: { width: 600, height: 650, top: 60, left: 50 } // Extra large desktop - more centered
       }
     };
 
@@ -268,339 +235,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
 
     return { getDimensions };
   }, []);
-
-  // Explore mode functions
-  const saveExploreState = useCallback((newState) => {
-    const stateToSave = {
-      selectedNodes: Array.from(newState.selectedNodes),
-      visibleNodes: Array.from(newState.visibleNodes),
-      startingNode: newState.startingNode
-    };
-    localStorage.setItem(`explore-state-${dataType}`, JSON.stringify(stateToSave));
-  }, [dataType]);
-
-  const getNodeConnections = useCallback((nodeId) => {
-    return networkData.links
-      .filter(link => {
-        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-        return sourceId === nodeId || targetId === nodeId;
-      })
-      .map(link => {
-        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-        return sourceId === nodeId ? targetId : sourceId;
-      });
-  }, [networkData.links]);
-
-  const addNodeToExploration = useCallback((nodeId) => {
-    setExploreState(prev => {
-      const newSelectedNodes = new Set(prev.selectedNodes);
-      newSelectedNodes.add(nodeId);
-      
-      // Get all first-degree connections of ALL selected nodes
-      const newVisibleNodes = new Set();
-      newSelectedNodes.forEach(selectedId => {
-        const connections = getNodeConnections(selectedId);
-        connections.forEach(connId => {
-          // Only add if not already selected
-          if (!newSelectedNodes.has(connId)) {
-            newVisibleNodes.add(connId);
-          }
-        });
-      });
-      
-      const newState = {
-        ...prev,
-        selectedNodes: newSelectedNodes,
-        visibleNodes: newVisibleNodes
-      };
-      
-      saveExploreState(newState);
-      return newState;
-    });
-  }, [getNodeConnections, saveExploreState]);
-
-  const removeNodeFromExploration = useCallback((nodeId) => {
-    setExploreState(prev => {
-      const newSelectedNodes = new Set(prev.selectedNodes);
-      newSelectedNodes.delete(nodeId);
-      
-      // Recalculate visible nodes based on remaining selected nodes
-      const newVisibleNodes = new Set();
-      newSelectedNodes.forEach(selectedId => {
-        const connections = getNodeConnections(selectedId);
-        connections.forEach(connId => newVisibleNodes.add(connId));
-      });
-      
-      const newState = {
-        ...prev,
-        selectedNodes: newSelectedNodes,
-        visibleNodes: newVisibleNodes
-      };
-      
-      saveExploreState(newState);
-      return newState;
-    });
-  }, [getNodeConnections, saveExploreState]);
-
-  // Check if a node is a first-degree connection of any selected node
-  const isFirstDegreeConnection = useCallback((nodeId) => {
-    const currentState = exploreStateRef.current;
-    console.log('🔍 Checking if first-degree connection:', { 
-      nodeId, 
-      selectedNodes: Array.from(currentState.selectedNodes),
-      visibleNodes: Array.from(currentState.visibleNodes)
-    });
-    
-    for (const selectedId of currentState.selectedNodes) {
-      const connections = getNodeConnections(selectedId);
-      console.log(`🔗 Connections of ${selectedId}:`, connections);
-      if (connections.includes(nodeId)) {
-        console.log('✅ Found as first-degree connection');
-        return true;
-      }
-    }
-    console.log('❌ Not a first-degree connection');
-    return false;
-  }, [getNodeConnections]);
-
-  // Constrain popup position to stay within screen bounds
-  const constrainPopupPosition = useCallback((position, popupWidth = 300, popupHeight = 200) => {
-    const margin = 20; // Minimum distance from screen edge
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-    
-    let { x, y } = position;
-    
-    // Constrain horizontal position
-    if (x - popupWidth / 2 < margin) {
-      x = margin + popupWidth / 2;
-    } else if (x + popupWidth / 2 > screenWidth - margin) {
-      x = screenWidth - margin - popupWidth / 2;
-    }
-    
-    // Constrain vertical position
-    if (y - popupHeight < margin) {
-      y = margin + popupHeight;
-    } else if (y > screenHeight - margin) {
-      y = screenHeight - margin;
-    }
-    
-    return { x, y };
-  }, []);
-
-  // Handle node popup actions
-  const handleNodePopupAction = useCallback((action) => {
-    if (!nodePopup.node) return;
-
-    const nodeId = nodePopup.node.id;
-    const currentState = exploreStateRef.current;
-    console.log('🎯 Node popup action triggered:', { action, nodeId, isCurrentlySelected: currentState.selectedNodes.has(nodeId) });
-
-    switch (action) {
-      case 'save':
-        // Add as selected node (full color) - keep in visibleNodes so it can show popup
-        console.log('💾 Saving node as selected:', nodeId);
-        setExploreState(prev => {
-          const newSelectedNodes = new Set(prev.selectedNodes);
-          const newVisibleNodes = new Set(prev.visibleNodes);
-          
-          // Add to selected nodes
-          newSelectedNodes.add(nodeId);
-          // Keep in visible nodes so it can show popup when clicked
-          newVisibleNodes.add(nodeId);
-          
-          const newState = { ...prev, selectedNodes: newSelectedNodes, visibleNodes: newVisibleNodes };
-          saveExploreState(newState);
-          return newState;
-        });
-        break;
-      case 'keep':
-        // Keep as visible node (greyed out) - remove from selectedNodes if it was there
-        console.log('👁️ Keeping node as visible:', nodeId);
-        setExploreState(prev => {
-          const newSelectedNodes = new Set(prev.selectedNodes);
-          const newVisibleNodes = new Set(prev.visibleNodes);
-          
-          // Remove from selected nodes (since it's now greyed)
-          newSelectedNodes.delete(nodeId);
-          // Add to visible nodes
-          newVisibleNodes.add(nodeId);
-          
-          const newState = { ...prev, selectedNodes: newSelectedNodes, visibleNodes: newVisibleNodes };
-          saveExploreState(newState);
-          return newState;
-        });
-        break;
-      case 'hide':
-        // Remove from both selected and visible nodes to hide it completely
-        console.log('🙈 Hiding node:', nodeId);
-        setExploreState(prev => {
-          const newSelectedNodes = new Set(prev.selectedNodes);
-          const newVisibleNodes = new Set(prev.visibleNodes);
-          
-          // Remove from both sets
-          newSelectedNodes.delete(nodeId);
-          newVisibleNodes.delete(nodeId);
-          
-          const newState = { ...prev, selectedNodes: newSelectedNodes, visibleNodes: newVisibleNodes };
-          saveExploreState(newState);
-          return newState;
-        });
-        break;
-    }
-
-    // Close popup
-    console.log('❌ Closing popup');
-    setNodePopup({ isVisible: false, node: null, position: { x: 0, y: 0 } });
-  }, [nodePopup.node, saveExploreState]);
-
-  const setStartingNode = useCallback((nodeId) => {
-    console.log('🚀 Setting starting node:', nodeId);
-    const connections = getNodeConnections(nodeId);
-    console.log('🔗 Starting node connections:', connections);
-    
-    setExploreState(prev => {
-      const selectedNodes = new Set([nodeId]);
-      const visibleNodes = new Set(connections);
-      
-      const newState = {
-        ...prev,
-        startingNode: nodeId,
-        selectedNodes: selectedNodes,
-        visibleNodes: visibleNodes
-      };
-      
-      console.log('📊 New explore state:', {
-        selectedNodes: Array.from(newState.selectedNodes),
-        visibleNodes: Array.from(newState.visibleNodes),
-        startingNode: newState.startingNode
-      });
-      
-      saveExploreState(newState);
-      return newState;
-    });
-    setShowStartingNodeSelector(false);
-  }, [getNodeConnections, saveExploreState]);
-
-  const resetExploration = useCallback(() => {
-    setExploreState({
-      selectedNodes: new Set(),
-      visibleNodes: new Set(),
-      startingNode: null,
-      isInitialized: true
-    });
-    // Clear starting node search query and results
-    setStartingNodeSearchQuery('');
-    setStartingNodeSearchResults([]);
-    localStorage.removeItem(`explore-state-${dataType}`);
-  }, [dataType]);
-
-  // Apply preset sizing for explore mode UI
-  const applyExploreModeSizing = useCallback(() => {
-    const exploreUI = document.querySelector('.explore-mode-ui');
-    if (!exploreUI) return;
-    
-    // Get preset dimensions for the current screen size
-    const dimensions = getDropdownDimensions.getDimensions('explore');
-    
-    // Apply preset dimensions
-    exploreUI.style.width = `${dimensions.width}px`;
-    exploreUI.style.height = `${dimensions.height}px`;
-    exploreUI.style.maxWidth = `${dimensions.width}px`;
-    exploreUI.style.maxHeight = `${dimensions.height}px`;
-    
-    // Apply positioning if specified in preset
-    if (dimensions.top !== undefined) {
-      exploreUI.style.top = `${dimensions.top}px`;
-    }
-    if (dimensions.left !== undefined) {
-      exploreUI.style.left = `${dimensions.left}%`;
-    }
-    
-    console.log(`📐 Applied explore mode preset sizing:`, dimensions);
-  }, [getDropdownDimensions]);
-
-  // Dynamic sizing for explore mode dropdown
-  const adjustExploreDropdownSize = useCallback(() => {
-    const resultsElement = document.querySelector('.starting-node-results');
-    if (!resultsElement) return;
-    
-    // Get the explore mode UI container
-    const exploreUI = document.querySelector('.explore-mode-ui');
-    if (!exploreUI) return;
-    
-    // Get the search input element to calculate position within the container
-    const searchInput = document.querySelector('.starting-node-search-input');
-    if (!searchInput) return;
-    
-    // Calculate available space within the explore mode UI container
-    const containerRect = exploreUI.getBoundingClientRect();
-    const inputRect = searchInput.getBoundingClientRect();
-    
-    // Calculate space available below the input within the container
-    const containerBottom = containerRect.bottom;
-    const inputBottom = inputRect.bottom;
-    const availableHeight = containerBottom - inputBottom - 24; // 24px for container padding
-    
-    // Calculate optimal height based on content
-    const options = resultsElement.querySelectorAll('.starting-node-option');
-    const optionCount = options.length;
-    const estimatedHeight = optionCount * 60; // Reduced from 80px per option for smaller font sizes
-    
-    // Set max height to available space within container, with a minimum height
-    const maxHeight = Math.max(150, Math.min(availableHeight, estimatedHeight));
-    const minHeight = Math.min(150, maxHeight * 0.6);
-    
-    // Apply sizing constraints
-    resultsElement.style.maxHeight = `${maxHeight}px`;
-    resultsElement.style.minHeight = `${minHeight}px`;
-    resultsElement.style.maxWidth = '100%'; // Stay within container width
-    
-    // Ensure scrolling is enabled when content exceeds available space
-    if (estimatedHeight > availableHeight) {
-      resultsElement.style.overflowY = 'auto';
-    } else {
-      resultsElement.style.overflowY = 'hidden';
-    }
-    
-    console.log(`📐 Adjusted explore dropdown size (within container):`, {
-      containerHeight: containerRect.height,
-      availableHeight,
-      options: optionCount,
-      estimated: estimatedHeight,
-      applied: {
-        maxHeight: resultsElement.style.maxHeight,
-        minHeight: resultsElement.style.minHeight,
-        maxWidth: resultsElement.style.maxWidth,
-        overflowY: resultsElement.style.overflowY
-      }
-    });
-  }, []);
-
-
-  // Starting node search functionality
-  const handleStartingNodeSearch = useCallback((query) => {
-    setStartingNodeSearchQuery(query);
-    if (query.trim() === '') {
-      setStartingNodeSearchResults([]);
-      return;
-    }
-    
-    const filtered = networkData.nodes.filter(node => 
-      node.name.toLowerCase().includes(query.toLowerCase()) ||
-      node.fullName?.toLowerCase().includes(query.toLowerCase())
-    ).slice(0, 10); // Limit to 10 results
-    
-    setStartingNodeSearchResults(filtered);
-    setSearchResultsKey(prev => prev + 1); // Force re-render
-    
-    // Adjust dropdown size after results are set
-    setTimeout(() => {
-      adjustExploreDropdownSize();
-    }, 100);
-  }, [networkData.nodes, adjustExploreDropdownSize]);
 
   // Debug function to log all UI element positions
   const logAllElementPositions = useCallback(() => {
@@ -691,49 +325,12 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     setShowLegend(false);
   };
 
-  // Close all dropdowns and node popups
-  const closeAllDropdownsAndPopups = () => {
-    closeAllDropdowns();
-    // Close node popup and default to "keep" behavior
-    if (nodePopup.isVisible && nodePopup.node) {
-      const nodeId = nodePopup.node.id;
-      console.log('🔄 Closing popup due to dropdown interaction, defaulting to keep:', nodeId);
-      
-      // Default to "keep" behavior (add to visible nodes, remove from selected)
-      setExploreState(prev => {
-        const newSelectedNodes = new Set(prev.selectedNodes);
-        const newVisibleNodes = new Set(prev.visibleNodes);
-        
-        // Remove from selected nodes (since it's now greyed)
-        newSelectedNodes.delete(nodeId);
-        // Add to visible nodes
-        newVisibleNodes.add(nodeId);
-        
-        const newState = { ...prev, selectedNodes: newSelectedNodes, visibleNodes: newVisibleNodes };
-        saveExploreState(newState);
-        return newState;
-      });
-    }
-    setNodePopup({ isVisible: false, node: null, position: { x: 0, y: 0 } });
-  };
-
-  // Check if controls should be disabled (in explore mode without starting node)
-  const areControlsDisabled = exploreMode && !exploreState.startingNode;
-
-  // Update ref whenever explore state changes
-  useEffect(() => {
-    exploreStateRef.current = exploreState;
-  }, [exploreState]);
-
   const handleDropdownContentClick = (event) => {
     // Prevent the click from bubbling up and triggering the click outside handler
     event.stopPropagation();
   };
 
   const handleLegendToggle = () => {
-    // Don't allow legend toggle if controls are disabled
-    if (areControlsDisabled) return;
-    
     if (showLegend) {
       // If legend is already open, clicking it should close it
       setShowLegend(false);
@@ -747,9 +344,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
   };
 
   const toggleDropdown = (dropdownType) => {
-    // Don't allow dropdown toggles if controls are disabled
-    if (areControlsDisabled) return;
-    
     switch (dropdownType) {
       case 'share':
         if (showShareDropdown) {
@@ -757,7 +351,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           setShowShareDropdown(false);
         } else {
           // Open and close others
-          closeAllDropdownsAndPopups();
+          closeAllDropdowns();
           setShowShareDropdown(true);
           // Apply preset sizing after state update
           setTimeout(() => applyDropdownSizing('share'), 0);
@@ -769,7 +363,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           setShowFilters(false);
         } else {
           // Open and close others
-          closeAllDropdownsAndPopups();
+          closeAllDropdowns();
           setShowFilters(true);
           // Apply preset sizing after state update
           setTimeout(() => applyDropdownSizing('filters'), 0);
@@ -781,7 +375,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           setShowSearch(false);
         } else {
           // Open and close others
-          closeAllDropdownsAndPopups();
+          closeAllDropdowns();
           setShowSearch(true);
           
           // Apply preset sizing after state update
@@ -1031,7 +625,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     }
     
     // Close all other dropdowns when opening node details
-    closeAllDropdownsAndPopups();
+    closeAllDropdowns();
     
     setSelectedNodeDetails(node);
     setSelectedConnection(null); // Clear connection selection when selecting a node
@@ -1171,7 +765,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     
     // When a connection is clicked, show connection details
     // Close all other dropdowns when opening connection details
-    closeAllDropdownsAndPopups();
+    closeAllDropdowns();
     
     setSelectedConnection(connection);
     setSelectedNodeDetails(null);
@@ -1273,7 +867,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     
     // When an edge is clicked directly in the network, show connection details
     // Close all other dropdowns when opening connection details
-    closeAllDropdownsAndPopups();
+    closeAllDropdowns();
     
     console.log('Setting selectedConnection to:', edge);
     setSelectedConnection(edge);
@@ -1401,152 +995,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
         console.log('🔍 Collapsing console logs...');
         // Restore original console.log (this is just a placeholder)
         console.log('✅ Console logs collapsed');
-      },
-      // New explore mode debugging functions
-      debugExploreMode: () => {
-        console.log('🔍 Explore Mode Debug Information:');
-        console.log('Current state:', {
-          exploreMode,
-          startingNode: exploreState.startingNode,
-          selectedNodes: Array.from(exploreState.selectedNodes),
-          visibleNodes: Array.from(exploreState.visibleNodes),
-          searchQuery: startingNodeSearchQuery,
-          searchResultsCount: startingNodeSearchResults.length
-        });
-        
-        const resultsElement = document.querySelector('.starting-node-results');
-        if (resultsElement) {
-          const rect = resultsElement.getBoundingClientRect();
-          console.log('Dropdown dimensions:', {
-            width: rect.width,
-            height: rect.height,
-            maxHeight: getComputedStyle(resultsElement).maxHeight,
-            minHeight: getComputedStyle(resultsElement).minHeight,
-            viewport: {
-              width: window.innerWidth,
-              height: window.innerHeight
-            }
-          });
-        } else {
-          console.log('❌ Starting node results dropdown not found');
-        }
-      },
-      testExploreSearch: (query) => {
-        console.log(`🧪 Testing explore search with query: "${query}"`);
-        handleStartingNodeSearch(query);
-      },
-      getExploreSearchResults: () => {
-        console.log('Current search results:', startingNodeSearchResults);
-        return startingNodeSearchResults;
-      },
-      measureDropdownContent: () => {
-        const resultsElement = document.querySelector('.starting-node-results');
-        if (!resultsElement) {
-          console.log('❌ No dropdown found to measure');
-          return;
-        }
-        
-        const options = resultsElement.querySelectorAll('.starting-node-option');
-        console.log(`📏 Dropdown content measurement:`, {
-          totalOptions: options.length,
-          containerHeight: resultsElement.offsetHeight,
-          containerMaxHeight: getComputedStyle(resultsElement).maxHeight,
-          containerMinHeight: getComputedStyle(resultsElement).minHeight,
-          options: Array.from(options).map((option, index) => ({
-            index,
-            height: option.offsetHeight,
-            textContent: option.textContent.trim().substring(0, 50) + '...'
-          }))
-        });
-      },
-      adjustExploreDropdownSize: () => {
-        console.log('🔧 Manually adjusting explore dropdown size...');
-        adjustExploreDropdownSize();
-      },
-      testExploreDropdownSizing: () => {
-        console.log('🧪 Testing explore dropdown sizing with different scenarios...');
-        
-        // Test with different search queries
-        const testQueries = ['a', 'tech', 'university', 'startup'];
-        testQueries.forEach((query, index) => {
-          setTimeout(() => {
-            console.log(`\n--- Test ${index + 1}: Searching for "${query}" ---`);
-            handleStartingNodeSearch(query);
-          }, index * 1000);
-        });
-      },
-      forceShowResults: () => {
-        console.log('🧪 Forcing results to show for testing...');
-        if (networkData.nodes.length > 0) {
-          const testResults = networkData.nodes.slice(0, 3);
-          setStartingNodeSearchResults(testResults);
-          setSearchResultsKey(prev => prev + 1);
-          console.log('Forced results set:', testResults);
-        } else {
-          console.log('No network data available');
-        }
-      },
-      checkState: () => {
-        console.log('🔍 Current state values:', {
-          startingNodeSearchQuery,
-          startingNodeSearchResults: startingNodeSearchResults.length,
-          searchResultsKey,
-          exploreMode,
-          hasStartingNode: !!exploreState.startingNode
-        });
-        return {
-          startingNodeSearchQuery,
-          startingNodeSearchResults: startingNodeSearchResults.length,
-          searchResultsKey,
-          exploreMode,
-          hasStartingNode: !!exploreState.startingNode
-        };
-      },
-      checkResultsVisibility: () => {
-        console.log('🔍 Checking results visibility...');
-        
-        const resultsElement = document.querySelector('.starting-node-results');
-        const options = document.querySelectorAll('.starting-node-option');
-        
-        console.log('Results element:', resultsElement);
-        console.log('Options found:', options.length);
-        
-        if (resultsElement) {
-          const rect = resultsElement.getBoundingClientRect();
-          const styles = getComputedStyle(resultsElement);
-          console.log('Results element position:', {
-            top: rect.top,
-            left: rect.left,
-            right: rect.right,
-            bottom: rect.bottom,
-            width: rect.width,
-            height: rect.height,
-            position: styles.position,
-            zIndex: styles.zIndex,
-            display: styles.display,
-            visibility: styles.visibility,
-            opacity: styles.opacity
-          });
-          
-          // Check if it's visible in viewport
-          const isInViewport = rect.top >= 0 && rect.left >= 0 && 
-                              rect.bottom <= window.innerHeight && 
-                              rect.right <= window.innerWidth;
-          console.log('Is in viewport:', isInViewport);
-        }
-        
-        if (options.length > 0) {
-          console.log('First option:', options[0]);
-          const firstOptionRect = options[0].getBoundingClientRect();
-          console.log('First option position:', {
-            top: firstOptionRect.top,
-            left: firstOptionRect.left,
-            width: firstOptionRect.width,
-            height: firstOptionRect.height
-          });
-        }
-        
-        return { resultsElement, optionsCount: options.length };
       }
     };
     
@@ -1590,33 +1038,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     loadData();
   }, [dataType]);
 
-  // Initialize explore mode when data is loaded
-  useEffect(() => {
-    if (exploreMode && networkData.nodes.length > 0 && !exploreState.isInitialized) {
-      // Load saved explore state from localStorage
-      const savedState = localStorage.getItem(`explore-state-${dataType}`);
-      if (savedState) {
-        try {
-          const parsed = JSON.parse(savedState);
-          setExploreState({
-            selectedNodes: new Set(parsed.selectedNodes || []),
-            visibleNodes: new Set(parsed.visibleNodes || []),
-            startingNode: parsed.startingNode || null,
-            isInitialized: true
-          });
-        } catch (error) {
-          console.error('Error loading saved explore state:', error);
-          // Initialize with empty state
-          setExploreState(prev => ({ ...prev, isInitialized: true }));
-        }
-      } else {
-        // Initialize with empty state
-        setExploreState(prev => ({ ...prev, isInitialized: true }));
-      }
-    }
-  }, [exploreMode, networkData.nodes.length, exploreState.isInitialized, dataType]);
-
-  // Close dropdowns and popup when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Check if click is inside any dropdown content
@@ -1632,16 +1054,13 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
                                 event.target.closest('.network-share-button') ||
                                 event.target.closest('.legend-toggle-button');
       
-      // Check if click is inside node popup
-      const isInsidePopup = event.target.closest('.node-popup');
-      
-      // Don't close if clicking inside dropdown content, on dropdown buttons, or inside popup
-      if (isInsideDropdown || isOnDropdownButton || isInsidePopup) {
+      // Don't close if clicking inside dropdown content or on dropdown buttons
+      if (isInsideDropdown || isOnDropdownButton) {
         return;
       }
       
-      // Close all dropdowns and node popups if clicking outside
-      closeAllDropdownsAndPopups();
+      // Close all dropdowns if clicking outside
+      closeAllDropdowns();
     };
 
     document.addEventListener('click', handleClickOutside);
@@ -1658,16 +1077,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
       if (showFilters) applyDropdownSizing('filters');
       if (showSearch) applyDropdownSizing('search');
       if (showLegend) applyDropdownSizing('legend');
-      
-      // Also adjust explore mode dropdown if it's visible
-      if (exploreMode && startingNodeSearchResults.length > 0) {
-        adjustExploreDropdownSize();
-      }
-      
-      // Apply preset sizing for explore mode UI on resize
-      if (exploreMode && !exploreState.startingNode) {
-        applyExploreModeSizing();
-      }
     };
 
     // Debounce resize events for better performance and to handle mobile detection changes
@@ -1682,7 +1091,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
       window.removeEventListener('resize', debouncedResize);
       clearTimeout(resizeTimeout);
     };
-  }, [showShareDropdown, showFilters, showSearch, showLegend, applyDropdownSizing, exploreMode, startingNodeSearchResults.length, adjustExploreDropdownSize, applyExploreModeSizing, exploreState.startingNode]);
+  }, [showShareDropdown, showFilters, showSearch, showLegend, applyDropdownSizing]);
 
   // Ensure preset sizing runs whenever search state changes
   useEffect(() => {
@@ -1691,19 +1100,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
       applyDropdownSizing('search');
     }
   }, [showSearch, applyDropdownSizing]);
-
-  // Apply preset sizing for explore mode UI when it's shown
-  useEffect(() => {
-    if (exploreMode && !exploreState.startingNode) {
-      // Close any open dropdowns when entering explore mode without starting node
-      closeAllDropdownsAndPopups();
-      
-      // Apply preset sizing after it's rendered
-      setTimeout(() => {
-        applyExploreModeSizing();
-      }, 100);
-    }
-  }, [exploreMode, exploreState.startingNode, applyExploreModeSizing]);
 
 
 
@@ -1718,12 +1114,11 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
         {/* These controls are positioned in the top-right corner for easy access */}
         <div className="top-right-controls">
           {/* Theme Toggle - Allows users to switch between light and dark themes */}
-          <ThemeToggle disabled={areControlsDisabled} />
+          <ThemeToggle />
           
           {/* Share Button - Provides social sharing functionality */}
           <button 
             className={`network-share-button ${showShareDropdown ? 'expanded' : ''}`}
-            disabled={areControlsDisabled}
             onClick={() => toggleDropdown('share')}
             title="Share"
           >
@@ -1797,7 +1192,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           {/* Center Network Button - Resets the network view to show all nodes */}
           <button 
             className="control-button center-button"
-            disabled={areControlsDisabled}
             onClick={() => {
               if (networkRef.current) {
                 networkRef.current.manualCenterNetwork();
@@ -1821,7 +1215,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           {/* Zoom In Button - Increases the zoom level of the network view */}
           <button 
             className="control-button zoom-button"
-            disabled={areControlsDisabled}
             onClick={() => {
               if (networkRef.current) {
                 networkRef.current.zoomIn();
@@ -1838,7 +1231,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           {/* Zoom Out Button - Decreases the zoom level of the network view */}
           <button 
             className="control-button zoom-button"
-            disabled={areControlsDisabled}
             onClick={() => {
               if (networkRef.current) {
                 networkRef.current.zoomOut();
@@ -1855,7 +1247,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           <div className="control-dropdown">
             <button 
               className={`control-dropdown-button ${showFilters ? 'expanded' : ''}`}
-              disabled={areControlsDisabled}
               onClick={() => toggleDropdown('filters')}
               title="Filters"
             >
@@ -1906,7 +1297,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           <div className="control-dropdown">
             <button 
               className={`control-dropdown-button ${showSearch ? 'expanded' : ''}`}
-              disabled={areControlsDisabled}
               onClick={() => toggleDropdown('search')}
               title="Search"
             >
@@ -2230,43 +1620,19 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
 
         {/* Network Stats Panel - Bottom Right */}
         {/* This panel displays key statistics about the network */}
-        <div className={`network-stats-bottom-right ${areControlsDisabled ? 'disabled' : ''}`}>
-          {exploreMode ? (
-            <>
-              <div className="stats-item">
-                <span className="stat-label">Selected:</span>
-                <span className="stat-value">{exploreState.selectedNodes.size}</span>
-              </div>
-              <div className="stats-item">
-                <span className="stat-label">Visible:</span>
-                <span className="stat-value">{exploreState.visibleNodes.size}</span>
-              </div>
-              <div className="stats-item">
-                <button
-                  className="explore-reset-button-small"
-                  onClick={resetExploration}
-                  title="Reset exploration"
-                >
-                  Reset
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="stats-item">
-                <span className="stat-label">Organizations:</span>
-                <span className="stat-value">{networkData.nodes.length}</span>
-              </div>
-              <div className="stats-item">
-                <span className="stat-label">Connections:</span>
-                <span className="stat-value">{networkData.links.length}</span>
-              </div>
-              <div className="stats-item">
-                <span className="stat-label">Updated:</span>
-                <span className="stat-value">{lastCommitDate}</span>
-              </div>
-            </>
-          )}
+        <div className="network-stats-bottom-right">
+          <div className="stats-item">
+            <span className="stat-label">Organizations:</span>
+            <span className="stat-value">{networkData.nodes.length}</span>
+          </div>
+          <div className="stats-item">
+            <span className="stat-label">Connections:</span>
+            <span className="stat-value">{networkData.links.length}</span>
+          </div>
+          <div className="stats-item">
+            <span className="stat-label">Updated:</span>
+            <span className="stat-value">{lastCommitDate}</span>
+          </div>
         </div>
 
         {/* Collapsible Legend - Bottom Left */}
@@ -2274,7 +1640,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
         <div className="fixed-legend">
           <button 
             className={`legend-toggle-button ${showLegend ? 'expanded' : ''}`}
-            disabled={areControlsDisabled}
             onClick={handleLegendToggle}
             title={showLegend ? "Hide Legend" : "Show Legend"}
           >
@@ -2367,49 +1732,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           </button>
         </div>
 
-        {/* Explore Mode Starting Node Selector */}
-        {exploreMode && !exploreState.startingNode && (
-          <div className="explore-mode-ui">
-            <div className="starting-node-selector">
-              <div className="starting-node-prompt">
-                <h3>Choose a starting point</h3>
-                <p>Select a node to begin exploring the network</p>
-                <div className="starting-node-search">
-                  <input
-                    type="text"
-                    placeholder="Search for a node..."
-                    value={startingNodeSearchQuery}
-                    onChange={(e) => handleStartingNodeSearch(e.target.value)}
-                    className="starting-node-search-input"
-                  />
-                  {startingNodeSearchResults.length > 0 && (
-                    <div className="starting-node-results">
-                      {startingNodeSearchResults.map(node => (
-                        <button
-                          key={node.id}
-                          className="starting-node-option"
-                          onClick={() => setStartingNode(node.id)}
-                        >
-                          <span className="node-name">{getOrganizationDisplayName(node)}</span>
-                          <span className="node-type">{formatOrganizationType(node.type)}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  {startingNodeSearchResults.length === 0 && startingNodeSearchQuery && (
-                    <div className="starting-node-results" style={{display: 'block', visibility: 'visible', opacity: 1}}>
-                      <div className="starting-node-option">
-                        <span className="node-name">No results found for "{startingNodeSearchQuery}"</span>
-                        <span className="node-type">Try a different search term</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Full Screen Network Visualization - No Box */}
         {/* This is the main network visualization component that renders the interactive network */}
         <div className="network-fullscreen">
@@ -2417,47 +1739,8 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
             dataFile={dataType} // Use data based on dataType prop
             hideUI={true} // Hide the built-in UI since we have our own controls
             ref={networkRef} // Reference to access network methods
-            onNodeClick={exploreMode ? null : handleNetworkNodeClick} // Handle clicks on network nodes
+            onNodeClick={handleNetworkNodeClick} // Handle clicks on network nodes
             onEdgeClick={handleEdgeClick} // Handle clicks on network edges
-            exploreMode={exploreMode} // Enable explore mode
-            exploreState={exploreState} // Pass explore state
-            onNodeToggle={exploreMode ? (nodeId, event) => {
-              const currentState = exploreStateRef.current;
-              console.log('🔍 onNodeToggle called:', { nodeId, event, selectedNodes: Array.from(currentState.selectedNodes) });
-              
-              if (currentState.visibleNodes.has(nodeId)) {
-                // If it's visible (either selected or greyed out), show popup
-                console.log('🎯 Visible node clicked, showing popup:', nodeId);
-                const node = networkData.nodes.find(n => n.id === nodeId);
-                if (node) {
-                  // Get click position for popup placement
-                  const rect = event?.target?.getBoundingClientRect();
-                  const rawPosition = rect ? {
-                    x: rect.left + rect.width / 2,
-                    y: rect.top - 10
-                  } : { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-                  
-                  // Constrain position to stay within screen bounds
-                  const position = constrainPopupPosition(rawPosition);
-                  
-                  // Close any open dropdowns when opening node popup
-                  closeAllDropdowns();
-                  
-                  console.log('📍 Setting popup position:', { raw: rawPosition, constrained: position });
-                  setNodePopup({
-                    isVisible: true,
-                    node: node,
-                    position: position
-                  });
-                } else {
-                  console.log('❌ Node not found in networkData:', nodeId);
-                }
-              } else {
-                // If it's not visible at all, add it directly
-                console.log('➕ Adding hidden node directly to exploration:', nodeId);
-                addNodeToExploration(nodeId);
-              }
-            } : null} // Handle node toggling in explore mode
             onCenterNetwork={() => {
               if (networkRef.current) {
                 networkRef.current.centerNetwork();
@@ -2475,79 +1758,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
             }}
           />
         </div>
-
-        {/* Node Popup for First-Degree Connections */}
-        {nodePopup.isVisible && nodePopup.node && (
-          <div 
-            className="node-popup"
-            style={{
-              position: 'fixed',
-              left: `${nodePopup.position.x}px`,
-              top: `${nodePopup.position.y}px`,
-              transform: 'translateX(-50%)',
-              zIndex: 2000
-            }}
-          >
-            <div className="node-popup-content">
-              <div className="node-popup-header">
-                <div className="node-popup-title">
-                  <h4>{getOrganizationDisplayName(nodePopup.node)}</h4>
-                  {nodePopup.node.website && (
-                    <a 
-                      href={nodePopup.node.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="node-popup-website"
-                      title="Visit website"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                      </svg>
-                    </a>
-                  )}
-                </div>
-                <p className="node-popup-type">{formatOrganizationType(nodePopup.node.type)}</p>
-                {nodePopup.node.description && (
-                  <p className="node-popup-description">{nodePopup.node.description}</p>
-                )}
-              </div>
-              <div className="node-popup-actions">
-                <button 
-                  className="node-popup-action save"
-                  onClick={() => handleNodePopupAction('save')}
-                  title="Save as Full Color"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M20 6L9 17l-5-5"/>
-                  </svg>
-                </button>
-                <button 
-                  className="node-popup-action keep"
-                  onClick={() => handleNodePopupAction('keep')}
-                  title="Keep Greyed"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M8 12h8"/>
-                  </svg>
-                </button>
-                <button 
-                  className="node-popup-action hide"
-                  onClick={() => handleNodePopupAction('hide')}
-                  title="Hide"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-      
     </ThemeProvider>
   );
 }
