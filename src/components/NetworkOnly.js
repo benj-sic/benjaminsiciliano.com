@@ -40,7 +40,6 @@
  */
 
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { createPortal } from 'react-dom';
 // CRITICAL FIX: Import NetworkVisualization without its CSS to prevent style conflicts
 // We'll handle all styling in NetworkOnly.css to prevent horizontal expansion issues
 import NetworkVisualization from './NetworkVisualization';
@@ -96,7 +95,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     node: null,
     position: { x: 0, y: 0 }
   });
-  const [showStartingNodeSelector, setShowStartingNodeSelector] = useState(false);
   const [startingNodeSearchQuery, setStartingNodeSearchQuery] = useState('');
   const [startingNodeSearchResults, setStartingNodeSearchResults] = useState([]);
   const [searchResultsKey, setSearchResultsKey] = useState(0); // Force re-render
@@ -321,49 +319,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     });
   }, [getNodeConnections, saveExploreState]);
 
-  const removeNodeFromExploration = useCallback((nodeId) => {
-    setExploreState(prev => {
-      const newSelectedNodes = new Set(prev.selectedNodes);
-      newSelectedNodes.delete(nodeId);
-      
-      // Recalculate visible nodes based on remaining selected nodes
-      const newVisibleNodes = new Set();
-      newSelectedNodes.forEach(selectedId => {
-        const connections = getNodeConnections(selectedId);
-        connections.forEach(connId => newVisibleNodes.add(connId));
-      });
-      
-      const newState = {
-        ...prev,
-        selectedNodes: newSelectedNodes,
-        visibleNodes: newVisibleNodes
-      };
-      
-      saveExploreState(newState);
-      return newState;
-    });
-  }, [getNodeConnections, saveExploreState]);
 
-  // Check if a node is a first-degree connection of any selected node
-  const isFirstDegreeConnection = useCallback((nodeId) => {
-    const currentState = exploreStateRef.current;
-    console.log('🔍 Checking if first-degree connection:', { 
-      nodeId, 
-      selectedNodes: Array.from(currentState.selectedNodes),
-      visibleNodes: Array.from(currentState.visibleNodes)
-    });
-    
-    for (const selectedId of currentState.selectedNodes) {
-      const connections = getNodeConnections(selectedId);
-      console.log(`🔗 Connections of ${selectedId}:`, connections);
-      if (connections.includes(nodeId)) {
-        console.log('✅ Found as first-degree connection');
-        return true;
-      }
-    }
-    console.log('❌ Not a first-degree connection');
-    return false;
-  }, [getNodeConnections]);
 
   // Constrain popup position to stay within screen bounds
   const constrainPopupPosition = useCallback((position, popupWidth = 300, popupHeight = 200) => {
@@ -475,12 +431,15 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           return newState;
         });
         break;
+      default:
+        console.log('Unknown action:', action);
+        break;
     }
 
     // Close popup
     console.log('❌ Closing popup');
     setNodePopup({ isVisible: false, node: null, position: { x: 0, y: 0 } });
-  }, [nodePopup.node, saveExploreState]);
+  }, [nodePopup.node, saveExploreState, getNodeConnections]);
 
   const setStartingNode = useCallback((nodeId) => {
     console.log('🚀 Setting starting node:', nodeId);
@@ -507,7 +466,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
       saveExploreState(newState);
       return newState;
     });
-    setShowStartingNodeSelector(false);
   }, [getNodeConnections, saveExploreState]);
 
   const resetExploration = useCallback(() => {
@@ -710,15 +668,15 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
   }, [getDropdownDimensions]);
 
   // Helper functions to manage dropdown states - only one can be open at a time
-  const closeAllDropdowns = () => {
+  const closeAllDropdowns = useCallback(() => {
     setShowShareDropdown(false);
     setShowFilters(false);
     setShowSearch(false);
     setShowLegend(false);
-  };
+  }, []);
 
   // Close all dropdowns and node popups
-  const closeAllDropdownsAndPopups = () => {
+  const closeAllDropdownsAndPopups = useCallback(() => {
     closeAllDropdowns();
     // Close node popup and default to "keep" behavior
     if (nodePopup.isVisible && nodePopup.node) {
@@ -741,7 +699,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
       });
     }
     setNodePopup({ isVisible: false, node: null, position: { x: 0, y: 0 } });
-  };
+  }, [closeAllDropdowns, nodePopup.isVisible, nodePopup.node, setExploreState, saveExploreState]);
 
   // Handle window resize to reposition popup if needed
   useEffect(() => {
@@ -1627,7 +1585,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     
     console.log('Caching system initialized');
     console.log('🔧 Dropdown sizing debugging available: window.debugDropdownSizing');
-  }, [logAllElementPositions, applyDropdownSizing, getDropdownDimensions]);
+  }, [logAllElementPositions, applyDropdownSizing, getDropdownDimensions, adjustExploreDropdownSize, exploreMode, exploreState.selectedNodes, exploreState.startingNode, exploreState.visibleNodes, handleStartingNodeSearch, networkData.nodes, searchResultsKey, startingNodeSearchQuery, startingNodeSearchResults]);
 
   // Load network data and last commit date
   useEffect(() => {
@@ -1723,7 +1681,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [closeAllDropdownsAndPopups]);
 
   // Handle window resize to recalculate preset sizing
   useEffect(() => {
@@ -1778,7 +1736,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
         applyExploreModeSizing();
       }, 100);
     }
-  }, [exploreMode, exploreState.startingNode, applyExploreModeSizing]);
+  }, [exploreMode, exploreState.startingNode, applyExploreModeSizing, closeAllDropdownsAndPopups]);
 
 
 

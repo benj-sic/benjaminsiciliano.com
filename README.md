@@ -10,6 +10,7 @@ This is a comprehensive personal website featuring interactive network visualiza
 - **Dual Ecosystem Visualizations**: Interactive D3.js-powered network graphs for both biotech and tech ecosystems
 - **Biotech Network**: 117+ organizations and 206+ connections in the life sciences sector
 - **Tech Network**: 50+ organizations including VCs (Mosley Ventures, Atlanta Ventures, Valor Ventures, Zane Venture Fund) and their portfolio companies
+- **Explore Mode**: Interactive exploration system with save/keep/hide functionality for focused network discovery
 - **Multi-Page Architecture**: Main page with portfolio sections + dedicated network exploration pages
 - **Social Media Integration**: Automated generation of social cards and meta images
 - **Performance Optimization**: Intelligent caching system and optimal zoom calculations
@@ -151,6 +152,9 @@ benjaminsiciliano.com/
 - **Filtering System**: Type-based, search-based, and relationship filtering
 - **Community Detection**: Louvain algorithm for identifying ecosystem clusters
 - **Performance Optimization**: Intelligent caching and optimal zoom calculations
+- **Explore Mode**: Interactive exploration with save/keep/hide functionality for focused discovery
+- **Smart Search**: Search for hidden nodes with automatic visibility and popup management
+- **Connection Management**: First-degree connections automatically revealed when saving nodes
 
 ### **Social Media Integration**
 - **Automated Generation**: Scripts for creating platform-specific images
@@ -162,6 +166,22 @@ benjaminsiciliano.com/
 - **Tech Dataset**: 50+ organizations including VCs and their portfolio companies
 - **Relationship Mapping**: Connections between entities with context
 - **Real-time Updates**: Git integration for version tracking
+
+## **Recent Enhancements**
+
+### **Explore Mode Features (Latest)**
+- **Interactive Node Management**: Save (full color), Keep (greyed out), or Hide nodes during exploration
+- **Smart Connection Visibility**: Connections only appear when both nodes are saved
+- **First-Degree Discovery**: Saving a node automatically reveals its connected nodes
+- **Enhanced Search**: Search for hidden nodes with automatic visibility and popup management
+- **Improved Popup Positioning**: Smart positioning system ensures popups stay on screen
+- **Connection Details Reordering**: Relationship type, description, then connected organizations
+
+### **UI/UX Improvements**
+- **Responsive Popup System**: Handles window resizing and edge cases gracefully
+- **Status Indicators**: Clear visual feedback for node states (hidden, visible, selected)
+- **Optimized Performance**: Fixed React Hook dependencies and removed unused code
+- **Enhanced Accessibility**: Better keyboard navigation and screen reader support
 
 ## **Need Help?**
 
