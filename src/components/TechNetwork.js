@@ -1361,6 +1361,22 @@ function NetworkOnly() {
                       // Connection Details View - Show when a connection is selected
                       <div className="network-only-connection-details">
                         <div className="network-only-details-content">
+                          {/* Relationship Type Section */}
+                          <div className="network-only-details-section">
+                            <h4>Relationship Type</h4>
+                            <p className="network-only-relationship-type">
+                              {selectedConnection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                            </p>
+                          </div>
+                          
+                          {/* Relationship Description Section (if available) */}
+                          {selectedConnection.description && (
+                            <div className="network-only-details-section">
+                              <h4>Description</h4>
+                              <p className="network-only-relationship-description">{selectedConnection.description}</p>
+                            </div>
+                          )}
+                          
                           <div className="network-only-details-section">
                             <div className="network-only-section-header">
                               <h4>Connected Organizations</h4>
@@ -1439,22 +1455,6 @@ function NetworkOnly() {
                               })()}
                             </div>
                           </div>
-                          
-                          {/* Relationship Type Section */}
-                          <div className="network-only-details-section">
-                            <h4>Relationship Type</h4>
-                            <p className="network-only-relationship-type">
-                              {selectedConnection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                            </p>
-                          </div>
-                          
-                          {/* Relationship Description Section (if available) */}
-                          {selectedConnection.description && (
-                            <div className="network-only-details-section">
-                              <h4>Description</h4>
-                              <p className="network-only-relationship-description">{selectedConnection.description}</p>
-                            </div>
-                          )}
                         </div>
                       </div>
                   ) : (

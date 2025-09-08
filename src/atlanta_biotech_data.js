@@ -230,7 +230,7 @@ export const atlantaBiotechEcosystem = {
       type: "startup",
       size: 14,
       description: "Clinical-stage CNS drug developer. A spinout from research at Emory and Duke University.",
-      website: "https://neuropinc.com/",
+      website: "http://neuropinc.com/",
       keyPersonnel: [
       {
         "name": "Raymond Dingledine",

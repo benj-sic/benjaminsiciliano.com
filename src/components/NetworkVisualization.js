@@ -1111,16 +1111,10 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
         if (exploreMode && exploreState) {
           const sourceSelected = exploreState.selectedNodes.has(d.source.id);
           const targetSelected = exploreState.selectedNodes.has(d.target.id);
-          const sourceVisible = exploreState.visibleNodes.has(d.source.id);
-          const targetVisible = exploreState.visibleNodes.has(d.target.id);
           
-          // Show link only if:
-          // 1. Both nodes are selected, OR
-          // 2. One node is selected and the other is visible (first-degree connection)
+          // Show link only if both nodes are selected (saved)
           if (sourceSelected && targetSelected) {
             classes += ' link-selected';
-          } else if ((sourceSelected && targetVisible) || (targetSelected && sourceVisible)) {
-            classes += ' link-visible';
           } else {
             classes += ' link-hidden';
           }
@@ -1491,13 +1485,9 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
         const link = d3.select(this);
         const sourceSelected = exploreState.selectedNodes.has(d.source.id);
         const targetSelected = exploreState.selectedNodes.has(d.target.id);
-        const sourceVisible = exploreState.visibleNodes.has(d.source.id);
-        const targetVisible = exploreState.visibleNodes.has(d.target.id);
         
         if (sourceSelected && targetSelected) {
           link.classed("link-selected", true);
-        } else if ((sourceSelected && targetVisible) || (targetSelected && sourceVisible)) {
-          link.classed("link-visible", true);
         } else {
           link.classed("link-hidden", true);
         }
@@ -2315,19 +2305,43 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
                       <>
                         <h5>Search Results</h5>
                         <div className="search-results-list">
-                          {searchResults.map((node, index) => (
-                            <div 
-                              key={node.id} 
-                              className="search-result-item"
-                              onClick={() => handleNodeClick(node)}
-                            >
-                              <div className="result-node-color" style={{backgroundColor: getNodeColor(node.type)}}></div>
-                              <div className="result-content">
-                                <div className="result-name">{node.name}</div>
-                                <div className="result-type">{typeMap[node.type] || node.type}</div>
+                          {searchResults.map((node, index) => {
+                            const isHidden = exploreMode && exploreState && !exploreState.selectedNodes.has(node.id) && !exploreState.visibleNodes.has(node.id);
+                            const isSelected = exploreMode && exploreState && exploreState.selectedNodes.has(node.id);
+                            const isVisible = exploreMode && exploreState && exploreState.visibleNodes.has(node.id);
+                            
+                            return (
+                              <div 
+                                key={node.id} 
+                                className={`search-result-item ${isHidden ? 'search-result-hidden' : ''} ${isSelected ? 'search-result-selected' : ''} ${isVisible ? 'search-result-visible' : ''}`}
+                                onClick={() => {
+                                  if (exploreMode && isHidden) {
+                                    // For hidden nodes in explore mode, trigger the node toggle to show the popup
+                                    if (onNodeToggle) {
+                                      onNodeToggle(node.id, { stopPropagation: () => {} });
+                                    }
+                                  } else {
+                                    handleNodeClick(node);
+                                  }
+                                }}
+                              >
+                                <div className="result-node-color" style={{backgroundColor: getNodeColor(node.type)}}></div>
+                                <div className="result-content">
+                                  <div className="result-name">{node.name}</div>
+                                  <div className="result-type">{typeMap[node.type] || node.type}</div>
+                                  {exploreMode && isHidden && (
+                                    <div className="result-status">Hidden - Click to show options</div>
+                                  )}
+                                  {exploreMode && isSelected && (
+                                    <div className="result-status">Saved</div>
+                                  )}
+                                  {exploreMode && isVisible && !isSelected && (
+                                    <div className="result-status">Visible</div>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </>
                     ) : (
@@ -2520,6 +2534,20 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
                     
                     <div className="details-content">
                       <div className="details-section">
+                        <h4>Relationship Type</h4>
+                        <p className="relationship-type">
+                          {getSelectedEdge.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </p>
+                      </div>
+                      
+                      {getSelectedEdge.description && (
+                        <div className="details-section">
+                          <h4>Description</h4>
+                          <p className="relationship-description">{getSelectedEdge.description}</p>
+                        </div>
+                      )}
+                      
+                      <div className="details-section">
                         <h4>Connected Organizations</h4>
                         <div className="connected-organizations">
                           <div 
@@ -2598,20 +2626,6 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
                           </div>
                         </div>
                       </div>
-                      
-                      <div className="details-section">
-                        <h4>Relationship Type</h4>
-                        <p className="relationship-type">
-                          {getSelectedEdge.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                        </p>
-                      </div>
-                      
-                      {getSelectedEdge.description && (
-                        <div className="details-section">
-                          <h4>Description</h4>
-                          <p className="relationship-description">{getSelectedEdge.description}</p>
-                        </div>
-                      )}
                     </div>
                   </div>
                 )}

@@ -1366,6 +1366,35 @@
   font-size: 12px;
 }
 
+.result-status {
+  color: var(--network-text-tertiary);
+  font-size: 11px;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* Search result states for explore mode */
+.search-result-hidden {
+  opacity: 0.6;
+  background: var(--network-bg-secondary);
+  border-color: var(--network-border-primary);
+}
+
+.search-result-hidden:hover {
+  opacity: 0.8;
+  background: var(--network-hover-bg);
+}
+
+.search-result-selected {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--network-text-accent);
+}
+
+.search-result-visible {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
 /* Node Details */
 .node-details {
   border-top: 1px solid var(--network-border-primary);

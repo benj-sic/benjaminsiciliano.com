@@ -373,7 +373,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     
     let { x, y } = position;
     
-    // Constrain horizontal position
+    // Constrain horizontal position (popup is centered with translateX(-50%))
     if (x - popupWidth / 2 < margin) {
       x = margin + popupWidth / 2;
     } else if (x + popupWidth / 2 > screenWidth - margin) {
@@ -381,13 +381,28 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     }
     
     // Constrain vertical position
-    if (y - popupHeight < margin) {
-      y = margin + popupHeight;
-    } else if (y > screenHeight - margin) {
-      y = screenHeight - margin;
+    // Try to position above the node first
+    let popupY = y - popupHeight - 20; // Position above with spacing
+    
+    // Check if popup fits above the node
+    if (popupY < margin) {
+      // If not enough space above, try below the node
+      popupY = y + 20; // Position below with spacing
+      
+      // If it doesn't fit below either, position it in the center of the screen
+      if (popupY + popupHeight > screenHeight - margin) {
+        popupY = (screenHeight - popupHeight) / 2;
+      }
     }
     
-    return { x, y };
+    // Final safety check to ensure popup doesn't go off-screen
+    if (popupY < margin) {
+      popupY = margin;
+    } else if (popupY + popupHeight > screenHeight - margin) {
+      popupY = screenHeight - margin - popupHeight;
+    }
+    
+    return { x, y: popupY };
   }, []);
 
   // Handle node popup actions
@@ -410,6 +425,17 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
           newSelectedNodes.add(nodeId);
           // Keep in visible nodes so it can show popup when clicked
           newVisibleNodes.add(nodeId);
+          
+          // Add first-degree connections to visible nodes if they aren't already displayed
+          const connections = getNodeConnections(nodeId);
+          console.log('🔗 Adding first-degree connections for saved node:', connections);
+          connections.forEach(connId => {
+            // Only add if not already selected and not already visible
+            if (!newSelectedNodes.has(connId) && !newVisibleNodes.has(connId)) {
+              newVisibleNodes.add(connId);
+              console.log('➕ Added connection to visible nodes:', connId);
+            }
+          });
           
           const newState = { ...prev, selectedNodes: newSelectedNodes, visibleNodes: newVisibleNodes };
           saveExploreState(newState);
@@ -717,6 +743,22 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     setNodePopup({ isVisible: false, node: null, position: { x: 0, y: 0 } });
   };
 
+  // Handle window resize to reposition popup if needed
+  useEffect(() => {
+    const handleResize = () => {
+      if (nodePopup.isVisible && nodePopup.position) {
+        // Recalculate popup position to ensure it stays on screen
+        const newPosition = constrainPopupPosition(nodePopup.position, 300, 250);
+        if (newPosition.x !== nodePopup.position.x || newPosition.y !== nodePopup.position.y) {
+          setNodePopup(prev => ({ ...prev, position: newPosition }));
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [nodePopup.isVisible, nodePopup.position, constrainPopupPosition]);
+
   // Check if controls should be disabled (in explore mode without starting node)
   const areControlsDisabled = exploreMode && !exploreState.startingNode;
 
@@ -1016,6 +1058,39 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
     if (!node) return;
     
     console.log('selectNode called with:', node);
+    
+    // In explore mode, check if the node is hidden
+    if (exploreMode && exploreState) {
+      const isHidden = !exploreState.selectedNodes.has(node.id) && !exploreState.visibleNodes.has(node.id);
+      
+      if (isHidden) {
+        console.log('Hidden node clicked in search, making it visible and showing popup:', node.id);
+        
+        // Make the node visible (greyed out) by adding it to visibleNodes
+        setExploreState(prev => {
+          const newVisibleNodes = new Set(prev.visibleNodes);
+          newVisibleNodes.add(node.id);
+          
+          const newState = { ...prev, visibleNodes: newVisibleNodes };
+          saveExploreState(newState);
+          return newState;
+        });
+        
+        // Show the popup for the node
+        const position = {
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2
+        };
+        
+        setNodePopup({
+          isVisible: true,
+          node: node,
+          position: position
+        });
+        
+        return; // Don't proceed with normal selection behavior
+      }
+    }
     
     // Check if this node is already selected - if so, deselect it
     // BUT: If we're in connection details mode, allow selection to explore the node
@@ -1985,6 +2060,22 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
                       // Connection Details View - Show when a connection is selected
                       <div className="network-only-connection-details">
                         <div className="network-only-details-content">
+                          {/* Relationship Type Section */}
+                          <div className="network-only-details-section">
+                            <h4>Relationship Type</h4>
+                            <p className="network-only-relationship-type">
+                              {selectedConnection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                            </p>
+                          </div>
+                          
+                          {/* Relationship Description Section (if available) */}
+                          {selectedConnection.description && (
+                            <div className="network-only-details-section">
+                              <h4>Description</h4>
+                              <p className="network-only-relationship-description">{selectedConnection.description}</p>
+                            </div>
+                          )}
+                          
                           <div className="network-only-details-section">
                             <div className="network-only-section-header">
                               <h4>Connected Organizations</h4>
@@ -2063,22 +2154,6 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
                               })()}
                             </div>
                           </div>
-                          
-                          {/* Relationship Type Section */}
-                          <div className="network-only-details-section">
-                            <h4>Relationship Type</h4>
-                            <p className="network-only-relationship-type">
-                              {selectedConnection.type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                            </p>
-                          </div>
-                          
-                          {/* Relationship Description Section (if available) */}
-                          {selectedConnection.description && (
-                            <div className="network-only-details-section">
-                              <h4>Description</h4>
-                              <p className="network-only-relationship-description">{selectedConnection.description}</p>
-                            </div>
-                          )}
                         </div>
                       </div>
                   ) : (
@@ -2434,11 +2509,12 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
                   const rect = event?.target?.getBoundingClientRect();
                   const rawPosition = rect ? {
                     x: rect.left + rect.width / 2,
-                    y: rect.top - 10
+                    y: rect.top + rect.height / 2 // Use center of node for better positioning
                   } : { x: window.innerWidth / 2, y: window.innerHeight / 2 };
                   
                   // Constrain position to stay within screen bounds
-                  const position = constrainPopupPosition(rawPosition);
+                  // Use more accurate popup dimensions (based on CSS)
+                  const position = constrainPopupPosition(rawPosition, 300, 250);
                   
                   // Close any open dropdowns when opening node popup
                   closeAllDropdowns();
