@@ -11,7 +11,7 @@ This report presents the results of a comprehensive network analysis of the Atla
 - **Total Connections**: 201 (unique edges)
 - **Network Density**: 0.027 (sparse but well-connected)
 - **Communities Detected**: 31
-- **Modularity**: 0.435 (strong community structure)
+- **Modularity**: 0.439 (strong community structure)
 - **Assortativity**: -0.329 (negative, indicating diverse connections)
 
 ### Network Characteristics
@@ -74,11 +74,11 @@ The network contains **31 distinct communities**, indicating:
 - **Collaboration Networks**: Research partnerships and joint ventures
 
 ### Community Breakdown
-- **Mixed: Emory University (20 nodes)**: 20 organizations
-- **Startup Hub: Biolocity (16 nodes)**: 16 organizations
-- **Mixed: Georgia Tech (15 nodes)**: 15 organizations
+- **Startup Hub: Georgia Tech (20 nodes)**: 20 organizations
+- **Startup Hub: Emory University (18 nodes)**: 18 organizations
 - **Startup Hub: GRA (15 nodes)**: 15 organizations
-- **Startup Hub: Portal Innovations (12 nodes)**: 12 organizations
+- **Startup Hub: Biolocity (14 nodes)**: 14 organizations
+- **Mixed: Department of Veterans Affairs (11 nodes)**: 11 organizations
 - **Startup Hub: ATDC (8 nodes)**: 8 organizations
 - **Startup Hub: GSU (7 nodes)**: 7 organizations
 - **Startup Hub: Emory Healthcare (6 nodes)**: 6 organizations
@@ -86,7 +86,7 @@ The network contains **31 distinct communities**, indicating:
 - **Single Health_System: Aveanna Healthcare**: 1 organizations
 - **... and 21 other communities**
 
-### Modularity Score: 0.435
+### Modularity Score: 0.439
 - **Strong Community Structure**: Well above random (0.0)
 - **Clear Boundaries**: Communities are well-defined
 - **Internal Cohesion**: High within-community connections

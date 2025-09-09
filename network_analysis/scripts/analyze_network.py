@@ -41,6 +41,7 @@ class BiotechNetworkAnalyzer:
         self.communities = {}
         self.raw_nodes = 0
         self.raw_links = 0
+        self.node_names = {}  # Mapping from node ID to display name
         
     def load_data(self):
         """Load and parse the JSON data file."""
@@ -57,6 +58,14 @@ class BiotechNetworkAnalyzer:
         
         self.raw_nodes = len(data.get('nodes', []))
         self.raw_links = len(data.get('links', []))
+        
+        # Create node ID to display name mapping
+        self.node_names = {}
+        for node in data.get('nodes', []):
+            node_id = node.get('id')
+            node_name = node.get('name', node_id)  # Fallback to ID if no name
+            self.node_names[node_id] = node_name
+        
         print(f"Loaded {self.raw_nodes} nodes and {self.raw_links} links")
         return data
     
@@ -341,7 +350,7 @@ class BiotechNetworkAnalyzer:
         
         # Customize axes
         ax.set_yticks(y_pos)
-        ax.set_yticklabels([node.replace('_', ' ').title() for node in top_hubs['node_id']])
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_hubs['node_id']])
         ax.set_xlabel('Degree Centrality', fontweight='bold')
         ax.set_title('Top 10 Network Hubs (by Degree Centrality)', fontweight='bold')
         
@@ -373,7 +382,7 @@ class BiotechNetworkAnalyzer:
         
         # Customize axes
         ax.set_yticks(y_pos)
-        ax.set_yticklabels([node.replace('_', ' ').title() for node in top_bridges['node_id']])
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_bridges['node_id']])
         ax.set_xlabel('Betweenness Centrality', fontweight='bold')
         ax.set_title('Top 10 Network Bridges (by Betweenness Centrality)', fontweight='bold')
         
@@ -394,19 +403,25 @@ class BiotechNetworkAnalyzer:
         """Plot degree vs betweenness centrality scatterplot."""
         df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
         
-        plt.figure(figsize=(10, 8))
-        scatter =         plt.scatter(df['degree_centrality'], df['betweenness_centrality'], 
-                   c=df['community_id'], cmap='tab20', alpha=0.7, s=60)
-        plt.xlabel('Degree Centrality')
-        plt.ylabel('Betweenness Centrality')
-        plt.title('Degree vs Betweenness Centrality\n(Color = Community)')
-        plt.colorbar(scatter, label='Community ID')
-        plt.grid(True, alpha=0.3)
+        fig, ax = plt.subplots(figsize=(10, 8))
+        scatter = ax.scatter(df['degree_centrality'], df['betweenness_centrality'], 
+                   c=df['community_id'], cmap='tab20', alpha=0.7, s=60, edgecolor='black', linewidth=0.5)
+        ax.set_xlabel('Degree Centrality', fontweight='bold')
+        ax.set_ylabel('Betweenness Centrality', fontweight='bold')
+        ax.set_title('Degree vs Betweenness Centrality\n(Color = Community)', fontweight='bold')
+        
+        # Add colorbar
+        cbar = plt.colorbar(scatter, ax=ax)
+        cbar.set_label('Community ID', fontweight='bold')
         
         # Add correlation coefficient
         corr = df['degree_centrality'].corr(df['betweenness_centrality'])
-        plt.text(0.05, 0.95, f'Correlation: {corr:.3f}', transform=plt.gca().transAxes,
-                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+        ax.text(0.05, 0.95, f'Correlation: {corr:.3f}', transform=ax.transAxes,
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8), fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
         
         plt.tight_layout()
         plt.savefig('visualizations/degree_vs_betweenness.svg', format='svg', dpi=300, bbox_inches='tight')
@@ -440,7 +455,7 @@ class BiotechNetworkAnalyzer:
         
         # Add labels for high-degree nodes only
         high_degree_nodes = [node for node, data in self.G.degree() if data >= 5]
-        labels = {node: node for node in high_degree_nodes}
+        labels = {node: self.node_names.get(node, node) for node in high_degree_nodes}
         nx.draw_networkx_labels(self.G, pos, labels, font_size=8, font_weight='bold')
         
         # Create legend with community labels
@@ -491,12 +506,14 @@ class BiotechNetworkAnalyzer:
         print(f"\nTop 5 Hubs (by Degree):")
         top_hubs = df.nlargest(5, 'degree_centrality')
         for i, (idx, row) in enumerate(top_hubs.iterrows(), 1):
-            print(f"  {i}. {row['node_id']}: {row['degree']} connections")
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            print(f"  {i}. {display_name}: {row['degree']} connections")
         
         print(f"\nTop 5 Bridges (by Betweenness):")
         top_bridges = df.nlargest(5, 'betweenness_centrality')
         for i, (idx, row) in enumerate(top_bridges.iterrows(), 1):
-            print(f"  {i}. {row['node_id']}: {row['betweenness_centrality']:.3f}")
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            print(f"  {i}. {display_name}: {row['betweenness_centrality']:.3f}")
         
         print(f"\nFiles Generated:")
         print(f"  • data/biotech_network_metrics.csv")
