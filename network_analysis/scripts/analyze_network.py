@@ -42,6 +42,7 @@ class BiotechNetworkAnalyzer:
         self.raw_nodes = 0
         self.raw_links = 0
         self.node_names = {}  # Mapping from node ID to display name
+        self.raw_data = {}  # Store raw data for type analysis
         
     def load_data(self):
         """Load and parse the JSON data file."""
@@ -65,6 +66,9 @@ class BiotechNetworkAnalyzer:
             node_id = node.get('id')
             node_name = node.get('name', node_id)  # Fallback to ID if no name
             self.node_names[node_id] = node_name
+        
+        # Store raw data for type analysis
+        self.raw_data = data
         
         print(f"Loaded {self.raw_nodes} nodes and {self.raw_links} links")
         return data
@@ -321,6 +325,12 @@ class BiotechNetworkAnalyzer:
         # 4. Top 10 Clustering Coefficient
         self._plot_top_clustering()
         
+        # 5. Organization Type Breakdown
+        self._plot_organization_types()
+        
+        # 6. Connection Type Breakdown
+        self._plot_connection_types()
+        
         print("All visualizations created!")
     
     def _plot_top_hubs(self):
@@ -451,7 +461,93 @@ class BiotechNetworkAnalyzer:
         plt.savefig('visualizations/top_10_clustering.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
+    def _plot_organization_types(self):
+        """Plot breakdown of organization types."""
+        # Count organization types
+        org_types = {}
+        for node in self.raw_data.get('nodes', []):
+            org_type = node.get('type', 'Unknown')
+            org_types[org_type] = org_types.get(org_type, 0) + 1
+        
+        # Sort by count
+        sorted_types = sorted(org_types.items(), key=lambda x: x[1], reverse=True)
+        
+        fig, ax = plt.subplots(figsize=(12, 8))
+        
+        # Create horizontal bar plot
+        types, counts = zip(*sorted_types)
+        y_pos = np.arange(len(types))
+        
+        # Calculate percentages
+        total = sum(counts)
+        percentages = [count/total*100 for count in counts]
+        
+        bars = ax.barh(y_pos, counts, 
+                      color=plt.cm.Set1(np.linspace(0, 1, len(types))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([t.replace('_', ' ').title() for t in types], fontweight='bold')
+        ax.set_xlabel('Number of Organizations', fontweight='bold')
+        ax.set_title('Organization Type Breakdown', fontweight='bold')
+        
+        # Add value and percentage labels on bars
+        for i, (count, pct) in enumerate(zip(counts, percentages)):
+            ax.text(count + 0.5, i, f'{count} ({pct:.1f}%)', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/organization_types.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
     
+    def _plot_connection_types(self):
+        """Plot breakdown of connection types."""
+        # Count connection types
+        conn_types = {}
+        for link in self.raw_data.get('links', []):
+            conn_type = link.get('type', 'Unknown')
+            conn_types[conn_type] = conn_types.get(conn_type, 0) + 1
+        
+        # Sort by count
+        sorted_types = sorted(conn_types.items(), key=lambda x: x[1], reverse=True)
+        
+        fig, ax = plt.subplots(figsize=(12, 8))
+        
+        # Create horizontal bar plot
+        types, counts = zip(*sorted_types)
+        y_pos = np.arange(len(types))
+        
+        # Calculate percentages
+        total = sum(counts)
+        percentages = [count/total*100 for count in counts]
+        
+        bars = ax.barh(y_pos, counts, 
+                      color=plt.cm.Pastel1(np.linspace(0, 1, len(types))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([t.replace('_', ' ').title() for t in types], fontweight='bold')
+        ax.set_xlabel('Number of Connections', fontweight='bold')
+        ax.set_title('Connection Type Breakdown', fontweight='bold')
+        
+        # Add value and percentage labels on bars
+        for i, (count, pct) in enumerate(zip(counts, percentages)):
+            ax.text(count + 0.5, i, f'{count} ({pct:.1f}%)', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/connection_types.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
     
     def print_summary(self):
         """Print a summary of the analysis."""
@@ -512,6 +608,8 @@ class BiotechNetworkAnalyzer:
         print(f"  • visualizations/top_10_bridges.svg")
         print(f"  • visualizations/top_10_closeness.svg")
         print(f"  • visualizations/top_10_clustering.svg")
+        print(f"  • visualizations/organization_types.svg")
+        print(f"  • visualizations/connection_types.svg")
         print(f"  • ANALYSIS_RESULTS.md")
         
         print("\n" + "="*60)
