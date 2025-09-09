@@ -95,7 +95,7 @@ def extract_simple_colors(js_file_path):
 def main():
     """Extract simple network data and save to JSON."""
     js_file = '../src/atlanta_biotech_data.js'
-    json_file = '../data/biotech_network_data.json'
+    json_file = 'data/biotech_network_data_raw.json'
     
     print("Simple Atlanta Biotech Network Data Extractor")
     print("=" * 50)

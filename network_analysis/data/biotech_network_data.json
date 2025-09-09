@@ -129,6 +129,46 @@
       "website": "http://neuropinc.com/"
     },
     {
+      "id": "emory_innovation_center",
+      "name": "Emory Innovation Center",
+      "type": "facility",
+      "size": 10,
+      "description": "An innovation hub focused on biomedical research and entrepreneurship, offering resources for 3D printing, rapid prototyping, and extended reality applications. It is also known as The Hatchery.",
+      "website": "https://med.emory.edu/research/research-innovation/entrepreneurship/innovation-center/index.html"
+    },
+    {
+      "id": "goizueta_cei",
+      "name": "Goizueta CEI",
+      "type": "accelerator",
+      "size": 8,
+      "description": "A leading resource for entrepreneurial education at Emory University. It focuses on venture development, capital formation, and corporate innovation. It also supports the Techstars Emory Founder Catalyst pre-accelerator program.",
+      "website": "https://goizueta.emory.edu/faculty/entrepreneurship-innovation"
+    },
+    {
+      "id": "emory_center_for_new_medicines",
+      "name": "Emory CNM",
+      "type": "research_institution",
+      "size": 15,
+      "description": "An integrated hub for translating discoveries into therapeutics, providing infrastructure and resources to accelerate the drug discovery pipeline. It focuses on diseases like cancer and neurodegenerative conditions.",
+      "website": "https://pharmacology.emory.edu/newmedicines/"
+    },
+    {
+      "id": "emory_co_design_lab",
+      "name": "Emory Co-Design Lab",
+      "type": "community",
+      "size": 5,
+      "description": "An interdisciplinary lab focused on promoting health equity through the co-design of health and social innovation programs with marginalized populations.",
+      "website": "https://codesign.emory.edu/"
+    },
+    {
+      "id": "the_hatchery",
+      "name": "The Hatchery at Emory",
+      "type": "incubator",
+      "size": 10,
+      "description": "Emory's student innovation center, providing configurable spaces, a makerspace, and programs to support student innovators and entrepreneurs.",
+      "website": "https://hatchery.emory.edu/"
+    },
+    {
       "id": "maphabit",
       "name": "MapHabit",
       "type": "company",
@@ -953,14 +993,6 @@
       "website": "https://www.artpharmacy.co/"
     },
     {
-      "id": "department_of_veterans_affairs",
-      "name": "Department of Veterans Affairs",
-      "type": "government",
-      "size": 5,
-      "description": "Department of Veterans Affairs - Referenced in network connections but not defined in nodes array.",
-      "website": ""
-    },
-    {
       "id": "topodx",
       "name": "TopoDX",
       "type": "startup",
@@ -974,6 +1006,14 @@
       "type": "startup",
       "size": 5,
       "description": "BioCircuit Technologies - Referenced in network connections but not defined in nodes array.",
+      "website": ""
+    },
+    {
+      "id": "department_of_veterans_affairs",
+      "name": "Department of Veterans Affairs",
+      "type": "government",
+      "size": 5,
+      "description": "Department of Veterans Affairs - Referenced in network connections but not defined in nodes array.",
       "website": ""
     }
   ],
@@ -1327,10 +1367,10 @@
       "description": "Portfolio company advancing AI-driven AST diagnostics"
     },
     {
-      "source": "armor_medical",
-      "target": "portal",
-      "type": "incubated_at",
-      "description": "Armor Medical is a tenant of Portal Innovations' BioSpark Labs at Science Square"
+      "source": "portal",
+      "target": "armor_medical",
+      "type": "member",
+      "description": "Armor Medical is a Portal Atlanta member company."
     },
     {
       "source": "eddf",
@@ -1771,10 +1811,10 @@
       "description": "Georgia Tech bioengineering and drug manufacturing support"
     },
     {
-      "source": "department_of_veterans_affairs",
-      "target": "oxos",
-      "type": "pilot",
-      "description": "Pilot program with OXOS Medical for handheld X-ray devices in VA hospitals."
+      "source": "oxos",
+      "target": "department_of_veterans_affairs",
+      "type": "partnership",
+      "description": "Pilot program partnership"
     },
     {
       "source": "department_of_veterans_affairs",
@@ -2183,6 +2223,36 @@
       "target": "gatech",
       "type": "partnership",
       "description": "Partners with ATDC to host Southeast Investor Conference (July 2025), featuring startup showcases and angel investment programming."
+    },
+    {
+      "source": "emory_innovation_center",
+      "target": "emory",
+      "type": "affiliation",
+      "description": "Operated by Emory University to support innovation and entrepreneurship."
+    },
+    {
+      "source": "goizueta_cei",
+      "target": "emory",
+      "type": "affiliation",
+      "description": "A collaboration between the Goizueta Business School and The Hatchery at Emory."
+    },
+    {
+      "source": "emory_center_for_new_medicines",
+      "target": "emory",
+      "type": "affiliation",
+      "description": "An integrated hub within Emory University for drug discovery and development."
+    },
+    {
+      "source": "emory_co_design_lab",
+      "target": "emory",
+      "type": "affiliation",
+      "description": "A lab within Emory University focused on health equity and social innovation."
+    },
+    {
+      "source": "the_hatchery",
+      "target": "emory",
+      "type": "affiliation",
+      "description": "The official student innovation center of Emory University."
     }
   ],
   "nodeColors": {}

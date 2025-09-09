@@ -15,7 +15,7 @@ def clean_duplicate_organizations():
     print("=" * 40)
     
     # Load the data
-    data_file = Path("data/biotech_network_data.json")
+    data_file = Path("data/biotech_network_data_with_missing.json")
     with open(data_file, 'r') as f:
         data = json.load(f)
     
@@ -70,11 +70,12 @@ def clean_duplicate_organizations():
         print(f"Cleaned nodes: {len(data['nodes'])}")
         print(f"Duplicates removed: {len(indices_to_remove)}")
         
-        # Save cleaned data
-        with open(data_file, 'w') as f:
+        # Save cleaned data to final file
+        final_file = Path("data/biotech_network_data.json")
+        with open(final_file, 'w') as f:
             json.dump(data, f, indent=2)
         
-        print(f"Cleaned data saved to: {data_file}")
+        print(f"Cleaned data saved to: {final_file}")
         
     else:
         print("No duplicate organizations found!")

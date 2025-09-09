@@ -7,18 +7,18 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Network Overview
 
 ### Basic Statistics
-- **Total Organizations**: 122 (after cleaning duplicates)
-- **Total Connections**: 201 (unique edges)
-- **Network Density**: 0.027 (sparse but well-connected)
-- **Communities Detected**: 30
-- **Modularity**: 0.433 (strong community structure)
-- **Assortativity**: -0.329 (negative, indicating diverse connections)
+- **Total Organizations**: 127 (after cleaning duplicates)
+- **Total Connections**: 206 (unique edges)
+- **Network Density**: 0.026 (sparse but well-connected)
+- **Communities Detected**: 31
+- **Modularity**: 0.446 (strong community structure)
+- **Assortativity**: -0.336 (negative, indicating diverse connections)
 
 ### Network Health Metrics
-- **Average Degree**: 3.3 connections per organization
+- **Average Degree**: 3.2 connections per organization
 - **Median Degree**: 2.0 connections per organization
-- **Degree Standard Deviation**: 5.6 (indicates network heterogeneity)
-- **Degree Range**: 0 - 44 connections
+- **Degree Standard Deviation**: 5.8 (indicates network heterogeneity)
+- **Degree Range**: 0 - 49 connections
 - **Network Connectivity**: Disconnected (main component)
 
 ### Network Characteristics
@@ -30,40 +30,40 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Key Findings
 
 ### Top 10 Hub Organizations (by Degree Centrality)
-1. **Emory University** - 44 connections (centrality: 0.364)
-2. **Georgia Tech** - 34 connections (centrality: 0.281)
-3. **GRA** - 18 connections (centrality: 0.149)
-4. **Portal Innovations** - 16 connections (centrality: 0.132)
-5. **GRA Venture Fund** - 15 connections (centrality: 0.124)
-6. **Biolocity** - 15 connections (centrality: 0.124)
-7. **EBCC** - 11 connections (centrality: 0.091)
-8. **Department of Veterans Affairs** - 8 connections (centrality: 0.066)
-9. **Georgia CTSA** - 7 connections (centrality: 0.058)
-10. **MSM** - 6 connections (centrality: 0.050)
+1. **Emory University** - 49 connections (centrality: 0.389)
+2. **Georgia Tech** - 34 connections (centrality: 0.270)
+3. **GRA** - 18 connections (centrality: 0.143)
+4. **Portal Innovations** - 16 connections (centrality: 0.127)
+5. **GRA Venture Fund** - 15 connections (centrality: 0.119)
+6. **Biolocity** - 15 connections (centrality: 0.119)
+7. **EBCC** - 11 connections (centrality: 0.087)
+8. **Department of Veterans Affairs** - 8 connections (centrality: 0.063)
+9. **Georgia CTSA** - 7 connections (centrality: 0.056)
+10. **MSM** - 6 connections (centrality: 0.048)
 
 ### Top 10 Bridge Organizations (by Betweenness Centrality)
-1. **Emory University** - 0.368 (degree: 44)
-2. **Georgia Tech** - 0.187 (degree: 34)
-3. **Portal Innovations** - 0.104 (degree: 16)
-4. **GRA** - 0.058 (degree: 18)
-5. **Biolocity** - 0.055 (degree: 15)
-6. **Emory Healthcare** - 0.053 (degree: 6)
-7. **GRA Venture Fund** - 0.043 (degree: 15)
-8. **ATDC** - 0.036 (degree: 6)
-9. **Department of Veterans Affairs** - 0.031 (degree: 8)
-10. **EBCC** - 0.025 (degree: 11)
+1. **Emory University** - 0.402 (degree: 49)
+2. **Georgia Tech** - 0.179 (degree: 34)
+3. **Portal Innovations** - 0.102 (degree: 16)
+4. **GRA** - 0.057 (degree: 18)
+5. **Biolocity** - 0.053 (degree: 15)
+6. **Emory Healthcare** - 0.051 (degree: 6)
+7. **GRA Venture Fund** - 0.042 (degree: 15)
+8. **ATDC** - 0.035 (degree: 6)
+9. **Department of Veterans Affairs** - 0.030 (degree: 8)
+10. **EBCC** - 0.024 (degree: 11)
 
 ### Top 10 Closeness Centrality Leaders
-1. **Emory University** - 0.490 (degree: 44)
-2. **Georgia Tech** - 0.431 (degree: 34)
-3. **GRA** - 0.382 (degree: 18)
-4. **Biolocity** - 0.374 (degree: 15)
-5. **Sanguina** - 0.361 (degree: 5)
-6. **Cambium** - 0.361 (degree: 6)
-7. **MSM** - 0.358 (degree: 6)
-8. **Portal Innovations** - 0.356 (degree: 16)
-9. **Department of Veterans Affairs** - 0.354 (degree: 8)
-10. **Science Square** - 0.351 (degree: 5)
+1. **Emory University** - 0.504 (degree: 49)
+2. **Georgia Tech** - 0.434 (degree: 34)
+3. **GRA** - 0.386 (degree: 18)
+4. **Biolocity** - 0.379 (degree: 15)
+5. **Sanguina** - 0.366 (degree: 5)
+6. **Cambium** - 0.366 (degree: 6)
+7. **MSM** - 0.363 (degree: 6)
+8. **Portal Innovations** - 0.361 (degree: 16)
+9. **Department of Veterans Affairs** - 0.360 (degree: 8)
+10. **Science Square** - 0.357 (degree: 5)
 
 ### Top 10 Clustering Coefficient Leaders
 1. **Keiretsu Forum South-East** - 1.000 (degree: 2)
@@ -80,36 +80,37 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Network Composition
 
 ### Organization Type Breakdown
-- **Startup**: 42 organizations (34.4%)
-- **Company**: 19 organizations (15.6%)
-- **Serviceprovider**: 16 organizations (13.1%)
-- **Health System**: 7 organizations (5.7%)
-- **Vc**: 6 organizations (4.9%)
-- **Incubator**: 6 organizations (4.9%)
-- **Community**: 6 organizations (4.9%)
-- **University**: 5 organizations (4.1%)
-- **Facility**: 5 organizations (4.1%)
-- **Government**: 4 organizations (3.3%)
-- **Public Company**: 4 organizations (3.3%)
+- **Startup**: 42 organizations (33.1%)
+- **Company**: 19 organizations (15.0%)
+- **Serviceprovider**: 16 organizations (12.6%)
+- **Health System**: 7 organizations (5.5%)
+- **Community**: 7 organizations (5.5%)
+- **Incubator**: 7 organizations (5.5%)
+- **Facility**: 6 organizations (4.7%)
+- **Vc**: 6 organizations (4.7%)
+- **University**: 5 organizations (3.9%)
+- **Government**: 4 organizations (3.1%)
+- **Public Company**: 4 organizations (3.1%)
+- **Accelerator**: 1 organizations (0.8%)
+- **Research Institution**: 1 organizations (0.8%)
 - **Trade**: 1 organizations (0.8%)
 - **Development**: 1 organizations (0.8%)
 
 ### Connection Type Breakdown
-- **Collaboration**: 44 connections (21.9%)
-- **Spinout**: 28 connections (13.9%)
-- **Investment**: 20 connections (10.0%)
-- **Service**: 16 connections (8.0%)
-- **Affiliation**: 15 connections (7.5%)
-- **Funding**: 15 connections (7.5%)
-- **Support**: 13 connections (6.5%)
-- **Partnership**: 11 connections (5.5%)
-- **Infrastructure**: 9 connections (4.5%)
-- **Tenant**: 7 connections (3.5%)
-- **Member**: 7 connections (3.5%)
-- **Pilot**: 4 connections (2.0%)
+- **Collaboration**: 44 connections (21.4%)
+- **Spinout**: 28 connections (13.6%)
+- **Affiliation**: 20 connections (9.7%)
+- **Investment**: 20 connections (9.7%)
+- **Service**: 16 connections (7.8%)
+- **Funding**: 15 connections (7.3%)
+- **Support**: 13 connections (6.3%)
+- **Partnership**: 12 connections (5.8%)
+- **Infrastructure**: 9 connections (4.4%)
+- **Member**: 8 connections (3.9%)
+- **Tenant**: 7 connections (3.4%)
+- **Pilot**: 3 connections (1.5%)
 - **Funded By**: 2 connections (1.0%)
 - **Education Program**: 2 connections (1.0%)
-- **Incubated At**: 1 connections (0.5%)
 - **Origin**: 1 connections (0.5%)
 - **Development**: 1 connections (0.5%)
 - **Housed At**: 1 connections (0.5%)
@@ -121,32 +122,32 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Community Analysis
 
 ### Community Structure
-The network contains 30 distinct communities with a modularity of 0.433, indicating strong community structure.
+The network contains 31 distinct communities with a modularity of 0.446, indicating strong community structure.
 
 ### Top 10 Communities by Size
-1. **Startup Hub: Biolocity (24 nodes)** - 24 organizations
-2. **Startup Hub: Emory University (18 nodes)** - 18 organizations
-3. **Startup Hub: Georgia Tech (18 nodes)** - 18 organizations
-4. **Startup Hub: GRA (15 nodes)** - 15 organizations
+1. **Startup Hub: Georgia Tech (22 nodes)** - 22 organizations
+2. **Mixed: Emory University (19 nodes)** - 19 organizations
+3. **Startup Hub: GRA (17 nodes)** - 17 organizations
+4. **Startup Hub: Biolocity (14 nodes)** - 14 organizations
 5. **Mixed: Department of Veterans Affairs (11 nodes)** - 11 organizations
-6. **Startup Hub: GSU (7 nodes)** - 7 organizations
-7. **Startup Hub: Emory Healthcare (6 nodes)** - 6 organizations
-8. **Single Community: Agetech Connect** - 1 organizations
-9. **Single Company: Odylia** - 1 organizations
-10. **Single Serviceprovider: Peachtree Bio** - 1 organizations
+6. **Startup Hub: ATDC (8 nodes)** - 8 organizations
+7. **Startup Hub: GSU (7 nodes)** - 7 organizations
+8. **Startup Hub: Emory Healthcare (6 nodes)** - 6 organizations
+9. **Single Community: Agetech Connect** - 1 organizations
+10. **Single Company: Odylia** - 1 organizations
 
 ## Network Metrics Analysis
 
 ### Centrality Measures
-- **Degree Centrality**: Measures direct connections (hubs) - Range: 0.000 to 0.364
-- **Betweenness Centrality**: Measures bridge connections (brokers) - Range: 0.000 to 0.368
-- **Closeness Centrality**: Measures average distance to all other nodes - Range: 0.000 to 0.490
+- **Degree Centrality**: Measures direct connections (hubs) - Range: 0.000 to 0.389
+- **Betweenness Centrality**: Measures bridge connections (brokers) - Range: 0.000 to 0.402
+- **Closeness Centrality**: Measures average distance to all other nodes - Range: 0.000 to 0.504
 - **Clustering Coefficient**: Measures local connectivity patterns - Range: 0.000 to 1.000
 
 ### Network-Level Statistics
-- **Density**: 0.027 - Proportion of possible connections that exist
-- **Modularity**: 0.433 - Strength of community structure (0.3+ indicates strong structure)
-- **Assortativity**: -0.329 - Tendency for similar nodes to connect (-1 to +1 scale)
+- **Density**: 0.026 - Proportion of possible connections that exist
+- **Modularity**: 0.446 - Strength of community structure (0.3+ indicates strong structure)
+- **Assortativity**: -0.336 - Tendency for similar nodes to connect (-1 to +1 scale)
 
 ### Network Health Assessment
 - **Connectivity**: Fragmented - Some nodes are isolated
@@ -195,7 +196,7 @@ The network contains 30 distinct communities with a modularity of 0.433, indicat
 
 ## Data Quality Notes
 
-- Analysis based on 122 organizations and 201 connections
+- Analysis based on 127 organizations and 206 connections
 - Data cleaned to remove duplicates and ensure accuracy
 - Network metrics calculated using NetworkX library
 - Community detection performed using Louvain algorithm

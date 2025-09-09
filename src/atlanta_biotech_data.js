@@ -240,6 +240,103 @@ export const atlantaBiotechEcosystem = {
       recentNews: "FDA granted Orphan Drug Designation for NP10679 in subarachnoid hemorrhage (SAH)."
     },
 
+    // EMORY UNIVERSITY AFFILIATED ORGANIZATIONS
+    {
+      id: "emory_innovation_center",
+      name: "Emory Innovation Center",
+      type: "facility",
+      size: 10,
+      description: "An innovation hub focused on biomedical research and entrepreneurship, offering resources for 3D printing, rapid prototyping, and extended reality applications. It is also known as The Hatchery.",
+      website: "https://med.emory.edu/research/research-innovation/entrepreneurship/innovation-center/index.html",
+      keyPersonnel: [
+      {
+        "name": "Wilbur Lam",
+        "linkedin": "https://www.linkedin.com/in/wilbur-a-lam-5b84a667/"
+      },
+      {
+        "name": "Morgan Greenleaf",
+        "linkedin": "https://www.linkedin.com/in/morgan-greenleaf/"
+      }
+    ],
+      recentNews: null
+    },
+    {
+      id: "goizueta_cei",
+      name: "Goizueta CEI",
+      type: "accelerator",
+      size: 8,
+      description: "A leading resource for entrepreneurial education at Emory University. It focuses on venture development, capital formation, and corporate innovation. It also supports the Techstars Emory Founder Catalyst pre-accelerator program.",
+      website: "https://goizueta.emory.edu/faculty/entrepreneurship-innovation",
+      keyPersonnel: [
+      {
+        "name": "Brian Cayce",
+        "linkedin": "https://www.linkedin.com/in/bcayce/"
+      },
+      {
+        "name": "Christy Brown",
+        "linkedin": "https://www.linkedin.com/in/christy-brown-a54aa0/"
+      }
+    ],
+      recentNews: "The Techstars Emory Founder Catalyst program replaced the Startup Launch Accelerator in 2025."
+    },
+    {
+      id: "emory_center_for_new_medicines",
+      name: "Emory CNM",
+      type: "research_institution",
+      size: 15,
+      description: "An integrated hub for translating discoveries into therapeutics, providing infrastructure and resources to accelerate the drug discovery pipeline. It focuses on diseases like cancer and neurodegenerative conditions.",
+      website: "https://pharmacology.emory.edu/newmedicines/",
+      keyPersonnel: [
+      {
+        "name": "Haian Fu",
+        "linkedin": "https://www.linkedin.com/in/haian-fu-11b5398/"
+      },
+      {
+        "name": "Dennis Liotta",
+        "linkedin": "https://www.linkedin.com/in/dennis-liotta-1b087729/"
+      },
+      {
+        "name": "Callie Wigington",
+        "linkedin": "https://www.linkedin.com/in/callie-wigington-phd-0382a3133/"
+      }
+    ],
+      recentNews: "Announced the first cohort of eight therapeutic projects for its advancement program in August 2025."
+    },
+    {
+      id: "emory_co_design_lab",
+      name: "Emory Co-Design Lab",
+      type: "community",
+      size: 5,
+      description: "An interdisciplinary lab focused on promoting health equity through the co-design of health and social innovation programs with marginalized populations.",
+      website: "https://codesign.emory.edu/",
+      keyPersonnel: [
+      {
+        "name": "Rachel Hall-Clifford",
+        "linkedin": "https://www.linkedin.com/in/rachel-hall-clifford-55264a14a/"
+      },
+      {
+        "name": "Gari Clifford",
+        "linkedin": "https://www.linkedin.com/in/gdclifford/"
+      }
+    ],
+      recentNews: null
+    },
+    {
+      id: "the_hatchery",
+      name: "The Hatchery at Emory",
+      type: "incubator",
+      size: 10,
+      description: "Emory's student innovation center, providing configurable spaces, a makerspace, and programs to support student innovators and entrepreneurs.",
+      website: "https://hatchery.emory.edu/",
+      keyPersonnel: [
+      {
+        "name": "Ben Garrett",
+        "linkedin": "https://www.linkedin.com/in/benlgarrett/"
+      }
+    ],
+      recentNews: null
+    },
+
 
     // GROWTH COMPANIES
 
@@ -2514,6 +2611,13 @@ export const atlantaBiotechEcosystem = {
     { source: "keiretsu_southeast", target: "gatech", type: "partnership", description: "Partners with ATDC to host Southeast Investor Conference (July 2025), featuring startup showcases and angel investment programming." },
 
     // --- Accelerator & Incubator Support ---
+
+    // --- Emory University Affiliated Organizations ---
+    { source: "emory_innovation_center", target: "emory", type: "affiliation", description: "Operated by Emory University to support innovation and entrepreneurship." },
+    { source: "goizueta_cei", target: "emory", type: "affiliation", description: "A collaboration between the Goizueta Business School and The Hatchery at Emory." },
+    { source: "emory_center_for_new_medicines", target: "emory", type: "affiliation", description: "An integrated hub within Emory University for drug discovery and development." },
+    { source: "emory_co_design_lab", target: "emory", type: "affiliation", description: "A lab within Emory University focused on health equity and social innovation." },
+    { source: "the_hatchery", target: "emory", type: "affiliation", description: "The official student innovation center of Emory University." }
   ]
 };
 

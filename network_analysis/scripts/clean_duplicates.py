@@ -120,8 +120,8 @@ def choose_best_relationship(links):
 
 def main():
     """Clean the network data."""
-    input_file = '../data/biotech_network_data.json'
-    output_file = '../data/biotech_network_data_cleaned.json'
+    input_file = 'data/biotech_network_data_raw.json'
+    output_file = 'data/biotech_network_data_cleaned.json'
     
     print("Cleaning Atlanta Biotech Network Data")
     print("=" * 40)
