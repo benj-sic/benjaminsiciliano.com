@@ -622,10 +622,40 @@ class BiotechNetworkAnalyzer:
         from datetime import datetime
         current_date = datetime.now().strftime("%B %d, %Y")
         
-        # Get top nodes for the report
+        # Get top performers for each metric
         df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
-        top_hubs = df.nlargest(5, 'degree_centrality')
-        top_bridges = df.nlargest(5, 'betweenness_centrality')
+        top_hubs = df.nlargest(10, 'degree_centrality')
+        top_bridges = df.nlargest(10, 'betweenness_centrality')
+        top_closeness = df.nlargest(10, 'closeness_centrality')
+        top_clustering = df.nlargest(10, 'clustering_coefficient')
+        
+        # Community breakdown
+        community_sizes = df['community_label'].value_counts()
+        top_communities = community_sizes.head(10)
+        
+        # Organization type breakdown
+        org_types = {}
+        for node in self.raw_data.get('nodes', []):
+            org_type = node.get('type', 'Unknown')
+            org_types[org_type] = org_types.get(org_type, 0) + 1
+        sorted_org_types = sorted(org_types.items(), key=lambda x: x[1], reverse=True)
+        
+        # Connection type breakdown
+        conn_types = {}
+        for link in self.raw_data.get('links', []):
+            conn_type = link.get('type', 'Unknown')
+            conn_types[conn_type] = conn_types.get(conn_type, 0) + 1
+        sorted_conn_types = sorted(conn_types.items(), key=lambda x: x[1], reverse=True)
+        
+        # Network health metrics
+        degrees = [self.G.degree(node) for node in self.G.nodes()]
+        degree_stats = {
+            'mean': np.mean(degrees),
+            'median': np.median(degrees),
+            'std': np.std(degrees),
+            'min': np.min(degrees),
+            'max': np.max(degrees)
+        }
         
         # Generate report content
         report_content = f"""# Atlanta Biotech Network Analysis Results
@@ -644,186 +674,158 @@ This report presents the results of a comprehensive network analysis of the Atla
 - **Modularity**: {self.network_stats['modularity']:.3f} (strong community structure)
 - **Assortativity**: {self.network_stats['assortativity']:.3f} (negative, indicating diverse connections)
 
+### Network Health Metrics
+- **Average Degree**: {degree_stats['mean']:.1f} connections per organization
+- **Median Degree**: {degree_stats['median']:.1f} connections per organization
+- **Degree Standard Deviation**: {degree_stats['std']:.1f} (indicates network heterogeneity)
+- **Degree Range**: {degree_stats['min']} - {degree_stats['max']} connections
+- **Network Connectivity**: {'Connected' if nx.is_connected(self.G) else 'Disconnected'} (main component)
+
 ### Network Characteristics
 - **Sparse Network**: Low density suggests specialized, targeted connections rather than random interactions
 - **Strong Community Structure**: High modularity indicates well-defined clusters of related organizations
 - **Diverse Connections**: Negative assortativity shows organizations connect across different types and sizes
-- **Disconnected Components**: Some organizations are not connected to the main network
+- **Heterogeneous Connectivity**: High degree variation indicates both highly connected hubs and peripheral nodes
 
 ## Key Findings
 
-### Top 5 Hub Organizations (by Degree Centrality)
+### Top 10 Hub Organizations (by Degree Centrality)
 """
         
-        # Add top hubs
         for i, (idx, row) in enumerate(top_hubs.iterrows(), 1):
-            report_content += f"{i}. **{row['node_id']}** - {row['degree']} connections\n"
-            if i == 1:
-                report_content += "   - Central research university with extensive biotech partnerships\n"
-                report_content += "   - Key role in academic-industry collaborations\n"
-            elif i == 2:
-                report_content += "   - Major engineering and research institution\n"
-                report_content += "   - Strong presence in biotech innovation\n"
-            elif i == 3:
-                report_content += "   - State-level research coordination body\n"
-                report_content += "   - Facilitates connections between institutions\n"
-            elif i == 4:
-                report_content += "   - Biotech incubator and accelerator\n"
-                report_content += "   - Hub for startup development\n"
-            elif i == 5:
-                report_content += "   - Investment arm of GRA\n"
-                report_content += "   - Key funding source for biotech startups\n"
-            report_content += "\n"
-        
-        report_content += f"""### Top 5 Bridge Organizations (by Betweenness Centrality)
-"""
-        
-        # Add top bridges
-        for i, (idx, row) in enumerate(top_bridges.iterrows(), 1):
-            report_content += f"{i}. **{row['node_id']}** - {row['betweenness_centrality']:.3f}\n"
-            if i == 1:
-                report_content += "   - Most important bridge in the network\n"
-                report_content += "   - Connects different communities and sectors\n"
-            elif i == 2:
-                report_content += "   - Second most important bridge\n"
-                report_content += "   - Links academic and industry sectors\n"
-            elif i == 3:
-                report_content += "   - Important connector for startups\n"
-                report_content += "   - Bridges academic research and commercial applications\n"
-            elif i == 4:
-                report_content += "   - State-level coordination role\n"
-                report_content += "   - Connects different institutional types\n"
-            elif i == 5:
-                report_content += "   - Important regional connector\n"
-                report_content += "   - Facilitates local biotech relationships\n"
-            report_content += "\n"
-        
-        report_content += f"""## Community Analysis
-
-### Community Structure
-The network contains **{self.network_stats['num_communities']} distinct communities**, indicating:
-- **Specialized Clusters**: Different focus areas (therapeutics, diagnostics, research, etc.)
-- **Geographic Clustering**: Proximity-based connections
-- **Functional Clustering**: Similar organizational types working together
-- **Collaboration Networks**: Research partnerships and joint ventures
-
-### Community Breakdown
-"""
-        
-        # Add community details
-        community_summary = {}
-        for node, community_id in self.communities.items():
-            if community_id not in community_summary:
-                community_summary[community_id] = []
-            community_summary[community_id].append(node)
-        
-        # Sort communities by size
-        sorted_communities = sorted(community_summary.items(), key=lambda x: len(x[1]), reverse=True)
-        
-        for i, (comm_id, nodes) in enumerate(sorted_communities[:10]):  # Top 10 communities
-            label = self.community_labels.get(comm_id, f"Community {comm_id}")
-            report_content += f"- **{label}**: {len(nodes)} organizations\n"
-        
-        if len(sorted_communities) > 10:
-            report_content += f"- **... and {len(sorted_communities) - 10} other communities**\n"
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            report_content += f"{i}. **{display_name}** - {row['degree']} connections (centrality: {row['degree_centrality']:.3f})\n"
         
         report_content += f"""
-### Modularity Score: {self.network_stats['modularity']:.3f}
-- **Strong Community Structure**: Well above random (0.0)
-- **Clear Boundaries**: Communities are well-defined
-- **Internal Cohesion**: High within-community connections
-- **External Integration**: Some cross-community connections
+### Top 10 Bridge Organizations (by Betweenness Centrality)
+"""
+        
+        for i, (idx, row) in enumerate(top_bridges.iterrows(), 1):
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            report_content += f"{i}. **{display_name}** - {row['betweenness_centrality']:.3f} (degree: {row['degree']})\n"
+        
+        report_content += f"""
+### Top 10 Closeness Centrality Leaders
+"""
+        
+        for i, (idx, row) in enumerate(top_closeness.iterrows(), 1):
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            report_content += f"{i}. **{display_name}** - {row['closeness_centrality']:.3f} (degree: {row['degree']})\n"
+        
+        report_content += f"""
+### Top 10 Clustering Coefficient Leaders
+"""
+        
+        for i, (idx, row) in enumerate(top_clustering.iterrows(), 1):
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            report_content += f"{i}. **{display_name}** - {row['clustering_coefficient']:.3f} (degree: {row['degree']})\n"
+        
+        report_content += f"""
+## Network Composition
 
+### Organization Type Breakdown
+"""
+        
+        total_orgs = sum(org_types.values())
+        for org_type, count in sorted_org_types:
+            percentage = count / total_orgs * 100
+            report_content += f"- **{org_type.replace('_', ' ').title()}**: {count} organizations ({percentage:.1f}%)\n"
+        
+        report_content += f"""
+### Connection Type Breakdown
+"""
+        
+        total_conns = sum(conn_types.values())
+        for conn_type, count in sorted_conn_types:
+            percentage = count / total_conns * 100
+            report_content += f"- **{conn_type.replace('_', ' ').title()}**: {count} connections ({percentage:.1f}%)\n"
+        
+        report_content += f"""
+## Community Analysis
+
+### Community Structure
+The network contains {self.network_stats['num_communities']} distinct communities with a modularity of {self.network_stats['modularity']:.3f}, indicating strong community structure.
+
+### Top 10 Communities by Size
+"""
+        
+        for i, (community, size) in enumerate(top_communities.items(), 1):
+            report_content += f"{i}. **{community}** - {size} organizations\n"
+        
+        report_content += f"""
 ## Network Metrics Analysis
 
 ### Centrality Measures
-- **Degree Centrality**: Shows connection volume ({top_hubs.iloc[0]['node_id']} leads with {top_hubs.iloc[0]['degree']})
-- **Betweenness Centrality**: Shows bridge importance ({top_bridges.iloc[0]['node_id']} leads with {top_bridges.iloc[0]['betweenness_centrality']:.3f})
-- **Closeness Centrality**: Shows average distance to others
-- **Clustering Coefficient**: Shows local connectivity density
+- **Degree Centrality**: Measures direct connections (hubs) - Range: {df['degree_centrality'].min():.3f} to {df['degree_centrality'].max():.3f}
+- **Betweenness Centrality**: Measures bridge connections (brokers) - Range: {df['betweenness_centrality'].min():.3f} to {df['betweenness_centrality'].max():.3f}
+- **Closeness Centrality**: Measures average distance to all other nodes - Range: {df['closeness_centrality'].min():.3f} to {df['closeness_centrality'].max():.3f}
+- **Clustering Coefficient**: Measures local connectivity patterns - Range: {df['clustering_coefficient'].min():.3f} to {df['clustering_coefficient'].max():.3f}
 
 ### Network-Level Statistics
-- **Density ({self.network_stats['density']:.3f})**: Low density indicates specialized, targeted connections
-- **Assortativity ({self.network_stats['assortativity']:.3f})**: Negative value shows diverse connection patterns
-- **Diameter**: {self.network_stats['diameter']}
-- **Average Path Length**: {self.network_stats['average_path_length']}
+- **Density**: {self.network_stats['density']:.3f} - Proportion of possible connections that exist
+- **Modularity**: {self.network_stats['modularity']:.3f} - Strength of community structure (0.3+ indicates strong structure)
+- **Assortativity**: {self.network_stats['assortativity']:.3f} - Tendency for similar nodes to connect (-1 to +1 scale)
+
+### Network Health Assessment
+- **Connectivity**: {'Strong' if nx.is_connected(self.G) else 'Fragmented'} - {'All nodes are reachable' if nx.is_connected(self.G) else 'Some nodes are isolated'}
+- **Hub Concentration**: {'High' if degree_stats['std'] > degree_stats['mean'] else 'Moderate'} - Degree variation indicates {'concentrated' if degree_stats['std'] > degree_stats['mean'] else 'distributed'} power
+- **Community Integration**: {'Strong' if self.network_stats['modularity'] > 0.3 else 'Weak'} - Modularity score indicates {'well-defined' if self.network_stats['modularity'] > 0.3 else 'loose'} community structure
 
 ## Strategic Implications
 
 ### Strengths
-1. **Strong Academic Foundation**: Leading research universities provide solid base
-2. **Clear Community Structure**: Well-defined clusters enable targeted interventions
-3. **Key Connectors**: Identified bridge organizations can facilitate new connections
-4. **State Support**: GRA provides coordination and funding
+1. **Clear Hub Organizations**: Well-defined central players (Emory, Georgia Tech) with high connectivity
+2. **Strong Community Structure**: High modularity indicates well-defined clusters of related organizations
+3. **Diverse Connections**: Negative assortativity shows organizations connect across different types and sizes
+4. **Balanced Network**: Mix of hubs, bridges, and peripheral nodes creates robust structure
 
 ### Opportunities
-1. **Bridge Development**: Strengthen connections between communities
-2. **Investment Expansion**: Increase number of active investors
-3. **Startup Support**: Expand Portal Atlanta's reach
-4. **Cross-Community Collaboration**: Foster inter-community partnerships
+1. **Bridge Development**: Identify and strengthen bridge organizations to improve cross-community flow
+2. **Community Integration**: Connect isolated communities through targeted interventions
+3. **Hub Support**: Leverage central organizations for network growth and knowledge transfer
+4. **Peripheral Engagement**: Connect isolated nodes to increase network reach
 
 ### Challenges
-1. **Sparse Network**: Low density may limit serendipitous connections
-2. **Disconnected Components**: Some organizations remain isolated
-3. **Centralization Risk**: Heavy reliance on key players
-4. **Limited Diversity**: Few non-academic central players
+1. **Sparse Network**: Low density may limit information flow and collaboration opportunities
+2. **Disconnected Components**: Some organizations remain isolated from the main network
+3. **Scale Dependencies**: Network effects may be limited by current size and density
+4. **Hub Dependencies**: Over-reliance on key hubs creates vulnerability
 
 ## Recommendations
 
 ### Short-term (0-6 months)
-1. **Strengthen Key Bridges**: Support {top_bridges.iloc[0]['node_id']} and {top_bridges.iloc[1]['node_id']}'s connector roles
-2. **Community Mapping**: Identify specific focus areas of each community
-3. **Gap Analysis**: Identify missing connections between key players
+- Focus on strengthening existing hub organizations and their connections
+- Identify and support bridge organizations to improve cross-community flow
+- Map community-specific needs and resources for targeted interventions
+- Connect isolated nodes to the main network through strategic partnerships
 
 ### Medium-term (6-18 months)
-1. **Investment Expansion**: Recruit additional investors to the network
-2. **Startup Acceleration**: Expand Portal Atlanta's programs
-3. **Cross-Community Events**: Organize networking across communities
+- Develop targeted interventions for each community based on their characteristics
+- Create cross-community collaboration programs to reduce silos
+- Establish metrics for network health monitoring and regular assessment
+- Implement programs to develop new bridge organizations
 
 ### Long-term (18+ months)
-1. **Network Density**: Increase overall connection density
-2. **New Hubs**: Develop additional central organizations
-3. **Ecosystem Integration**: Connect to national/international networks
+- Scale successful community models across the network
+- Develop network-wide governance structures for sustainable growth
+- Create sustainable funding mechanisms for network maintenance
+- Establish regular network health assessments and optimization
 
 ## Data Quality Notes
 
-### Data Cleaning Performed
-- **Duplicate Organizations**: Removed duplicate entries
-- **Duplicate Connections**: Consolidated duplicate connection pairs
-- **Missing Nodes**: Added organizations referenced in links but missing from nodes
-- **Connection Types**: Standardized connection types and descriptions
-
-### Data Sources
-- **Primary Source**: `src/atlanta_biotech_data.js` from website
-- **Extraction Method**: Custom Python script with robust parsing
-- **Validation**: Manual verification of key organizations and connections
+- Analysis based on {self.network_stats['raw_nodes']:,} organizations and {self.network_stats['raw_links']:,} connections
+- Data cleaned to remove duplicates and ensure accuracy
+- Network metrics calculated using NetworkX library
+- Community detection performed using Louvain algorithm
+- All visualizations generated as publication-quality SVG files
 
 ## Technical Details
 
-### Analysis Tools
-- **NetworkX**: Python library for network analysis
-- **Community Detection**: Louvain algorithm for modularity optimization
-- **Visualization**: Matplotlib and Seaborn for publication-quality plots
-- **Data Processing**: Pandas for data manipulation and CSV export
-
-### Files Generated
-- **`biotech_network_metrics.csv`**: Complete node-level metrics
-- **`top_10_hubs.svg`**: Bar chart of most connected organizations
-- **`top_10_bridges.svg`**: Bar chart of most important bridge organizations
-- **`degree_vs_betweenness.svg`**: Scatterplot of centrality relationships
-- **`community_network.svg`**: Network visualization colored by community
-- **`network_dashboard.svg`**: Summary dashboard with key statistics
-
-## Conclusion
-
-The Atlanta biotech network demonstrates a well-structured ecosystem with clear community organization and identifiable key players. While the network is sparse, it shows strong community structure and strategic positioning of important organizations. The analysis provides a foundation for understanding the ecosystem and developing targeted interventions to strengthen connections and support growth.
-
----
-
-**Analysis Date**: {current_date}  
-**Data Source**: Atlanta Biotech Network ({self.network_stats['raw_nodes']} organizations, {self.network_stats['raw_links']} connections)  
-**Analysis Method**: NetworkX with Louvain community detection  
-**Report Generated**: Automated analysis pipeline
+- **Analysis Date**: {current_date}
+- **NetworkX Version**: {nx.__version__}
+- **Communities**: Detected using python-louvain
+- **Visualizations**: Generated as SVG files for publication quality
+- **Files Generated**: 6 visualization files + CSV metrics + this report
 """
         
         # Write the report
