@@ -140,13 +140,19 @@ After running the analysis, you'll find:
 - `visualizations/community_network.svg` - Network by community
 - `visualizations/network_dashboard.svg` - Summary dashboard
 
+## Results Report
+
+For detailed analysis results and insights, see:
+- **`ANALYSIS_RESULTS.md`** - Comprehensive results report with key findings
+
 ## Next Steps
 
 1. **Run the analysis**: `python analyze_biotech_network.py`
-2. **Open SVG files** in Illustrator for customization
-3. **Import CSV** into Excel, R, or other analysis tools
-4. **Extend the analysis** by adding new metrics or visualizations
-5. **Use results** in presentations or reports
+2. **Read the results**: `ANALYSIS_RESULTS.md` for detailed findings
+3. **Open SVG files** in Illustrator for customization
+4. **Import CSV** into Excel, R, or other analysis tools
+5. **Extend the analysis** by adding new metrics or visualizations
+6. **Use results** in presentations or reports
 
 ---
 
