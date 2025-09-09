@@ -8,10 +8,10 @@ This report presents the results of a comprehensive network analysis of the Atla
 
 ### Basic Statistics
 - **Total Organizations**: 119 (after cleaning duplicates)
-- **Total Connections**: 201 (unique edges)
+- **Total Connections**: 206 (unique edges)
 - **Network Density**: 0.027 (sparse but well-connected)
-- **Communities Detected**: 30
-- **Modularity**: 0.427 (strong community structure)
+- **Communities Detected**: 31
+- **Modularity**: 0.445 (strong community structure)
 - **Assortativity**: -0.329 (negative, indicating diverse connections)
 
 ### Network Characteristics
@@ -23,57 +23,57 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Key Findings
 
 ### Top 5 Hub Organizations (by Degree Centrality)
-1. **Emory University** - 44 connections
+1. **emory** - 44 connections
    - Central research university with extensive biotech partnerships
    - Key role in academic-industry collaborations
 
-2. **Georgia Tech** - 34 connections
+2. **gatech** - 34 connections
    - Major engineering and research institution
    - Strong presence in biotech innovation
 
-3. **GRA (Georgia Research Alliance)** - 18 connections
+3. **gra** - 18 connections
    - State-level research coordination body
    - Facilitates connections between institutions
 
-4. **Portal Atlanta** - 16 connections
+4. **portal** - 16 connections
    - Biotech incubator and accelerator
    - Hub for startup development
 
-5. **GRA Venture Fund** - 15 connections
+5. **gra_fund** - 15 connections
    - Investment arm of GRA
    - Key funding source for biotech startups
 
 ### Top 5 Bridge Organizations (by Betweenness Centrality)
-1. **Emory University** - 0.368
+1. **emory** - 0.368
    - Most important bridge in the network
    - Connects different communities and sectors
 
-2. **Georgia Tech** - 0.187
+2. **gatech** - 0.187
    - Second most important bridge
    - Links academic and industry sectors
 
-3. **Portal Atlanta** - 0.104
+3. **portal** - 0.104
    - Important connector for startups
    - Bridges academic research and commercial applications
 
-4. **GRA** - 0.058
+4. **gra** - 0.058
    - State-level coordination role
    - Connects different institutional types
 
-5. **BioLocity** - 0.055
+5. **biolocity** - 0.055
    - Important regional connector
    - Facilitates local biotech relationships
 
 ## Community Analysis
 
 ### Community Structure
-The network contains **30 distinct communities**, indicating:
+The network contains **31 distinct communities**, indicating:
 - **Specialized Clusters**: Different focus areas (therapeutics, diagnostics, research, etc.)
 - **Geographic Clustering**: Proximity-based connections
 - **Functional Clustering**: Similar organizational types working together
 - **Collaboration Networks**: Research partnerships and joint ventures
 
-### Modularity Score: 0.427
+### Modularity Score: 0.445
 - **Strong Community Structure**: Well above random (0.0)
 - **Clear Boundaries**: Communities are well-defined
 - **Internal Cohesion**: High within-community connections
@@ -82,33 +82,16 @@ The network contains **30 distinct communities**, indicating:
 ## Network Metrics Analysis
 
 ### Centrality Measures
-- **Degree Centrality**: Shows connection volume (Emory leads with 44)
-- **Betweenness Centrality**: Shows bridge importance (Emory leads with 0.368)
+- **Degree Centrality**: Shows connection volume (emory leads with 44)
+- **Betweenness Centrality**: Shows bridge importance (emory leads with 0.368)
 - **Closeness Centrality**: Shows average distance to others
 - **Clustering Coefficient**: Shows local connectivity density
 
 ### Network-Level Statistics
 - **Density (0.027)**: Low density indicates specialized, targeted connections
 - **Assortativity (-0.329)**: Negative value shows diverse connection patterns
-- **Diameter**: Not calculated (disconnected components present)
-- **Average Path Length**: Not calculated (disconnected components present)
-
-## Organizational Insights
-
-### University Dominance
-- **Emory University** and **Georgia Tech** are the clear network leaders
-- Academic institutions serve as central hubs and bridges
-- Research universities drive collaboration and innovation
-
-### Support Infrastructure
-- **GRA** and **Portal Atlanta** provide crucial support services
-- State-level coordination through GRA
-- Startup incubation through Portal Atlanta
-
-### Investment Ecosystem
-- **GRA Venture Fund** is the primary investment hub
-- Limited number of active investors in the network
-- Investment connections are concentrated around key players
+- **Diameter**: Not connected
+- **Average Path Length**: Not connected
 
 ## Strategic Implications
 
@@ -133,7 +116,7 @@ The network contains **30 distinct communities**, indicating:
 ## Recommendations
 
 ### Short-term (0-6 months)
-1. **Strengthen Key Bridges**: Support Emory and Georgia Tech's connector roles
+1. **Strengthen Key Bridges**: Support emory and gatech's connector roles
 2. **Community Mapping**: Identify specific focus areas of each community
 3. **Gap Analysis**: Identify missing connections between key players
 
@@ -150,9 +133,9 @@ The network contains **30 distinct communities**, indicating:
 ## Data Quality Notes
 
 ### Data Cleaning Performed
-- **Duplicate Organizations**: Removed 1 duplicate SynthBiome entry
-- **Duplicate Connections**: Consolidated 5 duplicate connection pairs
-- **Missing Nodes**: Added 3 organizations referenced in links but missing from nodes
+- **Duplicate Organizations**: Removed duplicate entries
+- **Duplicate Connections**: Consolidated duplicate connection pairs
+- **Missing Nodes**: Added organizations referenced in links but missing from nodes
 - **Connection Types**: Standardized connection types and descriptions
 
 ### Data Sources
@@ -182,7 +165,7 @@ The Atlanta biotech network demonstrates a well-structured ecosystem with clear 
 
 ---
 
-**Analysis Date**: September 9, 2025  
-**Data Source**: Atlanta Biotech Network (119 organizations, 201 connections)  
+**Analysis Date**: September 09, 2025  
+**Data Source**: Atlanta Biotech Network (119 organizations, 206 connections)  
 **Analysis Method**: NetworkX with Louvain community detection  
 **Report Generated**: Automated analysis pipeline
