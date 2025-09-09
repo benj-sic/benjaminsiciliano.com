@@ -10,8 +10,8 @@ This report presents the results of a comprehensive network analysis of the Atla
 - **Total Organizations**: 122 (after cleaning duplicates)
 - **Total Connections**: 201 (unique edges)
 - **Network Density**: 0.027 (sparse but well-connected)
-- **Communities Detected**: 30
-- **Modularity**: 0.430 (strong community structure)
+- **Communities Detected**: 31
+- **Modularity**: 0.435 (strong community structure)
 - **Assortativity**: -0.329 (negative, indicating diverse connections)
 
 ### Network Characteristics
@@ -67,26 +67,26 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Community Analysis
 
 ### Community Structure
-The network contains **30 distinct communities**, indicating:
+The network contains **31 distinct communities**, indicating:
 - **Specialized Clusters**: Different focus areas (therapeutics, diagnostics, research, etc.)
 - **Geographic Clustering**: Proximity-based connections
 - **Functional Clustering**: Similar organizational types working together
 - **Collaboration Networks**: Research partnerships and joint ventures
 
 ### Community Breakdown
-- **Startup Hub: Emory University (22 nodes)**: 22 organizations
+- **Mixed: Emory University (20 nodes)**: 20 organizations
 - **Startup Hub: Biolocity (16 nodes)**: 16 organizations
+- **Mixed: Georgia Tech (15 nodes)**: 15 organizations
 - **Startup Hub: GRA (15 nodes)**: 15 organizations
-- **Startup Hub: Portal Innovations (15 nodes)**: 15 organizations
-- **Startup Hub: Georgia Tech (13 nodes)**: 13 organizations
-- **Mixed: Department of Veterans Affairs (11 nodes)**: 11 organizations
+- **Startup Hub: Portal Innovations (12 nodes)**: 12 organizations
+- **Startup Hub: ATDC (8 nodes)**: 8 organizations
 - **Startup Hub: GSU (7 nodes)**: 7 organizations
+- **Startup Hub: Emory Healthcare (6 nodes)**: 6 organizations
 - **Single Health_System: Oak Street Health**: 1 organizations
 - **Single Health_System: Aveanna Healthcare**: 1 organizations
-- **Single Company: Maphabit**: 1 organizations
-- **... and 20 other communities**
+- **... and 21 other communities**
 
-### Modularity Score: 0.430
+### Modularity Score: 0.435
 - **Strong Community Structure**: Well above random (0.0)
 - **Clear Boundaries**: Communities are well-defined
 - **Internal Cohesion**: High within-community connections

@@ -272,14 +272,33 @@ class BiotechNetworkAnalyzer:
         print("Creating visualizations...")
         
         # Ensure visualizations directory exists
-        viz_dir = Path('../visualizations')
+        viz_dir = Path('visualizations')
         viz_dir.mkdir(parents=True, exist_ok=True)
         
-        # Set up the plotting style
-        plt.rcParams['figure.figsize'] = (12, 8)
-        plt.rcParams['font.size'] = 12
-        plt.rcParams['axes.titlesize'] = 14
-        plt.rcParams['axes.labelsize'] = 12
+        # Set up scientific journal plotting style
+        plt.rcParams.update({
+            'figure.figsize': (10, 8),
+            'font.size': 18,
+            'font.weight': 'bold',
+            'axes.titlesize': 20,
+            'axes.titleweight': 'bold',
+            'axes.labelsize': 18,
+            'axes.labelweight': 'bold',
+            'xtick.labelsize': 16,
+            'ytick.labelsize': 16,
+            'legend.fontsize': 16,
+            'legend.title_fontsize': 18,
+            'axes.grid': False,
+            'axes.spines.top': False,
+            'axes.spines.right': False,
+            'axes.linewidth': 1.5,
+            'xtick.major.width': 1.5,
+            'ytick.major.width': 1.5,
+            'xtick.minor.width': 1,
+            'ytick.minor.width': 1,
+            'lines.linewidth': 2,
+            'patch.linewidth': 1.5
+        })
         
         # 1. Top 10 Hubs (Degree Centrality)
         self._plot_top_hubs()
@@ -290,11 +309,20 @@ class BiotechNetworkAnalyzer:
         # 3. Degree vs Betweenness Scatterplot
         self._plot_degree_vs_betweenness()
         
-        # 4. Community-colored Network (if feasible)
+        # 4. Community-colored Network
         self._plot_community_network()
         
-        # 5. Dashboard Summary
-        self._plot_dashboard_summary()
+        # 5. Network Statistics
+        self._plot_network_statistics()
+        
+        # 6. Community Distribution
+        self._plot_community_distribution()
+        
+        # 7. Centrality Distribution
+        self._plot_centrality_distribution()
+        
+        # 8. Degree Distribution
+        self._plot_degree_distribution()
         
         print("All visualizations created!")
     
@@ -303,18 +331,28 @@ class BiotechNetworkAnalyzer:
         df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
         top_hubs = df.nlargest(10, 'degree_centrality')
         
-        plt.figure(figsize=(12, 8))
-        bars = plt.barh(range(len(top_hubs)), top_hubs['degree_centrality'], 
-                       color=plt.cm.viridis(np.linspace(0, 1, len(top_hubs))))
-        plt.yticks(range(len(top_hubs)), top_hubs['node_id'], rotation=0)
-        plt.xlabel('Degree Centrality')
-        plt.title('Top 10 Network Hubs (by Degree Centrality)')
-        plt.grid(axis='x', alpha=0.3)
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot
+        y_pos = np.arange(len(top_hubs))
+        bars = ax.barh(y_pos, top_hubs['degree_centrality'], 
+                      color=plt.cm.viridis(np.linspace(0, 1, len(top_hubs))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([node.replace('_', ' ').title() for node in top_hubs['node_id']])
+        ax.set_xlabel('Degree Centrality', fontweight='bold')
+        ax.set_title('Top 10 Network Hubs (by Degree Centrality)', fontweight='bold')
         
         # Add value labels on bars
         for i, (idx, row) in enumerate(top_hubs.iterrows()):
-            plt.text(row['degree_centrality'] + 0.001, i, f'{row["degree_centrality"]:.3f}', 
-                    va='center', ha='left')
+            ax.text(row['degree_centrality'] + 0.001, i, f'{row["degree_centrality"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
         
         plt.tight_layout()
         plt.savefig('visualizations/top_10_hubs.svg', format='svg', dpi=300, bbox_inches='tight')
@@ -325,18 +363,28 @@ class BiotechNetworkAnalyzer:
         df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
         top_bridges = df.nlargest(10, 'betweenness_centrality')
         
-        plt.figure(figsize=(12, 8))
-        bars = plt.barh(range(len(top_bridges)), top_bridges['betweenness_centrality'],
-                       color=plt.cm.plasma(np.linspace(0, 1, len(top_bridges))))
-        plt.yticks(range(len(top_bridges)), top_bridges['node_id'], rotation=0)
-        plt.xlabel('Betweenness Centrality')
-        plt.title('Top 10 Network Bridges (by Betweenness Centrality)')
-        plt.grid(axis='x', alpha=0.3)
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot
+        y_pos = np.arange(len(top_bridges))
+        bars = ax.barh(y_pos, top_bridges['betweenness_centrality'],
+                      color=plt.cm.plasma(np.linspace(0, 1, len(top_bridges))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([node.replace('_', ' ').title() for node in top_bridges['node_id']])
+        ax.set_xlabel('Betweenness Centrality', fontweight='bold')
+        ax.set_title('Top 10 Network Bridges (by Betweenness Centrality)', fontweight='bold')
         
         # Add value labels on bars
         for i, (idx, row) in enumerate(top_bridges.iterrows()):
-            plt.text(row['betweenness_centrality'] + 0.001, i, f'{row["betweenness_centrality"]:.3f}', 
-                    va='center', ha='left')
+            ax.text(row['betweenness_centrality'] + 0.001, i, f'{row["betweenness_centrality"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
         
         plt.tight_layout()
         plt.savefig('visualizations/top_10_bridges.svg', format='svg', dpi=300, bbox_inches='tight')
@@ -410,79 +458,6 @@ class BiotechNetworkAnalyzer:
         plt.savefig('visualizations/community_network.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
-    def _plot_dashboard_summary(self):
-        """Create a dashboard-style summary chart."""
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 12))
-        
-        # 1. Network Statistics
-        stats_text = f"""
-        Network Statistics:
-        • Organizations: {self.network_stats['raw_nodes']:,}
-        • Connections: {self.network_stats['raw_links']:,}
-        • Unique Edges: {self.network_stats['num_edges']:,}
-        • Density: {self.network_stats['density']:.3f}
-        • Communities: {self.network_stats['num_communities']}
-        • Modularity: {self.network_stats['modularity']:.3f}
-        """
-        
-        if isinstance(self.network_stats['diameter'], (int, float)):
-            stats_text += f"• Diameter: {self.network_stats['diameter']}\n"
-        else:
-            stats_text += f"• Diameter: {self.network_stats['diameter']}\n"
-            
-        if isinstance(self.network_stats['average_path_length'], (int, float)):
-            stats_text += f"• Avg Path Length: {self.network_stats['average_path_length']:.3f}\n"
-        else:
-            stats_text += f"• Avg Path Length: {self.network_stats['average_path_length']}\n"
-        
-        ax1.text(0.1, 0.5, stats_text, transform=ax1.transAxes, fontsize=12,
-                verticalalignment='center', fontfamily='monospace')
-        ax1.set_title('Network Overview', fontsize=14, fontweight='bold')
-        ax1.axis('off')
-        
-        # 2. Degree Distribution
-        degrees = [data['degree'] for data in self.node_metrics.values()]
-        ax2.hist(degrees, bins=20, alpha=0.7, color='skyblue', edgecolor='black')
-        ax2.set_xlabel('Degree')
-        ax2.set_ylabel('Frequency')
-        ax2.set_title('Degree Distribution')
-        ax2.grid(True, alpha=0.3)
-        
-        # 3. Centrality Comparison (Top 10)
-        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
-        top_10 = df.nlargest(10, 'degree_centrality')
-        
-        x = np.arange(len(top_10))
-        width = 0.35
-        
-        ax3.bar(x - width/2, top_10['degree_centrality'], width, label='Degree', alpha=0.8)
-        ax3.bar(x + width/2, top_10['betweenness_centrality'], width, label='Betweenness', alpha=0.8)
-        
-        ax3.set_xlabel('Nodes')
-        ax3.set_ylabel('Centrality')
-        ax3.set_title('Top 10 Nodes: Degree vs Betweenness Centrality')
-        ax3.set_xticks(x)
-        ax3.set_xticklabels(top_10['node_id'], rotation=45, ha='right')
-        ax3.legend()
-        ax3.grid(True, alpha=0.3)
-        
-        # 4. Community Size Distribution
-        community_sizes = {}
-        for node, community in self.communities.items():
-            community_sizes[community] = community_sizes.get(community, 0) + 1
-        
-        communities = list(community_sizes.keys())
-        sizes = list(community_sizes.values())
-        
-        ax4.bar(communities, sizes, alpha=0.7, color='lightcoral')
-        ax4.set_xlabel('Community ID')
-        ax4.set_ylabel('Number of Nodes')
-        ax4.set_title('Community Size Distribution')
-        ax4.grid(True, alpha=0.3)
-        
-        plt.tight_layout()
-        plt.savefig('visualizations/network_dashboard.svg', format='svg', dpi=300, bbox_inches='tight')
-        plt.close()
     
     def print_summary(self):
         """Print a summary of the analysis."""
@@ -529,7 +504,10 @@ class BiotechNetworkAnalyzer:
         print(f"  • visualizations/top_10_bridges.svg")
         print(f"  • visualizations/degree_vs_betweenness.svg")
         print(f"  • visualizations/community_network.svg")
-        print(f"  • visualizations/network_dashboard.svg")
+        print(f"  • visualizations/network_statistics.svg")
+        print(f"  • visualizations/community_distribution.svg")
+        print(f"  • visualizations/centrality_distribution.svg")
+        print(f"  • visualizations/degree_distribution.svg")
         print(f"  • ANALYSIS_RESULTS.md")
         
         print("\n" + "="*60)
@@ -752,6 +730,120 @@ The Atlanta biotech network demonstrates a well-structured ecosystem with clear 
             f.write(report_content)
         
         print(f"Results report saved to: {report_file}")
+    
+    def _plot_network_statistics(self):
+        """Plot network statistics as a clean summary."""
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Network statistics
+        stats = [
+            f"Organizations: {self.network_stats['raw_nodes']:,}",
+            f"Connections: {self.network_stats['raw_links']:,}",
+            f"Density: {self.network_stats['density']:.3f}",
+            f"Communities: {self.network_stats['num_communities']}",
+            f"Modularity: {self.network_stats['modularity']:.3f}",
+            f"Assortativity: {self.network_stats['assortativity']:.3f}"
+        ]
+        
+        # Create text plot
+        y_pos = np.arange(len(stats))
+        ax.barh(y_pos, [1] * len(stats), color='lightblue', edgecolor='black', linewidth=1.5)
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(stats, fontweight='bold')
+        ax.set_xlim(0, 1)
+        ax.set_xticks([])
+        ax.set_title('Network Statistics Summary', fontweight='bold')
+        
+        # Remove all spines except left
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/network_statistics.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_community_distribution(self):
+        """Plot community size distribution."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        community_sizes = df['community_label'].value_counts()
+        
+        fig, ax = plt.subplots(figsize=(12, 8))
+        
+        # Create horizontal bar plot
+        y_pos = np.arange(len(community_sizes))
+        bars = ax.barh(y_pos, community_sizes.values, 
+                      color=plt.cm.Set3(np.linspace(0, 1, len(community_sizes))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(community_sizes.index, fontweight='bold')
+        ax.set_xlabel('Number of Organizations', fontweight='bold')
+        ax.set_title('Community Size Distribution', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, v in enumerate(community_sizes.values):
+            ax.text(v + 0.1, i, str(v), va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/community_distribution.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_centrality_distribution(self):
+        """Plot distribution of centrality measures."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
+        
+        # Degree centrality histogram
+        ax1.hist(df['degree_centrality'], bins=20, color='skyblue', edgecolor='black', linewidth=1.5)
+        ax1.set_xlabel('Degree Centrality', fontweight='bold')
+        ax1.set_ylabel('Frequency', fontweight='bold')
+        ax1.set_title('Degree Centrality Distribution', fontweight='bold')
+        ax1.spines['top'].set_visible(False)
+        ax1.spines['right'].set_visible(False)
+        
+        # Betweenness centrality histogram
+        ax2.hist(df['betweenness_centrality'], bins=20, color='lightcoral', edgecolor='black', linewidth=1.5)
+        ax2.set_xlabel('Betweenness Centrality', fontweight='bold')
+        ax2.set_ylabel('Frequency', fontweight='bold')
+        ax2.set_title('Betweenness Centrality Distribution', fontweight='bold')
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/centrality_distribution.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_degree_distribution(self):
+        """Plot degree distribution."""
+        degrees = [self.G.degree(node) for node in self.G.nodes()]
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create histogram
+        ax.hist(degrees, bins=20, color='lightgreen', edgecolor='black', linewidth=1.5)
+        ax.set_xlabel('Degree', fontweight='bold')
+        ax.set_ylabel('Frequency', fontweight='bold')
+        ax.set_title('Network Degree Distribution', fontweight='bold')
+        
+        # Add statistics
+        mean_degree = np.mean(degrees)
+        ax.axvline(mean_degree, color='red', linestyle='--', linewidth=2, label=f'Mean: {mean_degree:.1f}')
+        ax.legend()
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/degree_distribution.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
 
 def main():
     """Main function to run the analysis."""
