@@ -15,20 +15,28 @@ cd network_analysis
 python scripts/analyze_network.py
 ```
 
+### Option 3: Complete Pipeline
+```bash
+cd network_analysis
+python scripts/simple_node_extractor.py  # Extract data
+python scripts/clean_duplicates.py      # Clean duplicates
+python scripts/add_missing_nodes.py     # Add missing nodes
+python scripts/analyze_network.py       # Run analysis
+```
+
 ## Directory Structure
 
 ```
 network_analysis/
 ├── README.md                           # This file
 ├── requirements.txt                    # Python dependencies
-├── NETWORK_ANALYSIS_README.md         # Detailed documentation
-├── ANALYSIS_SUMMARY.md                # Complete solution overview
+├── analyze_biotech_network.py         # Main entry point
 ├── scripts/                           # Analysis scripts
 │   ├── analyze_network.py            # Main analysis script
-│   ├── simple_node_extractor.py      # Data extraction (working)
-│   ├── run_analysis.py               # Pipeline runner
-│   ├── setup_analysis.py             # One-command setup
-│   └── [other extractors]            # Alternative extraction methods
+│   ├── simple_node_extractor.py      # Data extraction
+│   ├── clean_duplicates.py           # Remove duplicate connections
+│   ├── add_missing_nodes.py          # Add missing organizations
+│   └── clean_duplicate_organizations.py # Remove duplicate orgs
 ├── data/                              # Network data
 │   ├── biotech_network_data.json     # Extracted network data
 │   └── biotech_network_metrics.csv   # Node-level metrics
@@ -58,8 +66,8 @@ network_analysis/
 ## Current Results
 
 Your Atlanta biotech network analysis shows:
-- **122 nodes** and **201 edges**
-- **30 communities** detected with **0.429 modularity**
+- **119 organizations** and **201 connections** (cleaned data)
+- **30 communities** detected with **0.427 modularity**
 - **Density: 0.027** (sparse but well-connected)
 - **Top hubs**: Emory (44 connections), Georgia Tech (34), GRA (18)
 - **Top bridges**: Emory (0.368), Georgia Tech (0.187), Portal (0.104)
@@ -105,14 +113,14 @@ plt.savefig('filename.pdf', format='pdf', bbox_inches='tight')
 
 ## Troubleshooting
 
-### Data Extraction Issues
-- The working extractor is `simple_node_extractor.py`
-- It successfully extracts 120 nodes and 206 links
-- If extraction fails, the script will use minimal test data
+### Data Issues
+- **Duplicate organizations**: Run `python scripts/clean_duplicate_organizations.py`
+- **Missing nodes**: Run `python scripts/add_missing_nodes.py`
+- **Duplicate connections**: Run `python scripts/clean_duplicates.py`
 
 ### Dependencies
 - Requires Python 3.7+
-- All dependencies listed in `requirements.txt`
+- Install with: `pip install -r requirements.txt`
 
 ### File Paths
 - All scripts use relative paths from the `network_analysis/` directory
