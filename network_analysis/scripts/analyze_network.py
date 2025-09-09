@@ -141,13 +141,18 @@ class BiotechNetworkAnalyzer:
         try:
             communities = community_louvain.best_partition(self.G)
             self.communities = communities
+            # Generate meaningful community labels
+            self.community_labels = self._generate_community_labels()
         except Exception as e:
             print(f"Warning: Could not perform community detection: {e}")
             self.communities = {node: 0 for node in self.G.nodes()}
+            self.community_labels = {0: "Single Community"}
         
         # Store node metrics
         self.node_metrics = {}
         for node in self.G.nodes():
+            community_id = self.communities.get(node, 0)
+            community_label = self.community_labels.get(community_id, f"Community {community_id}")
             self.node_metrics[node] = {
                 'node_id': node,
                 'degree': self.G.degree(node),
@@ -155,7 +160,8 @@ class BiotechNetworkAnalyzer:
                 'betweenness_centrality': betweenness_centrality.get(node, 0),
                 'closeness_centrality': closeness_centrality.get(node, 0),
                 'clustering_coefficient': clustering_coefficient.get(node, 0),
-                'community': self.communities.get(node, 0)
+                'community_id': community_id,
+                'community_label': community_label
             }
         
         # Network-level metrics
@@ -173,6 +179,83 @@ class BiotechNetworkAnalyzer:
         }
         
         print("Metrics calculated successfully!")
+    
+    def _generate_community_labels(self):
+        """Generate meaningful labels for communities based on their characteristics."""
+        community_labels = {}
+        
+        # Group nodes by community
+        community_nodes = {}
+        for node, community_id in self.communities.items():
+            if community_id not in community_nodes:
+                community_nodes[community_id] = []
+            community_nodes[community_id].append(node)
+        
+        # Load node data for analysis
+        try:
+            with open('data/biotech_network_data.json', 'r') as f:
+                data = json.load(f)
+            node_data = {node['id']: node for node in data['nodes']}
+        except:
+            node_data = {}
+        
+        # Analyze each community
+        for community_id, nodes in community_nodes.items():
+            if len(nodes) == 1:
+                # Single node community
+                node = nodes[0]
+                node_info = node_data.get(node, {})
+                node_type = node_info.get('type', 'unknown')
+                community_labels[community_id] = f"Single {node_type.title()}: {node.replace('_', ' ').title()}"
+            else:
+                # Multi-node community - analyze characteristics
+                node_types = []
+                node_names = []
+                
+                for node in nodes:
+                    node_info = node_data.get(node, {})
+                    node_type = node_info.get('type', 'unknown')
+                    node_name = node_info.get('name', node.replace('_', ' ').title())
+                    node_types.append(node_type)
+                    node_names.append(node_name)
+                
+                # Count node types
+                type_counts = {}
+                for node_type in node_types:
+                    type_counts[node_type] = type_counts.get(node_type, 0) + 1
+                
+                # Find dominant type
+                dominant_type = max(type_counts, key=type_counts.get)
+                dominant_count = type_counts[dominant_type]
+                
+                # Find most central node (highest degree)
+                central_node = max(nodes, key=lambda n: self.G.degree(n))
+                central_node_info = node_data.get(central_node, {})
+                central_node_name = central_node_info.get('name', central_node.replace('_', ' ').title())
+                
+                # Generate label based on characteristics
+                if dominant_count == len(nodes):
+                    # All nodes are same type
+                    if dominant_type == 'university':
+                        community_labels[community_id] = f"Academic Cluster ({len(nodes)} nodes)"
+                    elif dominant_type == 'startup':
+                        community_labels[community_id] = f"Startup Cluster ({len(nodes)} nodes)"
+                    elif dominant_type == 'vc':
+                        community_labels[community_id] = f"Investment Cluster ({len(nodes)} nodes)"
+                    elif dominant_type == 'government':
+                        community_labels[community_id] = f"Government Cluster ({len(nodes)} nodes)"
+                    else:
+                        community_labels[community_id] = f"{dominant_type.title()} Cluster ({len(nodes)} nodes)"
+                else:
+                    # Mixed community - use central node and dominant type
+                    if dominant_type == 'university':
+                        community_labels[community_id] = f"Academic Hub: {central_node_name} ({len(nodes)} nodes)"
+                    elif dominant_type == 'startup':
+                        community_labels[community_id] = f"Startup Hub: {central_node_name} ({len(nodes)} nodes)"
+                    else:
+                        community_labels[community_id] = f"Mixed: {central_node_name} ({len(nodes)} nodes)"
+        
+        return community_labels
     
     def export_csv(self, filename='data/biotech_network_metrics.csv'):
         """Export node-level metrics to CSV."""
@@ -264,8 +347,8 @@ class BiotechNetworkAnalyzer:
         df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
         
         plt.figure(figsize=(10, 8))
-        scatter = plt.scatter(df['degree_centrality'], df['betweenness_centrality'], 
-                            c=df['community'], cmap='tab20', alpha=0.7, s=60)
+        scatter =         plt.scatter(df['degree_centrality'], df['betweenness_centrality'], 
+                   c=df['community_id'], cmap='tab20', alpha=0.7, s=60)
         plt.xlabel('Degree Centrality')
         plt.ylabel('Betweenness Centrality')
         plt.title('Degree vs Betweenness Centrality\n(Color = Community)')
@@ -312,7 +395,16 @@ class BiotechNetworkAnalyzer:
         labels = {node: node for node in high_degree_nodes}
         nx.draw_networkx_labels(self.G, pos, labels, font_size=8, font_weight='bold')
         
-        plt.title(f'Atlanta Biotech Network by Community\n({len(unique_communities)} communities detected)')
+        # Create legend with community labels
+        legend_elements = []
+        for i, comm_id in enumerate(unique_communities):
+            label = self.community_labels.get(comm_id, f"Community {comm_id}")
+            legend_elements.append(plt.Line2D([0], [0], marker='o', color='w', 
+                                            markerfacecolor=colors[i], markersize=10, label=label))
+        
+        plt.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(1, 1), fontsize=8)
+        
+        plt.title(f'Atlanta Biotech Network by Community\n({len(unique_communities)} communities detected)', fontsize=14)
         plt.axis('off')
         plt.tight_layout()
         plt.savefig('visualizations/community_network.svg', format='svg', dpi=300, bbox_inches='tight')
@@ -535,6 +627,27 @@ The network contains **{self.network_stats['num_communities']} distinct communit
 - **Functional Clustering**: Similar organizational types working together
 - **Collaboration Networks**: Research partnerships and joint ventures
 
+### Community Breakdown
+"""
+        
+        # Add community details
+        community_summary = {}
+        for node, community_id in self.communities.items():
+            if community_id not in community_summary:
+                community_summary[community_id] = []
+            community_summary[community_id].append(node)
+        
+        # Sort communities by size
+        sorted_communities = sorted(community_summary.items(), key=lambda x: len(x[1]), reverse=True)
+        
+        for i, (comm_id, nodes) in enumerate(sorted_communities[:10]):  # Top 10 communities
+            label = self.community_labels.get(comm_id, f"Community {comm_id}")
+            report_content += f"- **{label}**: {len(nodes)} organizations\n"
+        
+        if len(sorted_communities) > 10:
+            report_content += f"- **... and {len(sorted_communities) - 10} other communities**\n"
+        
+        report_content += f"""
 ### Modularity Score: {self.network_stats['modularity']:.3f}
 - **Strong Community Structure**: Well above random (0.0)
 - **Clear Boundaries**: Communities are well-defined
