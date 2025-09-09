@@ -10,7 +10,7 @@ This is a comprehensive personal website featuring interactive network visualiza
 - **Dual Ecosystem Visualizations**: Interactive D3.js-powered network graphs for both biotech and tech ecosystems
 - **Biotech Network**: 117+ organizations and 206+ connections in the life sciences sector
 - **Tech Network**: 50+ organizations including VCs (Mosley Ventures, Atlanta Ventures, Valor Ventures, Zane Venture Fund) and their portfolio companies
-- **Explore Mode**: Interactive exploration system with save/keep/hide functionality for focused network discovery
+- **Explore Mode (`/explore`)**: Interactive exploration system with save/keep/hide functionality for focused network discovery
 - **Multi-Page Architecture**: Main page with portfolio sections + dedicated network exploration pages
 - **Social Media Integration**: Automated generation of social cards and meta images
 - **Performance Optimization**: Intelligent caching system and optimal zoom calculations
@@ -23,14 +23,16 @@ This is a comprehensive personal website featuring interactive network visualiza
 - **Main Page (`/`)**: Portfolio, about, contact sections with embedded biotech network preview
 - **Biotech Network Page (`/biotech`)**: Full-screen interactive biotech ecosystem visualization
 - **Tech Network Page (`/tech`)**: Full-screen interactive tech ecosystem visualization
+- **Explore Mode (`/explore`)**: Interactive biotech network exploration with node management system
 - **Network Visualization**: D3.js-powered force-directed graph with filtering and search
 - **Theme System**: Dark/light mode with global context management
 
 ### **Data & Analytics**
-- **Atlanta Biotech Dataset**: 117+ organizations with detailed metadata
+- **Atlanta Biotech Dataset**: 123+ organizations with detailed metadata
 - **Atlanta Tech Dataset**: 50+ organizations including VCs, startups, and innovation hubs
 - **Network Analysis**: Community detection algorithms and relationship mapping
 - **Performance Monitoring**: Caching strategies and optimization metrics
+- **Standalone Analysis Tool**: Comprehensive Python-based network analysis with NetworkX
 
 ### **Build & Automation**
 - **Social Media Generation**: Automated creation of platform-specific images
@@ -91,11 +93,20 @@ benjaminsiciliano.com/
 │   ├── inject-git-date.js        ← Git integration for versioning
 │   ├── demo-community-detection.js ← Community detection examples
 │   └── SOCIAL_IMAGES_GUIDE.md    ← Social media setup guide
+├── network_analysis/              ← Standalone network analysis tool
+│   ├── scripts/                   ← Analysis pipeline scripts
+│   ├── data/                      ← Extracted and processed network data
+│   ├── visualizations/            ← Generated analysis charts and plots
+│   └── README.md                  ← Analysis tool documentation
+├── analyze_biotech_network.py     ← Main analysis entry point
+├── FINAL_ANALYSIS_REPORT.md       ← Complete analysis results summary
 ├── STYLING_ARCHITECTURE.md        ← COMPREHENSIVE MODIFICATION GUIDE
 └── README.md                      ← This file
 ```
 
 ## **Getting Started**
+
+### **Website Development**
 
 1. **Install dependencies:**
    ```bash
@@ -112,11 +123,30 @@ benjaminsiciliano.com/
    npm run build
    ```
 
+### **Network Analysis Tool**
+
+1. **Install Python dependencies:**
+   ```bash
+   cd network_analysis
+   pip install -r requirements.txt
+   ```
+
+2. **Run complete analysis:**
+   ```bash
+   python analyze_biotech_network.py
+   ```
+
+3. **View results:**
+   - **Data:** `network_analysis/data/biotech_network_metrics.csv`
+   - **Visualizations:** `network_analysis/visualizations/`
+   - **Report:** `FINAL_ANALYSIS_REPORT.md`
+
 ## **Available Routes**
 
 - **`/`** - Main page with welcome, about, contact sections + biotech network preview
 - **`/biotech`** - Full-screen biotech network visualization with advanced controls
 - **`/tech`** - Full-screen tech network visualization with advanced controls
+- **`/explore`** - Interactive exploration mode for focused network discovery with save/keep/hide functionality
 
 ## **Styling Systems**
 
@@ -152,9 +182,21 @@ benjaminsiciliano.com/
 - **Filtering System**: Type-based, search-based, and relationship filtering
 - **Community Detection**: Louvain algorithm for identifying ecosystem clusters
 - **Performance Optimization**: Intelligent caching and optimal zoom calculations
-- **Explore Mode**: Interactive exploration with save/keep/hide functionality for focused discovery
 - **Smart Search**: Search for hidden nodes with automatic visibility and popup management
 - **Connection Management**: First-degree connections automatically revealed when saving nodes
+
+### **Explore Mode (`/explore`)**
+- **Interactive Node Management**: Three-state system for focused network exploration
+  - **Save**: Full-color nodes that are actively selected and their connections visible
+  - **Keep**: Greyed-out nodes that remain visible but not selected
+  - **Hide**: Completely hidden nodes to reduce visual clutter
+- **Smart Connection Visibility**: Connections only appear when both connected nodes are saved
+- **First-Degree Discovery**: Saving a node automatically reveals all its connected nodes
+- **Enhanced Search**: Search for hidden nodes with automatic visibility and popup management
+- **Starting Node Selection**: Choose any node as your exploration starting point
+- **State Persistence**: Explore state is saved and restored across sessions
+- **Popup Management**: Smart positioning system ensures node popups stay on screen
+- **Visual Feedback**: Clear status indicators for node states (hidden, visible, selected)
 
 ### **Social Media Integration**
 - **Automated Generation**: Scripts for creating platform-specific images
@@ -162,10 +204,18 @@ benjaminsiciliano.com/
 - **Cache Busting**: Version control for social media previews
 
 ### **Data Management**
-- **Biotech Dataset**: 117+ organizations with detailed metadata in life sciences
+- **Biotech Dataset**: 123+ organizations with detailed metadata in life sciences
 - **Tech Dataset**: 50+ organizations including VCs and their portfolio companies
 - **Relationship Mapping**: Connections between entities with context
 - **Real-time Updates**: Git integration for version tracking
+
+### **Network Analysis Tool**
+- **Comprehensive Metrics**: Degree, betweenness, closeness centrality, clustering coefficient
+- **Community Detection**: Louvain algorithm for identifying ecosystem clusters
+- **Network Statistics**: Density, diameter, average path length, assortativity
+- **Data Export**: CSV files with all node-level metrics for further analysis
+- **Visualization Generation**: Presentation-quality SVG charts and network plots
+- **Standalone Operation**: Complete analysis pipeline with one command execution
 
 ## **Recent Enhancements**
 
