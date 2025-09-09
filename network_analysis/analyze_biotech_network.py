@@ -17,13 +17,8 @@ def main():
     print("Atlanta Biotech Network Analysis")
     print("=" * 40)
     
-    # Change to the network_analysis directory
-    analysis_dir = Path(__file__).parent / "network_analysis"
-    
-    if not analysis_dir.exists():
-        print("Error: network_analysis directory not found")
-        print("Please run this script from the project root directory")
-        return
+    # Get the current directory (should be network_analysis)
+    analysis_dir = Path(__file__).parent
     
     # Change to the analysis directory
     import os
