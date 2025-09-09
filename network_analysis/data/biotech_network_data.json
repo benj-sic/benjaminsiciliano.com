@@ -93,7 +93,7 @@
       "name": "Aveanna Healthcare",
       "type": "health_system",
       "size": 17,
-      "description": "Atlanta-headquartered national leader in pediatric and adult home health, hospice, and private‑duty nursing. Supports aging‑care pilots and partnerships with healthtech innovators.",
+      "description": "Atlanta-headquartered national leader in pediatric and adult home health, hospice, and private\u2011duty nursing. Supports aging\u2011care pilots and partnerships with healthtech innovators.",
       "website": "https://www.aveanna.com"
     },
     {
@@ -157,7 +157,7 @@
       "name": "VERO Biotech",
       "type": "company",
       "size": 17,
-      "description": "Medtech company with an FDA-approved inhaled nitric oxide system (Genosyl®) for neonatal respiratory failure.",
+      "description": "Medtech company with an FDA-approved inhaled nitric oxide system (Genosyl\u00ae) for neonatal respiratory failure.",
       "website": "https://vero-biotech.com"
     },
     {
@@ -253,7 +253,7 @@
       "name": "Quadrant-i",
       "type": "facility",
       "size": 15,
-      "description": "Georgia Tech's innovation acceleration hub transforming disruptive research into scalable startups. Quadrant-i empowers faculty and students through expert-led commercialization strategy, venture-building programs, and investor access—bridging research and market impact.",
+      "description": "Georgia Tech's innovation acceleration hub transforming disruptive research into scalable startups. Quadrant-i empowers faculty and students through expert-led commercialization strategy, venture-building programs, and investor access\u2014bridging research and market impact.",
       "website": "https://quadrant-i.gatech.edu/"
     },
     {
@@ -285,7 +285,7 @@
       "name": "BioSpark Labs",
       "type": "facility",
       "size": 12,
-      "description": "Purpose‑built shared wet‑lab, cleanroom, and office facility for early‑stage biotech and life sciences startups at Science Square, Atlanta.",
+      "description": "Purpose\u2011built shared wet\u2011lab, cleanroom, and office facility for early\u2011stage biotech and life sciences startups at Science Square, Atlanta.",
       "website": "https://www.biosparklabs.com"
     },
     {
@@ -349,7 +349,7 @@
       "name": "Strados Labs",
       "type": "startup",
       "size": 10,
-      "description": "Digital health company with FDA-cleared RESP® wearable for continuous respiratory monitoring. Operates in both Philadelphia and Atlanta, supporting clinical trials and decentralized care.",
+      "description": "Digital health company with FDA-cleared RESP\u00ae wearable for continuous respiratory monitoring. Operates in both Philadelphia and Atlanta, supporting clinical trials and decentralized care.",
       "website": "https://www.stradoslabs.com"
     },
     {
@@ -397,7 +397,7 @@
       "name": "Paint Therapeutics",
       "type": "startup",
       "size": 8,
-      "description": "Atlanta-based emerging seed-funded biotechnology company utilizing proprietary drug targeting algorithm to improve localization and duration of action of therapeutic agents in the tissues where they are needed most. Paint's conjugation-based therapeutic development platforms enable rapid generation of clinical lead compounds with new compositions of matter starting from drugs already known to be active. Most advanced platform, PulmoPaint™, targets diseases of the lungs, with lead program for treatment of inflammatory lung diseases on track for IND in 2025. Advancing extensive pipeline of additional PulmoPaint™ products including immune potentiating approaches for lung-resident cancers, treatments for refractory and resistant bacterial lung infections including NTM, and preventive agents for viral respiratory infection prophylaxis.",
+      "description": "Atlanta-based emerging seed-funded biotechnology company utilizing proprietary drug targeting algorithm to improve localization and duration of action of therapeutic agents in the tissues where they are needed most. Paint's conjugation-based therapeutic development platforms enable rapid generation of clinical lead compounds with new compositions of matter starting from drugs already known to be active. Most advanced platform, PulmoPaint\u2122, targets diseases of the lungs, with lead program for treatment of inflammatory lung diseases on track for IND in 2025. Advancing extensive pipeline of additional PulmoPaint\u2122 products including immune potentiating approaches for lung-resident cancers, treatments for refractory and resistant bacterial lung infections including NTM, and preventive agents for viral respiratory infection prophylaxis.",
       "website": "https://www.painttherapeutics.com/"
     },
     {
@@ -501,7 +501,7 @@
       "name": "Axion BioSystems",
       "type": "serviceProvider",
       "size": 15,
-      "description": "Atlanta‑headquartered live‑cell analysis platform company (MEA & imaging) spun out of Georgia Tech and widely used in neuroscience, cardiology, oncology, and virology research.",
+      "description": "Atlanta\u2011headquartered live\u2011cell analysis platform company (MEA & imaging) spun out of Georgia Tech and widely used in neuroscience, cardiology, oncology, and virology research.",
       "website": "https://axionbiosystems.com"
     },
     {
@@ -605,7 +605,7 @@
       "name": "Andson Biotech",
       "type": "startup",
       "size": 13,
-      "description": "Georgia Tech spinout building the DynaChip™ X1 platform to automate and miniaturize mass spectrometry sample prep for biologics and advanced therapeutics. Enables faster, cheaper, and more scalable bioanalysis.",
+      "description": "Georgia Tech spinout building the DynaChip\u2122 X1 platform to automate and miniaturize mass spectrometry sample prep for biologics and advanced therapeutics. Enables faster, cheaper, and more scalable bioanalysis.",
       "website": "http://www.andsonbiotech.com"
     },
     {
@@ -645,7 +645,7 @@
       "name": "Synaptrix",
       "type": "startup",
       "size": 10,
-      "description": "Atlanta-based startup developing a non-invasive, drug-free pain management system (NOVABLOC™) for post-operative knee pain. Clinical-stage therapy delivering novel electrical stimulation to extend pain relief while preserving sensory function.",
+      "description": "Atlanta-based startup developing a non-invasive, drug-free pain management system (NOVABLOC\u2122) for post-operative knee pain. Clinical-stage therapy delivering novel electrical stimulation to extend pain relief while preserving sensory function.",
       "website": "https://www.linkedin.com/company/novabloc-pain-free-knee/"
     },
     {
@@ -677,7 +677,7 @@
       "name": "EDDF",
       "type": "vc",
       "size": 12,
-      "description": "Early-stage investment fund under Emory Innovations, Inc. Established in 2023 using royalties from Merck's LEGEVRIO™ (molnupiravir). Funds Emory-discovered therapeutics to IND/clinical milestones.",
+      "description": "Early-stage investment fund under Emory Innovations, Inc. Established in 2023 using royalties from Merck's LEGEVRIO\u2122 (molnupiravir). Funds Emory-discovered therapeutics to IND/clinical milestones.",
       "website": "https://innovate.emory.edu/ecosystem/emory-drug-development-fund.html"
     },
     {
@@ -701,7 +701,7 @@
       "name": "Cambium",
       "type": "startup",
       "size": 13,
-      "description": "Immuno‑oncology startup headquartered in Atlanta, GA developing first‑in‑class VIP receptor antagonists (e.g. ANT308) to restore anti‑cancer T‑cell activity in tumors with elevated VIP/VPAC signaling.",
+      "description": "Immuno\u2011oncology startup headquartered in Atlanta, GA developing first\u2011in\u2011class VIP receptor antagonists (e.g. ANT308) to restore anti\u2011cancer T\u2011cell activity in tumors with elevated VIP/VPAC signaling.",
       "website": "https://cambiumoncology.com"
     },
     {
@@ -765,7 +765,7 @@
       "name": "Exvade Bioscience",
       "type": "startup",
       "size": 11,
-      "description": "Atlanta-based medtech startup developing the Tumor Monorail device for guiding glioblastoma cells into a retrievable reservoir, enabling serial biopsy and real‑time monitoring.",
+      "description": "Atlanta-based medtech startup developing the Tumor Monorail device for guiding glioblastoma cells into a retrievable reservoir, enabling serial biopsy and real\u2011time monitoring.",
       "website": "https://www.exvadebio.com/"
     },
     {
@@ -773,7 +773,7 @@
       "name": "OnCuRNA",
       "type": "startup",
       "size": 11,
-      "description": "Georgia Tech/Biolocity-supported biotech startup developing nanostructured RNAi delivery platforms (SANGs) targeting solid tumors, including ovarian and other high‑need cancers.",
+      "description": "Georgia Tech/Biolocity-supported biotech startup developing nanostructured RNAi delivery platforms (SANGs) targeting solid tumors, including ovarian and other high\u2011need cancers.",
       "website": "https://oncurna.com/"
     },
     {
@@ -781,16 +781,8 @@
       "name": "Huxley Medical",
       "type": "startup",
       "size": 7,
-      "description": "Atlanta‑based medical device company developing multi‑sensor diagnostic patch (SANSA) for cardio‑sleep and vital sign monitoring.",
+      "description": "Atlanta\u2011based medical device company developing multi\u2011sensor diagnostic patch (SANSA) for cardio\u2011sleep and vital sign monitoring.",
       "website": "https://www.huxleymed.com/"
-    },
-    {
-      "id": "synthbiome",
-      "name": "SynthBiome",
-      "type": "startup",
-      "size": 10,
-      "description": "Atlanta-based biotechnology company developing synthetic environments to mimic physiological conditions for drug development and treatment selection. Focuses on creating accurate synthetic models for cystic fibrosis research (SCFM1, SCFM2) and chronic wound infection research (LCWB).",
-      "website": "https://www.synthbiome.com/"
     },
     {
       "id": "tether_therapeutics",
@@ -845,7 +837,7 @@
       "name": "Jackson Medical",
       "type": "startup",
       "size": 12,
-      "description": "Atlanta-based safety-focused medical and surgical device company. Manufactures GloShield™, a fiber-optic light cable shield that reduces potential for fires and burns to patients and hospital staff during surgeries.",
+      "description": "Atlanta-based safety-focused medical and surgical device company. Manufactures GloShield\u2122, a fiber-optic light cable shield that reduces potential for fires and burns to patients and hospital staff during surgeries.",
       "website": "https://www.jackson-medical.com/"
     },
     {
@@ -869,7 +861,7 @@
       "name": "Lybbie",
       "type": "startup",
       "size": 8,
-      "description": "Health technology company focused on solving overlooked challenges in early parenthood. Building tools that support breastfeeding through science, technology, and empathy — offering new ways to understand and optimize the feeding experience. Founded by Dr. Andrea Braden, a nationally recognized Ob/Gyn and expert in Breastfeeding Medicine.",
+      "description": "Health technology company focused on solving overlooked challenges in early parenthood. Building tools that support breastfeeding through science, technology, and empathy \u2014 offering new ways to understand and optimize the feeding experience. Founded by Dr. Andrea Braden, a nationally recognized Ob/Gyn and expert in Breastfeeding Medicine.",
       "website": "https://www.lybbie.com"
     },
     {
@@ -901,7 +893,7 @@
       "name": "EarliTec Diagnostics",
       "type": "company",
       "size": 15,
-      "description": "Making earlier identification and treatment for autism and related early childhood vulnerabilities accessible to children everywhere. EarliTec's flagship product, EarliPoint™, is FDA authorized to diagnose and assess autism in children ages 16-30 months old.",
+      "description": "Making earlier identification and treatment for autism and related early childhood vulnerabilities accessible to children everywhere. EarliTec's flagship product, EarliPoint\u2122, is FDA authorized to diagnose and assess autism in children ages 16-30 months old.",
       "website": "https://earlitecdx.com"
     },
     {
@@ -909,7 +901,7 @@
       "name": "Kodikaz Therapeutics",
       "type": "startup",
       "size": 8,
-      "description": "Developing targeted cancer therapies through their Zip-Code™ Technology platform, a first-in-class cell-specific delivery system for gene therapy applications. Derived from endogenous human mechanisms, avoiding viral delivery challenges while being universally applicable and cell-type specific.",
+      "description": "Developing targeted cancer therapies through their Zip-Code\u2122 Technology platform, a first-in-class cell-specific delivery system for gene therapy applications. Derived from endogenous human mechanisms, avoiding viral delivery challenges while being universally applicable and cell-type specific.",
       "website": "https://kodikaz.com"
     },
     {
@@ -1146,7 +1138,7 @@
       "source": "science_square",
       "target": "biospark_labs",
       "type": "infrastructure",
-      "description": "BioSpark Labs is the shared wet‑lab and core facility node within the Science Square life sciences district in Atlanta."
+      "description": "BioSpark Labs is the shared wet\u2011lab and core facility node within the Science Square life sciences district in Atlanta."
     },
     {
       "source": "portal",
@@ -1164,13 +1156,13 @@
       "source": "tag_digital_health",
       "target": "georgia_bio",
       "type": "affiliation",
-      "description": "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (formerly Georgia Bio) on digital health ecosystem events and directories supporting biotech‐adjacent innovation."
+      "description": "TAG Digital Health Society collaborates statewide with Georgia Life Sciences (formerly Georgia Bio) on digital health ecosystem events and directories supporting biotech\u2010adjacent innovation."
     },
     {
       "source": "emory",
       "target": "adjust_center_emory",
       "type": "infrastructure",
-      "description": "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity‑focused assay development capabilities."
+      "description": "Emory University operates the ADJUST Center, housing translational diagnostics labs and equity\u2011focused assay development capabilities."
     },
     {
       "source": "gatech",
@@ -1254,7 +1246,7 @@
       "source": "sanguina",
       "target": "emory",
       "type": "spinout",
-      "description": "Georgia Tech / Emory research spinout—AnemoCheck platform developed with Wilbur Lam (Emory/GT) and clinically validated using Emory patient data."
+      "description": "Georgia Tech / Emory research spinout\u2014AnemoCheck platform developed with Wilbur Lam (Emory/GT) and clinically validated using Emory patient data."
     },
     {
       "source": "gatech",
@@ -1272,7 +1264,7 @@
       "source": "gatech",
       "target": "andson_biotech",
       "type": "spinout",
-      "description": "Georgia Tech spinout commercializing DynaChip™ microfluidic technology."
+      "description": "Georgia Tech spinout commercializing DynaChip\u2122 microfluidic technology."
     },
     {
       "source": "gatech",
@@ -1350,7 +1342,7 @@
       "source": "gra_fund",
       "target": "biocircuit_technologies",
       "type": "investment",
-      "description": "Early-stage investment in BioCircuit's Nerve Tape® nerve repair technology."
+      "description": "Early-stage investment in BioCircuit's Nerve Tape\u00ae nerve repair technology."
     },
     {
       "source": "gra_fund",
@@ -1998,7 +1990,7 @@
       "source": "andson_biotech",
       "target": "collabtech_gsu",
       "type": "tenant",
-      "description": "Andson Biotech is a current tenant at CollabTech incubator, developing DynaChip™ microfluidic technology."
+      "description": "Andson Biotech is a current tenant at CollabTech incubator, developing DynaChip\u2122 microfluidic technology."
     },
     {
       "source": "palate_therapeutics",
@@ -2136,7 +2128,7 @@
       "source": "jackson_medical",
       "target": "emory_healthcare",
       "type": "partnership",
-      "description": "Jackson Medical's GloShield™ surgical safety device is used in healthcare systems including Emory Healthcare to prevent fiber-optic cable fires and burns in operating rooms."
+      "description": "Jackson Medical's GloShield\u2122 surgical safety device is used in healthcare systems including Emory Healthcare to prevent fiber-optic cable fires and burns in operating rooms."
     },
     {
       "source": "ethos_medical",

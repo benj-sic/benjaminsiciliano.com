@@ -32,7 +32,7 @@ sns.set_palette("husl")
 class BiotechNetworkAnalyzer:
     """Analyzes the Atlanta biotech network using NetworkX."""
     
-    def __init__(self, data_file='../data/biotech_network_data.json'):
+    def __init__(self, data_file='data/biotech_network_data.json'):
         """Initialize the analyzer with network data."""
         self.data_file = data_file
         self.G = nx.Graph()
@@ -174,7 +174,7 @@ class BiotechNetworkAnalyzer:
         
         print("Metrics calculated successfully!")
     
-    def export_csv(self, filename='../data/biotech_network_metrics.csv'):
+    def export_csv(self, filename='data/biotech_network_metrics.csv'):
         """Export node-level metrics to CSV."""
         print(f"Exporting metrics to {filename}...")
         
@@ -234,7 +234,7 @@ class BiotechNetworkAnalyzer:
                     va='center', ha='left')
         
         plt.tight_layout()
-        plt.savefig('../visualizations/top_10_hubs.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.savefig('visualizations/top_10_hubs.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
     def _plot_top_bridges(self):
@@ -256,7 +256,7 @@ class BiotechNetworkAnalyzer:
                     va='center', ha='left')
         
         plt.tight_layout()
-        plt.savefig('../visualizations/top_10_bridges.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.savefig('visualizations/top_10_bridges.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
     def _plot_degree_vs_betweenness(self):
@@ -278,7 +278,7 @@ class BiotechNetworkAnalyzer:
                 bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
         
         plt.tight_layout()
-        plt.savefig('../visualizations/degree_vs_betweenness.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.savefig('visualizations/degree_vs_betweenness.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
     def _plot_community_network(self):
@@ -315,7 +315,7 @@ class BiotechNetworkAnalyzer:
         plt.title(f'Atlanta Biotech Network by Community\n({len(unique_communities)} communities detected)')
         plt.axis('off')
         plt.tight_layout()
-        plt.savefig('../visualizations/community_network.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.savefig('visualizations/community_network.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
     def _plot_dashboard_summary(self):
@@ -389,7 +389,7 @@ class BiotechNetworkAnalyzer:
         ax4.grid(True, alpha=0.3)
         
         plt.tight_layout()
-        plt.savefig('../visualizations/network_dashboard.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.savefig('visualizations/network_dashboard.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
     def print_summary(self):
