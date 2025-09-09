@@ -7,11 +7,11 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Network Overview
 
 ### Basic Statistics
-- **Total Organizations**: 119 (after cleaning duplicates)
-- **Total Connections**: 206 (unique edges)
+- **Total Organizations**: 122 (after cleaning duplicates)
+- **Total Connections**: 201 (unique edges)
 - **Network Density**: 0.027 (sparse but well-connected)
 - **Communities Detected**: 31
-- **Modularity**: 0.445 (strong community structure)
+- **Modularity**: 0.437 (strong community structure)
 - **Assortativity**: -0.329 (negative, indicating diverse connections)
 
 ### Network Characteristics
@@ -73,7 +73,7 @@ The network contains **31 distinct communities**, indicating:
 - **Functional Clustering**: Similar organizational types working together
 - **Collaboration Networks**: Research partnerships and joint ventures
 
-### Modularity Score: 0.445
+### Modularity Score: 0.437
 - **Strong Community Structure**: Well above random (0.0)
 - **Clear Boundaries**: Communities are well-defined
 - **Internal Cohesion**: High within-community connections
@@ -166,6 +166,6 @@ The Atlanta biotech network demonstrates a well-structured ecosystem with clear 
 ---
 
 **Analysis Date**: September 09, 2025  
-**Data Source**: Atlanta Biotech Network (119 organizations, 206 connections)  
+**Data Source**: Atlanta Biotech Network (122 organizations, 201 connections)  
 **Analysis Method**: NetworkX with Louvain community detection  
 **Report Generated**: Automated analysis pipeline

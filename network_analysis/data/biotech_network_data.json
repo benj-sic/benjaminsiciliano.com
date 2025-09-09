@@ -951,6 +951,30 @@
       "size": 16,
       "description": "America's leader in healthcare-grade social prescribing, delivering evidence-based solutions for the dual mental health and loneliness epidemics. Enables personalized social prescribing services with healthcare, university, corporate, and government partners to address the nation's most intractable health challenges.",
       "website": "https://www.artpharmacy.co/"
+    },
+    {
+      "id": "department_of_veterans_affairs",
+      "name": "Department of Veterans Affairs",
+      "type": "government",
+      "size": 5,
+      "description": "Department of Veterans Affairs - Referenced in network connections but not defined in nodes array.",
+      "website": ""
+    },
+    {
+      "id": "topodx",
+      "name": "TopoDX",
+      "type": "startup",
+      "size": 5,
+      "description": "TopoDX - Referenced in network connections but not defined in nodes array.",
+      "website": ""
+    },
+    {
+      "id": "biocircuit_technologies",
+      "name": "BioCircuit Technologies",
+      "type": "startup",
+      "size": 5,
+      "description": "BioCircuit Technologies - Referenced in network connections but not defined in nodes array.",
+      "website": ""
     }
   ],
   "links": [
@@ -1484,12 +1508,6 @@
     },
     {
       "source": "portal",
-      "target": "armor_medical",
-      "type": "member",
-      "description": "Armor Medical is a Portal Atlanta member company."
-    },
-    {
-      "source": "portal",
       "target": "oridivus",
       "type": "member",
       "description": "Oridivus is a Portal Atlanta member company."
@@ -1771,12 +1789,6 @@
       "description": "Tempus (via acquired AKESOgen) conducted genomics work for VA's Million Veteran Program."
     },
     {
-      "source": "oxos",
-      "target": "department_of_veterans_affairs",
-      "type": "partnership",
-      "description": "Pilot program partnership"
-    },
-    {
       "source": "micron",
       "target": "cdc",
       "type": "partnership",
@@ -1981,12 +1993,6 @@
       "description": "EBCC Spring 2020 client - provided commercialization strategy for cardiac device technology"
     },
     {
-      "source": "eddf",
-      "target": "emory",
-      "type": "funding",
-      "description": "Direct laboratory investment in CFTR-targeted therapies via Sorscher Lab"
-    },
-    {
       "source": "andson_biotech",
       "target": "collabtech_gsu",
       "type": "tenant",
@@ -2132,12 +2138,6 @@
     },
     {
       "source": "ethos_medical",
-      "target": "portal",
-      "type": "tenant",
-      "description": "Ethos Medical is a member of Portal Innovations at Science Square, receiving support for development of the Iris needle guidance system for safer percutaneous access."
-    },
-    {
-      "source": "ethos_medical",
       "target": "gatech",
       "type": "collaboration",
       "description": "Ethos Medical collaborates with Georgia Tech researchers on ultrasound-guided needle guidance technology and real-time image guidance systems."
@@ -2171,12 +2171,6 @@
       "target": "georgia_bio",
       "type": "affiliation",
       "description": "Ecosystem stakeholder and clinical/policy partner for workforce and translational initiatives."
-    },
-    {
-      "source": "gra_fund",
-      "target": "earlitec",
-      "type": "investment",
-      "description": "EarliTec Diagnostics is a GRA Venture Fund portfolio company developing early diagnosis tools for autism and developmental disorders."
     },
     {
       "source": "keiretsu_southeast",

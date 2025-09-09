@@ -87,8 +87,8 @@ def format_node_name(node_id):
 
 def main():
     """Add missing nodes to the network data."""
-    input_file = '../data/biotech_network_data.json'
-    output_file = '../data/biotech_network_data_complete.json'
+    input_file = 'data/biotech_network_data.json'
+    output_file = 'data/biotech_network_data.json'
     
     print("Adding Missing Nodes to Atlanta Biotech Network Data")
     print("=" * 55)
