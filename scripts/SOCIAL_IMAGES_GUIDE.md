@@ -42,6 +42,15 @@ All images use the same clean network visualization (no gradient background, no 
 - **File size**: ~261KB
 - **Usage**: For LinkedIn posts, professional sharing
 
+### 7. **PowerPoint Backdrop (1920x1080px)** - `powerpoint-backdrop.png`
+- **Use for**: PowerPoint presentations, Google Slides, Keynote
+- **Features**: 
+  - 16:9 aspect ratio (standard presentation format)
+  - Subtle gradient background for professional appearance
+  - Muted network visualization optimized for text readability
+- **File size**: ~200-300KB
+- **Usage**: Set as slide background for presentations
+
 ## Generation Commands
 
 ### Generate All Images
@@ -52,6 +61,11 @@ npm run generate-all-social-images
 ### Generate Only Social Card
 ```bash
 npm run generate-social-card
+```
+
+### Generate PowerPoint Backdrop
+```bash
+npm run generate-powerpoint-backdrop
 ```
 
 ## Platform-Specific Recommendations
@@ -81,6 +95,11 @@ npm run generate-social-card
 ### WhatsApp/Telegram
 - **Primary**: `whatsapp-card.png`
 - **Usage**: Download and attach to messages
+
+### PowerPoint/Presentations
+- **Primary**: `powerpoint-backdrop.png`
+- **Usage**: Set as slide background for professional presentations
+- **Note**: Use dark text for optimal readability
 
 ## Meta Tag Configuration
 
@@ -135,6 +154,7 @@ All generated images are saved to:
 - `public/pinterest-card.png` - Pinterest optimized
 - `public/whatsapp-card.png` - Messaging apps
 - `public/headshot-card.png` - Professional networking
+- `public/powerpoint-backdrop.png` - PowerPoint presentations
 
 ## Best Practices
 

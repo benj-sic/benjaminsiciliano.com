@@ -19,6 +19,7 @@
     "eject": "react-scripts eject",
     "generate-social-card": "node scripts/generate-social-card.js",
     "generate-all-social-images": "node scripts/generate-all-social-images.js",
+    "generate-powerpoint-backdrop": "node scripts/generate-powerpoint-backdrop.js",
     "inject-git-date": "node scripts/inject-git-date.js",
     "calculate-optimal-zoom": "node scripts/calculate-optimal-zoom.js",
     "test-cache": "node scripts/test-cache.js"

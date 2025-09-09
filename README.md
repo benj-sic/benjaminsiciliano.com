@@ -97,9 +97,9 @@ benjaminsiciliano.com/
 │   ├── scripts/                   ← Analysis pipeline scripts
 │   ├── data/                      ← Extracted and processed network data
 │   ├── visualizations/            ← Generated analysis charts and plots
+│   ├── analyze_biotech_network.py ← Main analysis entry point
+│   ├── FINAL_ANALYSIS_REPORT.md   ← Complete analysis results summary
 │   └── README.md                  ← Analysis tool documentation
-├── analyze_biotech_network.py     ← Main analysis entry point
-├── FINAL_ANALYSIS_REPORT.md       ← Complete analysis results summary
 ├── STYLING_ARCHITECTURE.md        ← COMPREHENSIVE MODIFICATION GUIDE
 └── README.md                      ← This file
 ```
@@ -137,8 +137,8 @@ benjaminsiciliano.com/
    ```
 
 3. **View results:**
-   - **Data:** `network_analysis/data/biotech_network_metrics.csv`
-   - **Visualizations:** `network_analysis/visualizations/`
+   - **Data:** `data/biotech_network_metrics.csv`
+   - **Visualizations:** `visualizations/`
    - **Report:** `FINAL_ANALYSIS_REPORT.md`
 
 ## **Available Routes**
