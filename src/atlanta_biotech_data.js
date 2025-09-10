@@ -115,7 +115,7 @@ export const atlantaBiotechEcosystem = {
       website: "https://cdc.gov",
       keyPersonnel: [
       {
-        "name": "Dr. Mandy K. Cohen",
+        "name": "Mandy K. Cohen, MD",
         "linkedin": "https://www.linkedin.com/in/mandy-cohen-03aa343/"
       }
     ],
@@ -212,7 +212,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "micron",
       name: "Micron Biomedical",
-      type: "startup",
+      type: "company",
       size: 16,
       description: "Georgia Tech spinout developing a dissolvable microneedle patch for painless, needle-free delivery of drugs and vaccines.",
       website: "https://micronbiomedical.com",
@@ -227,7 +227,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "neurop",
       name: "NeurOp",
-      type: "startup",
+      type: "company",
       size: 14,
       description: "Clinical-stage CNS drug developer. A spinout from research at Emory and Duke University.",
       website: "http://neuropinc.com/",
@@ -244,9 +244,9 @@ export const atlantaBiotechEcosystem = {
     {
       id: "emory_innovation_center",
       name: "Emory Innovation Center",
-      type: "facility",
+      type: "lab_facility",
       size: 10,
-      description: "An innovation hub focused on biomedical research and entrepreneurship, offering resources for 3D printing, rapid prototyping, and extended reality applications. It is also known as The Hatchery.",
+      description: "A specialized biomedical research and entrepreneurship hub within the School of Medicine, located in the Health Sciences Research Building (HSRB-II). Offers resources for 3D printing, rapid prototyping, and developing medical technologies for faculty, clinicians, and researchers.",
       website: "https://med.emory.edu/research/research-innovation/entrepreneurship/innovation-center/index.html",
       keyPersonnel: [
       {
@@ -326,7 +326,7 @@ export const atlantaBiotechEcosystem = {
       name: "The Hatchery at Emory",
       type: "incubator",
       size: 10,
-      description: "Emory's student innovation center, providing configurable spaces, a makerspace, and programs to support student innovators and entrepreneurs.",
+      description: "Emory's central hub for student-facing innovation and entrepreneurship across all nine schools. Industry-agnostic center providing configurable spaces, a makerspace with prototyping tools, and programs to support student innovators and entrepreneurs in any field.",
       website: "https://hatchery.emory.edu/",
       keyPersonnel: [
       {
@@ -379,7 +379,7 @@ export const atlantaBiotechEcosystem = {
       website: "https://clearsidebio.com",
       keyPersonnel: [
       {
-        "name": "Dr. George Lasezkay",
+        "name": "George Lasezkay, MD",
         "linkedin": "https://www.linkedin.com/in/george-lasezkay-1848679/"
       }
     ],
@@ -416,6 +416,33 @@ export const atlantaBiotechEcosystem = {
       recentNews: "Launched On-X Plus 1.5™ mechanical heart valve in Europe."
     },
     {
+      id: "endoluxe",
+      name: "Endoluxe",
+      type: "company",
+      size: 12,
+      description: "Medical device company developing wireless, cloud-connected endoscopy visualization systems. The Endoluxe platform includes wireless endoscopy devices, digital health platform for video storage and sharing, and surgical intelligence using computer vision and sensor data.",
+      website: "https://www.endoluxe.com/",
+      keyPersonnel: [
+      {
+        "name": "Neal Patel, MD",
+        "linkedin": "https://www.linkedin.com/in/neal-patel-md-8b8b8b8b/"
+      },
+      {
+        "name": "Phil Zhao, MD",
+        "linkedin": "https://www.linkedin.com/in/phil-zhao-md-8b8b8b8b/"
+      },
+      {
+        "name": "Scott Dentino",
+        "linkedin": "https://www.linkedin.com/in/scott-dentino-8b8b8b8b/"
+      },
+      {
+        "name": "Louise Hucal",
+        "linkedin": "https://www.linkedin.com/in/louise-hucal-8b8b8b8b/"
+      }
+    ],
+      recentNews: "Endoluxe announces know-how agreement with Mayo Clinic. Named to the 2022 CB Insights' Digital Health 150 List. First ENT procedures completed using Endoluxe Vision System."
+    },
+    {
       id: "copient_health",
       name: "Copient Health",
       type: "company",
@@ -440,7 +467,7 @@ export const atlantaBiotechEcosystem = {
         "linkedin": "https://www.linkedin.com/in/amy-pecic-b287a4/"
       }
     ],
-      recentNews: "Provides three main modules: Reclaim (machine learning to identify unused block time), Distribute (connect open time with providers), and Measure and Manage (analytics for OR scheduling)."
+      recentNews: "In late 2023, Copient Health launched ARDEN, its groundbreaking generative AI solution designed to provide perioperative leaders with real-time operational and financial data to optimize operating room utilization and dramatically increase surgical margin."
     },
 
     // VENTURE CAPITAL & INVESTORS
@@ -606,7 +633,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "lab2launch",
       name: "Lab2Launch",
-      type: "facility",
+      type: "lab_facility",
       size: 14,
       description: "Wet lab and co-working space at Emory's HSRB II Innovation Floor, providing bench space and infrastructure to Emory-affiliated startups supported through Biolocity.",
       website: "https://med.emory.edu/research/research-innovation/entrepreneurship/lab2launch/",
@@ -621,7 +648,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "quadrant_i",
       name: "Quadrant-i",
-      type: "facility",
+      type: "accelerator_program",
       size: 15,
       description: "Georgia Tech's innovation acceleration hub transforming disruptive research into scalable startups. Quadrant-i empowers faculty and students through expert-led commercialization strategy, venture-building programs, and investor access—bridging research and market impact.",
       website: "https://quadrant-i.gatech.edu/",
@@ -656,7 +683,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "venturelab",
       name: "VentureLab",
-      type: "facility",
+      type: "accelerator_program",
       size: 15,
       description: "Georgia Tech's startup incubation and customer discovery program. Serves as an NSF I-Corps Node, helping faculty and student innovators across biotech, medtech, AI, and engineering translate research into marketable ventures.",
       website: "https://venturelab.gatech.edu/",
@@ -711,7 +738,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "biospark_labs",
       name: "BioSpark Labs",
-      type: "facility",
+      type: "lab_facility",
       size: 12,
       description: "Purpose‑built shared wet‑lab, cleanroom, and office facility for early‑stage biotech and life sciences startups at Science Square, Atlanta.",
       website: "https://www.biosparklabs.com",
@@ -829,7 +856,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "strados_labs",
       name: "Strados Labs",
-      type: "startup",
+      type: "company",
       size: 10,
       description: "Digital health company with FDA-cleared RESP® wearable for continuous respiratory monitoring. Operates in both Philadelphia and Atlanta, supporting clinical trials and decentralized care.",
       website: "https://www.stradoslabs.com",
@@ -1068,7 +1095,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "science_square",
       name: "Science Square",
-      type: "facility",
+      type: "research_park",
       size: 16,
       description: "A 16-acre life sciences research park adjacent to Georgia Tech, developed by GATV. Anchor tenants include Portal Innovations.",
       website: "https://sciencesquareatl.com",
@@ -1084,7 +1111,7 @@ export const atlantaBiotechEcosystem = {
       website: "https://oralee.org",
       keyPersonnel: [
         {
-          "name": "Dr. Hadiyah-Nicole Green",
+          "name": "Hadiyah-Nicole Green, PhD",
           "linkedin": "https://www.linkedin.com/in/drhadiyahgreen/"
         },
         {
@@ -1466,7 +1493,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "moonlight",
       name: "Moonlight Therapeutics",
-      type: "startup",
+      type: "company",
       size: 10,
       description: "Developing a microneedle-based immunotherapy platform (TASIS) for food allergies. Portal Innovations' first Atlanta investment. Advancing lead program into Phase I trials.",
       website: "https://moonlighttx.com",
@@ -1497,7 +1524,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "sanguina",
       name: "Sanguina",
-      type: "startup",
+      type: "company",
       size: 11,
       description: "Digital health startup spun out of Emory/GT collaboration. Developed AnemoCheck Mobile, a non-invasive app for anemia screening.",
       website: "https://sanguina.com",
@@ -1512,7 +1539,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "oxos",
       name: "OXOS Medical",
-      type: "startup",
+      type: "company",
       size: 12,
       description: "Georgia Tech CREATE-X alumnus making portable, handheld X-ray imaging systems.",
       website: "https://oxos.com",
@@ -1538,7 +1565,7 @@ export const atlantaBiotechEcosystem = {
       keyPersonnel: [
       {
         "name": "George Painter",
-        "linkedin": "https://www.linkedin.com/in/george-painter-61ab25126/"
+        "linkedin": "https://www.linkedin.com/in/george-painter-5664aa11/"
       },
       {
         "name": "Dennis Liotta",
@@ -1569,7 +1596,7 @@ export const atlantaBiotechEcosystem = {
     {
       id: "synaptrix",
       name: "Synaptrix",
-      type: "startup",
+      type: "company",
       size: 10,
       description: "Atlanta-based startup developing a non-invasive, drug-free pain management system (NOVABLOC™) for post-operative knee pain. Clinical-stage therapy delivering novel electrical stimulation to extend pain relief while preserving sensory function.",
       website: "https://www.linkedin.com/company/novabloc-pain-free-knee/",
@@ -1896,8 +1923,8 @@ export const atlantaBiotechEcosystem = {
       id: "synthbiome",
       name: "SynthBiome",
       type: "startup",
-      size: 10,
-      description: "Atlanta-based biotechnology company developing synthetic environments to mimic physiological conditions for drug development and treatment selection. Focuses on creating accurate synthetic models for cystic fibrosis research (SCFM1, SCFM2) and chronic wound infection research (LCWB).",
+      size: 12,
+      description: "Atlanta-based biotechnology company founded by Marvin Whiteley, PhD from Georgia Tech. Designs synthetic environments to mimic physiological conditions that microorganisms encounter in their natural environments. Manufactures specialized growth media including synthetic media that imitate CF-sputum and chronic wound environments for better drug development and treatment selection. Focuses on creating accurate synthetic models for cystic fibrosis research (SCFM1, SCFM2) and chronic wound infection research (LCWB).",
       website: "https://www.synthbiome.com/",
       keyPersonnel: [
         {
@@ -1905,7 +1932,7 @@ export const atlantaBiotechEcosystem = {
           "linkedin": "https://www.linkedin.com/in/marvin-whiteley-895997194/"
         }
       ],
-      recentNews: "Founded in 2022. Developing synthetic media that accurately replicate human infection environments for improved drug development and antibiotic treatment selection."
+      recentNews: "Founded in 2022 by Marvin Whiteley, PhD from Georgia Tech. Focuses on creating accurate synthetic models for drug development and treatment selection, moving beyond traditional clinical models to provide adaptive, scalable simulations of human physiology for improved drug development and antibiotic treatment selection."
     },
     {
       id: "tether_therapeutics",
@@ -1924,14 +1951,14 @@ export const atlantaBiotechEcosystem = {
     },
     {
       id: "dr_noze_best",
-      name: "Dr. Noze Best",
+      name: "Noze Best",
       type: "company",
       size: 10,
       description: "Atlanta-based pediatric health and wellness company founded by Pediatric ENT Dr. Steven Goudy. Develops innovative wellness solutions that improve children's health and reduce stress for parents. Best known for the NozeBot electric nasal aspirator - a physician-founded, hospital-level quality device for pediatric nasal congestion relief.",
       website: "https://drnozebest.com",
       keyPersonnel: [
         {
-          "name": "Dr. Steven Goudy, MD, MBA",
+          "name": "Steven Goudy, MD, MBA",
           "linkedin": "https://www.linkedin.com/in/steven-goudy-md-mba-b3ba819/"
         },
         {
@@ -1984,7 +2011,7 @@ export const atlantaBiotechEcosystem = {
       website: "https://www.ozlinktech.com/",
       keyPersonnel: [
         {
-          "name": "Dr. Kasie Collins",
+          "name": "Kasie Collins, MD",
           "linkedin": "https://www.linkedin.com/in/kasielcollins/"
         }
       ],
@@ -2074,7 +2101,7 @@ export const atlantaBiotechEcosystem = {
       website: "https://www.lybbie.com",
       keyPersonnel: [
         {
-          "name": "Dr. Andrea Braden",
+          "name": "Andrea Braden, MD",
           "linkedin": "https://www.linkedin.com/in/drandreabraden/"
         }
       ],
@@ -2292,21 +2319,6 @@ export const atlantaBiotechEcosystem = {
       recentNews: "Secured exclusive license for cutting-edge Anti-RSV inhibitor from Alabama State University. Entered collaboration with Sartorius BIA Separations to develop mRNA synthesis and purification platform with PATfix in-process analytical solution."
     },
     {
-      id: "synthbiome",
-      name: "SynthBiome",
-      type: "startup",
-      size: 14,
-      description: "Designs synthetic environments to mimic physiological conditions that microorganisms encounter in their natural environments. Manufactures specialized growth media including synthetic media that imitate CF-sputum and chronic wound environments for better drug development and treatment selection.",
-      website: "https://www.synthbiome.com/",
-      keyPersonnel: [
-        {
-          "name": "Marvin Whiteley",
-          "linkedin": "https://www.linkedin.com/in/marvin-whiteley-895997194/"
-        }
-      ],
-      recentNews: "Founded by Marvin Whiteley, PhD from Georgia Tech. Focuses on creating accurate synthetic models for drug development and treatment selection, moving beyond traditional clinical models to provide adaptive, scalable simulations of human physiology."
-    },
-    {
       id: "artpharmacy",
       name: "Art Pharmacy",
       type: "company",
@@ -2320,42 +2332,142 @@ export const atlantaBiotechEcosystem = {
         }
       ],
       recentNews: "Partners with major health systems including UnitedHealthcare, Stanford, Grady, Mass General Brigham, Emory, and Wellstar. Provides end-to-end social prescribing solutions for health plans, universities, and health systems to address mental health, social isolation, and loneliness."
+    },
+    {
+      id: "inhibikase",
+      name: "Inhibikase Therapeutics",
+      type: "public_company",
+      size: 12,
+      description: "Clinical-stage pharmaceutical company developing kinase inhibitors to treat Parkinson's disease and other neurodegenerative disorders.",
+      website: "https://www.inhibikase.com/",
+      keyPersonnel: [],
+      recentNews: "Publicly-traded company (NASDAQ: IKT) that moved its headquarters to Atlanta, focused on developing treatments for Parkinson's disease and related neurodegenerative disorders."
+    },
+    {
+      id: "mimedx",
+      name: "MiMedx",
+      type: "public_company",
+      size: 12,
+      description: "Marietta-based leader in regenerative medicine, developing and distributing amniotic tissue-based products for wound care, surgical, and non-operative applications.",
+      website: "https://www.mimedx.com/",
+      keyPersonnel: [],
+      recentNews: "Publicly-traded company (NASDAQ: MDXG) and significant commercial-stage company headquartered in Marietta, specializing in regenerative medicine and amniotic tissue technology."
+    },
+    {
+      id: "raybiotech",
+      name: "RayBiotech",
+      type: "serviceProvider",
+      size: 12,
+      description: "Leading provider of immunoassays, proteomics services, and other life science research tools for academic and industry researchers.",
+      website: "https://www.raybiotech.com/",
+      keyPersonnel: [],
+      recentNews: "Long-standing and significant life sciences company in Peachtree Corners that provides critical tools and services (ELISA kits, antibodies, proteomics services) to researchers globally."
+    },
+    {
+      id: "dendreon",
+      name: "Dendreon",
+      type: "company",
+      size: 16,
+      description: "Pioneer in cancer immunotherapy, operating a large-scale cell therapy manufacturing facility in Union City for its PROVENGE® product and providing contract manufacturing services for other cell therapy companies.",
+      website: "https://www.dendreon.com/",
+      keyPersonnel: [
+        {
+          "name": "Jason O'Neill",
+          "linkedin": "https://www.linkedin.com/in/jason-o-neill-1b8a2349/"
+        }
+      ],
+      recentNews: "Announced a major expansion of its Union City cell therapy manufacturing facility in Q1 2025 to support new contract manufacturing partnerships."
+    },
+    {
+      id: "femasys",
+      name: "Femasys Inc.",
+      type: "public_company",
+      size: 14,
+      description: "Suwanee-based medtech company focused on developing innovative, non-surgical solutions for women's healthcare, including permanent birth control and infertility diagnostics.",
+      website: "https://www.femasys.com/",
+      keyPersonnel: [
+        {
+          "name": "Kathy Lee-Sepsick",
+          "linkedin": "https://www.linkedin.com/in/kathy-lee-sepsick-6b680b7/"
+        }
+      ],
+      recentNews: "Announced FDA approval for its FemaSeed intratubal insemination system for infertility in April 2025, preparing for commercial launch."
+    },
+    {
+      id: "neurotrauma_sciences",
+      name: "NeuroTrauma Sciences",
+      type: "company",
+      size: 12,
+      description: "Alpharetta-based biopharmaceutical company developing novel therapies for central nervous system injuries, including traumatic brain injury (TBI) and stroke.",
+      website: "https://neurotraumasciences.com/",
+      keyPersonnel: [
+        {
+          "name": "Anthony Caggiano, MD, PhD",
+          "linkedin": "https://www.linkedin.com/in/anthony-caggiano/"
+        }
+      ],
+      recentNews: "Initiated Phase 2b clinical trial for its lead drug candidate, NTS-104, for the treatment of moderate to severe traumatic brain injury in May 2025."
+    },
+    {
+      id: "ucb",
+      name: "UCB Pharma",
+      type: "public_company",
+      size: 12,
+      description: "Global biopharmaceutical company with a major U.S. headquarters in Smyrna, focusing on neurology and immunology.",
+      website: "https://www.ucb.com/",
+      keyPersonnel: [],
+      recentNews: "Major global biopharmaceutical company with its U.S. headquarters in Smyrna, one of the largest life science employers in the state and a critical anchor for talent and commercial activity."
+    },
+    {
+      id: "vivex",
+      name: "Vivex Biologics",
+      type: "company",
+      size: 13,
+      description: "Regenerative medicine company specializing in the development of naturally sourced, advanced biologic solutions for orthopedic, spine, and wound care applications.",
+      website: "https://vivex.com/",
+      keyPersonnel: [
+        {
+          "name": "John McCallum",
+          "linkedin": "https://www.linkedin.com/in/john-mccallum-7292b328/"
+        }
+      ],
+      recentNews: "Published positive 12-month follow-up data from a clinical study on its VIA Disc NP allograft for degenerative disc disease in a leading orthopedic journal."
     }
   ],
 
   links: [
     // --- Core Academic Collaborations ---
-    { source: "emory", target: "gatech", type: "collaboration", description: "Joint Coulter Department of Biomedical Engineering" },
-    { source: "emory", target: "gsu", type: "collaboration", description: "NIH Antivirals Center (AC/DC)" },
-    { source: "emory", target: "morehouse", type: "collaboration", description: "Georgia CTSA Alliance" },
-    { source: "gatech", target: "morehouse", type: "collaboration", description: "Georgia CTSA Alliance" },
-    { source: "emory", target: "cdc", type: "collaboration", description: "Numerous research partnerships" },
-    { source: "emory", target: "choa", type: "collaboration", description: "Academic partner in pediatric research and clinical training" },
-    { source: "gatech", target: "choa", type: "collaboration", description: "Collaborates on pediatric medtech and translational research" },
+    { source: "emory", target: "gatech", type: "partnership", description: "Joint Coulter Department of Biomedical Engineering" },
+    { source: "emory", target: "gsu", type: "partnership", description: "NIH Antivirals Center (AC/DC)" },
+    { source: "emory", target: "morehouse", type: "partnership", description: "Georgia CTSA Alliance" },
+    { source: "gatech", target: "morehouse", type: "partnership", description: "Georgia CTSA Alliance" },
+    { source: "emory", target: "cdc", type: "partnership", description: "Numerous research partnerships" },
+    { source: "emory", target: "choa", type: "partnership", description: "Academic partner in pediatric research and clinical training" },
+    { source: "gatech", target: "choa", type: "partnership", description: "Collaborates on pediatric medtech and translational research" },
     { source: "emory", target: "emory_healthcare", type: "affiliation", description: "Clinical enterprise of Emory University; partner for translational and digital health research" },
     { source: "emory_healthcare", target: "florence", type: "pilot", description: "Florence's eClinical tools validated in Emory Healthcare Innovation Hub pilot programs" },
     { source: "switchboard_md", target: "emory_healthcare", type: "pilot", description: "Partnered with Emory Healthcare to implement and validate clinical operations and AI workflow tools" },
-    { source: "switchboard_md", target: "emory", type: "collaboration", description: "Founded by Emory-affiliated physicians and collaborates on applied AI and clinical operations research" },
+    { source: "switchboard_md", target: "emory", type: "partnership", description: "Founded by Emory-affiliated physicians and collaborates on applied AI and clinical operations research" },
     { source: "catalyst", target: "wellstar", type: "affiliation", description: "Catalyst is the innovation and venture arm of Wellstar Health System" },
-    { source: "emory", target: "grady", type: "collaboration", description: "Emory partners with Grady for clinical care, research, and workforce development" },
-    { source: "morehouse", target: "grady", type: "collaboration", description: "Morehouse School of Medicine is a core academic partner at Grady" },
-    { source: "georgia_ctsa", target: "emory", type: "collaboration", description: "Core CTSA partner leading clinical trials infrastructure and translational science programs." },
-    { source: "georgia_ctsa", target: "gatech", type: "collaboration", description: "Georgia Tech co-leads Georgia CTSA efforts in device development, data science, and commercialization support." },
-    { source: "georgia_ctsa", target: "morehouse", type: "collaboration", description: "Partner in CTSA community engagement, clinical trial access, and translational research training." },
-    { source: "georgia_ctsa", target: "gsu", type: "collaboration", description: "Contributes public health and behavioral science expertise to statewide CTSA programs." },
+    { source: "emory", target: "grady", type: "partnership", description: "Emory partners with Grady for clinical care, research, and workforce development" },
+    { source: "morehouse", target: "grady", type: "partnership", description: "Morehouse School of Medicine is a core academic partner at Grady" },
+    { source: "georgia_ctsa", target: "emory", type: "partnership", description: "Core CTSA partner leading clinical trials infrastructure and translational science programs." },
+    { source: "georgia_ctsa", target: "gatech", type: "partnership", description: "Georgia Tech co-leads Georgia CTSA efforts in device development, data science, and commercialization support." },
+    { source: "georgia_ctsa", target: "morehouse", type: "partnership", description: "Partner in CTSA community engagement, clinical trial access, and translational research training." },
+    { source: "georgia_ctsa", target: "gsu", type: "partnership", description: "Contributes public health and behavioral science expertise to statewide CTSA programs." },
     { source: "georgia_ctsa", target: "grady", type: "infrastructure", description: "Operates clinical research units within Grady for translational and population health research." },
     { source: "georgia_ctsa", target: "choa", type: "infrastructure", description: "Supports pediatric clinical research infrastructure at CHOA sites." },
 
     // --- VA Academic & Clinical Research Partnerships ---
-    { source: "department_of_veterans_affairs", target: "emory", type: "collaboration", description: "Joint clinical research, many dual-appointed physician-scientists, major partner in translational medicine and clinical trials." },
-    { source: "department_of_veterans_affairs", target: "morehouse", type: "collaboration", description: "NIH-funded clinical and translational science, joint community health studies as part of Georgia CTSA." },
-    { source: "department_of_veterans_affairs", target: "gatech", type: "collaboration", description: "Device testing, digital health, and engineering partnerships on medtech pilots and translational projects." },
+    { source: "department_of_veterans_affairs", target: "emory", type: "partnership", description: "Joint clinical research, many dual-appointed physician-scientists, major partner in translational medicine and clinical trials." },
+    { source: "department_of_veterans_affairs", target: "morehouse", type: "partnership", description: "NIH-funded clinical and translational science, joint community health studies as part of Georgia CTSA." },
+    { source: "department_of_veterans_affairs", target: "gatech", type: "partnership", description: "Device testing, digital health, and engineering partnerships on medtech pilots and translational projects." },
     { source: "department_of_veterans_affairs", target: "georgia_ctsa", type: "affiliation", description: "Formal affiliate of the Georgia Clinical & Translational Science Alliance (Georgia CTSA), Atlanta's NIH translational research consortium." },
 
-    { source: "nucleate_atlanta", target: "gatech", type: "collaboration", description: "Nucleate Atlanta recruits founders and fellows from Georgia Tech graduate programs." },
-    { source: "nucleate_atlanta", target: "emory", type: "collaboration", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
-    { source: "nucleate_atlanta", target: "uga", type: "collaboration", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
-    { source: "nucleate_atlanta", target: "gsu", type: "collaboration", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
+    { source: "nucleate_atlanta", target: "gatech", type: "partnership", description: "Nucleate Atlanta recruits founders and fellows from Georgia Tech graduate programs." },
+    { source: "nucleate_atlanta", target: "emory", type: "partnership", description: "Nucleate Atlanta partners with Emory students, postdocs, and faculty to launch biotech ventures." },
+    { source: "nucleate_atlanta", target: "uga", type: "partnership", description: "UGA students participate in Nucleate Atlanta's Activator and fellowship programs." },
+    { source: "nucleate_atlanta", target: "gsu", type: "partnership", description: "Georgia State students participate in Nucleate's regional cohort for Atlanta-based life sciences innovation." },
 
     { source: "gsu", target: "collabtech_gsu", type: "infrastructure", description: "CollabTech is Georgia State University's life sciences incubator providing lab space and core research facilities." },
 
@@ -2378,7 +2490,6 @@ export const atlantaBiotechEcosystem = {
     { source: "emory", target: "neurop", type: "spinout", description: "Founded by Emory faculty" },
     { source: "emory", target: "altesa", type: "spinout", description: "Formed via Emory's DRIVE institute" },
     { source: "emory", target: "braintrust", type: "spinout", description: "Founded by Emory faculty" },
-    { source: "emory", target: "topodx", type: "spinout", description: "Co-founded by Emory and GT researchers" },
     { source: "emory", target: "cambium_oncology", type: "spinout", description: "Founded on IP licensed from Emory University; works closely with Winship Cancer Institute" },
     { source: "gatech", target: "micron", type: "spinout", description: "Technology developed at Georgia Tech" },
     { source: "gatech", target: "clearside", type: "spinout", description: "Based on GT/Emory microneedle tech" },
@@ -2386,29 +2497,28 @@ export const atlantaBiotechEcosystem = {
     { source: "gatech", target: "oxos", type: "spinout", description: "Formed via CREATE-X program" },
     { source: "gatech", target: "sanguina", type: "spinout", description: "Co-founded by GT alumna from student research" },
     { source: "sanguina", target: "emory", type: "spinout", description: "Georgia Tech / Emory research spinout—AnemoCheck platform developed with Wilbur Lam (Emory/GT) and clinically validated using Emory patient data." },
-    { source: "gatech", target: "topodx", type: "spinout", description: "Developed out of Georgia Tech research" },
     { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
     { source: "gatech", target: "andson_biotech", type: "spinout", description: "Georgia Tech spinout commercializing DynaChip™ microfluidic technology." },
     { source: "gatech", target: "axion_biosystems", type: "spinout", description: "Founded based on licensed technology from Georgia Tech NanoBioSensors Lab." },
-    { source: "emory", target: "metaclipse", type: "collaboration", description: "Emory-affiliated advisors and founders contribute scientific expertise to VLP platform development." },
+    { source: "emory", target: "metaclipse", type: "partnership", description: "Emory-affiliated advisors and founders contribute scientific expertise to VLP platform development." },
     { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
     // --- VC Investments ---
     { source: "portal", target: "moonlight", type: "investment", description: "Co-led Series A for peanut allergy immunotherapy platform" },
     { source: "portal", target: "synaptrix", type: "investment", description: "Portfolio company focused on post-surgical pain management" },
-    { source: "portal", target: "topodx", type: "investment", description: "Portfolio company advancing AI-driven AST diagnostics" },
-    { source: "armor_medical", target: "portal", type: "incubated_at", description: "Armor Medical is a tenant of Portal Innovations' BioSpark Labs at Science Square" },
+    { source: "armor_medical", target: "portal", type: "tenant", description: "Armor Medical is a tenant of Portal Innovations' BioSpark Labs at Science Square" },
     { source: "eddf", target: "allonix", type: "investment", description: "EDDF portfolio investment in IBD therapeutics" },
     { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
 
     { source: "catalyst", target: "armor_medical", type: "investment", description: "Catalyst by Wellstar invested in Armor Medical to support development of Maternal aRMOR wearable (Jun 2025)." },
+    { source: "catalyst", target: "artpharmacy", type: "partnership", description: "Catalyst by Wellstar leaders have publicly discussed their work with Art Pharmacy in forums and publications as part of their strategy to address social determinants of health in the community." },
     { source: "gra_fund", target: "huxley_medical", type: "investment", description: "Portfolio investment in Huxley's SANSA patch platform for cardio-sleep diagnostics." },
     { source: "gra_fund", target: "biocircuit_technologies", type: "investment", description: "Early-stage investment in BioCircuit's Nerve Tape® nerve repair technology." },
     { source: "gra_fund", target: "geovax", type: "investment", description: "GeoVax is in the GRA Venture Fund portfolio" },
     { source: "gra_fund", target: "clearside", type: "investment", description: "GRA Venture Fund held a 7.2% stake pre-IPO" },
     { source: "gra_fund", target: "axion_biosystems", type: "investment", description: "GRA VF led Axion's early-stage round" },
-    { source: "gra", target: "huxley_medical", type: "funded_by", description: "Huxley Medical is listed in GRA's portfolio" },
+    { source: "gra", target: "huxley_medical", type: "funding", description: "Huxley Medical received non-dilutive funding from GRA's portfolio programs" },
 
     // --- Accelerator & Incubator Support ---
     { source: "atdc", target: "gatech", type: "affiliation", description: "Program of Georgia Tech" },
@@ -2425,33 +2535,33 @@ export const atlantaBiotechEcosystem = {
     // --- DRIVE Relationships ---
     { source: "emory", target: "drive", type: "affiliation", description: "Emory-formed drug development accelerator for antiviral therapeutics" },
 
-    { source: "drive", target: "eddf", type: "origin", description: "Established EDDF using royalties from DRIVE-licensed drug molnupiravir (LAGEVRIO)" },
+    { source: "drive", target: "eddf", type: "funding", description: "Established EDDF using royalties from DRIVE-licensed drug molnupiravir (LAGEVRIO)" },
     { source: "drive", target: "altesa", type: "spinout", description: "Antiviral spinout formed via DRIVE to develop Vapendavir and other respiratory virus therapies" },
-    { source: "drive", target: "agrithera", type: "funded_by", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
+    { source: "drive", target: "agrithera", type: "funding", description: "Supported preclinical work on cannabinoid-based neurotherapeutics" },
 
     // --- Key Partnerships & Affiliations ---
     { source: "gatech", target: "science_square", type: "development", description: "Development partner (via GATV)" },
-    { source: "emory", target: "science_square", type: "housed_at", description: "Seven Emory labs relocating to Science Square (2025)" },
+    { source: "emory", target: "science_square", type: "tenant", description: "Seven Emory labs relocating to Science Square (2025)" },
     { source: "science_square", target: "portal", type: "tenant", description: "Anchor tenant" },
     { source: "portal", target: "emory", type: "education_program", description: "Co-leads the Emory x Portal Innovation Certificate Program to train faculty and clinicians in biotech commercialization" },
     { source: "portal", target: "jones_day", type: "education_program", description: "Co-hosts the Brewed & Briefed legal education series for life sciences founders at Portal's Atlanta office" },
 
     { source: "portal", target: "radyus", type: "partnership", description: "Radyus Research is a Portal partner providing preclinical CRO services to early-stage life sciences ventures." },
-    { source: "portal", target: "armor_medical", type: "member", description: "Armor Medical is a Portal Atlanta member company." },
-    { source: "portal", target: "oridivus", type: "member", description: "Oridivus is a Portal Atlanta member company." },
-    { source: "portal", target: "orthopreserve", type: "member", description: "OrthoPreserve is a Portal Atlanta member company." },
-    { source: "portal", target: "lymphatech", type: "member", description: "LymphaTech is a Portal Atlanta member company." },
-    { source: "portal", target: "ethos_medical", type: "member", description: "Ethos Medical is a Portal Atlanta member company." },
-    { source: "portal", target: "oncospherix", type: "member", description: "OncoSpherix is a Portal Atlanta member company." },
-    { source: "portal", target: "palate_therapeutics", type: "member", description: "Palate Therapeutics is a Portal Atlanta member company." },
-    { source: "portal", target: "lybbie", type: "member", description: "Lybbie is a Portal Atlanta member company." },
-    { source: "aruna_bio", target: "uga", type: "collaboration", description: "Aruna Bio is headquartered in Athens, GA and collaborates with University of Georgia on neural stem cell research and drug development." },
+    { source: "portal", target: "armor_medical", type: "tenant", description: "Armor Medical is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "oridivus", type: "tenant", description: "Oridivus is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "orthopreserve", type: "tenant", description: "OrthoPreserve is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "lymphatech", type: "tenant", description: "LymphaTech is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "ethos_medical", type: "tenant", description: "Ethos Medical is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "oncospherix", type: "tenant", description: "OncoSpherix is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "palate_therapeutics", type: "tenant", description: "Palate Therapeutics is a tenant at Portal's BioSpark Labs facility." },
+    { source: "portal", target: "lybbie", type: "tenant", description: "Lybbie is a tenant at Portal's BioSpark Labs facility." },
+    { source: "aruna_bio", target: "uga", type: "partnership", description: "Aruna Bio is headquartered in Athens, GA and collaborates with University of Georgia on neural stem cell research and drug development." },
     { source: "accuitis", target: "emory", type: "spinout", description: "Accuitis Pharmaceuticals key technology was discovered by Emory University." },
-    { source: "accuitis", target: "gra", type: "program", description: "Accuitis is a participant in the Georgia Research Alliance Venture Lab program." },
-    { source: "diasyst", target: "emory", type: "collaboration", description: "Diasyst is backed by decades of research at Emory University and the VA." },
+    { source: "accuitis", target: "gra", type: "support", description: "Accuitis is a participant in the Georgia Research Alliance Venture Lab program." },
+    { source: "diasyst", target: "emory", type: "spinout", description: "Diasyst is an Emory spin-out company. Core intellectual property was developed from research conducted at Emory by Dr. Lawrence Phillips, a professor of endocrinology." },
     { source: "diasyst", target: "gra", type: "funding", description: "Diasyst received GRA funding in 2019." },
-    { source: "earlitec", target: "emory", type: "collaboration", description: "EarliTec Diagnostics collaborates with Emory University on autism research and clinical validation studies." },
-    { source: "kodikaz", target: "emory", type: "collaboration", description: "Kodikaz Therapeutics collaborates with Emory University on gene therapy research. Co-Founder Dr. Leon Bernal-Mizrachi is Associate Professor in the Department of Hematology and Medical Oncology at Emory University School of Medicine." },
+    { source: "earlitec", target: "emory", type: "partnership", description: "EarliTec Diagnostics collaborates with Emory University on autism research and clinical validation studies." },
+    { source: "kodikaz", target: "emory", type: "partnership", description: "Kodikaz Therapeutics collaborates with Emory University on gene therapy research. Co-Founder Dr. Leon Bernal-Mizrachi is Associate Professor in the Department of Hematology and Medical Oncology at Emory University School of Medicine." },
     { source: "nyra_medical", target: "emory", type: "spinout", description: "Nyra Medical was founded in 2021 based on intellectual property developed at Emory University by Dr. Murali Padala. The company licensed its core CARLEN technology from Emory University." },
     { source: "gra_fund", target: "accuitis", type: "investment", description: "Accuitis is a GRA Venture Fund portfolio company developing dermatology drugs for rosacea." },
     { source: "gra_fund", target: "aruna_bio", type: "investment", description: "ArunA Biomedical is a GRA Venture Fund portfolio company developing exosome therapeutics for neurodegeneration." },
@@ -2463,17 +2573,17 @@ export const atlantaBiotechEcosystem = {
 
     { source: "catalyst", target: "atdc", type: "partnership", description: "Formal partnership for HealthTech pipeline" },
 
-    { source: "biolocity", target: "emory", type: "collaboration", description: "Joint program with Emory" },
-    { source: "biolocity", target: "gatech", type: "collaboration", description: "Joint program with Georgia Tech" },
+    { source: "biolocity", target: "emory", type: "partnership", description: "Joint program with Emory" },
+    { source: "biolocity", target: "gatech", type: "partnership", description: "Joint program with Georgia Tech" },
     { source: "biolocity", target: "lab2launch", type: "support", description: "Biolocity subsidizes and guides startups in Lab2Launch, includes programmatic support and consultation." },
     { source: "emory", target: "lab2launch", type: "infrastructure", description: "Lab2Launch located onsite at Emory's HSRB II Innovation Floor; supports Emory-affiliated innovators." },
     { source: "emory_ott", target: "emory", type: "affiliation", description: "Office of Technology Transfer is Emory's formal commercialization & IP licensing arm." },
-    { source: "emory_ott", target: "biolocity", type: "collaboration", description: "OTT collaborates with Biolocity to connect researchers to commercialization funding and support programs." },
+    { source: "emory_ott", target: "biolocity", type: "partnership", description: "OTT collaborates with Biolocity to connect researchers to commercialization funding and support programs." },
     
     // --- Quadrant-i Relationships ---
     { source: "gatech", target: "quadrant_i", type: "affiliation", description: "Quadrant-i is a Georgia Tech commercialization and venture creation unit accelerating research translation into startups." },
-    { source: "quadrant_i", target: "biolocity", type: "collaboration", description: "Quadrant-i Principals advise Biolocity projects and help connect funded teams to investors and partners." },
-    { source: "quadrant_i", target: "emory", type: "collaboration", description: "Collaborates on Emory-affiliated Biolocity projects such as Infinite Loupe and OnCuRNA." },
+    { source: "quadrant_i", target: "biolocity", type: "partnership", description: "Quadrant-i Principals advise Biolocity projects and help connect funded teams to investors and partners." },
+    { source: "quadrant_i", target: "emory", type: "partnership", description: "Collaborates on Emory-affiliated Biolocity projects such as Infinite Loupe and OnCuRNA." },
     { source: "quadrant_i", target: "exvade_bioscience", type: "support", description: "Supported commercialization of continuous glioblastoma biopsy device developed at Georgia Tech." },
     { source: "quadrant_i", target: "oncurna", type: "support", description: "Assisted Georgia Tech researchers in forming OnCuRNA, focused on solid tumor RNAi therapeutics." },
     { source: "biolocity", target: "oncurna", type: "support", description: "Biolocity-supported startup selected in 2025-26 cohort for ovarian cancer drug delivery platform, receiving mentorship and non-dilutive funding." },
@@ -2485,14 +2595,13 @@ export const atlantaBiotechEcosystem = {
     
     // --- VentureLab Relationships ---
     { source: "gatech", target: "venturelab", type: "affiliation", description: "VentureLab is Georgia Tech's startup launch and commercialization support hub." },
-    { source: "venturelab", target: "quadrant_i", type: "collaboration", description: "VentureLab works upstream of Quadrant-i to identify and nurture promising tech transfer opportunities." },
-    { source: "venturelab", target: "biolocity", type: "collaboration", description: "Refers high-potential GT teams to Biolocity for translational medtech support and funding." },
-    { source: "gatech", target: "cambium_oncology", type: "research_collaboration", description: "Georgia Tech bioengineering and drug manufacturing support" },
+    { source: "venturelab", target: "quadrant_i", type: "partnership", description: "VentureLab works upstream of Quadrant-i to identify and nurture promising tech transfer opportunities." },
+    { source: "venturelab", target: "biolocity", type: "partnership", description: "Refers high-potential GT teams to Biolocity for translational medtech support and funding." },
+    { source: "gatech", target: "cambium_oncology", type: "partnership", description: "Georgia Tech bioengineering and drug manufacturing support" },
     // --- VA Company & Startup Connections ---
     { source: "department_of_veterans_affairs", target: "oxos", type: "pilot", description: "Pilot program with OXOS Medical for handheld X-ray devices in VA hospitals." },
-    { source: "department_of_veterans_affairs", target: "diasyst", type: "collaboration", description: "Clinical implementation and validation of diabetes management software, building on joint Emory/VA research." },
+    { source: "department_of_veterans_affairs", target: "diasyst", type: "partnership", description: "Technology was significantly validated through clinical trials at the Atlanta VA Medical Center. Many Emory physicians, including Dr. Phillips, hold joint appointments and conduct research at the VA, enabling crucial real-world testing that formed the foundation of the company." },
     { source: "department_of_veterans_affairs", target: "tempus", type: "research", description: "Tempus (via acquired AKESOgen) conducted genomics work for VA's Million Veteran Program." },
-    { source: "oxos", target: "department_of_veterans_affairs", type: "partnership", description: "Pilot program partnership" },
     { source: "micron", target: "cdc", type: "partnership", description: "Research and clinical trial collaboration" },
     { source: "iqvia_atlanta", target: "cdc", type: "partnership", description: "Real-world data partnership" },
 
@@ -2503,7 +2612,7 @@ export const atlantaBiotechEcosystem = {
     { source: "biotechexec", target: "biolocity", type: "service", description: "Mentorship and strategic consulting" },
     { source: "mng_labs", target: "emory", type: "service", description: "Neurogenetic testing services vendor" },
     { source: "radyus", target: "cambium_oncology", type: "service", description: "Longtime CRO and strategic consulting partner" },
-    { source: "woven_health_collective", target: "emory_healthcare", type: "collaboration", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
+    { source: "woven_health_collective", target: "emory_healthcare", type: "partnership", description: "Strategic partner to the Emory Healthcare Innovation Hub, enabling clinical UX testing and healthcare product validation" },
 
     { source: "vizzia", target: "choa", type: "service", description: "Selected by CHOA to deploy RTLS and asset tracking for Arthur M. Blank Hospital (2025)." },
     { source: "vizzia", target: "piedmont_healthcare", type: "service", description: "Deployed RTLS platform at Marcus Tower (16-story, $603M hospital project)." },
@@ -2527,9 +2636,9 @@ export const atlantaBiotechEcosystem = {
     { source: "gra", target: "axion_biosystems", type: "funding", description: "Received financial backing via Georgia Research Alliance / GRA Venture Fund." },
 
     { source: "emory_biotech_consulting_club", target: "emory", type: "affiliation", description: "EBCC is a student-led commercialization and consulting program founded at Emory University under the Innovate@Emory initiative." },
-    { source: "emory_biotech_consulting_club", target: "emory_ott", type: "collaboration", description: "Partners with Emory OTT to support technology assessments and connect student teams to Emory-affiliated startups." },
-    { source: "emory_biotech_consulting_club", target: "biolocity", type: "collaboration", description: "Collaborates with Biolocity to provide commercialization strategy support for early-stage medtech projects." },
-    { source: "emory_biotech_consulting_club", target: "gra", type: "collaboration", description: "Engages with Georgia Research Alliance through university commercialization programs and startup diligence efforts." },
+    { source: "emory_biotech_consulting_club", target: "emory_ott", type: "partnership", description: "Partners with Emory OTT to support technology assessments and connect student teams to Emory-affiliated startups." },
+    { source: "emory_biotech_consulting_club", target: "biolocity", type: "partnership", description: "Collaborates with Biolocity to provide commercialization strategy support for early-stage medtech projects." },
+    { source: "emory_biotech_consulting_club", target: "gra", type: "partnership", description: "Engages with Georgia Research Alliance through university commercialization programs and startup diligence efforts." },
     
     // --- EBCC Client Relationships ---
     { source: "emory_biotech_consulting_club", target: "switchboard_md", type: "service", description: "EBCC Spring 2024 client - provided commercialization strategy for AI-based triage platform" },
@@ -2545,7 +2654,7 @@ export const atlantaBiotechEcosystem = {
     { source: "andson_biotech", target: "collabtech_gsu", type: "tenant", description: "Andson Biotech is a current tenant at CollabTech incubator, developing DynaChip™ microfluidic technology." },
     { source: "palate_therapeutics", target: "collabtech_gsu", type: "tenant", description: "Palate Therapeutics is a current tenant at CollabTech incubator, developing oral oligonucleotide therapy for metabolic diseases." },
     { source: "piezo_therapeutics", target: "collabtech_gsu", type: "tenant", description: "Piezo Therapeutics is a current tenant at CollabTech incubator, developing energy-based nucleic acid delivery technology." },
-    { source: "neurop", target: "collabtech_gsu", type: "graduate", description: "NeurOp is a CollabTech graduate, having incubated at Georgia State University's biotech incubator before advancing to clinical-stage CNS drug development." },
+    { source: "neurop", target: "collabtech_gsu", type: "support", description: "NeurOp is a CollabTech graduate (alumni of the incubator), having incubated at Georgia State University's biotech incubator before advancing to clinical-stage CNS drug development." },
 
     // --- Emtherapro and Arc Proteomics Connections ---
     { source: "emtherapro", target: "emory", type: "spinout", description: "Emory spinout transforming diagnosis and treatment of neurodegenerative diseases through pioneering science, data and insights." },
@@ -2563,7 +2672,7 @@ export const atlantaBiotechEcosystem = {
     { source: "tether_therapeutics", target: "emory", type: "spinout", description: "Tether Therapeutics technology based on novel chemistry developed at Emory University, creating next-generation delivery solutions for mRNA therapeutics targeting respiratory diseases." },
 
     // --- YoungHeartValve Connections ---
-    { source: "youngheartvalve", target: "emory", type: "collaboration", description: "YoungHeartValve collaborates with Emory-affiliated cardiovascular surgeons including Vinod Thourani, MD of Piedmont Heart Institute, for clinical validation of next-generation heart valve technology." },
+    { source: "youngheartvalve", target: "emory", type: "partnership", description: "YoungHeartValve collaborates with Emory-affiliated cardiovascular surgeons including Vinod Thourani, MD of Piedmont Heart Institute, for clinical validation of next-generation heart valve technology." },
 
     // --- Ora Lee Foundation Connections ---
     // Note: No verified connections found yet - will add when confirmed relationships are established
@@ -2576,13 +2685,13 @@ export const atlantaBiotechEcosystem = {
 
     // --- Veranex Connections ---
     { source: "veranex", target: "science_square", type: "tenant", description: "Veranex operates T3 Labs facility in Science Square, Atlanta's growing life sciences hub." },
-    { source: "veranex", target: "cdc", type: "collaboration", description: "Strategic community relationship with CDC for preclinical research and public health initiatives." },
-    { source: "veranex", target: "emory", type: "collaboration", description: "Strategic community relationship with Emory University for preclinical research and medical device development." },
-    { source: "veranex", target: "gatech", type: "collaboration", description: "Strategic community relationship with Georgia Tech for preclinical research and medical device development." },
+    { source: "veranex", target: "cdc", type: "partnership", description: "Strategic community relationship with CDC for preclinical research and public health initiatives." },
+    { source: "veranex", target: "emory", type: "partnership", description: "Strategic community relationship with Emory University for preclinical research and medical device development." },
+    { source: "veranex", target: "gatech", type: "partnership", description: "Strategic community relationship with Georgia Tech for preclinical research and medical device development." },
     { source: "youngheartvalve", target: "veranex", type: "service", description: "YoungHeartValve located at T3 Labs facility (now part of Veranex) for preclinical testing and development support." },
 
     // --- OZ-Link Technologies Connections ---
-    { source: "oz_link_technologies", target: "gatech", type: "collaboration", description: "OZ-Link Technologies collaborates with Georgia Tech researchers on polymer chemistry and bioconjugation technologies for controlled release therapeutics." },
+    { source: "oz_link_technologies", target: "gatech", type: "partnership", description: "OZ-Link Technologies collaborates with Georgia Tech researchers on polymer chemistry and bioconjugation technologies for controlled release therapeutics." },
 
     // --- LymphaTech Connections ---
     { source: "lymphatech", target: "gatech", type: "spinout", description: "LymphaTech founded by Georgia Tech faculty J. Brandon Dixon, developing innovative 3D measurement solutions for clinical care using proprietary algorithms for accurate human geometry measurement." },
@@ -2593,7 +2702,7 @@ export const atlantaBiotechEcosystem = {
 
     // --- Ethos Medical Connections ---
     { source: "ethos_medical", target: "portal", type: "tenant", description: "Ethos Medical is a member of Portal Innovations at Science Square, receiving support for development of the Iris needle guidance system for safer percutaneous access." },
-    { source: "ethos_medical", target: "gatech", type: "collaboration", description: "Ethos Medical collaborates with Georgia Tech researchers on ultrasound-guided needle guidance technology and real-time image guidance systems." },
+    { source: "ethos_medical", target: "gatech", type: "partnership", description: "Ethos Medical collaborates with Georgia Tech researchers on ultrasound-guided needle guidance technology and real-time image guidance systems." },
 
     // --- Rowen Foundation Partner Connections ---
     { source: "rowen", target: "uga", type: "partnership", description: "University of Georgia is a key academic partner in Rowen Foundation's 2,000-acre knowledge community focused on biotech, agriculture, and environmental tech." },
@@ -2603,8 +2712,6 @@ export const atlantaBiotechEcosystem = {
 
     // --- VA Broader Ecosystem Connection ---
     { source: "department_of_veterans_affairs", target: "georgia_bio", type: "affiliation", description: "Ecosystem stakeholder and clinical/policy partner for workforce and translational initiatives." },
-
-    { source: "gra_fund", target: "earlitec", type: "investment", description: "EarliTec Diagnostics is a GRA Venture Fund portfolio company developing early diagnosis tools for autism and developmental disorders." },
 
     // --- Keiretsu Forum South-East Connections ---
     { source: "keiretsu_southeast", target: "atdc", type: "partnership", description: "Co-hosts Southeast Investor Conference (July 2025) with ATDC and Angel Capital Association, featuring startup showcases and angel investment programming for accredited investors." },
@@ -2632,7 +2739,9 @@ export const nodeTypeMap = {
     vc: 'Investor',
     accelerator: 'Accelerator & Incubator',
     incubator: 'Accelerator & Incubator',
-    facility: 'Accelerator & Incubator',
+    accelerator_program: 'Accelerator & Incubator',
+    lab_facility: 'Accelerator & Incubator',
+    research_park: 'Accelerator & Incubator',
     government: 'Government & Trade Org',
     trade: 'Government & Trade Org',
     development: 'Government & Trade Org',
