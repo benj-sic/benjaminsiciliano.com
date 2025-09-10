@@ -527,7 +527,11 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     'vc': 'vcs',
     'incubator': 'incubators',
     'accelerator': 'incubators',
+    'accelerator_program': 'incubators',  // Added missing mapping
     'facility': 'facilities',
+    'lab_facility': 'facilities',  // Added missing mapping
+    'research_park': 'facilities',  // Added missing mapping
+    'research_institution': 'universities',  // Added missing mapping
     'health_system': 'healthSystems',
     'serviceProvider': 'serviceProviders',
     'government': 'government',
