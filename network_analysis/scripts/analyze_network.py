@@ -148,7 +148,19 @@ class BiotechNetworkAnalyzer:
         degree_centrality = nx.degree_centrality(self.G)
         betweenness_centrality = nx.betweenness_centrality(self.G)
         closeness_centrality = nx.closeness_centrality(self.G)
+        harmonic_centrality = nx.harmonic_centrality(self.G)
+        eigenvector_centrality = nx.eigenvector_centrality(self.G, max_iter=1000)
+        pagerank = nx.pagerank(self.G, alpha=0.85, max_iter=1000)
         clustering_coefficient = nx.clustering(self.G)
+        
+        # Calculate structural holes metrics
+        structural_holes = self._calculate_structural_holes()
+        
+        # Calculate core-periphery analysis
+        core_periphery = self._calculate_core_periphery()
+        
+        # Calculate network resilience metrics
+        resilience_metrics = self._calculate_network_resilience()
         
         # Community detection using Louvain algorithm
         try:
@@ -172,10 +184,32 @@ class BiotechNetworkAnalyzer:
                 'degree_centrality': degree_centrality.get(node, 0),
                 'betweenness_centrality': betweenness_centrality.get(node, 0),
                 'closeness_centrality': closeness_centrality.get(node, 0),
+                'harmonic_centrality': harmonic_centrality.get(node, 0),
+                'eigenvector_centrality': eigenvector_centrality.get(node, 0),
+                'pagerank': pagerank.get(node, 0),
                 'clustering_coefficient': clustering_coefficient.get(node, 0),
+                'structural_holes': structural_holes.get(node, {}),
+                'core_periphery': core_periphery.get(node, {}),
                 'community_id': community_id,
                 'community_label': community_label
             }
+        
+        # Calculate rich club coefficient for different degree thresholds
+        rich_club_coeffs = {}
+        max_degree = max(dict(self.G.degree()).values()) if self.G.number_of_nodes() > 0 else 0
+        for k in range(1, min(max_degree + 1, 20)):  # Calculate for degrees 1-19 or max degree
+            try:
+                coeff = nx.rich_club_coefficient(self.G, k)
+                # Handle both scalar and dict returns
+                if isinstance(coeff, dict):
+                    rich_club_coeffs[k] = coeff.get(k, 0.0)
+                else:
+                    rich_club_coeffs[k] = float(coeff) if coeff is not None else 0.0
+            except:
+                rich_club_coeffs[k] = 0.0
+        
+        # Calculate community quality metrics
+        community_quality = self._calculate_community_quality()
         
         # Network-level metrics
         self.network_stats = {
@@ -183,6 +217,11 @@ class BiotechNetworkAnalyzer:
             'diameter': nx.diameter(self.G) if nx.is_connected(self.G) else 'Not connected',
             'average_path_length': nx.average_shortest_path_length(self.G) if nx.is_connected(self.G) else 'Not connected',
             'assortativity': nx.degree_assortativity_coefficient(self.G),
+            'transitivity': nx.transitivity(self.G),
+            'average_clustering': nx.average_clustering(self.G),
+            'rich_club_coefficients': rich_club_coeffs,
+            'community_quality': community_quality,
+            'resilience_metrics': resilience_metrics,
             'num_communities': len(set(self.communities.values())),
             'modularity': community_louvain.modularity(self.communities, self.G) if self.communities else 0,
             'num_nodes': self.G.number_of_nodes(),
@@ -192,6 +231,403 @@ class BiotechNetworkAnalyzer:
         }
         
         print("Metrics calculated successfully!")
+    
+    def _calculate_structural_holes(self):
+        """Calculate structural holes metrics for each node."""
+        structural_holes = {}
+        
+        for node in self.G.nodes():
+            neighbors = list(self.G.neighbors(node))
+            if len(neighbors) < 2:
+                # Single neighbor or isolated node
+                structural_holes[node] = {
+                    'effective_size': 0.0,
+                    'efficiency': 0.0,
+                    'constraint': 1.0,
+                    'hierarchy': 0.0
+                }
+                continue
+            
+            # Calculate effective size (Burt's measure)
+            # Effective size = n - (2t/n) where n = degree, t = ties among neighbors
+            neighbor_edges = 0
+            for i, neighbor1 in enumerate(neighbors):
+                for neighbor2 in neighbors[i+1:]:
+                    if self.G.has_edge(neighbor1, neighbor2):
+                        neighbor_edges += 1
+            
+            n = len(neighbors)
+            t = neighbor_edges
+            effective_size = n - (2 * t / n) if n > 0 else 0
+            
+            # Calculate efficiency (effective size / degree)
+            efficiency = effective_size / n if n > 0 else 0
+            
+            # Calculate constraint (Burt's constraint measure)
+            # Constraint = sum((p_ij + sum(p_ik * p_kj))^2) for all j != i
+            constraint = 0.0
+            for j in neighbors:
+                p_ij = 1.0 / n  # Direct connection strength
+                
+                # Calculate indirect connections through other neighbors
+                indirect_sum = 0.0
+                for k in neighbors:
+                    if k != j and self.G.has_edge(k, j):
+                        p_ik = 1.0 / n
+                        p_kj = 1.0 / self.G.degree(k) if self.G.degree(k) > 0 else 0
+                        indirect_sum += p_ik * p_kj
+                
+                total_connection = p_ij + indirect_sum
+                constraint += total_connection ** 2
+            
+            # Calculate hierarchy (constraint concentration)
+            # Hierarchy = 1 - (sum of squared constraint components) / (constraint^2)
+            if constraint > 0:
+                constraint_components = []
+                for j in neighbors:
+                    p_ij = 1.0 / n
+                    indirect_sum = 0.0
+                    for k in neighbors:
+                        if k != j and self.G.has_edge(k, j):
+                            p_ik = 1.0 / n
+                            p_kj = 1.0 / self.G.degree(k) if self.G.degree(k) > 0 else 0
+                            indirect_sum += p_ik * p_kj
+                    total_connection = p_ij + indirect_sum
+                    constraint_components.append(total_connection ** 2)
+                
+                hierarchy = 1 - (sum(constraint_components) / (constraint ** 2)) if constraint > 0 else 0
+            else:
+                hierarchy = 0.0
+            
+            structural_holes[node] = {
+                'effective_size': effective_size,
+                'efficiency': efficiency,
+                'constraint': constraint,
+                'hierarchy': hierarchy
+            }
+        
+        return structural_holes
+    
+    def _calculate_core_periphery(self):
+        """Calculate core-periphery analysis for each node."""
+        core_periphery = {}
+        
+        # Calculate degree centrality for all nodes
+        degree_centrality = nx.degree_centrality(self.G)
+        
+        # Calculate k-core decomposition
+        k_core = nx.core_number(self.G)
+        max_k_core = max(k_core.values()) if k_core else 0
+        
+        # Calculate betweenness centrality for core identification
+        betweenness_centrality = nx.betweenness_centrality(self.G)
+        
+        # Calculate clustering coefficient
+        clustering_coeff = nx.clustering(self.G)
+        
+        # Calculate average neighbor degree
+        avg_neighbor_degree = {}
+        for node in self.G.nodes():
+            neighbors = list(self.G.neighbors(node))
+            if neighbors:
+                neighbor_degrees = [self.G.degree(neighbor) for neighbor in neighbors]
+                avg_neighbor_degree[node] = np.mean(neighbor_degrees)
+            else:
+                avg_neighbor_degree[node] = 0
+        
+        # Calculate core-periphery score for each node
+        for node in self.G.nodes():
+            # Normalize metrics to 0-1 scale
+            norm_degree = degree_centrality.get(node, 0)
+            norm_betweenness = betweenness_centrality.get(node, 0)
+            norm_k_core = k_core.get(node, 0) / max_k_core if max_k_core > 0 else 0
+            norm_clustering = clustering_coeff.get(node, 0)
+            norm_avg_neighbor_degree = avg_neighbor_degree.get(node, 0) / max(avg_neighbor_degree.values()) if avg_neighbor_degree else 0
+            
+            # Core-periphery score (higher = more core-like)
+            # Core nodes: high degree, high betweenness, high k-core, low clustering, high neighbor degree
+            core_score = (
+                0.3 * norm_degree +
+                0.3 * norm_betweenness +
+                0.2 * norm_k_core +
+                0.1 * (1 - norm_clustering) +  # Low clustering is more core-like
+                0.1 * norm_avg_neighbor_degree
+            )
+            
+            # Determine core vs periphery classification
+            # Use percentile-based classification
+            all_scores = [core_score for core_score in [core_score]]
+            threshold = np.percentile([core_score for node in self.G.nodes()], 70)  # Top 30% are core
+            
+            is_core = core_score >= threshold
+            
+            # Calculate additional metrics
+            degree = self.G.degree(node)
+            k_core_value = k_core.get(node, 0)
+            
+            # Calculate local clustering (how clustered the node's neighborhood is)
+            local_clustering = clustering_coeff.get(node, 0)
+            
+            # Calculate participation coefficient (how well connected to different communities)
+            participation_coeff = 0.0
+            if self.communities:
+                community_connections = {}
+                for neighbor in self.G.neighbors(node):
+                    neighbor_community = self.communities.get(neighbor, 0)
+                    community_connections[neighbor_community] = community_connections.get(neighbor_community, 0) + 1
+                
+                if community_connections:
+                    total_connections = sum(community_connections.values())
+                    participation_coeff = 1 - sum((count/total_connections)**2 for count in community_connections.values())
+            
+            core_periphery[node] = {
+                'core_score': core_score,
+                'is_core': is_core,
+                'k_core': k_core_value,
+                'participation_coefficient': participation_coeff,
+                'local_clustering': local_clustering,
+                'avg_neighbor_degree': avg_neighbor_degree.get(node, 0)
+            }
+        
+        return core_periphery
+    
+    def _calculate_network_resilience(self):
+        """Calculate network resilience metrics."""
+        resilience_metrics = {}
+        
+        # Basic connectivity metrics
+        num_nodes = self.G.number_of_nodes()
+        num_edges = self.G.number_of_edges()
+        
+        # Calculate largest connected component
+        if nx.is_connected(self.G):
+            largest_cc_size = num_nodes
+            largest_cc_ratio = 1.0
+        else:
+            connected_components = list(nx.connected_components(self.G))
+            largest_cc = max(connected_components, key=len)
+            largest_cc_size = len(largest_cc)
+            largest_cc_ratio = largest_cc_size / num_nodes if num_nodes > 0 else 0
+        
+        # Calculate node connectivity (minimum nodes to remove to disconnect)
+        try:
+            node_connectivity = nx.node_connectivity(self.G)
+        except:
+            node_connectivity = 0
+        
+        # Calculate edge connectivity (minimum edges to remove to disconnect)
+        try:
+            edge_connectivity = nx.edge_connectivity(self.G)
+        except:
+            edge_connectivity = 0
+        
+        # Calculate algebraic connectivity (Fiedler value)
+        try:
+            algebraic_connectivity = nx.algebraic_connectivity(self.G)
+        except:
+            algebraic_connectivity = 0
+        
+        # Calculate robustness to random failures (simulation)
+        robustness_random = self._simulate_random_failures()
+        
+        # Calculate robustness to targeted attacks (simulation)
+        robustness_targeted = self._simulate_targeted_attacks()
+        
+        # Calculate critical nodes (nodes whose removal most affects connectivity)
+        critical_nodes = self._identify_critical_nodes()
+        
+        # Calculate network efficiency
+        try:
+            efficiency = nx.global_efficiency(self.G)
+        except:
+            efficiency = 0
+        
+        # Calculate vulnerability (inverse of robustness)
+        vulnerability = 1 - robustness_targeted if robustness_targeted > 0 else 1
+        
+        resilience_metrics = {
+            'largest_cc_size': largest_cc_size,
+            'largest_cc_ratio': largest_cc_ratio,
+            'node_connectivity': node_connectivity,
+            'edge_connectivity': edge_connectivity,
+            'algebraic_connectivity': algebraic_connectivity,
+            'robustness_random': robustness_random,
+            'robustness_targeted': robustness_targeted,
+            'efficiency': efficiency,
+            'vulnerability': vulnerability,
+            'critical_nodes_count': len(critical_nodes)
+        }
+        
+        return resilience_metrics
+    
+    def _simulate_random_failures(self, num_simulations=100):
+        """Simulate random node failures to test robustness."""
+        if self.G.number_of_nodes() < 2:
+            return 0.0
+        
+        total_robustness = 0.0
+        for _ in range(num_simulations):
+            # Randomly remove 10% of nodes
+            nodes_to_remove = int(0.1 * self.G.number_of_nodes())
+            if nodes_to_remove == 0:
+                nodes_to_remove = 1
+            
+            # Create a copy of the graph
+            G_copy = self.G.copy()
+            nodes = list(G_copy.nodes())
+            np.random.shuffle(nodes)
+            
+            # Remove random nodes
+            for node in nodes[:nodes_to_remove]:
+                if G_copy.has_node(node):
+                    G_copy.remove_node(node)
+            
+            # Calculate remaining connectivity
+            if G_copy.number_of_nodes() > 0:
+                remaining_cc = max(len(cc) for cc in nx.connected_components(G_copy))
+                robustness = remaining_cc / self.G.number_of_nodes()
+            else:
+                robustness = 0.0
+            
+            total_robustness += robustness
+        
+        return total_robustness / num_simulations
+    
+    def _simulate_targeted_attacks(self, num_simulations=10):
+        """Simulate targeted attacks on high-degree nodes."""
+        if self.G.number_of_nodes() < 2:
+            return 0.0
+        
+        total_robustness = 0.0
+        for _ in range(num_simulations):
+            # Remove top 10% of nodes by degree
+            nodes_to_remove = int(0.1 * self.G.number_of_nodes())
+            if nodes_to_remove == 0:
+                nodes_to_remove = 1
+            
+            # Get nodes sorted by degree
+            node_degrees = [(node, self.G.degree(node)) for node in self.G.nodes()]
+            node_degrees.sort(key=lambda x: x[1], reverse=True)
+            
+            # Create a copy of the graph
+            G_copy = self.G.copy()
+            
+            # Remove high-degree nodes
+            for node, _ in node_degrees[:nodes_to_remove]:
+                if G_copy.has_node(node):
+                    G_copy.remove_node(node)
+            
+            # Calculate remaining connectivity
+            if G_copy.number_of_nodes() > 0:
+                remaining_cc = max(len(cc) for cc in nx.connected_components(G_copy))
+                robustness = remaining_cc / self.G.number_of_nodes()
+            else:
+                robustness = 0.0
+            
+            total_robustness += robustness
+        
+        return total_robustness / num_simulations
+    
+    def _identify_critical_nodes(self):
+        """Identify nodes whose removal most affects network connectivity."""
+        if self.G.number_of_nodes() < 2:
+            return []
+        
+        critical_nodes = []
+        original_cc = max(len(cc) for cc in nx.connected_components(self.G))
+        
+        for node in self.G.nodes():
+            # Create a copy without this node
+            G_copy = self.G.copy()
+            G_copy.remove_node(node)
+            
+            if G_copy.number_of_nodes() > 0:
+                remaining_cc = max(len(cc) for cc in nx.connected_components(G_copy))
+                impact = (original_cc - remaining_cc) / original_cc
+                
+                if impact > 0.1:  # Node removal causes >10% connectivity loss
+                    critical_nodes.append((node, impact))
+        
+        # Sort by impact and return top nodes
+        critical_nodes.sort(key=lambda x: x[1], reverse=True)
+        return [node for node, impact in critical_nodes[:10]]  # Top 10 critical nodes
+    
+    def _calculate_community_quality(self):
+        """Calculate community quality metrics."""
+        if not self.communities:
+            return {
+                'average_conductance': 0.0,
+                'average_cut_ratio': 0.0,
+                'average_expansion': 0.0,
+                'average_internal_density': 0.0,
+                'average_edges_inside': 0.0,
+                'average_edges_outside': 0.0
+            }
+        
+        # Group nodes by community
+        community_nodes = {}
+        for node, community_id in self.communities.items():
+            if community_id not in community_nodes:
+                community_nodes[community_id] = []
+            community_nodes[community_id].append(node)
+        
+        # Calculate quality metrics for each community
+        conductances = []
+        cut_ratios = []
+        expansions = []
+        internal_densities = []
+        edges_inside = []
+        edges_outside = []
+        
+        for community_id, nodes in community_nodes.items():
+            if len(nodes) < 2:  # Skip single-node communities
+                continue
+                
+            # Create subgraph for this community
+            community_subgraph = self.G.subgraph(nodes)
+            
+            # Calculate edges inside community
+            edges_inside_count = community_subgraph.number_of_edges()
+            edges_inside.append(edges_inside_count)
+            
+            # Calculate edges outside community
+            edges_outside_count = 0
+            for node in nodes:
+                for neighbor in self.G.neighbors(node):
+                    if neighbor not in nodes:
+                        edges_outside_count += 1
+            edges_outside.append(edges_outside_count)
+            
+            # Calculate conductance (lower is better)
+            total_edges = edges_inside_count + edges_outside_count
+            if total_edges > 0:
+                conductance = edges_outside_count / total_edges
+                conductances.append(conductance)
+            
+            # Calculate cut ratio (lower is better)
+            if len(nodes) > 0:
+                cut_ratio = edges_outside_count / (len(nodes) * (self.G.number_of_nodes() - len(nodes)))
+                cut_ratios.append(cut_ratio)
+            
+            # Calculate expansion (lower is better)
+            if len(nodes) > 0:
+                expansion = edges_outside_count / len(nodes)
+                expansions.append(expansion)
+            
+            # Calculate internal density (higher is better)
+            if len(nodes) > 1:
+                max_possible_edges = len(nodes) * (len(nodes) - 1) / 2
+                internal_density = edges_inside_count / max_possible_edges if max_possible_edges > 0 else 0
+                internal_densities.append(internal_density)
+        
+        return {
+            'average_conductance': np.mean(conductances) if conductances else 0.0,
+            'average_cut_ratio': np.mean(cut_ratios) if cut_ratios else 0.0,
+            'average_expansion': np.mean(expansions) if expansions else 0.0,
+            'average_internal_density': np.mean(internal_densities) if internal_densities else 0.0,
+            'average_edges_inside': np.mean(edges_inside) if edges_inside else 0.0,
+            'average_edges_outside': np.mean(edges_outside) if edges_outside else 0.0
+        }
     
     def _generate_community_labels(self):
         """Generate meaningful labels for communities based on their characteristics."""
@@ -325,10 +761,25 @@ class BiotechNetworkAnalyzer:
         # 4. Top 10 Clustering Coefficient
         self._plot_top_clustering()
         
-        # 5. Organization Type Breakdown
+        # 5. Top 10 Eigenvector Centrality
+        self._plot_top_eigenvector()
+        
+        # 6. Top 10 Harmonic Centrality
+        self._plot_top_harmonic()
+        
+        # 7. Top 10 PageRank
+        self._plot_top_pagerank()
+        
+        # 8. Top 10 Structural Holes (Effective Size)
+        self._plot_top_structural_holes()
+        
+        # 9. Core-Periphery Analysis
+        self._plot_core_periphery()
+        
+        # 10. Organization Type Breakdown
         self._plot_organization_types()
         
-        # 6. Connection Type Breakdown
+        # 11. Connection Type Breakdown
         self._plot_connection_types()
         
         print("All visualizations created!")
@@ -340,8 +791,8 @@ class BiotechNetworkAnalyzer:
         
         fig, ax = plt.subplots(figsize=(10, 8))
         
-        # Create horizontal bar plot
-        y_pos = np.arange(len(top_hubs))
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_hubs))[::-1]  # Reverse to put highest at top
         bars = ax.barh(y_pos, top_hubs['degree_centrality'], 
                       color=plt.cm.viridis(np.linspace(0, 1, len(top_hubs))),
                       edgecolor='black', linewidth=1.5)
@@ -354,7 +805,7 @@ class BiotechNetworkAnalyzer:
         
         # Add value labels on bars
         for i, (idx, row) in enumerate(top_hubs.iterrows()):
-            ax.text(row['degree_centrality'] + 0.001, i, f'{row["degree_centrality"]:.3f}', 
+            ax.text(row['degree_centrality'] + 0.001, len(top_hubs) - 1 - i, f'{row["degree_centrality"]:.3f}', 
                    va='center', ha='left', fontweight='bold')
         
         # Remove top and right spines
@@ -372,8 +823,8 @@ class BiotechNetworkAnalyzer:
         
         fig, ax = plt.subplots(figsize=(10, 8))
         
-        # Create horizontal bar plot
-        y_pos = np.arange(len(top_bridges))
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_bridges))[::-1]  # Reverse to put highest at top
         bars = ax.barh(y_pos, top_bridges['betweenness_centrality'],
                       color=plt.cm.plasma(np.linspace(0, 1, len(top_bridges))),
                       edgecolor='black', linewidth=1.5)
@@ -386,7 +837,7 @@ class BiotechNetworkAnalyzer:
         
         # Add value labels on bars
         for i, (idx, row) in enumerate(top_bridges.iterrows()):
-            ax.text(row['betweenness_centrality'] + 0.001, i, f'{row["betweenness_centrality"]:.3f}', 
+            ax.text(row['betweenness_centrality'] + 0.001, len(top_bridges) - 1 - i, f'{row["betweenness_centrality"]:.3f}', 
                    va='center', ha='left', fontweight='bold')
         
         # Remove top and right spines
@@ -404,8 +855,8 @@ class BiotechNetworkAnalyzer:
         
         fig, ax = plt.subplots(figsize=(10, 8))
         
-        # Create horizontal bar plot
-        y_pos = np.arange(len(top_closeness))
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_closeness))[::-1]  # Reverse to put highest at top
         bars = ax.barh(y_pos, top_closeness['closeness_centrality'],
                       color=plt.cm.coolwarm(np.linspace(0, 1, len(top_closeness))),
                       edgecolor='black', linewidth=1.5)
@@ -418,7 +869,7 @@ class BiotechNetworkAnalyzer:
         
         # Add value labels on bars
         for i, (idx, row) in enumerate(top_closeness.iterrows()):
-            ax.text(row['closeness_centrality'] + 0.001, i, f'{row["closeness_centrality"]:.3f}', 
+            ax.text(row['closeness_centrality'] + 0.001, len(top_closeness) - 1 - i, f'{row["closeness_centrality"]:.3f}', 
                    va='center', ha='left', fontweight='bold')
         
         # Remove top and right spines
@@ -436,8 +887,8 @@ class BiotechNetworkAnalyzer:
         
         fig, ax = plt.subplots(figsize=(10, 8))
         
-        # Create horizontal bar plot
-        y_pos = np.arange(len(top_clustering))
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_clustering))[::-1]  # Reverse to put highest at top
         bars = ax.barh(y_pos, top_clustering['clustering_coefficient'],
                       color=plt.cm.Set2(np.linspace(0, 1, len(top_clustering))),
                       edgecolor='black', linewidth=1.5)
@@ -450,7 +901,7 @@ class BiotechNetworkAnalyzer:
         
         # Add value labels on bars
         for i, (idx, row) in enumerate(top_clustering.iterrows()):
-            ax.text(row['clustering_coefficient'] + 0.001, i, f'{row["clustering_coefficient"]:.3f}', 
+            ax.text(row['clustering_coefficient'] + 0.001, len(top_clustering) - 1 - i, f'{row["clustering_coefficient"]:.3f}', 
                    va='center', ha='left', fontweight='bold')
         
         # Remove top and right spines
@@ -461,6 +912,228 @@ class BiotechNetworkAnalyzer:
         plt.savefig('visualizations/top_10_clustering.svg', format='svg', dpi=300, bbox_inches='tight')
         plt.close()
     
+    def _plot_top_eigenvector(self):
+        """Plot top 10 nodes by eigenvector centrality."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        top_eigenvector = df.nlargest(10, 'eigenvector_centrality')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest value at top
+        y_pos = np.arange(len(top_eigenvector))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_eigenvector['eigenvector_centrality'],
+                      color=plt.cm.RdYlBu(np.linspace(0, 1, len(top_eigenvector))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_eigenvector['node_id']])
+        ax.set_xlabel('Eigenvector Centrality', fontweight='bold')
+        ax.set_title('Top 10 Nodes by Eigenvector Centrality', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_eigenvector.iterrows()):
+            ax.text(row['eigenvector_centrality'] + 0.001, len(top_eigenvector) - 1 - i, f'{row["eigenvector_centrality"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_eigenvector.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_top_harmonic(self):
+        """Plot top 10 nodes by harmonic centrality."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        top_harmonic = df.nlargest(10, 'harmonic_centrality')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest value at top
+        y_pos = np.arange(len(top_harmonic))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_harmonic['harmonic_centrality'],
+                      color=plt.cm.RdYlGn(np.linspace(0, 1, len(top_harmonic))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_harmonic['node_id']])
+        ax.set_xlabel('Harmonic Centrality', fontweight='bold')
+        ax.set_title('Top 10 Nodes by Harmonic Centrality', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_harmonic.iterrows()):
+            ax.text(row['harmonic_centrality'] + 0.001, len(top_harmonic) - 1 - i, f'{row["harmonic_centrality"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_harmonic.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_top_pagerank(self):
+        """Plot top 10 nodes by PageRank."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        top_pagerank = df.nlargest(10, 'pagerank')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest value at top
+        y_pos = np.arange(len(top_pagerank))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_pagerank['pagerank'],
+                      color=plt.cm.PuOr(np.linspace(0, 1, len(top_pagerank))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_pagerank['node_id']])
+        ax.set_xlabel('PageRank Score', fontweight='bold')
+        ax.set_title('Top 10 Nodes by PageRank', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_pagerank.iterrows()):
+            ax.text(row['pagerank'] + 0.001, len(top_pagerank) - 1 - i, f'{row["pagerank"]:.4f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_pagerank.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_top_structural_holes(self):
+        """Plot top 10 nodes by structural holes (effective size)."""
+        # Extract effective size from structural holes data
+        effective_sizes = {}
+        for node, metrics in self.node_metrics.items():
+            if 'structural_holes' in metrics and isinstance(metrics['structural_holes'], dict):
+                effective_sizes[node] = metrics['structural_holes'].get('effective_size', 0)
+            else:
+                effective_sizes[node] = 0
+        
+        # Create DataFrame and get top 10
+        df = pd.DataFrame(list(effective_sizes.items()), columns=['node_id', 'effective_size'])
+        top_structural_holes = df.nlargest(10, 'effective_size')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest value at top
+        y_pos = np.arange(len(top_structural_holes))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_structural_holes['effective_size'],
+                      color=plt.cm.viridis(np.linspace(0, 1, len(top_structural_holes))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_structural_holes['node_id']])
+        ax.set_xlabel('Effective Size (Structural Holes)', fontweight='bold')
+        ax.set_title('Top 10 Nodes by Structural Holes (Effective Size)', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_structural_holes.iterrows()):
+            ax.text(row['effective_size'] + 0.1, len(top_structural_holes) - 1 - i, f'{row["effective_size"]:.2f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_structural_holes.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    def _plot_core_periphery(self):
+        """Plot core-periphery analysis showing core vs periphery organizations."""
+        # Extract core-periphery data
+        core_scores = {}
+        is_core = {}
+        k_core_values = {}
+        
+        for node, metrics in self.node_metrics.items():
+            if 'core_periphery' in metrics and isinstance(metrics['core_periphery'], dict):
+                core_scores[node] = metrics['core_periphery'].get('core_score', 0)
+                is_core[node] = metrics['core_periphery'].get('is_core', False)
+                k_core_values[node] = metrics['core_periphery'].get('k_core', 0)
+            else:
+                core_scores[node] = 0
+                is_core[node] = False
+                k_core_values[node] = 0
+        
+        # Create figure with two subplots
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
+        
+        # Plot 1: Core Score vs K-Core with Core/Periphery classification
+        core_nodes = [node for node, is_core_val in is_core.items() if is_core_val]
+        periphery_nodes = [node for node, is_core_val in is_core.items() if not is_core_val]
+        
+        # Plot core nodes
+        core_scores_core = [core_scores[node] for node in core_nodes]
+        k_core_core = [k_core_values[node] for node in core_nodes]
+        ax1.scatter(core_scores_core, k_core_core, c='red', alpha=0.7, s=60, label='Core', edgecolors='black')
+        
+        # Plot periphery nodes
+        core_scores_periphery = [core_scores[node] for node in periphery_nodes]
+        k_core_periphery = [k_core_values[node] for node in periphery_nodes]
+        ax1.scatter(core_scores_periphery, k_core_periphery, c='blue', alpha=0.7, s=60, label='Periphery', edgecolors='black')
+        
+        ax1.set_xlabel('Core Score', fontweight='bold')
+        ax1.set_ylabel('K-Core Value', fontweight='bold')
+        ax1.set_title('Core-Periphery Analysis: Core Score vs K-Core', fontweight='bold')
+        ax1.legend()
+        ax1.grid(True, alpha=0.3)
+        
+        # Add labels for top nodes
+        top_nodes = sorted(core_scores.items(), key=lambda x: x[1], reverse=True)[:5]
+        for node, score in top_nodes:
+            if node in core_scores and node in k_core_values:
+                ax1.annotate(self.node_names.get(node, node), 
+                           (core_scores[node], k_core_values[node]),
+                           xytext=(5, 5), textcoords='offset points',
+                           fontsize=8, alpha=0.8)
+        
+        # Plot 2: Top 10 Core Organizations
+        sorted_core_scores = sorted(core_scores.items(), key=lambda x: x[1], reverse=True)[:10]
+        top_core_nodes = [node for node, score in sorted_core_scores]
+        top_core_scores = [score for node, score in sorted_core_scores]
+        
+        y_pos = np.arange(len(top_core_nodes))[::-1]  # Reverse to put highest at top
+        colors = ['red' if is_core[node] else 'blue' for node in top_core_nodes]
+        
+        bars = ax2.barh(y_pos, top_core_scores, color=colors, alpha=0.7, edgecolor='black', linewidth=1)
+        
+        ax2.set_yticks(y_pos)
+        ax2.set_yticklabels([self.node_names.get(node, node) for node in top_core_nodes])
+        ax2.set_xlabel('Core Score', fontweight='bold')
+        ax2.set_title('Top 10 Organizations by Core Score', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (node, score) in enumerate(sorted_core_scores):
+            ax2.text(score + 0.01, len(top_core_nodes) - 1 - i, f'{score:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Add legend for colors
+        from matplotlib.patches import Patch
+        legend_elements = [Patch(facecolor='red', alpha=0.7, label='Core'),
+                          Patch(facecolor='blue', alpha=0.7, label='Periphery')]
+        ax2.legend(handles=legend_elements, loc='lower right')
+        
+        # Remove top and right spines
+        ax1.spines['top'].set_visible(False)
+        ax1.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/core_periphery_analysis.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
     def _plot_organization_types(self):
         """Plot breakdown of organization types."""
         # Count organization types
@@ -469,14 +1142,14 @@ class BiotechNetworkAnalyzer:
             org_type = node.get('type', 'Unknown')
             org_types[org_type] = org_types.get(org_type, 0) + 1
         
-        # Sort by count
-        sorted_types = sorted(org_types.items(), key=lambda x: x[1], reverse=True)
+        # Sort by count and take top 10
+        sorted_types = sorted(org_types.items(), key=lambda x: x[1], reverse=True)[:10]
         
         fig, ax = plt.subplots(figsize=(12, 8))
         
-        # Create horizontal bar plot
+        # Create horizontal bar plot with highest values at top
         types, counts = zip(*sorted_types)
-        y_pos = np.arange(len(types))
+        y_pos = np.arange(len(types))[::-1]  # Reverse to put highest at top
         
         # Calculate percentages
         total = sum(counts)
@@ -490,11 +1163,11 @@ class BiotechNetworkAnalyzer:
         ax.set_yticks(y_pos)
         ax.set_yticklabels([t.replace('_', ' ').title() for t in types], fontweight='bold')
         ax.set_xlabel('Number of Organizations', fontweight='bold')
-        ax.set_title('Organization Type Breakdown', fontweight='bold')
+        ax.set_title('Top 10 Organization Types', fontweight='bold')
         
         # Add value and percentage labels on bars
         for i, (count, pct) in enumerate(zip(counts, percentages)):
-            ax.text(count + 0.5, i, f'{count} ({pct:.1f}%)', 
+            ax.text(count + 0.5, len(types) - 1 - i, f'{count} ({pct:.1f}%)', 
                    va='center', ha='left', fontweight='bold')
         
         # Remove top and right spines
@@ -513,14 +1186,14 @@ class BiotechNetworkAnalyzer:
             conn_type = link.get('type', 'Unknown')
             conn_types[conn_type] = conn_types.get(conn_type, 0) + 1
         
-        # Sort by count
-        sorted_types = sorted(conn_types.items(), key=lambda x: x[1], reverse=True)
+        # Sort by count and take top 10
+        sorted_types = sorted(conn_types.items(), key=lambda x: x[1], reverse=True)[:10]
         
         fig, ax = plt.subplots(figsize=(12, 8))
         
-        # Create horizontal bar plot
+        # Create horizontal bar plot with highest values at top
         types, counts = zip(*sorted_types)
-        y_pos = np.arange(len(types))
+        y_pos = np.arange(len(types))[::-1]  # Reverse to put highest at top
         
         # Calculate percentages
         total = sum(counts)
@@ -534,11 +1207,11 @@ class BiotechNetworkAnalyzer:
         ax.set_yticks(y_pos)
         ax.set_yticklabels([t.replace('_', ' ').title() for t in types], fontweight='bold')
         ax.set_xlabel('Number of Connections', fontweight='bold')
-        ax.set_title('Connection Type Breakdown', fontweight='bold')
+        ax.set_title('Top 10 Connection Types', fontweight='bold')
         
         # Add value and percentage labels on bars
         for i, (count, pct) in enumerate(zip(counts, percentages)):
-            ax.text(count + 0.5, i, f'{count} ({pct:.1f}%)', 
+            ax.text(count + 0.5, len(types) - 1 - i, f'{count} ({pct:.1f}%)', 
                    va='center', ha='left', fontweight='bold')
         
         # Remove top and right spines
@@ -562,6 +1235,14 @@ class BiotechNetworkAnalyzer:
         print(f"  • Density: {self.network_stats['density']:.3f}")
         print(f"  • Communities: {self.network_stats['num_communities']}")
         print(f"  • Modularity: {self.network_stats['modularity']:.3f}")
+        print(f"  • Transitivity: {self.network_stats['transitivity']:.3f}")
+        print(f"  • Average Clustering: {self.network_stats['average_clustering']:.3f}")
+        
+        # Display rich club coefficients for key degree thresholds
+        rich_club = self.network_stats['rich_club_coefficients']
+        print(f"  • Rich Club Coefficient (degree ≥5): {float(rich_club.get(5, 0.0)):.3f}")
+        print(f"  • Rich Club Coefficient (degree ≥10): {float(rich_club.get(10, 0.0)):.3f}")
+        print(f"  • Rich Club Coefficient (degree ≥15): {float(rich_club.get(15, 0.0)):.3f}")
         
         if isinstance(self.network_stats['diameter'], (int, float)):
             print(f"  • Diameter: {self.network_stats['diameter']}")
@@ -574,6 +1255,29 @@ class BiotechNetworkAnalyzer:
             print(f"  • Average Path Length: {self.network_stats['average_path_length']}")
         
         print(f"  • Assortativity: {self.network_stats['assortativity']:.3f}")
+        
+        # Community Quality Metrics
+        cq = self.network_stats['community_quality']
+        print(f"\nCommunity Quality:")
+        print(f"  • Average Conductance: {cq['average_conductance']:.3f} (lower is better)")
+        print(f"  • Average Cut Ratio: {cq['average_cut_ratio']:.3f} (lower is better)")
+        print(f"  • Average Expansion: {cq['average_expansion']:.3f} (lower is better)")
+        print(f"  • Average Internal Density: {cq['average_internal_density']:.3f} (higher is better)")
+        print(f"  • Average Edges Inside: {cq['average_edges_inside']:.1f}")
+        print(f"  • Average Edges Outside: {cq['average_edges_outside']:.1f}")
+        
+        # Network Resilience Metrics
+        rm = self.network_stats['resilience_metrics']
+        print(f"\nNetwork Resilience:")
+        print(f"  • Largest Connected Component: {rm['largest_cc_size']} nodes ({rm['largest_cc_ratio']:.1%})")
+        print(f"  • Node Connectivity: {rm['node_connectivity']} (min nodes to disconnect)")
+        print(f"  • Edge Connectivity: {rm['edge_connectivity']} (min edges to disconnect)")
+        print(f"  • Algebraic Connectivity: {rm['algebraic_connectivity']:.3f} (higher = more robust)")
+        print(f"  • Robustness to Random Failures: {rm['robustness_random']:.3f}")
+        print(f"  • Robustness to Targeted Attacks: {rm['robustness_targeted']:.3f}")
+        print(f"  • Network Efficiency: {rm['efficiency']:.3f}")
+        print(f"  • Vulnerability: {rm['vulnerability']:.3f} (lower is better)")
+        print(f"  • Critical Nodes: {rm['critical_nodes_count']} nodes")
         
         # Top nodes
         df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
@@ -602,12 +1306,76 @@ class BiotechNetworkAnalyzer:
             display_name = self.node_names.get(row['node_id'], row['node_id'])
             print(f"  {i}. {display_name}: {row['clustering_coefficient']:.3f}")
         
+        print(f"\nTop 5 Eigenvector Centrality:")
+        top_eigenvector = df.nlargest(5, 'eigenvector_centrality')
+        for i, (idx, row) in enumerate(top_eigenvector.iterrows(), 1):
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            print(f"  {i}. {display_name}: {row['eigenvector_centrality']:.3f}")
+        
+        print(f"\nTop 5 Harmonic Centrality:")
+        top_harmonic = df.nlargest(5, 'harmonic_centrality')
+        for i, (idx, row) in enumerate(top_harmonic.iterrows(), 1):
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            print(f"  {i}. {display_name}: {row['harmonic_centrality']:.3f}")
+        
+        print(f"\nTop 5 PageRank:")
+        top_pagerank = df.nlargest(5, 'pagerank')
+        for i, (idx, row) in enumerate(top_pagerank.iterrows(), 1):
+            display_name = self.node_names.get(row['node_id'], row['node_id'])
+            print(f"  {i}. {display_name}: {row['pagerank']:.4f}")
+        
+        # Extract and display structural holes metrics
+        print(f"\nTop 5 Structural Holes (Effective Size):")
+        effective_sizes = {}
+        for node, metrics in self.node_metrics.items():
+            if 'structural_holes' in metrics and isinstance(metrics['structural_holes'], dict):
+                effective_sizes[node] = metrics['structural_holes'].get('effective_size', 0)
+            else:
+                effective_sizes[node] = 0
+        
+        # Sort by effective size
+        sorted_structural_holes = sorted(effective_sizes.items(), key=lambda x: x[1], reverse=True)
+        for i, (node, effective_size) in enumerate(sorted_structural_holes[:5], 1):
+            display_name = self.node_names.get(node, node)
+            print(f"  {i}. {display_name}: {effective_size:.2f}")
+        
+        # Extract and display core-periphery metrics
+        print(f"\nTop 5 Core Organizations (by Core Score):")
+        core_scores = {}
+        is_core = {}
+        for node, metrics in self.node_metrics.items():
+            if 'core_periphery' in metrics and isinstance(metrics['core_periphery'], dict):
+                core_scores[node] = metrics['core_periphery'].get('core_score', 0)
+                is_core[node] = metrics['core_periphery'].get('is_core', False)
+            else:
+                core_scores[node] = 0
+                is_core[node] = False
+        
+        # Sort by core score
+        sorted_core_scores = sorted(core_scores.items(), key=lambda x: x[1], reverse=True)
+        for i, (node, core_score) in enumerate(sorted_core_scores[:5], 1):
+            display_name = self.node_names.get(node, node)
+            core_status = "Core" if is_core[node] else "Periphery"
+            print(f"  {i}. {display_name}: {core_score:.3f} ({core_status})")
+        
+        # Count core vs periphery
+        core_count = sum(1 for is_core_val in is_core.values() if is_core_val)
+        periphery_count = len(is_core) - core_count
+        print(f"\nCore-Periphery Distribution:")
+        print(f"  • Core Organizations: {core_count} ({core_count/len(is_core)*100:.1f}%)")
+        print(f"  • Periphery Organizations: {periphery_count} ({periphery_count/len(is_core)*100:.1f}%)")
+        
         print(f"\nFiles Generated:")
         print(f"  • data/biotech_network_metrics.csv")
         print(f"  • visualizations/top_10_hubs.svg")
         print(f"  • visualizations/top_10_bridges.svg")
         print(f"  • visualizations/top_10_closeness.svg")
         print(f"  • visualizations/top_10_clustering.svg")
+        print(f"  • visualizations/top_10_eigenvector.svg")
+        print(f"  • visualizations/top_10_harmonic.svg")
+        print(f"  • visualizations/top_10_pagerank.svg")
+        print(f"  • visualizations/top_10_structural_holes.svg")
+        print(f"  • visualizations/core_periphery_analysis.svg")
         print(f"  • visualizations/organization_types.svg")
         print(f"  • visualizations/connection_types.svg")
         print(f"  • ANALYSIS_RESULTS.md")

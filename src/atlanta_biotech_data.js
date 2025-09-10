@@ -323,7 +323,7 @@ export const atlantaBiotechEcosystem = {
     },
     {
       id: "the_hatchery",
-      name: "The Hatchery at Emory",
+      name: "The Hatchery",
       type: "incubator",
       size: 10,
       description: "Emory's central hub for student-facing innovation and entrepreneurship across all nine schools. Industry-agnostic center providing configurable spaces, a makerspace with prototyping tools, and programs to support student innovators and entrepreneurs in any field.",
@@ -2380,7 +2380,7 @@ export const atlantaBiotechEcosystem = {
     },
     {
       id: "femasys",
-      name: "Femasys Inc.",
+      name: "Femasys",
       type: "public_company",
       size: 14,
       description: "Suwanee-based medtech company focused on developing innovative, non-surgical solutions for women's healthcare, including permanent birth control and infertility diagnostics.",
@@ -2757,12 +2757,52 @@ export const nodeColors = {
     'Academia & Research': '#0033A0', // Dark Blue
     'Company': '#0D6A42', // Green
     'Investor': '#F2A900', // Gold
-    'Accelerator & Incubator': '#A43533', // Red
+    'Accelerator & Incubator': '#E91E63', // Vibrant Magenta/Pink
     'Government & Trade Org': '#5A2D81', // Purple
     'Service Provider': '#545454', // Gray
     'Startup': '#00AEEF', // Light Blue
-    'Provider & Health System': '#7C9A7A', // Sage
+    'Provider & Health System': '#2E7D32', // Deep Forest Green
     'Community Builder': '#E67300', // Orange
+};
+
+export const linkTypeMap = {
+    // Financial relationships
+    investment: 'Financial',
+    funding: 'Financial',
+    
+    // Collaborative relationships
+    partnership: 'Collaboration',
+    research: 'Collaboration',
+    
+    // Support relationships
+    support: 'Support',
+    service: 'Support',
+    education_program: 'Support',
+    
+    // Organizational relationships
+    affiliation: 'Organizational',
+    spinout: 'Organizational',
+    
+    // Infrastructure relationships
+    tenant: 'Infrastructure',
+    infrastructure: 'Infrastructure',
+    
+    // Pilot/Testing relationships
+    pilot: 'Pilot & Testing'
+};
+
+export const linkColors = {
+    // High-importance links with vibrant, high-contrast colors
+    'Financial': '#1e90ff',       // Dodger Blue: Bright and clear on both themes
+    'Organizational': '#ff4757',  // A strong Red/Coral: High impact, works everywhere
+
+    // Secondary links with distinct colors
+    'Collaboration': '#00C2C7',   // A vibrant Teal: Excellent contrast and distinct from blue
+    'Pilot & Testing': '#f9a825', // A strong Gold/Mustard: Avoids the invisibility of pure yellow
+
+    // Contextual links with a still-visible but less prominent color
+    'Support': '#a55eea',         // A mid-tone Purple/Amethyst
+    'Infrastructure': '#778ca3'   // A desaturated Slate Blue that acts like a neutral color
 };
 
 export default atlantaBiotechEcosystem;

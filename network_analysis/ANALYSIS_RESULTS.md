@@ -11,7 +11,7 @@ This report presents the results of a comprehensive network analysis of the Atla
 - **Total Connections**: 206 (unique edges)
 - **Network Density**: 0.026 (sparse but well-connected)
 - **Communities Detected**: 31
-- **Modularity**: 0.446 (strong community structure)
+- **Modularity**: 0.440 (strong community structure)
 - **Assortativity**: -0.336 (negative, indicating diverse connections)
 
 ### Network Health Metrics
@@ -122,15 +122,15 @@ This report presents the results of a comprehensive network analysis of the Atla
 ## Community Analysis
 
 ### Community Structure
-The network contains 31 distinct communities with a modularity of 0.446, indicating strong community structure.
+The network contains 31 distinct communities with a modularity of 0.440, indicating strong community structure.
 
 ### Top 10 Communities by Size
-1. **Startup Hub: Georgia Tech (22 nodes)** - 22 organizations
-2. **Mixed: Emory University (19 nodes)** - 19 organizations
-3. **Startup Hub: GRA (17 nodes)** - 17 organizations
-4. **Startup Hub: Biolocity (14 nodes)** - 14 organizations
-5. **Mixed: Department of Veterans Affairs (11 nodes)** - 11 organizations
-6. **Startup Hub: ATDC (8 nodes)** - 8 organizations
+1. **Mixed: Emory University (21 nodes)** - 21 organizations
+2. **Startup Hub: Biolocity (16 nodes)** - 16 organizations
+3. **Startup Hub: GRA (15 nodes)** - 15 organizations
+4. **Startup Hub: Portal Innovations (15 nodes)** - 15 organizations
+5. **Startup Hub: Georgia Tech (13 nodes)** - 13 organizations
+6. **Mixed: Department of Veterans Affairs (11 nodes)** - 11 organizations
 7. **Startup Hub: GSU (7 nodes)** - 7 organizations
 8. **Startup Hub: Emory Healthcare (6 nodes)** - 6 organizations
 9. **Single Community: Agetech Connect** - 1 organizations
@@ -146,7 +146,7 @@ The network contains 31 distinct communities with a modularity of 0.446, indicat
 
 ### Network-Level Statistics
 - **Density**: 0.026 - Proportion of possible connections that exist
-- **Modularity**: 0.446 - Strength of community structure (0.3+ indicates strong structure)
+- **Modularity**: 0.440 - Strength of community structure (0.3+ indicates strong structure)
 - **Assortativity**: -0.336 - Tendency for similar nodes to connect (-1 to +1 scale)
 
 ### Network Health Assessment
@@ -204,7 +204,7 @@ The network contains 31 distinct communities with a modularity of 0.446, indicat
 
 ## Technical Details
 
-- **Analysis Date**: September 09, 2025
+- **Analysis Date**: September 10, 2025
 - **NetworkX Version**: 3.5
 - **Communities**: Detected using python-louvain
 - **Visualizations**: Generated as SVG files for publication quality

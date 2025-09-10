@@ -12,6 +12,7 @@ import * as d3 from 'd3';
 import { useTheme } from '../contexts/ThemeContext';
 import cacheManager from '../utils/cache.js';
 import performanceMonitor from '../utils/performance.js';
+import { applyDynamicSizing } from '../utils/centralityScoring.js';
 import './NetworkVisualization.css';
 
 const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false, onNodeClick, onEdgeClick, exploreMode = false, exploreState = null, onNodeToggle = null }, ref) => {
@@ -29,21 +30,38 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
   const [networkData, setNetworkData] = useState({ nodes: [], links: [] });
   const [nodeTypeMap, setNodeTypeMap] = useState({});
   const [nodeColors, setNodeColors] = useState({});
+  const [linkTypeMap, setLinkTypeMap] = useState({});
+  const [linkColors, setLinkColors] = useState({});
   
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
+      let rawData;
       if (dataFile === 'tech') {
-        const { atlantaTechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_tech_data.js');
-        setNetworkData(atlantaTechEcosystem);
+        const { atlantaTechEcosystem, nodeTypeMap: ntm, nodeColors: nc, linkTypeMap: ltm, linkColors: lc } = await import('../atlanta_tech_data.js');
+        rawData = atlantaTechEcosystem;
         setNodeTypeMap(ntm);
         setNodeColors(nc);
+        setLinkTypeMap(ltm || {});
+        setLinkColors(lc || {});
       } else {
-        const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc } = await import('../atlanta_biotech_data.js');
-        setNetworkData(atlantaBiotechEcosystem);
+        const { atlantaBiotechEcosystem, nodeTypeMap: ntm, nodeColors: nc, linkTypeMap: ltm, linkColors: lc } = await import('../atlanta_biotech_data.js');
+        rawData = atlantaBiotechEcosystem;
         setNodeTypeMap(ntm);
         setNodeColors(nc);
+        setLinkTypeMap(ltm || {});
+        setLinkColors(lc || {});
       }
+      
+      // Apply dynamic sizing by default
+      const dynamicData = applyDynamicSizing(rawData, {
+        minSize: 5,
+        maxSize: 30,
+        scalingMethod: 'logarithmic'
+      });
+      setNetworkData(dynamicData);
+      
+      console.log('Dynamic sizing applied');
       setIsLoading(false);
     };
     loadData();
@@ -438,11 +456,11 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
         '#0033A0': '#4A90E2', // Academia & Research / University - Lighter Blue
         '#0D6A42': '#4CAF50', // Company - Lighter Green
         '#F2A900': '#FFD54F', // Investor / Venture Capital - Lighter Gold
-        '#A43533': '#E57373', // Accelerator & Incubator - Lighter Red
+        '#E91E63': '#F48FB1', // Accelerator & Incubator - Lighter Magenta/Pink
         '#5A2D81': '#BA68C8', // Government & Trade Org - Lighter Purple
         '#545454': '#9E9E9E', // Service Provider - Lighter Gray
         '#00AEEF': '#81D4FA', // Startup - Lighter Blue
-        '#7C9A7A': '#A5D6A7', // Provider & Health System / Facilities - Lighter Sage
+        '#2E7D32': '#66BB6A', // Provider & Health System / Facilities - Lighter Forest Green
         '#E67300': '#FFB74D', // Community Builders - Lighter Orange
       };
       return colorMap[baseColor] || baseColor;
@@ -451,143 +469,42 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     return baseColor;
   };
 
-  // Enhanced link styling based on type with new relationship types
+  // Enhanced link styling based on centralized type mapping
   const getLinkStyle = (linkType) => {
-    switch (linkType) {
-      case 'spinout':
-        return {
-          stroke: '#ff6b6b',
-          strokeWidth: 6,
-          strokeDasharray: 'none',
-          opacity: 0.6
-        };
-      case 'investment':
-        return {
-          stroke: '#4ecdc4',
-          strokeWidth: 6,
-          strokeDasharray: '8,4',
-          opacity: 0.5
-        };
-      case 'collaboration':
-        return {
-          stroke: '#45b7d1',
-          strokeWidth: 6,
-          strokeDasharray: 'none',
-          opacity: 0.4
-        };
-      case 'research_collaboration':
-        return {
-          stroke: '#45b7d1',
-          strokeWidth: 6,
-          strokeDasharray: 'none',
-          opacity: 0.4
-        };
-      case 'partnership':
-        return {
-          stroke: '#96ceb4',
-          strokeWidth: 6,
-          strokeDasharray: '2,2',
-          opacity: 0.4
-        };
-      case 'service':
-        return {
-          stroke: '#ff8c42',
-          strokeWidth: 6,
-          strokeDasharray: '3,3',
-          opacity: 0.5
-        };
-      case 'support':
-        return {
-          stroke: '#dda0dd',
-          strokeWidth: 6,
-          strokeDasharray: '8,4',
-          opacity: 0.4
-        };
-      case 'affiliation':
-        return {
-          stroke: '#a8e6cf',
-          strokeWidth: 4,
-          strokeDasharray: 'none',
-          opacity: 0.3
-        };
-      case 'pilot':
-        return {
-          stroke: '#ffd93d',
-          strokeWidth: 6,
-          strokeDasharray: '4,4',
-          opacity: 0.5
-        };
-      case 'funding':
-        return {
-          stroke: '#6c5ce7',
-          strokeWidth: 6,
-          strokeDasharray: '6,3',
-          opacity: 0.5
-        };
-      case 'membership':
-        return {
-          stroke: '#fd79a8',
-          strokeWidth: 4,
-          strokeDasharray: '2,2',
-          opacity: 0.3
-        };
-      case 'development':
-        return {
-          stroke: '#00b894',
-          strokeWidth: 6,
-          strokeDasharray: 'none',
-          opacity: 0.4
-        };
-      case 'technology':
-        return {
-          stroke: '#fdcb6e',
-          strokeWidth: 6,
-          strokeDasharray: '3,3',
-          opacity: 0.5
-        };
-      case 'industry':
-        return {
-          stroke: '#e17055',
-          strokeWidth: 6,
-          strokeDasharray: 'none',
-          opacity: 0.4
-        };
-      case 'tenant':
-        return {
-          stroke: '#74b9ff',
-          strokeWidth: 4,
-          strokeDasharray: 'none',
-          opacity: 0.3
-        };
-      case 'origin':
-        return {
-          stroke: '#a29bfe',
-          strokeWidth: 6,
-          strokeDasharray: '8,4',
-          opacity: 0.5
-        };
-      case 'founding_support':
-        return {
-          stroke: '#fd79a8',
-          strokeWidth: 6,
-          strokeDasharray: '4,4',
-          opacity: 0.5
-        };
-      case 'education_program':
-        return {
-          stroke: '#9b59b6',
-          strokeWidth: 6,
-          strokeDasharray: '6,3',
-          opacity: 0.5
-        };
-      default:
-        return {
-          stroke: '#a0a0a0',
-          strokeWidth: 6,
-          strokeDasharray: 'none',
-          opacity: 0.2
-        };
-    }
+    // Get the category for this link type
+    const category = linkTypeMap[linkType] || 'Unknown';
+    
+    // Get the base color for this category
+    const baseColor = linkColors[category] || '#a0a0a0';
+    
+    // Define stroke patterns and weights based on category
+    const getCategoryStyle = (cat) => {
+      switch (cat) {
+        case 'Financial':
+          return { strokeWidth: 6, strokeDasharray: '8,4', opacity: 0.5 };
+        case 'Collaboration':
+          return { strokeWidth: 6, strokeDasharray: '2,2', opacity: 0.4 };
+        case 'Support':
+          return { strokeWidth: 6, strokeDasharray: '6,3', opacity: 0.4 };
+        case 'Organizational':
+          return { strokeWidth: 6, strokeDasharray: 'none', opacity: 0.6 };
+        case 'Infrastructure':
+          return { strokeWidth: 4, strokeDasharray: 'none', opacity: 0.3 };
+        case 'Pilot & Testing':
+          return { strokeWidth: 6, strokeDasharray: '4,4', opacity: 0.5 };
+        default:
+          return { strokeWidth: 6, strokeDasharray: 'none', opacity: 0.2 };
+      }
+    };
+    
+    const categoryStyle = getCategoryStyle(category);
+    
+    return {
+      stroke: baseColor,
+      strokeWidth: categoryStyle.strokeWidth,
+      strokeDasharray: categoryStyle.strokeDasharray,
+      opacity: categoryStyle.opacity
+    };
   };
 
   // Performance optimization: Debounced filter updates

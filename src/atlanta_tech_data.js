@@ -53,13 +53,13 @@ export const nodeColors = {
   'Startup': '#00AEEF', // Light Blue
   'Company': '#0D6A42', // Green
   'University': '#0033A0', // Dark Blue
-  'Incubator': '#A43533', // Red
-  'Accelerator': '#A43533', // Red
+  'Incubator': '#E91E63', // Vibrant Magenta/Pink
+  'Accelerator': '#E91E63', // Vibrant Magenta/Pink
   'Service Provider': '#545454', // Gray
   'Government': '#5A2D81', // Purple
   'Trade Organization': '#5A2D81', // Purple
   'Development': '#5A2D81', // Purple
-  'Facilities': '#7C9A7A', // Sage
+  'Facilities': '#2E7D32', // Deep Forest Green
   'Community Builders': '#E67300' // Orange
 };
 
@@ -1379,3 +1379,46 @@ export const atlantaTechEcosystem = {
 
 // Export the main ecosystem data
 export default atlantaTechEcosystem;
+
+// Link type mapping for consistent categorization
+export const linkTypeMap = {
+    // Financial relationships
+    investment: 'Financial',
+    funding: 'Financial',
+    
+    // Collaborative relationships
+    partnership: 'Collaboration',
+    research: 'Collaboration',
+    collaboration: 'Collaboration',
+    
+    // Support relationships
+    support: 'Support',
+    service: 'Support',
+    education_program: 'Support',
+    
+    // Organizational relationships
+    affiliation: 'Organizational',
+    spinout: 'Organizational',
+    
+    // Infrastructure relationships
+    tenant: 'Infrastructure',
+    infrastructure: 'Infrastructure',
+    
+    // Pilot/Testing relationships
+    pilot: 'Pilot & Testing'
+};
+
+// Color scheme for different link types
+export const linkColors = {
+    // High-importance links with vibrant, high-contrast colors
+    'Financial': '#1e90ff',       // Dodger Blue: Bright and clear on both themes
+    'Organizational': '#ff4757',  // A strong Red/Coral: High impact, works everywhere
+
+    // Secondary links with distinct colors
+    'Collaboration': '#00C2C7',   // A vibrant Teal: Excellent contrast and distinct from blue
+    'Pilot & Testing': '#f9a825', // A strong Gold/Mustard: Avoids the invisibility of pure yellow
+
+    // Contextual links with a still-visible but less prominent color
+    'Support': '#a55eea',         // A mid-tone Purple/Amethyst
+    'Infrastructure': '#778ca3'   // A desaturated Slate Blue that acts like a neutral color
+};
