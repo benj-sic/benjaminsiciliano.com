@@ -50,6 +50,21 @@ import cacheManager from './utils/cache.js';
 import performanceMonitor from './utils/performance.js';
 import './App.css';
 
+// NetworkPage component to handle URL parameters for full screen
+function NetworkPage() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const dataType = urlParams.get('type') || 'biotech';
+  
+  return <NetworkOnly dataType={dataType} exploreMode={false} />;
+}
+
+// ExplorePage component to handle URL parameters
+function ExplorePage() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const dataType = urlParams.get('type') || 'biotech';
+  
+  return <NetworkOnly dataType={dataType} exploreMode={true} />;
+}
 
 function App() {
   const [formData, setFormData] = useState({
@@ -77,7 +92,12 @@ function App() {
   };
 
   const handleNavigateToNetwork = () => {
-    const targetPath = currentNetwork === 'biotech' ? '/biotech' : '/tech';
+    const targetPath = `/network?type=${currentNetwork}`;
+    window.location.href = targetPath;
+  };
+
+  const handleNavigateToExplore = () => {
+    const targetPath = `/explore?type=${currentNetwork}`;
     window.location.href = targetPath;
   };
 
@@ -240,7 +260,8 @@ function App() {
 
           <Route path="/biotech" element={<NetworkOnly dataType="biotech" />} />
           <Route path="/tech" element={<NetworkOnly dataType="tech" />} />
-          <Route path="/explore" element={<NetworkOnly dataType="biotech" exploreMode={true} />} />
+          <Route path="/network" element={<NetworkPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
           <Route path="/" element={
             <div className="App">
               <header className="header">
@@ -387,16 +408,27 @@ function App() {
                   </div>
                 </section>
 
-                {/* Network Navigation Button - Below Network */}
+                {/* Network Navigation Buttons - Below Network */}
                 <div className="network-navigation">
                   <button 
                     className="network-nav-button"
                     onClick={handleNavigateToNetwork}
                     aria-label={`Navigate to full ${currentNetwork} network page`}
                   >
-                    <span>Explore Full {currentNetwork === 'biotech' ? 'Biotech' : 'Tech'} Network</span>
+                    <span>Full Screen</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                  </button>
+                  <button 
+                    className="network-nav-button"
+                    onClick={handleNavigateToExplore}
+                    aria-label={`Explore mode for ${currentNetwork} network data`}
+                  >
+                    <span>Explore Mode</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88 16.24,7.76"/>
                     </svg>
                   </button>
                 </div>
