@@ -1107,7 +1107,25 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
       .attr("r", d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16))
       .attr("fill", d => getNodeColor(d.type))
       .style("cursor", "pointer")
-      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 6px rgba(0,0,0,0.3))")); // Remove shadows on mobile
+      .style("filter", isMobile ? "none" : (theme === 'dark' ? "drop-shadow(0 0 8px rgba(255,255,255,0.5))" : "drop-shadow(0 0 6px rgba(0,0,0,0.3))")) // Remove shadows on mobile
+      .on("mouseover", function(event, d) {
+        // Add hover class to the node group
+        const nodeGroup = d3.select(this.parentNode);
+        nodeGroup.classed("node-hovered", true);
+        
+        // Add hover class to the corresponding label
+        const label = svg.selectAll(".label").filter(labelD => labelD.id === d.id);
+        label.classed("label-hovered", true);
+      })
+      .on("mouseout", function(event, d) {
+        // Remove hover class from the node group
+        const nodeGroup = d3.select(this.parentNode);
+        nodeGroup.classed("node-hovered", false);
+        
+        // Remove hover class from the corresponding label
+        const label = svg.selectAll(".label").filter(labelD => labelD.id === d.id);
+        label.classed("label-hovered", false);
+      });
 
 
 
@@ -1158,6 +1176,22 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
         } else {
           handleNodeClick(d, event);
         }
+      })
+      .on("mouseover", function(event, d) {
+        // Add hover class to the label
+        d3.select(this).classed("label-hovered", true);
+        
+        // Add hover class to the corresponding node group
+        const nodeGroup = svg.selectAll(".node-group").filter(nodeD => nodeD.id === d.id);
+        nodeGroup.classed("node-hovered", true);
+      })
+      .on("mouseout", function(event, d) {
+        // Remove hover class from the label
+        d3.select(this).classed("label-hovered", false);
+        
+        // Remove hover class from the corresponding node group
+        const nodeGroup = svg.selectAll(".node-group").filter(nodeD => nodeD.id === d.id);
+        nodeGroup.classed("node-hovered", false);
       });
 
     // Update collision detection with actual label measurements after labels are rendered

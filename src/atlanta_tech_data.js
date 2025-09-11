@@ -1169,6 +1169,478 @@ export const atlantaTechEcosystem = {
       recentNews: 'Recently closed $20M Series B funding round led by Vocap Partners and The Barkawi Group. Named to Inc. 5000 list of fastest-growing private companies.'
     },
 
+    // Additional Atlanta Tech Ecosystem Organizations
+    {
+      id: 'switchyards',
+      name: 'Switchyards',
+      type: 'communityBuilders', // or 'incubator'
+      size: 16,
+      description: 'A members-only club and community focused on B2C and design-centric startups, known as the "front door to the Atlanta startup scene."',
+      website: 'https://switchyards.com',
+      keyPersonnel: [
+        { name: 'Michael Tavani', title: 'Founder', linkedin: 'https://www.linkedin.com/in/michaeltavani/' }
+      ],
+      recentNews: 'Expanded to multiple neighborhood locations, fostering a hyper-local community model for entrepreneurs across the city.'
+    },
+    {
+      id: 'tech-alpharetta',
+      name: 'Tech Alpharetta',
+      type: 'incubator',
+      size: 17,
+      description: 'A non-profit that runs a thriving tech incubator and provides educational programs and events to help grow technology and innovation in the city of Alpharetta.',
+      website: 'https://techalpharetta.com',
+      keyPersonnel: [
+        { name: 'Karen Cashion', title: 'CEO', linkedin: 'https://www.linkedin.com/in/karencashion/' }
+      ],
+      recentNews: 'Fosters growth in North Fulton, known as the "Technology City of the South," by connecting startups with local enterprise tech companies.'
+    },
+    {
+      id: 'flatiron-city',
+      name: 'Flatiron City',
+      type: 'incubator',
+      size: 16,
+      description: 'An innovation hub in downtown Atlanta\'s iconic Flatiron Building, housing a diverse base of B2B startups and the Women\'s Entrepreneurship Initiative (WEI).',
+      website: 'https://flatironcity.com',
+      keyPersonnel: [
+        { name: 'Jacqui Chew', title: 'Founder, WEI', linkedin: 'https://www.linkedin.com/in/jacquichew/' }
+      ],
+      recentNews: 'Home to Microsoft\'s program for startups and a key partner for organizations promoting diverse founders in Atlanta.'
+    },
+    {
+      id: 'curiosity-lab',
+      name: 'Curiosity Lab',
+      type: 'accelerator',
+      size: 17,
+      description: 'A 5G-enabled autonomous vehicle and smart city living laboratory located in Peachtree Corners, designed to foster the development of IoT, mobility, and smart city technology.',
+      website: 'https://www.curiositylabptc.com/',
+      keyPersonnel: [
+        { name: 'Brandon Branham', title: 'Executive Director', linkedin: 'https://www.linkedin.com/in/bbranham/' }
+      ],
+      recentNews: 'Partners with companies globally to test and validate next-generation technologies in a real-world environment.'
+    },
+    {
+      id: 'atlanta-blockchain-center',
+      name: 'Atlanta Blockchain Center',
+      type: 'incubator',
+      size: 16,
+      description: 'An incubator and co-working space dedicated to supporting and accelerating startups that use blockchain technology.',
+      website: 'https://atlantablockchain.center/', // Corrected URL
+      keyPersonnel: [
+        { name: 'Marlon Williams', title: 'Founder & CEO', linkedin: 'https://www.linkedin.com/in/marlonwilliams/' }
+      ],
+      recentNews: 'Serves as the central hub for the Web3 community in Atlanta, providing education, venture funding, and corporate innovation.'
+    },
+
+    // Additional Venture Capital Firms
+    {
+      id: 'ttv-capital',
+      name: 'TTV Capital',
+      type: 'vc',
+      size: 18,
+      description: 'An early-stage venture capital firm focused on investing in fintech companies with a long history of success in Atlanta.',
+      website: 'https://ttvcapital.com',
+      keyPersonnel: [
+        { name: 'Gardiner Garrard', title: 'Founding Partner', linkedin: 'https://www.linkedin.com/in/gardinergarrard/' }
+      ],
+      recentNews: 'A leading voice in the fintech space, TTV Capital helps build and support the financial technology leaders of tomorrow.'
+    },
+    {
+      id: 'noro-moseley-partners',
+      name: 'Noro-Moseley Partners',
+      type: 'vc',
+      size: 18,
+      description: 'One of the longest-standing venture capital firms in the Southeast, NMP invests in early-growth stage healthcare and B2B software companies.',
+      website: 'https://noromoseley.com',
+      keyPersonnel: [
+        { name: 'Spence McClelland', title: 'Partner', linkedin: 'https://www.linkedin.com/in/spence-mcclelland-4375b4/' }
+      ],
+      recentNews: 'With a four-decade history, NMP has a deep network and history of backing successful entrepreneurs in the region.'
+    },
+    {
+      id: 'panoramic-ventures',
+      name: 'Panoramic Ventures',
+      type: 'vc',
+      size: 18,
+      description: 'A venture capital firm based in Atlanta that takes a "wider-view" approach to investing in startups across the country, particularly in emerging tech hubs.',
+      website: 'https://panoramic.vc',
+      keyPersonnel: [
+        { name: 'Paul Judge', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/pauljudge/' },
+        { name: 'Mark Buffington', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/markbuffington/' }
+      ],
+      recentNews: 'Known for its Startup Showdown event, Panoramic is one of the most active venture funds in the Southeast.'
+    },
+    {
+      id: 'fulcrum-equity-partners',
+      name: 'Fulcrum Equity Partners',
+      type: 'vc',
+      size: 17,
+      description: 'A growth equity firm that invests in rapidly growing, lower-middle market B2B software and healthcare companies.',
+      website: 'https://www.fulcrumep.com/',
+      keyPersonnel: [
+        { name: 'Frank X. Dalton', title: 'Partner', linkedin: 'https://www.linkedin.com/in/frank-x-dalton-38b4385/' }
+      ],
+      recentNews: 'Provides capital and operational expertise to help companies accelerate growth and reach their next level of scale.'
+    },
+    {
+      id: 'tech-square-ventures',
+      name: 'Tech Square Ventures',
+      type: 'vc',
+      size: 17,
+      description: 'An Atlanta-based early-stage venture capital firm that partners with visionary entrepreneurs. The firm is closely associated with Georgia Tech.',
+      website: 'https://techsquareventures.com',
+      keyPersonnel: [
+        { name: 'Blake Patton', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/blakepatton/' }
+      ],
+      recentNews: 'Often the first institutional investor in companies, helping them with access to markets and customers, particularly through its corporate network.'
+    },
+    {
+      id: 'collab-capital',
+      name: 'Collab Capital',
+      type: 'vc',
+      size: 17,
+      description: 'An investment fund focused on helping Black founders build sustainable, technology-enabled businesses through financial, human, and social capital.',
+      website: 'https://collab.capital',
+      keyPersonnel: [
+        { name: 'Jewel Burks Solomon', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/jewelburks/' }
+      ],
+      recentNews: 'Aims to establish a new model of investing to close the funding gap for Black entrepreneurs.'
+    },
+    {
+      id: 'fearless-fund',
+      name: 'Fearless Fund',
+      type: 'vc',
+      size: 17,
+      description: 'A venture capital fund that invests in women of color-led businesses seeking pre-seed, seed, or series A financing.',
+      website: 'https://www.fearless.fund/',
+      keyPersonnel: [
+        { name: 'Arian Simone', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/ariansimone/' }
+      ],
+      recentNews: 'Built by women of color for women of color, Fearless Fund is dedicated to bridging the gap in venture capital funding.'
+    },
+
+    // Additional Accelerators and Community Builders
+    {
+      id: 'techstars-atlanta',
+      name: 'Techstars Atlanta',
+      type: 'accelerator',
+      size: 19,
+      description: 'A globally recognized accelerator program, partnered with Cox Enterprises, that invests in and mentors early-stage startups.',
+      website: 'https://techstars.com/accelerators/atlanta',
+      keyPersonnel: [
+        { name: 'Tim Dorr', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/timdorr/' }
+      ],
+      recentNews: 'Graduates from Techstars Atlanta are among the most sought-after companies for follow-on funding from local and national VCs.'
+    },
+    {
+      id: 'cox-social-impact-accelerator',
+      name: 'Cox Social Impact Accelerator',
+      type: 'accelerator',
+      size: 18,
+      description: 'A program powered by Techstars and Cox Enterprises that supports for-profit startups addressing social justice and environmental issues.',
+      website: 'https://www.techstars.com/accelerators/cox-social-impact',
+      keyPersonnel: [
+        { name: 'Maigread Eichten', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/maigread/' }
+      ],
+      recentNews: 'Focuses on backing underrepresented founders and startups that are driving positive community impact.'
+    },
+    {
+      id: 'goodie-nation',
+      name: 'Goodie Nation',
+      type: 'communityBuilders', // or 'accelerator'
+      size: 18,
+      description: 'A non-profit dedicated to closing the relationship gap for diverse founders. Goodie Nation provides support and connections to social entrepreneurs and diverse founders.',
+      website: 'https://goodienation.org/',
+      keyPersonnel: [
+        { name: 'Joey Womack', title: 'Founder & CEO', linkedin: 'https://www.linkedin.com/in/joeywomack/' }
+      ],
+      recentNews: 'One of the most influential organizations in the Southeast for connecting diverse founders to capital, mentors, and corporate partners.'
+    },
+    {
+      id: 'cdl-atlanta',
+      name: 'Creative Destruction Lab - Atlanta',
+      type: 'accelerator',
+      size: 17,
+      description: 'An objectives-based program for massively scalable, seed-stage, science- and technology-based companies, hosted at Georgia Tech\'s Scheller College of Business.',
+      website: 'https://creativedestructionlab.com/locations/atlanta/',
+      keyPersonnel: [
+        { name: 'Malaika Gutto', title: 'Site Lead', linkedin: 'https://www.linkedin.com/in/malaikagutto/' }
+      ],
+      recentNews: 'Focuses on deep-tech, serving as a critical pipeline for highly technical startups emerging from university research.'
+    },
+    {
+      id: 'comcast-sportstech',
+      name: 'Comcast SportsTech Accelerator',
+      type: 'accelerator',
+      size: 17,
+      description: 'A Comcast NBCUniversal-backed accelerator that invests in and fast-tracks innovative startups in the sports technology sector.',
+      website: 'https://www.comcastsportstech.com/',
+      keyPersonnel: [
+        { name: 'Jenna Kurath', title: 'Vice President, Startup Partnerships', linkedin: 'https://www.linkedin.com/in/jennakurath/' }
+      ],
+      recentNews: 'Leverages partnerships with major sports brands to provide startups with unparalleled industry access.'
+    },
+
+    // Additional Trade Organizations and Community Builders
+    {
+      id: 'venture-atlanta',
+      name: 'Venture Atlanta',
+      type: 'trade',
+      size: 20,
+      description: 'A non-profit organization that hosts the largest and most prestigious venture capital conference in the Southeast, connecting investors with innovative tech companies.',
+      website: 'https://ventureatlanta.org',
+      keyPersonnel: [
+        { name: 'Allyson Eman', title: 'CEO', linkedin: 'https://www.linkedin.com/in/allysoneman/' }
+      ],
+      recentNews: 'Venture Atlanta has helped its presenting companies collectively raise over $7.5 billion in funding.'
+    },
+    {
+      id: 'metro-atlanta-chamber',
+      name: 'Metro Atlanta Chamber',
+      type: 'trade',
+      size: 19,
+      description: 'A leading organization for economic development and promoting the metro Atlanta region. Supports tech growth through various initiatives, including its Backed by ATL program for scale-ups.',
+      website: 'https://www.metroatlantachamber.com',
+      keyPersonnel: [
+        { name: 'Katie Kirkpatrick', title: 'President and CEO', linkedin: 'https://www.linkedin.com/in/katie-k-kirkpatrick-a064724/' }
+      ],
+      recentNews: 'Actively works to attract, grow, and retain technology companies and talent in the Atlanta region.'
+    },
+    {
+      id: 'startup-atlanta',
+      name: 'Startup Atlanta',
+      type: 'communityBuilders',
+      size: 18,
+      description: 'A community non-profit focused on connecting, supporting, and expanding the entrepreneurial ecosystem in the greater Atlanta region.',
+      website: 'https://www.startupatlanta.com',
+      keyPersonnel: [
+        { name: 'Jennifer Singh', title: 'Board Chair', linkedin: 'https://www.linkedin.com/in/jennifer-singh-5948a47/' }
+      ],
+      recentNews: 'Produces the annual Startup Atlanta Ecosystem Guide and hosts the Atlanta Startup Awards to celebrate the community\'s innovators.'
+    },
+    {
+      id: 'atlanta-ceo-council',
+      name: 'Atlanta CEO Council',
+      type: 'trade',
+      size: 17,
+      description: 'A non-profit, invitation-only organization of CEOs from product and recurring revenue companies. It connects leaders to capital, customers, talent, and each other.',
+      website: 'https://www.atlantaceo.org',
+      keyPersonnel: [
+        { name: 'Palaniswamy "Raj" Rajan', title: 'Chairman', linkedin: 'https://www.linkedin.com/in/palaniswamyrajan/' }
+      ],
+      recentNews: 'Provides a confidential, peer-to-peer network for the leaders of Atlanta\'s most successful tech companies.'
+    },
+    {
+      id: 'fintech-atlanta',
+      name: 'FinTech Atlanta',
+      type: 'trade',
+      size: 18,
+      description: 'A coalition of over 100 organizations working to cement Atlanta as the global capital of financial technology.',
+      website: 'https://www.fintechatlanta.org/',
+      keyPersonnel: [
+        { name: 'Bader Alam', title: 'Executive Director', linkedin: 'https://www.linkedin.com/in/baderalam/' }
+      ],
+      recentNews: 'Facilitates collaboration between Atlanta\'s large financial corporations and its thriving fintech startup scene.'
+    },
+    {
+      id: 'create-x',
+      name: 'Create-X',
+      type: 'accelerator',
+      size: 18,
+      description: 'A Georgia Institute of Technology initiative that empowers students to launch successful startups. It provides coaching, curriculum, legal services, and seed funding.',
+      website: 'https://create-x.gatech.edu/',
+      keyPersonnel: [
+        { name: 'Raghupathy "Siva" Sivakumar', title: 'Founding Director', linkedin: 'https://www.linkedin.com/in/raghupathy-sivakumar-39598a3/' }
+      ],
+      recentNews: 'A primary driver of new venture creation at Georgia Tech, having launched hundreds of startups that have raised significant venture capital.'
+    },
+
+    // Corporate Innovation Centers
+    {
+      id: 'att-innovation',
+      name: 'AT&T Innovation Centers',
+      type: 'development',
+      size: 19,
+      description: 'Includes the AT&T Foundry and Drive Studio in Midtown, focusing on 5G, IoT, and connected car technologies. AT&T is a founding partner of Engage VC.',
+      website: 'https://about.att.com/story/2019/foundry.html',
+      keyPersonnel: [],
+      recentNews: 'Actively collaborates with startups and Georgia Tech to prototype and launch next-generation connected solutions.'
+    },
+    {
+      id: 'delta-hangar',
+      name: 'Delta "The Hangar" Innovation Center',
+      type: 'development',
+      size: 18,
+      description: 'Delta Air Lines\' global innovation center in Tech Square, dedicated to developing solutions for travel that are thoughtful, reliable and innovative. Delta is a founding partner of Engage VC.',
+      website: 'https://news.delta.com/tags/hangar',
+      keyPersonnel: [],
+      recentNews: 'Explores technology in areas like biometric security, predictive analytics, and enhanced customer experiences.'
+    },
+    {
+      id: 'home-depot-innovation',
+      name: 'The Home Depot Innovation Center',
+      type: 'development',
+      size: 18,
+      description: 'Located in Tech Square, this center allows The Home Depot to partner with Georgia Tech students and faculty to accelerate retail technology and supply chain innovation. Home Depot is a founding partner of Engage VC.',
+      website: 'https://corporate.homedepot.com/newsroom/georgia-tech-innovation-center',
+      keyPersonnel: [],
+      recentNews: 'Focuses on developing new solutions for e-commerce, in-store experience, and supply chain logistics.'
+    },
+    {
+      id: 'southern-co-innovation',
+      name: 'Southern Company Energy Innovation Center',
+      type: 'development',
+      size: 18,
+      description: 'An innovation hub in Tech Square focused on developing and commercializing next-generation energy solutions, including renewables, smart home tech, and grid modernization. Southern Co. is a founding partner of Engage VC.',
+      website: 'https://www.southerncompany.com/innovation/energy-innovation-center.html',
+      keyPersonnel: [],
+      recentNews: 'Serves as a critical link between one of the nation\'s largest energy providers and the cleantech startup ecosystem.'
+    },
+    {
+      id: 'chick-fil-a-innovation',
+      name: 'Chick-fil-A Innovation Centers',
+      type: 'development',
+      size: 18,
+      description: 'Includes the "Hatch" innovation center at its headquarters and a Technology Center in Tech Square, focused on improving restaurant operations, customer service, and digital experience. Chick-fil-A is a founding partner of Engage VC.',
+      website: 'https://www.chick-fil-a.com/stories/inside-chick-fil-a/hatching-the-future-of-fast-food',
+      keyPersonnel: [],
+      recentNews: 'Utilizes its centers to pilot new technologies in automation, data analytics, and mobile ordering.'
+    },
+    {
+      id: 'ncr-innovation-lab',
+      name: 'NCR Innovation Lab',
+      type: 'development',
+      size: 18,
+      description: 'Located at NCR\'s global headquarters in Midtown, this lab focuses on creating next-generation solutions for banking, retail, and hospitality industries.',
+      website: 'https://www.ncr.com/company/innovation',
+      keyPersonnel: [],
+      recentNews: 'A key driver in Atlanta\'s FinTech ecosystem, exploring technologies like AI, IoT, and cloud computing for commerce.'
+    },
+
+    // Additional Universities
+    {
+      id: 'georgia-state-university',
+      name: 'Georgia State University',
+      type: 'university',
+      size: 20,
+      description: 'A major public research university in downtown Atlanta with a strong focus on innovation and entrepreneurship through its Entrepreneurship and Innovation Institute (ENI).',
+      website: 'https://gsu.edu',
+      keyPersonnel: [
+        { name: 'M. Brian Blake', title: 'President', linkedin: 'https://www.linkedin.com/in/m-brian-blake-phd-419a3b2/' }
+      ],
+      recentNews: 'GSU is a national leader in graduating students from diverse backgrounds and is rapidly expanding its programs like LaunchGSU to support student ventures.'
+    },
+    {
+      id: 'aucc',
+      name: 'Atlanta University Center Consortium',
+      type: 'university',
+      size: 20,
+      description: 'The world\'s oldest and largest consortium of historically Black colleges and universities (HBCUs), comprised of Clark Atlanta University, Morehouse College, and Spelman College. A powerhouse for diverse talent and innovation.',
+      website: 'https://aucenter.edu/',
+      keyPersonnel: [
+        { name: 'Michael Hodge', title: 'Executive Director', linkedin: 'https://www.linkedin.com/in/michael-hodge-5969588/' }
+      ],
+      recentNews: 'The AUCC is a focal point for major tech company partnerships and initiatives aimed at developing and recruiting top Black talent.'
+    },
+    {
+      id: 'kennesaw-state-university',
+      name: 'Kennesaw State University',
+      type: 'university',
+      size: 19,
+      description: 'One of Georgia\'s largest universities, with major programs in computing, engineering, and business. The Robin and Doug Shore Entrepreneurship Center supports a growing startup culture.',
+      website: 'https://www.kennesaw.edu/',
+      keyPersonnel: [
+        { name: 'Kathy "Kat" Schwaig', title: 'President', linkedin: 'https://www.linkedin.com/in/kathyschwaig/' }
+      ],
+      recentNews: 'KSU is a major supplier of tech and business talent to companies across the metro Atlanta area.'
+    },
+
+    // Additional Diversity-Focused and Scaling Organizations
+    {
+      id: 'hawks-ventures',
+      name: 'Hawks Ventures',
+      type: 'vc',
+      size: 17,
+      description: 'A venture capital fund from the Atlanta Hawks focused on investing in early-stage, minority- and women-led startups that align with the team\'s core values of innovation and inclusivity.',
+      website: 'https://hawksvc.com/',
+      keyPersonnel: [
+        { name: 'David Garcia', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/david-garcia-0112726/' }
+      ],
+      recentNews: 'Represents a unique model of corporate venture capital from a professional sports team with a diversity-first investment thesis.'
+    },
+    {
+      id: 'launchpad-2x',
+      name: 'Launchpad 2X',
+      type: 'accelerator',
+      size: 17,
+      description: 'An intensive, mentor-driven accelerator program and ecosystem for female founders and leaders of emerging-growth businesses.',
+      website: 'https://launchpad2x.com',
+      keyPersonnel: [
+        { name: 'Bernie Dixon', title: 'Founder and CEO', linkedin: 'https://www.linkedin.com/in/bernie-dixon-a49339/' }
+      ],
+      recentNews: 'Provides deep mentorship and a powerful network to help women-led companies overcome barriers to scaling.'
+    },
+    {
+      id: 'pin-georgia',
+      name: 'Partnership for Inclusive Innovation',
+      type: 'development',
+      size: 18,
+      description: 'A statewide public-private partnership that leads coordinated, statewide efforts to position Georgia as the tech capital of the East Coast through innovation, workforce development, and research.',
+      website: 'https://pingeorgia.org/',
+      keyPersonnel: [
+        { name: 'G.P. "Bud" Peterson', title: 'Board Chairman (Former President, Georgia Tech)' }
+      ],
+      recentNews: 'Launches pilot programs and initiatives to advance innovation and entrepreneurship in communities across Georgia.'
+    },
+    {
+      id: 'endeavor-atlanta',
+      name: 'Endeavor Atlanta',
+      type: 'communityBuilders',
+      size: 18,
+      description: 'The Atlanta chapter of a global organization that supports high-impact entrepreneurs. Its ScaleUp ATL program specifically accelerates high-potential Black founders.',
+      website: 'https://endeavoratlanta.org/',
+      keyPersonnel: [
+        { name: 'Aaron F. Goldman', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/aaronfgoldman/' }
+      ],
+      recentNews: 'Focuses on helping later-stage founders scale their businesses through mentorship and access to a global network.'
+    },
+
+    // Additional Diversity-Focused Investment and Educational Organizations
+    {
+      id: 'the-jump-fund',
+      name: 'The Jump Fund',
+      type: 'vc',
+      size: 17,
+      description: 'An all-female collective of angel investors that invests in early-stage, women-led, high-growth ventures in the Southeast to build a stronger and more inclusive regional economy.',
+      website: 'https://thejumpfund.com/',
+      keyPersonnel: [
+        { name: 'Kristina Montague', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/kristinamontague/' }
+      ],
+      recentNews: 'Actively invests in and provides mentorship to female founders, focusing on building a robust portfolio of women-led companies.'
+    },
+    {
+      id: 'steelsky-ventures',
+      name: 'Steelsky Ventures',
+      type: 'vc',
+      size: 17,
+      description: 'A venture capital firm that invests in companies improving access, care, and outcomes in women\'s healthcare, with a preference for companies with women in leadership.',
+      website: 'https://steelskyventures.com/',
+      keyPersonnel: [
+        { name: 'Maria Toler Velissaris', title: 'Founding Partner', linkedin: 'https://www.linkedin.com/in/mariapvelissaris/' }
+      ],
+      recentNews: 'Focuses on a critical and historically underfunded sector, investing across medical devices, digital health, and new care models.'
+    },
+    {
+      id: 'agnes-scott-college',
+      name: 'Agnes Scott College',
+      type: 'university',
+      size: 18,
+      description: 'A private, liberal arts women\'s college in Decatur, Georgia, known for its innovative SUMMIT curriculum focused on global learning and leadership development.',
+      website: 'https://www.agnesscott.edu/',
+      keyPersonnel: [
+        { name: 'Leocadia I. Zak', title: 'President', linkedin: 'https://www.linkedin.com/in/leocadia-zak-51829610b/' }
+      ],
+      recentNews: 'Consistently ranked among the most innovative liberal arts colleges, it is a key source of diverse, dynamic talent for the Atlanta area.'
+    }
 
   ],
 

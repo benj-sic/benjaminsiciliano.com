@@ -93,7 +93,7 @@
   stroke-width: 8px !important;
   opacity: 1 !important;
   /* Add glowing shadow effect using CSS variables */
-  filter: drop-shadow(0 0 8px var(--network-highlight-shadow)) !important;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) !important;
   transition: all 0.3s ease;
 }
 
@@ -117,7 +117,7 @@
  */
 .network-only .node-group.node-highlighted .node-main {
   /* Add multiple shadow layers for dramatic glow effect */
-  filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) 
+  filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.6)) 
           drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) !important;
 }
 
@@ -155,12 +155,12 @@
   /* Make highlighted labels extremely prominent */
   font-weight: 900 !important;
   font-size: 32px !important;
-  /* Use highlight color for both fill and stroke */
-  fill: var(--network-highlight-color) !important;
-  stroke: var(--network-highlight-color) !important;
+  /* Keep original fill and stroke colors - no color change */
+  /* fill: var(--network-highlight-color) !important; */
+  /* stroke: var(--network-highlight-color) !important; */
   stroke-width: 2px !important;
   /* Add glowing shadow effect for dramatic appearance */
-  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
           drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
 }
 
@@ -181,7 +181,7 @@
   /* Increase stroke width on hover for better visibility */
   stroke-width: 8px !important;
   opacity: 0.9 !important;
-  filter: drop-shadow(0 0 4px var(--network-highlight-shadow)) !important;
+  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)) !important;
   transition: all 0.2s ease;
 }
 

@@ -437,7 +437,7 @@
 
 /* Node highlighting styles */
 .node-highlighted .node-main {
-  filter: drop-shadow(0 0 16px var(--network-highlight-shadow)) 
+  filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.6)) 
           drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) !important;
 }
 
@@ -446,9 +446,69 @@
   fill: rgba(255, 107, 107, 0.3) !important;
 }
 
+/* Node hover styles - temporary size increase for better readability */
+.node-hovered .node-main {
+  transform: scale(1.5) !important;
+  transition: transform 0.2s ease !important;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 18px rgba(255, 255, 255, 0.6)) !important;
+}
+
+.node-hovered .node-glow {
+  transform: scale(1.5) !important;
+  transition: transform 0.2s ease !important;
+  opacity: 0.8 !important;
+  fill: rgba(255, 255, 255, 0.2) !important;
+}
+
+.label-hovered {
+  font-size: 42px !important; /* Increased from default 28px to 42px */
+  font-weight: 900 !important;
+  /* Keep original fill and stroke colors - no color change */
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.8)) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Mobile-specific hover adjustments */
+@media (max-width: 768px) {
+  .node-hovered .node-main {
+    transform: scale(1.35) !important; /* Increased scale on mobile */
+  }
+  
+  .node-hovered .node-glow {
+    transform: scale(1.35) !important;
+  }
+  
+  .label-hovered {
+    font-size: 28px !important; /* Increased from default 20px to 28px on mobile */
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* On touch devices, make hover effects more subtle */
+  .node-hovered .node-main {
+    transform: scale(1.25) !important;
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) 
+            drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)) !important;
+  }
+  
+  .node-hovered .node-glow {
+    transform: scale(1.25) !important;
+    opacity: 0.6 !important;
+  }
+  
+  .label-hovered {
+    font-size: 26px !important; /* Increased from default 20px to 26px on touch devices */
+    filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)) 
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)) !important;
+  }
+}
+
 /* Additional highlighting for NetworkOnly page */
 .node-group.highlighted .node-main {
-  filter: drop-shadow(0 0 20px var(--network-highlight-shadow)) 
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6)) 
           drop-shadow(0 0 30px rgba(255, 255, 255, 0.9)) !important;
   transform: scale(1.1) !important;
   transition: all 0.3s ease !important;
@@ -462,20 +522,18 @@
 .node-group.highlighted .label {
   font-weight: 900 !important;
   font-size: 32px !important;
-  fill: var(--network-highlight-color) !important;
-  stroke: var(--network-highlight-color) !important;
+  /* Keep original fill and stroke colors - no color change */
   stroke-width: 2px !important;
-  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
           drop-shadow(0 0 16px rgba(255, 255, 255, 0.8)) !important;
 }
 
 .label-highlighted {
   font-weight: 900 !important;
   font-size: 32px !important;
-  fill: var(--network-highlight-color) !important;
-  stroke: var(--network-highlight-color) !important;
+  /* Keep original fill and stroke colors - no color change */
   stroke-width: 2px !important;
-  filter: drop-shadow(0 0 12px var(--network-highlight-shadow)) 
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
           drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
 }
 
@@ -564,7 +622,7 @@
 .link-highlighted {
   stroke-width: 8px !important;
   opacity: 1 !important;
-  filter: drop-shadow(0 0 8px var(--network-highlight-shadow)) !important;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) !important;
   transition: all 0.3s ease;
 }
 
@@ -577,7 +635,7 @@
 .network-canvas line:hover {
   stroke-width: 8px !important;
   opacity: 0.9 !important;
-  filter: drop-shadow(0 0 4px var(--network-highlight-shadow)) !important;
+  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)) !important;
   transition: all 0.2s ease;
 }
 
