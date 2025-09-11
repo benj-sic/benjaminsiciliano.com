@@ -63,6 +63,52 @@ export const nodeColors = {
   'Community Builders': '#E67300' // Orange
 };
 
+// Dynamic node sizing function
+export const calculateNodeSize = (node) => {
+  // Base size for different node types
+  const baseSizes = {
+    'vc': 20,
+    'company': 16,
+    'startup': 14, // Startups are smaller than established companies
+    'university': 22,
+    'incubator': 18,
+    'accelerator': 18,
+    'trade': 19,
+    'government': 20,
+    'serviceProvider': 15,
+    'development': 17,
+    'facilities': 17,
+    'communityBuilders': 16
+  };
+
+  let baseSize = baseSizes[node.type] || 16;
+
+  // Size adjustments based on node properties
+  if (node.keyPersonnel && node.keyPersonnel.length > 5) {
+    baseSize += 2; // Larger for organizations with extensive leadership
+  }
+  
+  if (node.recentNews && node.recentNews.length > 200) {
+    baseSize += 1; // Slightly larger for organizations with detailed news
+  }
+
+  // Special size adjustments for major organizations
+  if (node.id === 'georgia-tech' || node.id === 'atlanta-ventures') {
+    baseSize += 3;
+  }
+  
+  if (node.id === 'valor-ventures' || node.id === 'engage-vc') {
+    baseSize += 2;
+  }
+
+  // Special adjustments for established companies vs startups
+  if (node.type === 'company' && (node.id === 'calendly' || node.id === 'stord' || node.id === 'finquery')) {
+    baseSize += 2; // Larger for established, successful companies
+  }
+
+  return Math.max(12, Math.min(25, baseSize)); // Clamp between 12 and 25
+};
+
 // Atlanta Tech Ecosystem Network Data
 export const atlantaTechEcosystem = {
   nodes: [
@@ -149,6 +195,21 @@ export const atlantaTechEcosystem = {
       recentNews: 'Collaborative innovation and corporate venture platform with 15+ global corporations and research universities as partners, including AT&T, Chick-fil-A, Delta Air Lines, and Georgia Tech.'
     },
 
+    // Circadian Ventures - Atlanta-based VC firm
+    {
+      id: 'circadian-ventures',
+      name: 'Circadian Ventures',
+      type: 'vc',
+      size: 20,
+      description: 'Venture capital firm actively partnering with exceptional entrepreneurs to build enduring businesses. Has investments in various sectors across the United States with 20+ portfolio companies and 35+ transactions.',
+      website: 'https://circadian.vc/',
+      keyPersonnel: [
+        { name: 'Mike Dowdle', title: 'Founding Partner', linkedin: 'https://www.linkedin.com/in/dowdle/' },
+        { name: 'Steve Hasty', title: 'Principal', linkedin: 'https://www.linkedin.com/in/steve-hasty-99473968/' }
+      ],
+      recentNews: 'Portfolio companies have raised $350M+ in funding. Fund II investments include Vero (AI Recruiting, Birmingham, AL) and Intellectible (Sales Enablement, Austin, TX). Multiple successful exits including acquisitions by United Stationers, TrendKite, and ClickDimensions.'
+    },
+
     // Portfolio Companies
 
     {
@@ -198,7 +259,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'adpipe',
       name: 'AdPipe',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'The #1 motion-first marketing platform! Leverages existing content and auto-drafts copy for digital campaigns to yield meaningful results without requiring extra resources.',
       website: 'https://www.adpipe.com/',
@@ -227,7 +288,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'carpool-logistics',
       name: 'Carpool Logistics',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'Technology-driven automotive logistics company redefining how vehicles get transported. Uses advanced technology to improve customer experience and reduce emissions.',
       website: 'https://carpoollogistics.com/',
@@ -243,7 +304,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'copient-health',
       name: 'Copient Health',
-      type: 'company',
+      type: 'startup',
       size: 17,
       description: 'Healthcare technology company that provides solutions that improve OR scheduling efficiency in both hospitals and surgery centers.',
       website: 'https://www.copienthealth.com/',
@@ -298,7 +359,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'grayscale',
       name: 'Grayscale',
-      type: 'company',
+      type: 'startup',
       size: 17,
       description: 'Automates the recruiting process for companies that hire in high volumes, such as warehousing, healthcare or high-growth tech companies.',
       website: 'https://grayscaleapp.com/',
@@ -312,7 +373,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'greenzie',
       name: 'Greenzie',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'Builds software for autonomous robotic lawn mowers. The retrofit hardware kit and cloud-based software adds self-driving to existing equipment.',
       website: 'https://www.greenzie.com/',
@@ -404,7 +465,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'queues',
       name: 'Queues',
-      type: 'company',
+      type: 'startup',
       size: 15,
       description: 'Uses cameras plus software to analyze wait times to help consumers and businesses better plan and forecast their day.',
       website: 'https://www.queues.com/',
@@ -417,7 +478,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'reframe',
       name: 'Reframe',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'Brings a dynamic recovery program and all the tools you\'ll need to quit alcohol, right to your pocket.',
       website: 'https://www.joinreframeapp.com/',
@@ -435,7 +496,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'the-perlant',
       name: 'The Perlant',
-      type: 'company',
+      type: 'startup',
       size: 14,
       description: 'A private social club rooted in wine, providing exclusive social experiences.',
       website: 'https://www.theperlant.com/',
@@ -451,7 +512,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'undaunted',
       name: 'Undaunted',
-      type: 'company',
+      type: 'startup',
       size: 15,
       description: 'Your new trusted partner in robotic security, providing advanced security solutions.',
       website: 'https://www.getundaunted.com/',
@@ -478,7 +539,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'zinnia',
       name: 'Zinnia',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'AI-driven platform that streamlines sales preparation by automating research, generating personalized strategies, and enhancing engagement for sales professionals.',
       website: 'https://www.getzinnia.com/',
@@ -493,7 +554,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'aetos-imaging',
       name: 'Aetos Imaging',
-      type: 'company',
+      type: 'startup',
       size: 17,
       description: 'The world\'s first Visual Maintenance Management System (VMMS). Provides exceptional clarity, support, and confidence to technicians through visual operation management and comprehensive IoT integration.',
       website: 'https://aetosimaging.com/',
@@ -511,7 +572,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'autonoma',
       name: 'Autonoma',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'AI-powered automation solutions for business processes and operations.',
       website: 'https://www.autonoma.ai/',
@@ -547,7 +608,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'myphysician360',
       name: 'MyPhysician360',
-      type: 'company',
+      type: 'startup',
       size: 17,
       description: 'Healthcare technology platform connecting patients with physicians and medical services.',
       website: 'https://myphysician360.com/',
@@ -564,7 +625,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'riderr',
       name: 'Love To Ride',
-      type: 'company',
+      type: 'startup',
       size: 14,
       description: 'Rideshare and transportation platform for local communities.',
       website: 'https://partners.lovetoride.net/',
@@ -583,7 +644,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'smartcommerce',
       name: 'SmartCommerce',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'E-commerce and digital commerce solutions for retailers and brands.',
       website: 'https://www.smartcommerce.com/',
@@ -598,7 +659,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'the-gathering-spot',
       name: 'The Gathering Spot',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'Private membership club and community space for professionals and entrepreneurs.',
       website: 'https://thegatheringspot.club/',
@@ -618,7 +679,7 @@ export const atlantaTechEcosystem = {
     {
       id: 'vital4',
       name: 'Vital4',
-      type: 'company',
+      type: 'startup',
       size: 16,
       description: 'Background screening and identity verification platform for businesses.',
       website: 'https://vital4.net/',
@@ -637,7 +698,7 @@ export const atlantaTechEcosystem = {
       description: 'The operating system for circular packaging. All-in-one data and software platform that helps brands manage sustainable packaging, meet regulatory requirements, and power transparency across every consumer touchpoint.',
       website: 'https://cirt.tech/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Katherine Shayne', title: 'CEO and Co-Founder', linkedin: 'https://www.linkedin.com/in/katherine-shayne/' }
       ],
       recentNews: 'B Corporation certified platform helping brands navigate packaging compliance and sustainability with confidence.'
     },
@@ -650,7 +711,7 @@ export const atlantaTechEcosystem = {
       description: 'Carbon credit marketplace and climate action platform. Provides software to manage carbon credits, sales, and climate impact for businesses.',
       website: 'https://cloverly.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Jason Rubottom', title: 'CEO', linkedin: 'https://www.linkedin.com/in/jason-rubottom/' }
       ],
       recentNews: 'Commerce software platform for managing carbon credits and driving climate action.'
     },
@@ -676,7 +737,7 @@ export const atlantaTechEcosystem = {
       description: 'Video technology platform for business communications and marketing.',
       website: 'https://cyranovideo.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Andy Monin', title: 'CEO', linkedin: 'https://www.linkedin.com/in/andy-monin-58577b/' }
       ],
       recentNews: 'Video technology solutions for business communications.'
     },
@@ -689,7 +750,7 @@ export const atlantaTechEcosystem = {
       description: 'Digital platform and technology solutions for businesses.',
       website: 'https://www.useglass.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Jonathan Allen', title: 'CEO', linkedin: 'https://www.linkedin.com/in/jonathanallen17/' }
       ],
       recentNews: 'Digital platform and technology solutions provider.'
     },
@@ -702,7 +763,7 @@ export const atlantaTechEcosystem = {
       description: 'Technology platform providing instant solutions for businesses.',
       website: 'https://www.instant.co/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Tal Clark', title: 'CEO', linkedin: 'https://www.linkedin.com/in/tal-clark-a60776b/' }
       ],
       recentNews: 'Instant technology solutions for business operations.'
     },
@@ -715,23 +776,11 @@ export const atlantaTechEcosystem = {
       description: 'Network automation platform for enterprise organizations.',
       website: 'https://www.itential.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Ian Bresnahan', title: 'President & CEO', linkedin: 'https://www.linkedin.com/in/ian-bresnahan-8aa9a73/' }
       ],
       recentNews: 'Network automation and orchestration platform for enterprises.'
     },
 
-    {
-      id: 'ask-kim',
-      name: 'Ask Kim',
-      type: 'company',
-      size: 15,
-      description: 'AI-powered platform for business intelligence and insights.',
-      website: 'https://ask.kim/',
-      keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
-      ],
-      recentNews: 'AI-powered business intelligence and insights platform.'
-    },
 
     {
       id: 'ledgible',
@@ -754,7 +803,8 @@ export const atlantaTechEcosystem = {
       description: 'AI and computer vision technology platform.',
       website: 'https://www.macondovision.ai/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Frank Layo', title: 'Co-Founder', linkedin: 'https://www.linkedin.com/in/franklayo/' },
+        { name: 'Debbie Fortnum', title: 'Co-Founder', linkedin: 'https://www.linkedin.com/in/debbiefortnum/' }
       ],
       recentNews: 'AI and computer vision technology solutions.'
     },
@@ -767,7 +817,7 @@ export const atlantaTechEcosystem = {
       description: 'Data analytics and business intelligence platform.',
       website: 'https://www.miragedata.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Sanjay Parekh', title: 'Co-Founder', linkedin: 'https://www.linkedin.com/in/sanjayparekh/' }
       ],
       recentNews: 'Data analytics and business intelligence solutions.'
     },
@@ -780,7 +830,7 @@ export const atlantaTechEcosystem = {
       description: 'Technology systems and solutions provider.',
       website: 'https://www.nugensystems.net/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Venus Desai', title: 'CEO', linkedin: 'https://www.linkedin.com/in/venusdesai/' }
       ],
       recentNews: 'Technology systems and solutions provider.'
     },
@@ -793,7 +843,8 @@ export const atlantaTechEcosystem = {
       description: 'Human resources technology and workforce management platform.',
       website: 'https://www.onwardshr.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Sarah Rodehorst', title: 'CEO and Co-Founder', linkedin: 'https://www.linkedin.com/in/sarahrodehorst/' },
+        { name: 'Janice Yu Edwards', title: 'Co-Founder and CPO', linkedin: 'https://www.linkedin.com/in/janice-yu-edwards-6859547/' }
       ],
       recentNews: 'HR technology and workforce management solutions.'
     },
@@ -806,7 +857,7 @@ export const atlantaTechEcosystem = {
       description: 'AI-powered platform for business operations and analytics.',
       website: 'https://playerzero.ai/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Animesh Koratana', title: 'Founder and CEO', linkedin: 'https://www.linkedin.com/in/animesh-koratana/' }
       ],
       recentNews: 'AI-powered business operations and analytics platform.'
     },
@@ -819,7 +870,7 @@ export const atlantaTechEcosystem = {
       description: 'AI-powered query and analytics platform.',
       website: 'https://www.query.ai/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Matt Eberhart', title: 'CEO', linkedin: 'https://www.linkedin.com/in/matteberhart/' }
       ],
       recentNews: 'AI-powered query and analytics solutions.'
     },
@@ -859,7 +910,7 @@ export const atlantaTechEcosystem = {
       description: 'Technology platform and solutions provider.',
       website: 'https://tcpoly.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Matthew Kirby Smith', title: 'Co-Founder', linkedin: 'https://www.linkedin.com/in/matthewkirbysmith/' }
       ],
       recentNews: 'Technology platform and solutions provider.'
     },
@@ -872,7 +923,7 @@ export const atlantaTechEcosystem = {
       description: 'Supply chain intelligence and materials management platform.',
       website: 'https://verusen.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Scott Matthews', title: 'CEO', linkedin: 'https://www.linkedin.com/in/scottmatthews2/' }
       ],
       recentNews: 'Supply chain intelligence and materials management solutions.'
     },
@@ -898,7 +949,7 @@ export const atlantaTechEcosystem = {
       description: 'Strategy execution and performance management platform for enterprise organizations.',
       website: 'https://www.achieveit.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Danny Sehr', title: 'CEO', linkedin: 'https://www.linkedin.com/in/dannysehr/' }
       ],
       recentNews: 'Strategy execution and performance management platform for enterprises.'
     },
@@ -944,6 +995,20 @@ export const atlantaTechEcosystem = {
       recentNews: 'Hosts major events including Fintech South, Georgia Technology Summit, and TAG Technology Awards. Features 26 professional societies covering sectors from fintech and cybersecurity to AI and digital health.'
     },
 
+    // GRA - Georgia Research Alliance
+    {
+      id: 'gra',
+      name: 'Georgia Research Alliance',
+      type: 'trade',
+      size: 19,
+      description: 'Public-private partnership that leverages university research to create economic growth in Georgia. Works with Georgia\'s research universities to attract world-class researchers and commercialize breakthrough technologies.',
+      website: 'https://gra.org/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Facilitating research commercialization and economic development through university partnerships across Georgia.'
+    },
+
     {
       id: 'georgia-tech',
       name: 'Georgia Institute of Technology',
@@ -983,6 +1048,127 @@ export const atlantaTechEcosystem = {
       recentNews: 'Mission to multiply thriving Black businesses and produce new economic value. By 2034, aims to generate and accelerate 1,000 Black-owned businesses, contribute to 3,000 new jobs, and produce $2 billion in new economic value.'
     },
 
+    // ADTC - Atlanta Development Technology Center
+    {
+      id: 'adtc',
+      name: 'Atlanta Development Technology Center',
+      type: 'development',
+      size: 18,
+      description: 'Technology development and innovation center focused on supporting technology companies and startups in Atlanta. Provides resources, mentorship, and development opportunities for emerging tech businesses.',
+      website: 'https://adtc.org/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Supporting technology development and innovation in Atlanta\'s growing tech ecosystem.'
+    },
+
+    // Cox Enterprises - Major Atlanta-based corporation
+    {
+      id: 'cox-enterprises',
+      name: 'Cox Enterprises',
+      type: 'company',
+      size: 22,
+      description: 'Major Atlanta-based private company with operations in communications, automotive, and media. One of the largest private companies in the United States, with significant presence in Atlanta\'s business community and technology sector.',
+      website: 'https://www.coxenterprises.com/',
+      keyPersonnel: [
+        { name: 'Alex Taylor', title: 'Chairman & CEO', linkedin: 'https://www.linkedin.com/in/alex-taylor-8b8b8b8b/' }
+      ],
+      recentNews: 'Major Atlanta employer and corporate citizen, supporting technology innovation and entrepreneurship in the region through various initiatives and partnerships.'
+    },
+
+    // Circadian Syndicate Investments
+    {
+      id: 'hermeus',
+      name: 'Hermeus',
+      type: 'startup',
+      size: 16,
+      description: 'Aerospace and defense technology company developing hypersonic aircraft quickly and cost-effectively by combining a hardware-rich, iterative approach with modern computing and autonomy.',
+      website: 'https://www.hermeus.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Building the world\'s fastest aircraft to operationalize hypersonic aircraft. Completed ground testing of Quarterhorse MK 1 at Edwards Air Force Base.'
+    },
+
+    {
+      id: 'flourish-software',
+      name: 'Flourish Software',
+      type: 'company',
+      size: 17,
+      description: 'Award-winning cannabis ERP software providing comprehensive seed-to-sale solutions for cultivation, manufacturing, distribution, and retail operations across the cannabis supply chain.',
+      website: 'https://www.flourishsoftware.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Serving 300+ cannabis brands with automated compliance, track & trace, COGS tracking, and easy label printing solutions.'
+    },
+
+    {
+      id: 'brrr',
+      name: 'brrr°',
+      type: 'company',
+      size: 15,
+      description: 'Revolutionary cooling performance fabric company that draws heat and moisture away from skin to keep users cool, fresh, and confident. Features Triple Chill Effect™ technology permanently embedded in yarn.',
+      website: 'https://www.brrr.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Scientifically tested and proven cooling fabrics used in bedding, undergarments, athletic apparel, outdoor gear, and business attire.'
+    },
+
+    {
+      id: 'apptega',
+      name: 'Apptega',
+      type: 'startup',
+      size: 15,
+      description: 'Cybersecurity compliance and risk management platform helping organizations streamline security frameworks and achieve compliance with industry standards.',
+      website: 'https://www.apptega.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Cybersecurity compliance and risk management solutions for modern organizations.'
+    },
+
+    {
+      id: 'roadsync',
+      name: 'RoadSync',
+      type: 'startup',
+      size: 15,
+      description: 'Digital payment and logistics platform for the transportation and logistics industry, streamlining payment processes and improving operational efficiency.',
+      website: 'https://roadsync.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Digital payment solutions for transportation and logistics companies.'
+    },
+
+    {
+      id: 'softwear-automation',
+      name: 'SoftWear Automation',
+      type: 'startup',
+      size: 16,
+      description: 'Robotics company developing sewing robots that can manufacture clothing and textiles with precision and efficiency, revolutionizing the apparel manufacturing industry.',
+      website: 'https://softwearautomation.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Developing robots that can sew clothing and textiles, transforming apparel manufacturing through automation.'
+    },
+
+    // Circadian Fund I Investments
+    {
+      id: 'ketteq',
+      name: 'ketteQ',
+      type: 'company',
+      size: 17,
+      description: 'Supply chain technology company providing advanced supply chain management and optimization solutions for enterprise organizations.',
+      website: 'https://www.ketteq.com/',
+      keyPersonnel: [
+        { name: 'CEO', title: 'Chief Executive Officer' }
+      ],
+      recentNews: 'Recently closed $20M Series B funding round led by Vocap Partners and The Barkawi Group. Named to Inc. 5000 list of fastest-growing private companies.'
+    },
+
 
   ],
 
@@ -1000,34 +1186,10 @@ export const atlantaTechEcosystem = {
       type: 'investment',
       description: 'Mosley Ventures investment in Demand Driven Technologies'
     },
-    {
-      source: 'mosley-ventures',
-      target: 'admiral',
-      type: 'investment',
-      description: 'Mosley Ventures investment in Admiral'
-    },
-    {
-      source: 'mosley-ventures',
-      target: 'droplit',
-      type: 'investment',
-      description: 'Mosley Ventures investment in Droplit.io'
-    },
-    {
-      source: 'mosley-ventures',
-      target: 'mixbook',
-      type: 'investment',
-      description: 'Mosley Ventures investment in Mixbook'
-    },
 
 
 
 
-    {
-      source: 'mosley-ventures',
-      target: 'strata-decision',
-      type: 'investment',
-      description: 'Mosley Ventures investment in Strata Decision Technology'
-    },
 
 
     // Atlanta Ventures investments in portfolio companies
@@ -1276,12 +1438,6 @@ export const atlantaTechEcosystem = {
     },
     {
       source: 'engage-vc',
-      target: 'ask-kim',
-      type: 'investment',
-      description: 'Engage VC investment in Ask Kim'
-    },
-    {
-      source: 'engage-vc',
       target: 'ledgible',
       type: 'investment',
       description: 'Engage VC investment in Ledgible'
@@ -1369,8 +1525,122 @@ export const atlantaTechEcosystem = {
     {
       source: 'atlanta-tech-village',
       target: 'atlanta-ventures',
+      type: 'founder_of',
+      description: 'Both founded by David Cummings, creating a foundational partnership in the Atlanta startup ecosystem'
+    },
+
+    // David Cummings founder relationships
+    {
+      source: 'atlanta-ventures',
+      target: 'the-perlant',
+      type: 'founder_of',
+      description: 'David Cummings co-founded The Perlant alongside Atlanta Ventures'
+    },
+    {
+      source: 'atlanta-ventures',
+      target: 'undaunted',
+      type: 'founder_of',
+      description: 'David Cummings co-founded Undaunted alongside Atlanta Ventures'
+    },
+
+    // Circadian Fund I Investments
+    {
+      source: 'circadian-ventures',
+      target: 'voxie',
+      type: 'investment',
+      description: 'Circadian Ventures Fund I investment in Voxie'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'cloverly',
+      type: 'investment',
+      description: 'Circadian Ventures Fund I investment in Cloverly'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'coginiti',
+      type: 'investment',
+      description: 'Circadian Ventures Fund I investment in Coginiti'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'ketteq',
+      type: 'investment',
+      description: 'Circadian Ventures Fund I investment in ketteQ'
+    },
+
+    // Circadian Syndicate Investments
+    {
+      source: 'circadian-ventures',
+      target: 'hermeus',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in Hermeus'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'flourish-software',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in Flourish Software'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'brrr',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in brrr°'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'demand-driven-tech',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in Demand Driven Technologies'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'apptega',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in Apptega'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'roadsync',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in RoadSync'
+    },
+    {
+      source: 'circadian-ventures',
+      target: 'softwear-automation',
+      type: 'investment',
+      description: 'Circadian Ventures syndicate investment in SoftWear Automation'
+    },
+
+    // GRA relationships with universities
+    {
+      source: 'gra',
+      target: 'georgia-tech',
       type: 'collaboration',
-      description: 'Atlanta Tech Village and Atlanta Ventures collaborate on startup ecosystem development'
+      description: 'Georgia Research Alliance partnership with Georgia Tech for research commercialization'
+    },
+    {
+      source: 'gra',
+      target: 'emory-university',
+      type: 'collaboration',
+      description: 'Georgia Research Alliance partnership with Emory University for research commercialization'
+    },
+
+    // ADTC relationships
+    {
+      source: 'adtc',
+      target: 'atlanta-tech-village',
+      type: 'collaboration',
+      description: 'ADTC collaboration with Atlanta Tech Village for technology development'
+    },
+
+    // Cox Enterprises relationships
+    {
+      source: 'cox-enterprises',
+      target: 'technology-association-georgia',
+      type: 'collaboration',
+      description: 'Cox Enterprises membership and collaboration with Technology Association of Georgia'
     },
 
     // Portfolio company collaborations
@@ -1399,6 +1669,7 @@ export const linkTypeMap = {
     // Organizational relationships
     affiliation: 'Organizational',
     spinout: 'Organizational',
+    founder_of: 'Organizational',
     
     // Infrastructure relationships
     tenant: 'Infrastructure',
