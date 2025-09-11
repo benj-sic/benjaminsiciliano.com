@@ -42,7 +42,8 @@ export const nodeTypeMap = {
   'serviceProvider': 'Service Provider',
   'government': 'Government',
   'trade': 'Trade Organization',
-  'development': 'Development',
+  'corporateInnovation': 'Corporate Innovation',
+  'economicDevelopment': 'Economic Development',
   'facilities': 'Facilities',
   'communityBuilders': 'Community Builders'
 };
@@ -54,11 +55,12 @@ export const nodeColors = {
   'Company': '#0D6A42', // Green
   'University': '#0033A0', // Dark Blue
   'Incubator': '#E91E63', // Vibrant Magenta/Pink
-  'Accelerator': '#E91E63', // Vibrant Magenta/Pink
+  'Accelerator': '#FF5722', // Deep Orange (distinct from Incubator)
   'Service Provider': '#545454', // Gray
   'Government': '#5A2D81', // Purple
-  'Trade Organization': '#5A2D81', // Purple
-  'Development': '#5A2D81', // Purple
+  'Trade Organization': '#9C27B0', // Light Purple (distinct from Government)
+  'Corporate Innovation': '#FF9800', // Amber (distinct from other categories)
+  'Economic Development': '#607D8B', // Blue Grey (distinct from other categories)
   'Facilities': '#2E7D32', // Deep Forest Green
   'Community Builders': '#E67300' // Orange
 };
@@ -76,7 +78,8 @@ export const calculateNodeSize = (node) => {
     'trade': 19,
     'government': 20,
     'serviceProvider': 15,
-    'development': 17,
+    'corporateInnovation': 18,
+    'economicDevelopment': 18,
     'facilities': 17,
     'communityBuilders': 16
   };
@@ -233,7 +236,7 @@ export const atlantaTechEcosystem = {
       description: 'Supply chain technology company providing Intuiflow, a disruptive Demand Driven Planning AI/ML software suite. Helps businesses build agile supply chains with materials planning, sales & operations planning, scheduling & execution, and demand planning solutions.',
       website: 'https://demanddriventech.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Erik Bush', title: 'CEO', linkedin: 'https://www.linkedin.com/in/erik-bush-88289110/' }
       ],
       recentNews: 'Trusted by customers globally to bring agility to the world\'s most complex supply chains. Provides actionable recommendations and improved visibility for supply chain performance.'
     },
@@ -622,18 +625,6 @@ export const atlantaTechEcosystem = {
 
 
 
-    {
-      id: 'riderr',
-      name: 'Love To Ride',
-      type: 'startup',
-      size: 14,
-      description: 'Rideshare and transportation platform for local communities.',
-      website: 'https://partners.lovetoride.net/',
-      keyPersonnel: [
-        { name: 'Thomas Stokell', title: 'CEO', linkedin: 'https://www.linkedin.com/in/thomasstokell/' }
-      ],
-      recentNews: 'Local rideshare and transportation platform.'
-    },
 
 
 
@@ -724,7 +715,7 @@ export const atlantaTechEcosystem = {
       description: 'Data analytics and business intelligence platform for enterprise organizations.',
       website: 'https://www.coginiti.co/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Richard Hall', title: 'CEO', linkedin: 'https://www.linkedin.com/in/richard-hall-6685513/' }
       ],
       recentNews: 'Enterprise data analytics and BI platform.'
     },
@@ -790,7 +781,7 @@ export const atlantaTechEcosystem = {
       description: 'Digital asset accounting and tax compliance platform.',
       website: 'https://ledgible.io/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Kell Canty', title: 'CEO', linkedin: 'https://www.linkedin.com/in/kellcanty/' }
       ],
       recentNews: 'Digital asset accounting and tax compliance solutions.'
     },
@@ -883,7 +874,7 @@ export const atlantaTechEcosystem = {
       description: 'Robotics and automation solutions for industrial applications.',
       website: 'https://www.sliprobotics.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Chris Smith', title: 'CEO', linkedin: 'https://www.linkedin.com/in/christopher-r-smith/' }
       ],
       recentNews: 'Robotics and automation solutions for industrial use.'
     },
@@ -936,7 +927,7 @@ export const atlantaTechEcosystem = {
       description: 'Digital marketing and advertising technology platform.',
       website: 'https://www.wripple.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Ray Samuels', title: 'CEO', linkedin: 'https://www.linkedin.com/in/ray-samuels-903a196/' }
       ],
       recentNews: 'Digital marketing and advertising technology solutions.'
     },
@@ -984,7 +975,7 @@ export const atlantaTechEcosystem = {
 
     {
       id: 'technology-association-georgia',
-      name: 'Technology Association of Georgia',
+      name: 'TAG',
       type: 'trade',
       size: 20,
       description: 'Georgia\'s largest technology association with over 30,000 members. Connects technology leaders, peers and decision makers through 200+ events annually, 26 professional societies, and exclusive engagements across Georgia\'s dynamic technology ecosystem.',
@@ -998,20 +989,20 @@ export const atlantaTechEcosystem = {
     // GRA - Georgia Research Alliance
     {
       id: 'gra',
-      name: 'Georgia Research Alliance',
+      name: 'GRA',
       type: 'trade',
       size: 19,
       description: 'Public-private partnership that leverages university research to create economic growth in Georgia. Works with Georgia\'s research universities to attract world-class researchers and commercialize breakthrough technologies.',
       website: 'https://gra.org/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Tim Denning', title: 'President', linkedin: 'https://www.linkedin.com/in/tim-denning-phd-4b13728b/' }
       ],
       recentNews: 'Facilitating research commercialization and economic development through university partnerships across Georgia.'
     },
 
     {
       id: 'georgia-tech',
-      name: 'Georgia Institute of Technology',
+      name: 'Georgia Tech',
       type: 'university',
       size: 22,
       description: 'Leading public research university developing exceptional leaders who advance technology and improve the human condition. Ranked #9 public university and #1 fastest-growing university over the past decade. Major research institution with $1.37B in research and sponsored awards.',
@@ -1037,7 +1028,7 @@ export const atlantaTechEcosystem = {
 
     {
       id: 'russell-innovation-center',
-      name: 'Russell Innovation Center for Entrepreneurs',
+      name: 'RICE',
       type: 'incubator',
       size: 19,
       description: 'Atlanta\'s home for Black entrepreneurs and the largest center in the world dedicated to growing, scaling, and developing Black entrepreneurs. Serves as an economic mobility engine driving entrepreneurs and small business owners to innovate, grow, create jobs and build wealth.',
@@ -1048,18 +1039,187 @@ export const atlantaTechEcosystem = {
       recentNews: 'Mission to multiply thriving Black businesses and produce new economic value. By 2034, aims to generate and accelerate 1,000 Black-owned businesses, contribute to 3,000 new jobs, and produce $2 billion in new economic value.'
     },
 
-    // ADTC - Atlanta Development Technology Center
+    // ATDC - Advanced Technology Development Center
     {
-      id: 'adtc',
-      name: 'Atlanta Development Technology Center',
-      type: 'development',
+      id: 'atdc',
+      name: 'ATDC',
+      type: 'incubator',
       size: 18,
-      description: 'Technology development and innovation center focused on supporting technology companies and startups in Atlanta. Provides resources, mentorship, and development opportunities for emerging tech businesses.',
-      website: 'https://adtc.org/',
+      description: 'Georgia Tech\'s technology incubator focused on supporting technology companies and startups in Atlanta. Provides resources, mentorship, and development opportunities for emerging tech businesses.',
+      website: 'https://atdc.org/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'John Avery', title: 'General Manager', linkedin: 'https://www.linkedin.com/in/johnwavery/' }
       ],
       recentNews: 'Supporting technology development and innovation in Atlanta\'s growing tech ecosystem.'
+    },
+
+    // Salesloft - Major sales engagement platform unicorn
+    {
+      id: 'salesloft',
+      name: 'Salesloft',
+      type: 'company',
+      size: 22,
+      description: 'A leading AI-powered revenue orchestration platform that helps sales teams prioritize and take action on what matters most. Trusted by 5,000+ customers including 3M, Stripe, and IBM.',
+      website: 'https://www.salesloft.com/',
+      keyPersonnel: [
+        { name: 'Kyle Porter', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/kyleporter/' }
+      ],
+      recentNews: 'Named a leader in the 2025 IDC MarketScape for worldwide GRC software and continues to expand its AI-powered revenue orchestration capabilities.'
+    },
+
+    // OneTrust - Privacy, security, and data governance leader
+    {
+      id: 'onetrust',
+      name: 'OneTrust',
+      type: 'company',
+      size: 22,
+      description: 'The world\'s most widely used privacy, security, and data governance platform. Serves 14,000+ customers including 75% of the Fortune 100, with 2,000+ employees and 300+ patents.',
+      website: 'https://www.onetrust.com/',
+      keyPersonnel: [
+        { name: 'Kabir Barday', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/kabirbarday/' }
+      ],
+      recentNews: 'Named to the Forbes Cloud 100 for seventh consecutive year and continues to lead in AI governance and privacy automation solutions.'
+    },
+
+    // Greenlight - Fintech unicorn for family financial services
+    {
+      id: 'greenlight',
+      name: 'Greenlight',
+      type: 'company',
+      size: 21,
+      description: 'A fintech unicorn providing financial services for families, including debit cards for kids, parental controls, and financial education tools. Valued at over $2.3 billion.',
+      website: 'https://greenlight.com/',
+      keyPersonnel: [
+        { name: 'Tim Sheehan', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/timsheehan/' }
+      ],
+      recentNews: 'Continues to expand its platform to help families teach kids about money management through innovative financial products and educational content.'
+    },
+
+    // MacStadium - NMP portfolio company
+    {
+      id: 'macstadium',
+      name: 'MacStadium',
+      type: 'company',
+      size: 18,
+      description: 'Leading provider of enterprise-class hosted Mac infrastructure, providing scalable, reliable, and secure private clouds and dedicated servers for workloads that require macOS. Trusted by iOS developers and DevOps teams at thousands of companies worldwide.',
+      website: 'https://www.macstadium.com/',
+      keyPersonnel: [
+        { name: 'Ken Tacelli', title: 'CEO', linkedin: 'https://www.linkedin.com/in/kentacelli/' }
+      ],
+      recentNews: 'Named to Inc. 5000 and TiE50 Winner, continues to expand its Mac cloud infrastructure solutions for enterprise customers.'
+    },
+
+    // Revenue Analytics - NMP portfolio company
+    {
+      id: 'revenue-analytics',
+      name: 'Revenue Analytics',
+      type: 'company',
+      size: 18,
+      description: 'Tech-enabled revenue optimization platform providing AI-powered pricing software and services for hospitality, manufacturing, media, and passenger rail industries. Helps customers manage pricing optimization, demand forecasting, and revenue management workflows.',
+      website: 'https://www.revenueanalytics.com/',
+      keyPersonnel: [
+        { name: 'Bill Brewster', title: 'CEO', linkedin: 'https://www.linkedin.com/in/billbrewster/' }
+      ],
+      recentNews: 'Announced strategic growth investment from Lead Edge Capital and continues to expand AI-powered revenue management solutions across multiple industries.'
+    },
+
+    // Rialtic - NMP portfolio company
+    {
+      id: 'rialtic',
+      name: 'Rialtic',
+      type: 'company',
+      size: 17,
+      description: 'Healthcare technology company focused on provider network management and payment integrity solutions. Helps healthcare organizations optimize their provider networks and ensure accurate payments.',
+      website: 'https://www.rialtic.io/',
+      keyPersonnel: [
+        { name: 'Ashish Patel', title: 'CEO', linkedin: 'https://www.linkedin.com/in/ashishpatel/' }
+      ],
+      recentNews: 'Continues to expand its healthcare technology platform for provider network optimization and payment integrity solutions.'
+    },
+
+    // BitPay - TTV Capital portfolio company
+    {
+      id: 'bitpay',
+      name: 'BitPay',
+      type: 'company',
+      size: 20,
+      description: 'Leading cryptocurrency payment platform that enables businesses and individuals to accept, store, and spend cryptocurrency. Over 1 million wallets created, supporting multiple cryptocurrencies and blockchain networks including Bitcoin, Ethereum, and Solana.',
+      website: 'https://www.bitpay.com/',
+      keyPersonnel: [
+        { name: 'Stephen Pair', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/stephenpair/' }
+      ],
+      recentNews: 'Recently added support for Solana network and introduced HODL Pay feature, enabling users to unlock spending power without selling their crypto assets.'
+    },
+
+    // Carputty - TTV Capital portfolio company
+    {
+      id: 'carputty',
+      name: 'Carputty',
+      type: 'company',
+      size: 18,
+      description: 'Innovative auto financing platform that reinvents how people finance vehicles. Offers Flexline™ (flexible line of credit for multiple vehicles) and Flexloan™ (single vehicle financing) with transparent rates and the V³ Valuation™ system to track vehicle values over time.',
+      website: 'https://www.carputty.com/',
+      keyPersonnel: [
+        { name: 'Patrick Bayliss', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/patrickbayliss/' }
+      ],
+      recentNews: 'Expanding lending operations across multiple states and continuing to innovate in the auto financing space with data-driven vehicle valuation tools.'
+    },
+
+    // DefenseStorm - TTV Capital portfolio company
+    {
+      id: 'defensestorm',
+      name: 'DefenseStorm',
+      type: 'company',
+      size: 19,
+      description: 'Cybersecurity risk management platform built specifically for banks and credit unions. Provides integrated risk assessment, threat surveillance, governance programs, and fraud prevention through their GRID Active intelligent data engine. Headquartered in Alpharetta, GA.',
+      website: 'https://defensestorm.com/',
+      keyPersonnel: [
+        { name: 'Paul Paget', title: 'CEO', linkedin: 'https://www.linkedin.com/in/paul-paget-6a0b1a1/' }
+      ],
+      recentNews: 'Recognized as High Performer by G2 in System Security and Endpoint Detection and Response, serving financial institutions with 24x7x365 cyber threat surveillance operations.'
+    },
+
+    // Greenwood - TTV Capital portfolio company
+    {
+      id: 'greenwood',
+      name: 'Greenwood',
+      type: 'company',
+      size: 19,
+      description: 'Black-founded, Black-led mobile financial platform inspired by the legacy of the early 1900s Greenwood District. Provides digital checking and savings accounts, investment opportunities, and community-focused financial services with features like Cash Back for Buying Black and roundup donations to support Black community organizations.',
+      website: 'https://gogreenwood.com/',
+      keyPersonnel: [
+        { name: 'Ryan Glover', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/ryanglover/' },
+        { name: 'David Tapscott', title: 'Co-Founder & COO', linkedin: 'https://www.linkedin.com/in/david-tapscott-2a4a4a1/' }
+      ],
+      recentNews: 'Continues to expand its community-focused financial services platform, offering 4.15% APY savings accounts and investment opportunities in Black-owned companies while supporting community organizations through its giving programs.'
+    },
+
+    // SmartPath - TTV Capital portfolio company
+    {
+      id: 'smartpath',
+      name: 'SmartPath',
+      type: 'company',
+      size: 18,
+      description: 'Comprehensive financial education platform providing live and on-demand personal finance classes, one-on-one coaching, and AI-driven personalization for over 1 million users. Serves retirement plan advisors, employers, brokers, fintech companies, and financial institutions with 99% client retention.',
+      website: 'https://www.joinsmartpath.com/',
+      keyPersonnel: [
+        { name: 'Todd Ruppert', title: 'CEO', linkedin: 'https://www.linkedin.com/in/todd-ruppert-4a4a4a1/' }
+      ],
+      recentNews: 'Named to Inc. 5000 list of fastest-growing private companies in 2024, continuing to expand its AI-powered financial education solutions for diverse client segments including major employers like Leidos, Lumen, and The Home Depot.'
+    },
+
+    // Medxoom - TTV Capital portfolio company
+    {
+      id: 'medxoom',
+      name: 'Medxoom',
+      type: 'company',
+      size: 18,
+      description: 'Health benefits platform that unifies the member experience to help navigate benefits and make better healthcare choices. Provides mobile-first member experience with pricing transparency, digital ID cards, integrated payments, and personalized communications. Headquartered in Atlanta, GA.',
+      website: 'https://medxoom.com/',
+      keyPersonnel: [
+        { name: 'John Gorman', title: 'CEO', linkedin: 'https://www.linkedin.com/in/john-gorman-8a4a4a1/' }
+      ],
+      recentNews: 'Recently acquired by Zelis to deliver a mobile-first member experience platform, continuing to serve brokers, employers, and TPAs with unified health benefits solutions.'
     },
 
     // Cox Enterprises - Major Atlanta-based corporation
@@ -1085,7 +1245,7 @@ export const atlantaTechEcosystem = {
       description: 'Aerospace and defense technology company developing hypersonic aircraft quickly and cost-effectively by combining a hardware-rich, iterative approach with modern computing and autonomy.',
       website: 'https://www.hermeus.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'AJ Piplica', title: 'CEO', linkedin: 'https://www.linkedin.com/in/ajpiplica/' }
       ],
       recentNews: 'Building the world\'s fastest aircraft to operationalize hypersonic aircraft. Completed ground testing of Quarterhorse MK 1 at Edwards Air Force Base.'
     },
@@ -1098,7 +1258,7 @@ export const atlantaTechEcosystem = {
       description: 'Award-winning cannabis ERP software providing comprehensive seed-to-sale solutions for cultivation, manufacturing, distribution, and retail operations across the cannabis supply chain.',
       website: 'https://www.flourishsoftware.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Colton Griffin', title: 'CEO', linkedin: 'https://www.linkedin.com/in/coltongriffin/' }
       ],
       recentNews: 'Serving 300+ cannabis brands with automated compliance, track & trace, COGS tracking, and easy label printing solutions.'
     },
@@ -1111,7 +1271,7 @@ export const atlantaTechEcosystem = {
       description: 'Revolutionary cooling performance fabric company that draws heat and moisture away from skin to keep users cool, fresh, and confident. Features Triple Chill Effect™ technology permanently embedded in yarn.',
       website: 'https://www.brrr.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Mary-Cathryn Kolb', title: 'CEO', linkedin: 'https://www.linkedin.com/in/mary-cathryn-kolb/' }
       ],
       recentNews: 'Scientifically tested and proven cooling fabrics used in bedding, undergarments, athletic apparel, outdoor gear, and business attire.'
     },
@@ -1124,7 +1284,7 @@ export const atlantaTechEcosystem = {
       description: 'Cybersecurity compliance and risk management platform helping organizations streamline security frameworks and achieve compliance with industry standards.',
       website: 'https://www.apptega.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Dave Colesante', title: 'CEO', linkedin: 'https://www.linkedin.com/in/dave-colesante-844064165/' }
       ],
       recentNews: 'Cybersecurity compliance and risk management solutions for modern organizations.'
     },
@@ -1137,7 +1297,7 @@ export const atlantaTechEcosystem = {
       description: 'Digital payment and logistics platform for the transportation and logistics industry, streamlining payment processes and improving operational efficiency.',
       website: 'https://roadsync.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Robin Gregg', title: 'CEO', linkedin: 'https://www.linkedin.com/in/robingregg/' }
       ],
       recentNews: 'Digital payment solutions for transportation and logistics companies.'
     },
@@ -1150,7 +1310,7 @@ export const atlantaTechEcosystem = {
       description: 'Robotics company developing sewing robots that can manufacture clothing and textiles with precision and efficiency, revolutionizing the apparel manufacturing industry.',
       website: 'https://softwearautomation.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Palaniswamy "Raj" Rajan', title: 'CEO', linkedin: 'https://www.linkedin.com/in/pvrajan/' }
       ],
       recentNews: 'Developing robots that can sew clothing and textiles, transforming apparel manufacturing through automation.'
     },
@@ -1164,7 +1324,7 @@ export const atlantaTechEcosystem = {
       description: 'Supply chain technology company providing advanced supply chain management and optimization solutions for enterprise organizations.',
       website: 'https://www.ketteq.com/',
       keyPersonnel: [
-        { name: 'CEO', title: 'Chief Executive Officer' }
+        { name: 'Mike Landry', title: 'CEO', linkedin: 'https://www.linkedin.com/in/mike-landry-gt/' }
       ],
       recentNews: 'Recently closed $20M Series B funding round led by Vocap Partners and The Barkawi Group. Named to Inc. 5000 list of fastest-growing private companies.'
     },
@@ -1257,17 +1417,17 @@ export const atlantaTechEcosystem = {
       recentNews: 'With a four-decade history, NMP has a deep network and history of backing successful entrepreneurs in the region.'
     },
     {
-      id: 'panoramic-ventures',
-      name: 'Panoramic Ventures',
+      id: 'bip-ventures',
+      name: 'BIP Ventures',
       type: 'vc',
       size: 18,
-      description: 'A venture capital firm based in Atlanta that takes a "wider-view" approach to investing in startups across the country, particularly in emerging tech hubs.',
-      website: 'https://panoramic.vc',
+      description: 'A venture capital firm based in Atlanta that takes a "wider-view" approach to investing in startups across the country, particularly in emerging tech hubs. Formerly known as Panoramic Ventures, the firm rebranded in June 2023 as part of BIP Capital\'s consolidation of all venture capital operations.',
+      website: 'https://bipventures.vc/',
       keyPersonnel: [
         { name: 'Paul Judge', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/pauljudge/' },
         { name: 'Mark Buffington', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/markbuffington/' }
       ],
-      recentNews: 'Known for its Startup Showdown event, Panoramic is one of the most active venture funds in the Southeast.'
+      recentNews: 'Rebranded from Panoramic Ventures in June 2023 as part of BIP Capital\'s consolidation. Known for its Startup Showdown event and remains one of the most active venture funds in the Southeast.'
     },
     {
       id: 'fulcrum-equity-partners',
@@ -1356,18 +1516,6 @@ export const atlantaTechEcosystem = {
       recentNews: 'One of the most influential organizations in the Southeast for connecting diverse founders to capital, mentors, and corporate partners.'
     },
     {
-      id: 'cdl-atlanta',
-      name: 'Creative Destruction Lab - Atlanta',
-      type: 'accelerator',
-      size: 17,
-      description: 'An objectives-based program for massively scalable, seed-stage, science- and technology-based companies, hosted at Georgia Tech\'s Scheller College of Business.',
-      website: 'https://creativedestructionlab.com/locations/atlanta/',
-      keyPersonnel: [
-        { name: 'Malaika Gutto', title: 'Site Lead', linkedin: 'https://www.linkedin.com/in/malaikagutto/' }
-      ],
-      recentNews: 'Focuses on deep-tech, serving as a critical pipeline for highly technical startups emerging from university research.'
-    },
-    {
       id: 'comcast-sportstech',
       name: 'Comcast SportsTech Accelerator',
       type: 'accelerator',
@@ -1413,7 +1561,20 @@ export const atlantaTechEcosystem = {
       description: 'A community non-profit focused on connecting, supporting, and expanding the entrepreneurial ecosystem in the greater Atlanta region.',
       website: 'https://www.startupatlanta.com',
       keyPersonnel: [
-        { name: 'Jennifer Singh', title: 'Board Chair', linkedin: 'https://www.linkedin.com/in/jennifer-singh-5948a47/' }
+        { name: 'Lexie Newhouse', title: 'President (Program Director, Boomtown Accelerators)', linkedin: 'https://www.linkedin.com/in/lexienewhouse/' },
+        { name: 'Burunda Prince', title: 'Secretary (Director, PNC Southeastern Regional Center for Entrepreneurship, Clark Atlanta University)', linkedin: 'https://www.linkedin.com/in/burunda/' },
+        { name: 'Joey Womack', title: 'President Emeritus (Founder/CEO, Goodie Nation)', linkedin: 'https://www.linkedin.com/in/joeywomack/' },
+        { name: 'Jennifer Bennett', title: 'VP Technology & Entrepreneurship, Invest Atlanta', linkedin: 'https://www.linkedin.com/in/jenniferbonnett/' },
+        { name: 'Karen Cashion', title: 'President & CEO, Tech Alpharetta', linkedin: 'https://www.linkedin.com/in/karen-cashion-25235042/' },
+        { name: 'Michael DiCenso', title: 'Relationship Manager: Innovation Ecosystems, Collaborative Real Estate', linkedin: 'https://www.linkedin.com/in/michaeldicenso/' },
+        { name: 'Allyson Eman', title: 'CEO, Venture Atlanta', linkedin: 'https://www.linkedin.com/in/allysoneman/' },
+        { name: 'Adam Harrell', title: 'Founder, Nebo', linkedin: 'https://www.linkedin.com/in/adamharrell/' },
+        { name: 'Kylan Kester', title: 'Director, Student Initiatives, Morehouse', linkedin: 'https://www.linkedin.com/in/bykylan/' },
+        { name: 'Larry McHugh', title: 'Facilitator, Mentor, Volunteer & Angel Investor', linkedin: 'https://www.linkedin.com/in/larrymchugh/' },
+        { name: 'Gail Podolsky', title: 'President & Founder, Podolsky Law', linkedin: 'https://www.linkedin.com/in/gail-podolsky-3694991/' },
+        { name: 'Jennifer Singh', title: 'Sustainability Catalyst, ATDC', linkedin: 'https://www.linkedin.com/in/jennifersingh2/' },
+        { name: 'Shea Taylor', title: 'VIP, Innovation Economy, Startup Banking, J.P. Morgan', linkedin: 'https://www.linkedin.com/in/shea-taylor-25243323/' },
+        { name: 'Pav Thukral', title: 'CEO, Magic Data', linkedin: 'https://www.linkedin.com/in/pavleen/' }
       ],
       recentNews: 'Produces the annual Startup Atlanta Ecosystem Guide and hosts the Atlanta Startup Awards to celebrate the community\'s innovators.'
     },
@@ -1443,7 +1604,7 @@ export const atlantaTechEcosystem = {
     },
     {
       id: 'create-x',
-      name: 'Create-X',
+      name: 'CREATE-X',
       type: 'accelerator',
       size: 18,
       description: 'A Georgia Institute of Technology initiative that empowers students to launch successful startups. It provides coaching, curriculum, legal services, and seed funding.',
@@ -1456,59 +1617,29 @@ export const atlantaTechEcosystem = {
 
     // Corporate Innovation Centers
     {
-      id: 'att-innovation',
-      name: 'AT&T Innovation Centers',
-      type: 'development',
-      size: 19,
-      description: 'Includes the AT&T Foundry and Drive Studio in Midtown, focusing on 5G, IoT, and connected car technologies. AT&T is a founding partner of Engage VC.',
-      website: 'https://about.att.com/story/2019/foundry.html',
-      keyPersonnel: [],
-      recentNews: 'Actively collaborates with startups and Georgia Tech to prototype and launch next-generation connected solutions.'
-    },
-    {
       id: 'delta-hangar',
-      name: 'Delta "The Hangar" Innovation Center',
-      type: 'development',
+      name: 'The Hangar',
+      type: 'corporateInnovation',
       size: 18,
       description: 'Delta Air Lines\' global innovation center in Tech Square, dedicated to developing solutions for travel that are thoughtful, reliable and innovative. Delta is a founding partner of Engage VC.',
-      website: 'https://news.delta.com/tags/hangar',
+      website: 'https://www.delta.com/us/en/delta-digital/innovation',
       keyPersonnel: [],
       recentNews: 'Explores technology in areas like biometric security, predictive analytics, and enhanced customer experiences.'
     },
     {
       id: 'home-depot-innovation',
-      name: 'The Home Depot Innovation Center',
-      type: 'development',
+      name: 'OrangeWorks',
+      type: 'corporateInnovation',
       size: 18,
       description: 'Located in Tech Square, this center allows The Home Depot to partner with Georgia Tech students and faculty to accelerate retail technology and supply chain innovation. Home Depot is a founding partner of Engage VC.',
-      website: 'https://corporate.homedepot.com/newsroom/georgia-tech-innovation-center',
+      website: 'https://www.scheller.gatech.edu/about-scheller/tech-square/scheller-goes-inside-the-home-depot.html',
       keyPersonnel: [],
       recentNews: 'Focuses on developing new solutions for e-commerce, in-store experience, and supply chain logistics.'
     },
     {
-      id: 'southern-co-innovation',
-      name: 'Southern Company Energy Innovation Center',
-      type: 'development',
-      size: 18,
-      description: 'An innovation hub in Tech Square focused on developing and commercializing next-generation energy solutions, including renewables, smart home tech, and grid modernization. Southern Co. is a founding partner of Engage VC.',
-      website: 'https://www.southerncompany.com/innovation/energy-innovation-center.html',
-      keyPersonnel: [],
-      recentNews: 'Serves as a critical link between one of the nation\'s largest energy providers and the cleantech startup ecosystem.'
-    },
-    {
-      id: 'chick-fil-a-innovation',
-      name: 'Chick-fil-A Innovation Centers',
-      type: 'development',
-      size: 18,
-      description: 'Includes the "Hatch" innovation center at its headquarters and a Technology Center in Tech Square, focused on improving restaurant operations, customer service, and digital experience. Chick-fil-A is a founding partner of Engage VC.',
-      website: 'https://www.chick-fil-a.com/stories/inside-chick-fil-a/hatching-the-future-of-fast-food',
-      keyPersonnel: [],
-      recentNews: 'Utilizes its centers to pilot new technologies in automation, data analytics, and mobile ordering.'
-    },
-    {
       id: 'ncr-innovation-lab',
       name: 'NCR Innovation Lab',
-      type: 'development',
+      type: 'corporateInnovation',
       size: 18,
       description: 'Located at NCR\'s global headquarters in Midtown, this lab focuses on creating next-generation solutions for banking, retail, and hospitality industries.',
       website: 'https://www.ncr.com/company/innovation',
@@ -1531,7 +1662,7 @@ export const atlantaTechEcosystem = {
     },
     {
       id: 'aucc',
-      name: 'Atlanta University Center Consortium',
+      name: 'AUCC',
       type: 'university',
       size: 20,
       description: 'The world\'s oldest and largest consortium of historically Black colleges and universities (HBCUs), comprised of Clark Atlanta University, Morehouse College, and Spelman College. A powerhouse for diverse talent and innovation.',
@@ -1556,18 +1687,6 @@ export const atlantaTechEcosystem = {
 
     // Additional Diversity-Focused and Scaling Organizations
     {
-      id: 'hawks-ventures',
-      name: 'Hawks Ventures',
-      type: 'vc',
-      size: 17,
-      description: 'A venture capital fund from the Atlanta Hawks focused on investing in early-stage, minority- and women-led startups that align with the team\'s core values of innovation and inclusivity.',
-      website: 'https://hawksvc.com/',
-      keyPersonnel: [
-        { name: 'David Garcia', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/david-garcia-0112726/' }
-      ],
-      recentNews: 'Represents a unique model of corporate venture capital from a professional sports team with a diversity-first investment thesis.'
-    },
-    {
       id: 'launchpad-2x',
       name: 'Launchpad 2X',
       type: 'accelerator',
@@ -1581,8 +1700,8 @@ export const atlantaTechEcosystem = {
     },
     {
       id: 'pin-georgia',
-      name: 'Partnership for Inclusive Innovation',
-      type: 'development',
+      name: 'PIN',
+      type: 'economicDevelopment',
       size: 18,
       description: 'A statewide public-private partnership that leads coordinated, statewide efforts to position Georgia as the tech capital of the East Coast through innovation, workforce development, and research.',
       website: 'https://pingeorgia.org/',
@@ -1606,18 +1725,6 @@ export const atlantaTechEcosystem = {
 
     // Additional Diversity-Focused Investment and Educational Organizations
     {
-      id: 'the-jump-fund',
-      name: 'The Jump Fund',
-      type: 'vc',
-      size: 17,
-      description: 'An all-female collective of angel investors that invests in early-stage, women-led, high-growth ventures in the Southeast to build a stronger and more inclusive regional economy.',
-      website: 'https://thejumpfund.com/',
-      keyPersonnel: [
-        { name: 'Kristina Montague', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/kristinamontague/' }
-      ],
-      recentNews: 'Actively invests in and provides mentorship to female founders, focusing on building a robust portfolio of women-led companies.'
-    },
-    {
       id: 'steelsky-ventures',
       name: 'Steelsky Ventures',
       type: 'vc',
@@ -1640,6 +1747,26 @@ export const atlantaTechEcosystem = {
         { name: 'Leocadia I. Zak', title: 'President', linkedin: 'https://www.linkedin.com/in/leocadia-zak-51829610b/' }
       ],
       recentNews: 'Consistently ranked among the most innovative liberal arts colleges, it is a key source of diverse, dynamic talent for the Atlanta area.'
+    },
+
+    // International Tech Organizations
+    {
+      id: 'la-french-tech-atlanta',
+      name: 'La French Tech Atlanta',
+      type: 'trade', // or 'communityBuilders'
+      size: 17,
+      description: 'An official chapter of the global French Tech movement, bringing together French entrepreneurs, investors, and tech leaders to animate the local ecosystem and support the growth of French startups in the Atlanta area.',
+      website: 'https://www.facc-atlanta.com/la-french-tech.html',
+      keyPersonnel: [
+        { name: 'Arthur Bellamy', title: 'President (CRO, Exotec)' },
+        { name: 'Sebastien Lafon', title: 'Board Member (Founder, Adapt1st)' },
+        { name: 'Christine De Wendel', title: 'Board Member (Co-Founder & CEO US, sunday)' },
+        { name: 'Pascale Cohen', title: 'Board Member (Attache for Science and Technology)' },
+        { name: 'Francois Giraud', title: 'Board Member (Startup Program Lead USA, OVHcloud)' },
+        { name: 'Katherine Lafourcade', title: 'Board Member (Executive Director, FACC Atlanta-Southeast)' },
+        { name: 'Renaud Charvet', title: 'Board Member (Co-founder & CEO, Ringover INC)' }
+      ],
+      recentNews: 'Formally launched as a new chapter for 2023-2025 to enhance transatlantic tech cooperation, led by major French-American tech companies including Exotec, OVHCloud, sunday, and Ringover.'
     }
 
   ],
@@ -1657,6 +1784,82 @@ export const atlantaTechEcosystem = {
       target: 'demand-driven-tech',
       type: 'investment',
       description: 'Mosley Ventures investment in Demand Driven Technologies'
+    },
+
+    // Noro-Moseley Partners investments in portfolio companies
+    {
+      source: 'noro-moseley-partners',
+      target: 'macstadium',
+      type: 'investment',
+      description: 'Noro-Moseley Partners investment in MacStadium'
+    },
+    {
+      source: 'noro-moseley-partners',
+      target: 'revenue-analytics',
+      type: 'investment',
+      description: 'Noro-Moseley Partners investment in Revenue Analytics'
+    },
+    {
+      source: 'noro-moseley-partners',
+      target: 'rialtic',
+      type: 'investment',
+      description: 'Noro-Moseley Partners investment in Rialtic'
+    },
+    {
+      source: 'noro-moseley-partners',
+      target: 'voxie',
+      type: 'investment',
+      description: 'Noro-Moseley Partners investment in Voxie'
+    },
+
+    // TTV Capital investments in portfolio companies
+    {
+      source: 'ttv-capital',
+      target: 'bitpay',
+      type: 'investment',
+      description: 'TTV Capital investment in BitPay'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'carputty',
+      type: 'investment',
+      description: 'TTV Capital investment in Carputty'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'defensestorm',
+      type: 'investment',
+      description: 'TTV Capital investment in DefenseStorm'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'greenlight',
+      type: 'investment',
+      description: 'TTV Capital investment in Greenlight'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'greenwood',
+      type: 'investment',
+      description: 'TTV Capital investment in Greenwood'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'instant',
+      type: 'investment',
+      description: 'TTV Capital investment in Instant'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'ledgible',
+      type: 'investment',
+      description: 'TTV Capital investment in Ledgible'
+    },
+    {
+      source: 'ttv-capital',
+      target: 'smartpath',
+      type: 'investment',
+      description: 'TTV Capital investment in SmartPath'
     },
 
 
@@ -1827,12 +2030,6 @@ export const atlantaTechEcosystem = {
       description: 'Valor Ventures investment in MyPhysician360'
     },
 
-    {
-      source: 'valor-ventures',
-      target: 'riderr',
-      type: 'investment',
-      description: 'Valor Ventures investment in Riderr'
-    },
 
 
 
@@ -2099,12 +2296,40 @@ export const atlantaTechEcosystem = {
       description: 'Georgia Research Alliance partnership with Emory University for research commercialization'
     },
 
-    // ADTC relationships
+    // University and Spinout Connections
     {
-      source: 'adtc',
+      source: 'georgia-tech',
+      target: 'softwear-automation',
+      type: 'spinout',
+      description: 'SoftWear Automation is a well-known spinout from Georgia Tech research'
+    },
+    {
+      source: 'georgia-tech',
+      target: 'atdc',
+      type: 'affiliation',
+      description: 'ATDC is Georgia Tech\'s technology incubator and startup accelerator'
+    },
+
+    // Tech Square Collaborations
+    {
+      source: 'georgia-tech',
+      target: 'delta-hangar',
+      type: 'collaboration',
+      description: 'Delta Innovation Center located in Tech Square for collaboration with Georgia Tech'
+    },
+    {
+      source: 'georgia-tech',
+      target: 'home-depot-innovation',
+      type: 'collaboration',
+      description: 'Home Depot Innovation Center located in Tech Square for collaboration with Georgia Tech'
+    },
+
+    // ATDC relationships
+    {
+      source: 'atdc',
       target: 'atlanta-tech-village',
       type: 'collaboration',
-      description: 'ADTC collaboration with Atlanta Tech Village for technology development'
+      description: 'ATDC collaboration with Atlanta Tech Village for technology development'
     },
 
     // Cox Enterprises relationships
@@ -2113,6 +2338,46 @@ export const atlantaTechEcosystem = {
       target: 'technology-association-georgia',
       type: 'collaboration',
       description: 'Cox Enterprises membership and collaboration with Technology Association of Georgia'
+    },
+
+    // Engage VC Corporate Partnerships
+    {
+      source: 'engage-vc',
+      target: 'cox-enterprises',
+      type: 'partnership',
+      description: 'Cox Enterprises is a founding partner of Engage VC, providing corporate access and innovation collaboration'
+    },
+    {
+      source: 'engage-vc',
+      target: 'delta-hangar',
+      type: 'partnership',
+      description: 'Delta Air Lines is a founding partner of Engage VC, providing corporate access and innovation collaboration'
+    },
+    {
+      source: 'engage-vc',
+      target: 'georgia-tech',
+      type: 'partnership',
+      description: 'Georgia Tech is a founding partner of Engage VC, providing research collaboration and talent pipeline'
+    },
+    {
+      source: 'engage-vc',
+      target: 'home-depot-innovation',
+      type: 'partnership',
+      description: 'The Home Depot is a founding partner of Engage VC, providing corporate access and innovation collaboration'
+    },
+    {
+      source: 'engage-vc',
+      target: 'ncr-innovation-lab',
+      type: 'partnership',
+      description: 'NCR is a founding partner of Engage VC, providing corporate access and innovation collaboration'
+    },
+
+    // Accelerator and Corporate Partnerships
+    {
+      source: 'techstars-atlanta',
+      target: 'cox-enterprises',
+      type: 'partnership',
+      description: 'Techstars Atlanta is powered by Cox Enterprises, providing corporate access and resources'
     },
 
     // Portfolio company collaborations
