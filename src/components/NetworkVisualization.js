@@ -930,21 +930,34 @@ const NetworkVisualization = forwardRef(({ dataFile = 'biotech', hideUI = false,
     const nodeTypes = [...new Set(filteredNodes.map(n => n.type))];
     const clustersPerRow = Math.ceil(Math.sqrt(nodeTypes.length));
     
+    // Use more spread out clustering in explore mode to reduce overlap
+    const clusterSpacing = exploreMode ? 0.8 : 1.0; // Reduce cluster density in explore mode
+    
     nodeTypes.forEach((type, index) => {
       const row = Math.floor(index / clustersPerRow);
       const col = index % clustersPerRow;
       clusterPositions[type] = {
-        x: (col + 0.5) * (width / clustersPerRow),
-        y: (row + 0.5) * (height / Math.ceil(nodeTypes.length / clustersPerRow))
+        x: (col + 0.5) * (width / clustersPerRow) * clusterSpacing + (width * (1 - clusterSpacing) / 2),
+        y: (row + 0.5) * (height / Math.ceil(nodeTypes.length / clustersPerRow)) * clusterSpacing + (height * (1 - clusterSpacing) / 2)
       };
     });
 
     // Create force simulation with faster settings
+    // Use more conservative spacing in explore mode to reduce label overlap
+    const baseLinkDistance = isMobile ? 200 : 280;
+    const baseChargeStrength = isMobile ? -300 : -500;
+    const baseCollisionRadius = (d) => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4 + (isMobile ? 30 : 50);
+    
+    // Adjust parameters for explore mode to reduce overlap
+    const linkDistance = exploreMode ? baseLinkDistance * 1.4 : baseLinkDistance;
+    const chargeStrength = exploreMode ? baseChargeStrength * 1.3 : baseChargeStrength;
+    const collisionRadius = exploreMode ? (d) => baseCollisionRadius(d) * 1.5 : baseCollisionRadius;
+    
     const simulation = d3.forceSimulation(filteredNodes)
-      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(isMobile ? 200 : 280))
-      .force("charge", d3.forceManyBody().strength(isMobile ? -300 : -500))
+      .force("link", d3.forceLink(processedLinks).id(d => d.id).distance(linkDistance))
+      .force("charge", d3.forceManyBody().strength(chargeStrength))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => Math.max(d.size * (isMobile ? 2.5 : 3.5), 16) + 4 + (isMobile ? 30 : 50)))
+      .force("collision", d3.forceCollide().radius(collisionRadius))
       .force("x", d3.forceX(d => clusterPositions[d.type]?.x || width / 2).strength(0.1))
       .force("y", d3.forceY(d => clusterPositions[d.type]?.y || height / 2).strength(0.1))
       .alphaDecay(0.1) // Faster decay (default is 0.0228)

@@ -1427,6 +1427,12 @@
   font-size: 14px;
 }
 
+/* Reset button container - center the button */
+.network-only .network-stats-bottom-right .stats-reset-container {
+  justify-content: center;
+  margin-top: 4px;
+}
+
 /* Network Share Dropdown */
 .network-only .network-share-dropdown {
   position: fixed;
@@ -2887,18 +2893,23 @@
 
 .network-only .explore-reset-button-small {
   padding: 4px 8px;
-  background: var(--accent-color);
-  color: white;
-  border: none;
+  background: transparent;
+  color: var(--text-accent); /* Emerald green accent color */
+  border: 1px solid var(--text-accent);
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
 }
 
 .network-only .explore-reset-button-small:hover {
-  background: var(--accent-hover);
+  background: var(--text-accent);
+  color: var(--bg-primary);
+  border-color: var(--text-accent);
 }
 
 /* Mobile responsiveness for explore mode */

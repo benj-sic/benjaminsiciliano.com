@@ -2274,7 +2274,7 @@ function NetworkOnly({ dataType = 'biotech', exploreMode = false }) {
                 <span className="stat-label">Visible:</span>
                 <span className="stat-value">{exploreState.visibleNodes.size}</span>
               </div>
-              <div className="stats-item">
+              <div className="stats-item stats-reset-container">
                 <button
                   className="explore-reset-button-small"
                   onClick={resetExploration}
