@@ -1062,7 +1062,7 @@ export const atlantaTechEcosystem = {
       description: 'A leading AI-powered revenue orchestration platform that helps sales teams prioritize and take action on what matters most. Trusted by 5,000+ customers including 3M, Stripe, and IBM.',
       website: 'https://www.salesloft.com/',
       keyPersonnel: [
-        { name: 'Kyle Porter', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/kyleporter/' }
+        { name: 'David Obrand', title: 'CEO', linkedin: 'https://www.linkedin.com/in/david-obrand-518b701/' }
       ],
       recentNews: 'Named a leader in the 2025 IDC MarketScape for worldwide GRC software and continues to expand its AI-powered revenue orchestration capabilities.'
     },
@@ -1076,7 +1076,7 @@ export const atlantaTechEcosystem = {
       description: 'The world\'s most widely used privacy, security, and data governance platform. Serves 14,000+ customers including 75% of the Fortune 100, with 2,000+ employees and 300+ patents.',
       website: 'https://www.onetrust.com/',
       keyPersonnel: [
-        { name: 'Kabir Barday', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/kabirbarday/' }
+        { name: 'Kabir Barday', title: 'Co-Founder & CEO', linkedin: 'https://www.linkedin.com/in/kbarday/' }
       ],
       recentNews: 'Named to the Forbes Cloud 100 for seventh consecutive year and continues to lead in AI governance and privacy automation solutions.'
     },
@@ -1350,7 +1350,7 @@ export const atlantaTechEcosystem = {
       description: 'A non-profit that runs a thriving tech incubator and provides educational programs and events to help grow technology and innovation in the city of Alpharetta.',
       website: 'https://techalpharetta.com',
       keyPersonnel: [
-        { name: 'Karen Cashion', title: 'CEO', linkedin: 'https://www.linkedin.com/in/karencashion/' }
+        { name: 'Karen Cashion', title: 'President & CEO', linkedin: 'https://www.linkedin.com/in/karen-cashion-25235042/' }
       ],
       recentNews: 'Fosters growth in North Fulton, known as the "Technology City of the South," by connecting startups with local enterprise tech companies.'
     },
@@ -1437,7 +1437,29 @@ export const atlantaTechEcosystem = {
       description: 'A growth equity firm that invests in rapidly growing, lower-middle market B2B software and healthcare companies.',
       website: 'https://www.fulcrumep.com/',
       keyPersonnel: [
-        { name: 'Frank X. Dalton', title: 'Partner', linkedin: 'https://www.linkedin.com/in/frank-x-dalton-38b4385/' }
+        { name: 'Garrett Kash', title: 'Partner', linkedin: 'https://www.linkedin.com/in/garrettkash/' },
+        { name: 'Frank X. Dalton', title: 'Partner', linkedin: 'https://www.linkedin.com/in/fxdalton/' },
+        { name: 'Brent Dorfman', title: 'Partner', linkedin: 'https://www.linkedin.com/in/brent-dorfman-ba121232/' },
+        { name: 'Scott Dorfman', title: 'Partner', linkedin: 'https://www.linkedin.com/in/scott-dorfman-90618730/' },
+        { name: 'Jim Douglass', title: 'Partner', linkedin: 'https://www.linkedin.com/in/jim-douglass-04b1254/' },
+        { name: 'Taylor Ellis-Jarrells', title: 'Partner', linkedin: 'https://www.linkedin.com/in/taylor-ellis-jarrells-44235097/' },
+        { name: 'Peter Franconi', title: 'Partner', linkedin: 'https://www.linkedin.com/in/fpeterfranconi/' },
+        { name: 'Alston Gardner', title: 'Partner', linkedin: 'https://www.linkedin.com/in/alston-gardner-41340/' },
+        { name: 'Jason Gaspard', title: 'Partner', linkedin: 'https://www.linkedin.com/in/jgaspard1/' },
+        { name: 'Amy Geiger', title: 'Partner', linkedin: 'https://www.linkedin.com/in/amy-geiger-cpa-91b1357/' },
+        { name: 'Lior Taig Gordon', title: 'Partner', linkedin: 'https://www.linkedin.com/in/liortaigordon/' },
+        { name: 'Thomas Greer', title: 'Partner', linkedin: 'https://www.linkedin.com/in/thomas-greer-35487158/' },
+        { name: 'Chad Hooker', title: 'Partner', linkedin: 'https://www.linkedin.com/in/chadhooker1/' },
+        { name: 'James Patrick Laudenslager', title: 'Partner', linkedin: 'https://www.linkedin.com/in/james-patrick-laudenslager-1060a1256/' },
+        { name: 'Philip Lewis', title: 'Partner', linkedin: 'https://www.linkedin.com/in/philiplewisfulcrum/' },
+        { name: 'Ali Razam', title: 'Partner', linkedin: 'https://www.linkedin.com/in/alirazam/' },
+        { name: 'Jason Moore', title: 'Partner', linkedin: 'https://www.linkedin.com/in/jasonmoore/' },
+        { name: 'Tonika Moore', title: 'Partner', linkedin: 'https://www.linkedin.com/in/tonika-moore-b9a01a247/' },
+        { name: 'Amit Patel', title: 'Partner', linkedin: 'https://www.linkedin.com/in/amit-patel-416b8114/' },
+        { name: 'Patrick Rowland', title: 'Partner', linkedin: 'https://www.linkedin.com/in/patrick-rowland-18077463/' },
+        { name: 'Hunter Sessions', title: 'Partner', linkedin: 'https://www.linkedin.com/in/ehuntersessions/' },
+        { name: 'Caitlin Tidwell', title: 'Partner', linkedin: 'https://www.linkedin.com/in/caitlin-tidwell-0091b0128/' },
+        { name: 'Matt Zowine', title: 'Partner', linkedin: 'https://www.linkedin.com/in/matt-zowine-3ab801122/' }
       ],
       recentNews: 'Provides capital and operational expertise to help companies accelerate growth and reach their next level of scale.'
     },
@@ -1463,7 +1485,127 @@ export const atlantaTechEcosystem = {
       keyPersonnel: [
         { name: 'Jewel Burks Solomon', title: 'Managing Partner', linkedin: 'https://www.linkedin.com/in/jewelburks/' }
       ],
+      portfolio: [
+        { id: 'boxedup', name: 'BoxedUp', description: 'Rental management platform for online bookings and sales' },
+        { id: 'filmhedge', name: 'FilmHedge', description: 'Financial technology platform for entertainment industry' },
+        { id: 'goodr', name: 'Goodr', description: 'Food waste solutions and hunger relief platform' },
+        { id: 'hairbrella', name: 'Hairbrella', description: 'Weatherproof hair protection products' },
+        { id: 'healthy-hip-hop', name: 'Healthy Hip Hop', description: 'Health and wellness platform using hip hop culture' },
+        { id: 'imin2', name: 'I\'m In 2', description: 'Community engagement and opportunity platform' },
+        { id: 'lainelondon', name: 'Laine London', description: 'Contemporary fashion and lifestyle brand' },
+        { id: 'nectar', name: 'Nectar', description: 'Community engagement and social impact platform' },
+        { id: 'photoid', name: 'PhotoID', description: 'Photo identification and verification platform' },
+        { id: 'kairos', name: 'Kairos', description: 'Digital water technology for asset protection and conservation' }
+      ],
       recentNews: 'Aims to establish a new model of investing to close the funding gap for Black entrepreneurs.'
+    },
+
+    // Collab Capital Fund 1 Portfolio Companies
+    {
+      id: 'boxedup',
+      name: 'BoxedUp',
+      type: 'startup',
+      size: 16,
+      description: 'Rental management platform that helps businesses book rentals and sales online 24/7. Provides e-commerce storefront, inventory management, same-day delivery, and payment processing for rental businesses.',
+      website: 'https://tryboxedup.com/',
+      keyPersonnel: [],
+      recentNews: 'Award-winning desktop and mobile UX design for rental businesses with RMS integration and automated quote generation.'
+    },
+    {
+      id: 'filmhedge',
+      name: 'FilmHedge',
+      type: 'startup',
+      size: 16,
+      description: 'Financial technology platform serving the entertainment industry with innovative funding solutions for film and media projects.',
+      website: 'https://filmhedge.com/',
+      keyPersonnel: [],
+      recentNews: 'Providing financial tools and services to support the entertainment industry ecosystem.'
+    },
+    {
+      id: 'goodr',
+      name: 'Goodr',
+      type: 'startup',
+      size: 17,
+      description: 'Food waste solutions and hunger relief platform that helps businesses reduce waste and feed communities. Uses technology and logistics to divert food from landfills and get it to those in need.',
+      website: 'https://goodr.co/',
+      keyPersonnel: [],
+      recentNews: 'Served 30 million meals to people in need and diverted 4 million pounds of food from landfills, generating $6.3 million in tax deductions for partners.'
+    },
+    {
+      id: 'hairbrella',
+      name: 'Hairbrella',
+      type: 'startup',
+      size: 16,
+      description: 'Weatherproof hair protection products including rain hats, swim caps, and outdoor accessories. Founded to solve the problem of hair being ruined by weather.',
+      website: 'https://www.hairbrella.com/',
+      keyPersonnel: [
+        { name: 'Tracey Pickett', title: 'CEO & Founder', linkedin: 'https://www.linkedin.com/in/tracey-pickett/' }
+      ],
+      recentNews: 'Black-owned company creating innovative solutions for weather protection with 65 prototypes and extensive focus group testing.'
+    },
+    {
+      id: 'healthy-hip-hop',
+      name: 'Healthy Hip Hop',
+      type: 'startup',
+      size: 16,
+      description: 'Health and wellness platform that promotes healthy living through hip hop culture and community engagement.',
+      website: 'https://www.healthy.hiphop/',
+      keyPersonnel: [],
+      recentNews: 'Using music and culture to promote health and wellness in communities.'
+    },
+    {
+      id: 'imin2',
+      name: 'I\'m In 2',
+      type: 'startup',
+      size: 16,
+      description: 'Platform connecting people with opportunities and experiences in their communities.',
+      website: 'https://imin2.com/',
+      keyPersonnel: [],
+      recentNews: 'Building community connections and engagement through technology.'
+    },
+    {
+      id: 'lainelondon',
+      name: 'Laine London',
+      type: 'startup',
+      size: 16,
+      description: 'Fashion and lifestyle brand focused on contemporary design and cultural expression.',
+      website: 'https://www.lainelondon.com/',
+      keyPersonnel: [],
+      recentNews: 'Contemporary fashion brand with cultural impact and community focus.'
+    },
+    {
+      id: 'nectar',
+      name: 'Nectar',
+      type: 'startup',
+      size: 16,
+      description: 'Platform providing services and solutions for community engagement and social impact.',
+      website: 'https://www.usenectar.com/',
+      keyPersonnel: [],
+      recentNews: 'Building tools for community engagement and social good.'
+    },
+    {
+      id: 'photoid',
+      name: 'PhotoID',
+      type: 'startup',
+      size: 16,
+      description: 'Photo identification and verification platform using technology for secure identity management.',
+      website: 'https://photoidapp.net/',
+      keyPersonnel: [],
+      recentNews: 'Technology platform for secure photo identification and verification services.'
+    },
+
+    // Collab Capital Fund 2 Portfolio Companies
+    {
+      id: 'kairos',
+      name: 'Kairos',
+      type: 'startup',
+      size: 16,
+      description: 'Digital water technology company focused on asset protection and water conservation through advanced metering and leak detection technologies.',
+      website: 'https://www.collab.capital/companies/kairos',
+      keyPersonnel: [
+        { name: 'Dean Fung-A-Wing', title: 'Founder', linkedin: 'https://www.linkedin.com/in/dean-fung-a-wing/' }
+      ],
+      recentNews: 'Part of Collab Capital Fund 2, focusing on community infrastructure through innovative water technology solutions.'
     },
     {
       id: 'fearless-fund',
@@ -1511,7 +1653,32 @@ export const atlantaTechEcosystem = {
       description: 'A non-profit dedicated to closing the relationship gap for diverse founders. Goodie Nation provides support and connections to social entrepreneurs and diverse founders.',
       website: 'https://goodienation.org/',
       keyPersonnel: [
-        { name: 'Joey Womack', title: 'Founder & CEO', linkedin: 'https://www.linkedin.com/in/joeywomack/' }
+        { name: 'Joey Womack', title: 'CEO', linkedin: 'https://www.linkedin.com/in/joeywomack/' },
+        { name: 'Abiodun John', title: 'Good Brotha', linkedin: 'https://www.linkedin.com/in/abiodun-john/' },
+        { name: 'Allison Todd', title: 'TAP Forward', linkedin: 'https://www.linkedin.com/in/allison-todd/' },
+        { name: 'Bobby Gilbert', title: 'AI Agent Coach', linkedin: 'https://www.linkedin.com/in/bobby-gilbert/' },
+        { name: 'Caitlin Ferguson', title: 'Board Member', linkedin: 'https://www.linkedin.com/in/caitlin-ferguson/' },
+        { name: 'Celeste Shie', title: 'Seed Stage Support', linkedin: 'https://www.linkedin.com/in/celeste-shie/' },
+        { name: 'Elishia Thomas', title: 'Lenovo Evolve', linkedin: 'https://www.linkedin.com/in/elishia-thomas/' },
+        { name: 'Eugenia Johnson', title: 'TAP Forward', linkedin: 'https://www.linkedin.com/in/eugenia-johnson/' },
+        { name: 'Ian Scott', title: 'Leadership Coach', linkedin: 'https://www.linkedin.com/in/ian-scott/' },
+        { name: 'Jamaila Holden', title: 'Product Manager', linkedin: 'https://www.linkedin.com/in/jamaila-holden/' },
+        { name: 'Jeff Hilimire', title: 'Board Member', linkedin: 'https://www.linkedin.com/in/jeffhilimire/' },
+        { name: 'Jenea Bradley', title: 'Board Member', linkedin: 'https://www.linkedin.com/in/jenea-bradley/' },
+        { name: 'Justin Dawkins', title: 'Board Member', linkedin: 'https://www.linkedin.com/in/justin-dawkins/' },
+        { name: 'Karen Hubbard', title: 'Seed Stage Support', linkedin: 'https://www.linkedin.com/in/karen-hubbard/' },
+        { name: 'Kimberly Jolley', title: 'Next Generation', linkedin: 'https://www.linkedin.com/in/kimberly-jolley/' },
+        { name: 'Kirk Barnes', title: 'Board Member', linkedin: 'https://www.linkedin.com/in/kirk-barnes/' },
+        { name: 'Kylan Kester', title: 'ATL BLK TCH', linkedin: 'https://www.linkedin.com/in/bykylan/' },
+        { name: 'MJ Allen', title: 'TAP Forward', linkedin: 'https://www.linkedin.com/in/mj-allen/' },
+        { name: 'Naomi Arroyo', title: 'TAP Forward', linkedin: 'https://www.linkedin.com/in/naomi-arroyo/' },
+        { name: 'Olayinka Osilaja', title: 'Event Operations', linkedin: 'https://www.linkedin.com/in/olayinka-osilaja/' },
+        { name: 'Raeshawn Peterson', title: 'Fundraising', linkedin: 'https://www.linkedin.com/in/raeshawn-peterson/' },
+        { name: 'Seth Banks', title: 'B2B Sales Coach', linkedin: 'https://www.linkedin.com/in/seth-banks/' },
+        { name: 'Shay Lawson', title: 'Board Member', linkedin: 'https://www.linkedin.com/in/shay-lawson/' },
+        { name: 'Tamay Shannon', title: 'ATL BLK TCH', linkedin: 'https://www.linkedin.com/in/tamay-shannon/' },
+        { name: 'Trevor Wilkin', title: 'Health Tech', linkedin: 'https://www.linkedin.com/in/trevor-wilkin/' },
+        { name: 'Vanessa Kuhl', title: 'VC Readiness', linkedin: 'https://www.linkedin.com/in/vanessa-kuhl/' }
       ],
       recentNews: 'One of the most influential organizations in the Southeast for connecting diverse founders to capital, mentors, and corporate partners.'
     },
@@ -1549,7 +1716,7 @@ export const atlantaTechEcosystem = {
       description: 'A leading organization for economic development and promoting the metro Atlanta region. Supports tech growth through various initiatives, including its Backed by ATL program for scale-ups.',
       website: 'https://www.metroatlantachamber.com',
       keyPersonnel: [
-        { name: 'Katie Kirkpatrick', title: 'President and CEO', linkedin: 'https://www.linkedin.com/in/katie-k-kirkpatrick-a064724/' }
+        { name: 'Katie Kirkpatrick', title: 'President and CEO', linkedin: 'https://www.linkedin.com/in/katiekirkpatrick/' }
       ],
       recentNews: 'Actively works to attract, grow, and retain technology companies and talent in the Atlanta region.'
     },
@@ -1586,7 +1753,7 @@ export const atlantaTechEcosystem = {
       description: 'A non-profit, invitation-only organization of CEOs from product and recurring revenue companies. It connects leaders to capital, customers, talent, and each other.',
       website: 'https://www.atlantaceo.org',
       keyPersonnel: [
-        { name: 'Palaniswamy "Raj" Rajan', title: 'Chairman', linkedin: 'https://www.linkedin.com/in/palaniswamyrajan/' }
+        { name: 'Palaniswamy "Raj" Rajan', title: 'Chairman', linkedin: 'https://www.linkedin.com/in/pvrajan/' }
       ],
       recentNews: 'Provides a confidential, peer-to-peer network for the leaders of Atlanta\'s most successful tech companies.'
     },
@@ -1718,7 +1885,10 @@ export const atlantaTechEcosystem = {
       description: 'The Atlanta chapter of a global organization that supports high-impact entrepreneurs. Its ScaleUp ATL program specifically accelerates high-potential Black founders.',
       website: 'https://endeavoratlanta.org/',
       keyPersonnel: [
-        { name: 'Aaron F. Goldman', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/aaronfgoldman/' }
+        { name: 'Eileen Slee', title: 'Managing Director', linkedin: 'https://www.linkedin.com/in/eileenslee/' },
+        { name: 'Lane Moore', title: 'Director', linkedin: 'https://www.linkedin.com/in/lanemoore/' },
+        { name: 'Shila Nieves-Burney', title: 'Director', linkedin: 'https://www.linkedin.com/in/shila-nieves-burney-0346436/' },
+        { name: 'Kyle Porter', title: 'Director', linkedin: 'https://www.linkedin.com/in/kyleporter/' }
       ],
       recentNews: 'Focuses on helping later-stage founders scale their businesses through mentorship and access to a global network.'
     },
@@ -1732,9 +1902,28 @@ export const atlantaTechEcosystem = {
       description: 'A venture capital firm that invests in companies improving access, care, and outcomes in women\'s healthcare, with a preference for companies with women in leadership.',
       website: 'https://steelskyventures.com/',
       keyPersonnel: [
-        { name: 'Maria Toler Velissaris', title: 'Founding Partner', linkedin: 'https://www.linkedin.com/in/mariapvelissaris/' }
+        { name: 'Maria Steelsky', title: 'Founding Partner', linkedin: 'https://www.linkedin.com/in/mariasteelsky/' },
+        { name: 'Casey Albert', title: 'Partner', linkedin: 'https://www.linkedin.com/in/caseyalbert1/' },
+        { name: 'Amy K. Lambert', title: 'Partner', linkedin: 'https://www.linkedin.com/in/amy-k-lambert/' },
+        { name: 'Georgia Rounder', title: 'Partner', linkedin: 'https://www.linkedin.com/in/georgia-rounder-rdn-907a4b74/' }
+      ],
+      portfolio: [
+        { id: 'motivo-health', name: 'Motivo Health', description: 'Digital health platform solving clinical supervision for healthcare organizations' }
       ],
       recentNews: 'Focuses on a critical and historically underfunded sector, investing across medical devices, digital health, and new care models.'
+    },
+
+    {
+      id: 'motivo-health',
+      name: 'Motivo Health',
+      type: 'startup',
+      size: 17,
+      description: 'Digital health platform that solves clinical supervision for healthcare organizations. Matches top-rated clinical supervisors with associate-level therapists, removing the burden of clinical supervision and ensuring no gaps in care.',
+      website: 'https://motivohealth.com/',
+      keyPersonnel: [
+        { name: 'Rachel McCrickard', title: 'CEO & Co-Founder', linkedin: 'https://www.linkedin.com/in/rachelmccrickard/' }
+      ],
+      recentNews: 'Network of 1,200+ clinical supervisors serving digital health providers, health plans, and community providers across multiple states with expertise in licensing regulations and compliance.'
     },
     {
       id: 'agnes-scott-college',
@@ -1758,13 +1947,13 @@ export const atlantaTechEcosystem = {
       description: 'An official chapter of the global French Tech movement, bringing together French entrepreneurs, investors, and tech leaders to animate the local ecosystem and support the growth of French startups in the Atlanta area.',
       website: 'https://www.facc-atlanta.com/la-french-tech.html',
       keyPersonnel: [
-        { name: 'Arthur Bellamy', title: 'President (CRO, Exotec)' },
-        { name: 'Sebastien Lafon', title: 'Board Member (Founder, Adapt1st)' },
-        { name: 'Christine De Wendel', title: 'Board Member (Co-Founder & CEO US, sunday)' },
-        { name: 'Pascale Cohen', title: 'Board Member (Attache for Science and Technology)' },
-        { name: 'Francois Giraud', title: 'Board Member (Startup Program Lead USA, OVHcloud)' },
-        { name: 'Katherine Lafourcade', title: 'Board Member (Executive Director, FACC Atlanta-Southeast)' },
-        { name: 'Renaud Charvet', title: 'Board Member (Co-founder & CEO, Ringover INC)' }
+        { name: 'Arthur Bellamy', title: 'President (CRO, Exotec)', linkedin: 'https://www.linkedin.com/in/arthurbellamy/' },
+        { name: 'Christine De Wendel', title: 'Board Member (Co-Founder & CEO US, sunday)', linkedin: 'https://www.linkedin.com/in/christine-de-wendel/' },
+        { name: 'Francois Giraud', title: 'Board Member (Startup Program Lead USA, OVHcloud)', linkedin: 'https://www.linkedin.com/in/fgiraud/' },
+        { name: 'Renaud Charvet', title: 'Board Member (Co-founder & CEO, Ringover INC)', linkedin: 'https://www.linkedin.com/in/renaud-charvet-809512124/' },
+        { name: 'Sebastien Lafon', title: 'Board Member (Founder, Adapt1st)', linkedin: 'https://www.linkedin.com/in/-sebastienlafon/' },
+        { name: 'Pascale Cohen', title: 'Board Member (Attache for Science and Technology)', linkedin: 'https://www.linkedin.com/in/pascale-cohen-09a04a102/' },
+        { name: 'Katherine Lafourcade', title: 'Board Member (Executive Director, FACC Atlanta-Southeast)', linkedin: 'https://www.linkedin.com/in/katherine-lafourcade/' }
       ],
       recentNews: 'Formally launched as a new chapter for 2023-2025 to enhance transatlantic tech cooperation, led by major French-American tech companies including Exotec, OVHCloud, sunday, and Ringover.'
     }
@@ -2378,6 +2567,76 @@ export const atlantaTechEcosystem = {
       target: 'cox-enterprises',
       type: 'partnership',
       description: 'Techstars Atlanta is powered by Cox Enterprises, providing corporate access and resources'
+    },
+
+    // Steelsky Ventures investments
+    {
+      source: 'steelsky-ventures',
+      target: 'motivo-health',
+      type: 'investment',
+      description: 'Steelsky Ventures investment in Motivo Health'
+    },
+
+    // Collab Capital Fund 1 investments
+    {
+      source: 'collab-capital',
+      target: 'boxedup',
+      type: 'investment',
+      description: 'Collab Capital investment in BoxedUp'
+    },
+    {
+      source: 'collab-capital',
+      target: 'filmhedge',
+      type: 'investment',
+      description: 'Collab Capital investment in FilmHedge'
+    },
+    {
+      source: 'collab-capital',
+      target: 'goodr',
+      type: 'investment',
+      description: 'Collab Capital investment in Goodr'
+    },
+    {
+      source: 'collab-capital',
+      target: 'hairbrella',
+      type: 'investment',
+      description: 'Collab Capital investment in Hairbrella'
+    },
+    {
+      source: 'collab-capital',
+      target: 'healthy-hip-hop',
+      type: 'investment',
+      description: 'Collab Capital investment in Healthy Hip Hop'
+    },
+    {
+      source: 'collab-capital',
+      target: 'imin2',
+      type: 'investment',
+      description: 'Collab Capital investment in I\'m In 2'
+    },
+    {
+      source: 'collab-capital',
+      target: 'lainelondon',
+      type: 'investment',
+      description: 'Collab Capital investment in Laine London'
+    },
+    {
+      source: 'collab-capital',
+      target: 'nectar',
+      type: 'investment',
+      description: 'Collab Capital investment in Nectar'
+    },
+    {
+      source: 'collab-capital',
+      target: 'photoid',
+      type: 'investment',
+      description: 'Collab Capital investment in PhotoID'
+    },
+    {
+      source: 'collab-capital',
+      target: 'kairos',
+      type: 'investment',
+      description: 'Collab Capital Fund 2 investment in Kairos'
     },
 
     // Portfolio company collaborations
