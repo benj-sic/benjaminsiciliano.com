@@ -2204,6 +2204,41 @@ export const atlantaBiotechEcosystem = {
       recentNews: "Founded in 2019. EarliPoint System device is FDA-authorized as a tool to aid qualified clinicians in the diagnosis and assessment of Autism Spectrum Disorder (ASD) in children ages 16 months through 30 months. Uses clinically validated measures to track social-visual engagement."
     },
     {
+      id: "topodx",
+      name: "TopoDx",
+      type: "startup",
+      size: 12,
+      description: "MedTech startup developing rapid antimicrobial susceptibility testing (AST) platform using white-light interferometry. Delivers pathogen identification and antibiotic resistance results in 4 hours versus 3-5 days for traditional methods. Addresses the global antimicrobial resistance crisis by enabling faster, more accurate treatment decisions.",
+      website: "https://www.topodx.com/",
+      keyPersonnel: [
+        {
+          "name": "Yogi Patel, PhD",
+          "linkedin": "https://www.linkedin.com/in/yapatel/"
+        },
+        {
+          "name": "Peter Yunker, PhD",
+          "linkedin": "https://www.linkedin.com/in/peter-yunker-34368426a/"
+        },
+        {
+          "name": "David Weiss, PhD",
+          "linkedin": "https://www.linkedin.com/in/david-weiss-aaabb81/"
+        },
+        {
+          "name": "Adam Krueger, PhD",
+          "linkedin": "https://www.linkedin.com/in/adam-krueger-a63b707b/"
+        },
+        {
+          "name": "Logan Kavanaugh, PhD",
+          "linkedin": "https://www.linkedin.com/in/logan-kavanaugh-phd/"
+        },
+        {
+          "name": "Eric Musselman, PhD",
+          "linkedin": "https://www.linkedin.com/in/ericmusselman/"
+        }
+      ],
+      recentNews: "Selected as Emory BioFoundry Institute's first investment (September 2025). Co-founded by Emory and Georgia Tech researchers through Quadrant-i Startup Launch Program. Developing Cosmos AI platform for rapid AST testing to combat antimicrobial resistance."
+    },
+    {
       id: "kodikaz",
       name: "Kodikaz Therapeutics",
       type: "startup",
@@ -2491,6 +2526,7 @@ export const atlantaBiotechEcosystem = {
     { source: "emory", target: "altesa", type: "spinout", description: "Formed via Emory's DRIVE institute" },
     { source: "emory", target: "braintrust", type: "spinout", description: "Founded by Emory faculty" },
     { source: "emory", target: "cambium_oncology", type: "spinout", description: "Founded on IP licensed from Emory University; works closely with Winship Cancer Institute" },
+    { source: "emory", target: "topodx", type: "spinout", description: "Co-founded by Emory researcher David Weiss (Director of Emory Antibiotic Resistance Center) and Georgia Tech professor Peter Yunker. Technology combines expertise in pathology, physics, and AI." },
     { source: "gatech", target: "micron", type: "spinout", description: "Technology developed at Georgia Tech" },
     { source: "gatech", target: "clearside", type: "spinout", description: "Based on GT/Emory microneedle tech" },
     { source: "gatech", target: "moonlight", type: "spinout", description: "GT Capstone project spinout" },
@@ -2500,15 +2536,18 @@ export const atlantaBiotechEcosystem = {
     { source: "gatech", target: "metaclipse", type: "spinout", description: "Founded by Georgia Tech researchers; based on VLP platform technology developed at GT." },
     { source: "gatech", target: "andson_biotech", type: "spinout", description: "Georgia Tech spinout commercializing DynaChip™ microfluidic technology." },
     { source: "gatech", target: "axion_biosystems", type: "spinout", description: "Founded based on licensed technology from Georgia Tech NanoBioSensors Lab." },
+    { source: "gatech", target: "topodx", type: "spinout", description: "Co-founded by Georgia Tech physics professor Peter Yunker through Quadrant-i Startup Launch Program. Technology based on white-light interferometry research from Yunker's lab." },
     { source: "emory", target: "metaclipse", type: "partnership", description: "Emory-affiliated advisors and founders contribute scientific expertise to VLP platform development." },
     { source: "avanos", target: "synaptrix", type: "spinout", description: "Spinout from Avanos Medical" },
 
     // --- VC Investments ---
     { source: "portal", target: "moonlight", type: "investment", description: "Co-led Series A for peanut allergy immunotherapy platform" },
     { source: "portal", target: "synaptrix", type: "investment", description: "Portfolio company focused on post-surgical pain management" },
+    { source: "portal", target: "topodx", type: "investment", description: "Portfolio company advancing AI-driven AST diagnostics for rapid antimicrobial susceptibility testing." },
     { source: "armor_medical", target: "portal", type: "tenant", description: "Armor Medical is a tenant of Portal Innovations' BioSpark Labs at Science Square" },
     { source: "eddf", target: "allonix", type: "investment", description: "EDDF portfolio investment in IBD therapeutics" },
     { source: "eddf", target: "agrithera", type: "investment", description: "EDDF portfolio investment in cannabinoid neurotherapeutics" },
+    { source: "ebfi", target: "topodx", type: "investment", description: "Emory BioFoundry Institute's first investment (September 2025). Selected TopoDx to support rapid antimicrobial susceptibility testing platform addressing global antibiotic resistance crisis." },
     { source: "gra_fund", target: "micron", type: "investment", description: "Investor in Series A" },
 
     { source: "catalyst", target: "armor_medical", type: "investment", description: "Catalyst by Wellstar invested in Armor Medical to support development of Maternal aRMOR wearable (Jun 2025)." },
@@ -2634,6 +2673,7 @@ export const atlantaBiotechEcosystem = {
     { source: "gra", target: "cambium_oncology", type: "funding", description: "Supported foundational cancer research programs at Emory that seeded Cambium." },
     { source: "gra", target: "andson_biotech", type: "funding", description: "Received early translational support from Georgia Research Alliance." },
     { source: "gra", target: "axion_biosystems", type: "funding", description: "Received financial backing via Georgia Research Alliance / GRA Venture Fund." },
+    { source: "gra", target: "topodx", type: "funding", description: "Backed by Georgia Research Alliance. Co-founded through Georgia Tech Quadrant-i Startup Launch Program with support from GRA's commercialization initiatives." },
 
     { source: "emory_biotech_consulting_club", target: "emory", type: "affiliation", description: "EBCC is a student-led commercialization and consulting program founded at Emory University under the Innovate@Emory initiative." },
     { source: "emory_biotech_consulting_club", target: "emory_ott", type: "partnership", description: "Partners with Emory OTT to support technology assessments and connect student teams to Emory-affiliated startups." },
