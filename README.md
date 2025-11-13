@@ -41,17 +41,17 @@ This is a comprehensive personal website featuring interactive network visualiza
 
 ## **Styling Architecture & Modification Guide**
 
-### 🎯 **Purpose**
+### **Purpose**
 This guide provides clear instructions for modifying styling and functionality on different pages without causing unintended conflicts between components.
 
-### 🏗️ **Architecture Overview**
+### **Architecture Overview**
 
 The application has **two distinct styling systems** that must remain separate:
 
 1. **Main Page (`/`)** - Uses `App.css` and embedded components
 2. **NetworkOnly Page (`/network`, `/biotech`, `/tech`)** - Uses `NetworkOnly.css` and isolated components
 
-### 📁 **File Structure & Responsibilities**
+### **File Structure & Responsibilities**
 
 #### **Main Page Styling & Functionality**
 ```
@@ -92,7 +92,7 @@ src/utils/*.js                         ← Global utility functions
 - Global theme system
 - Utility functions used by both pages
 
-### 🚨 **Critical Rules - NEVER BREAK THESE**
+### **Critical Rules - NEVER BREAK THESE**
 
 #### **CSS Class Naming Convention**
 - **Main page classes**: Use standard names (e.g., `.share-dropdown`, `.control-button`)
@@ -104,7 +104,7 @@ src/utils/*.js                         ← Global utility functions
 - **NetworkOnly components** should NOT import main page styles
 - **Shared components** should use their own CSS files
 
-### 📝 **Modification Instructions**
+### **Modification Instructions**
 
 #### **To Change Main Page Only:**
 1. **Edit these files:**
@@ -144,33 +144,33 @@ src/utils/*.js                         ← Global utility functions
    - `src/components/ThemeToggle.js` - Theme toggle behavior
 2. **Test on both pages** to ensure consistency
 
-### 🔧 **Common Modification Scenarios**
+### **Common Modification Scenarios**
 
 #### **Scenario 1: "I want to change the share popup on the main page"**
 ```
-✅ DO: Edit src/App.css and src/App.js
-❌ DON'T: Touch src/components/NetworkOnly.css or NetworkOnly.js
+DO: Edit src/App.css and src/App.js
+DON'T: Touch src/components/NetworkOnly.css or NetworkOnly.js
 ```
 
 #### **Scenario 2: "I want to change the share popup on the network page"**
 ```
-✅ DO: Edit src/components/NetworkOnly.css and NetworkOnly.js
-❌ DON'T: Touch src/App.css or App.js
+DO: Edit src/components/NetworkOnly.css and NetworkOnly.js
+DON'T: Touch src/App.css or App.js
 ```
 
 #### **Scenario 3: "I want to change how the network visualization works"**
 ```
-✅ DO: Edit src/components/NetworkVisualization.css and NetworkVisualization.js
-⚠️  WARNING: This affects BOTH pages - test thoroughly
+DO: Edit src/components/NetworkVisualization.css and NetworkVisualization.js
+WARNING: This affects BOTH pages - test thoroughly
 ```
 
 #### **Scenario 4: "I want to change the theme toggle appearance"**
 ```
-✅ DO: Edit src/components/ThemeToggle.css
-⚠️  WARNING: This affects BOTH pages - test thoroughly
+DO: Edit src/components/ThemeToggle.css
+WARNING: This affects BOTH pages - test thoroughly
 ```
 
-### 🧪 **Testing Checklist**
+### **Testing Checklist**
 
 After ANY modification, test these routes:
 
@@ -193,7 +193,7 @@ After ANY modification, test these routes:
 - [ ] Theme toggle works on both pages
 - [ ] Network visualization behaves consistently
 
-### 🚨 **Troubleshooting Common Issues**
+### **Troubleshooting Common Issues**
 
 #### **Issue: "My changes on the main page are affecting the network page"**
 **Cause:** CSS class conflicts or shared component issues  
@@ -211,7 +211,7 @@ After ANY modification, test these routes:
 **Cause:** CSS specificity issues or missing styles  
 **Solution:** Check browser dev tools, verify CSS class scoping
 
-### 📚 **Quick Reference**
+### **Quick Reference**
 
 | What to Change | Edit These Files | Don't Touch These |
 |----------------|------------------|-------------------|
