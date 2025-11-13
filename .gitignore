@@ -1,0 +1,11 @@
+node_modules
+
+# Backup files
+*.backup
+*.bak
+*~
+*.swp
+*.swo
+
+# Generated files
+*.csv

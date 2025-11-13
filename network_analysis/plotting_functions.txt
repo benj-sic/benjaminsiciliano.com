@@ -1,0 +1,102 @@
+    def _plot_top_bridges
+        """Plot top 10 nodes by betweenness centrality."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        top_bridges = df.nlargest(10, 'betweenness_centrality')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_bridges))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_bridges['betweenness_centrality'],
+                      color=plt.cm.plasma(np.linspace(0, 1, len(top_bridges))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_bridges['node_id']])
+        ax.set_xlabel('Betweenness Centrality', fontweight='bold')
+        ax.set_title('Top 10 Network Bridges (by Betweenness Centrality)', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_bridges.iterrows()):
+            ax.text(row['betweenness_centrality'] + 0.001, len(top_bridges) - 1 - i, f'{row["betweenness_centrality"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_bridges.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    
+
+    def _plot_top_closeness
+        """Plot top 10 nodes by closeness centrality."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        top_closeness = df.nlargest(10, 'closeness_centrality')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_closeness))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_closeness['closeness_centrality'],
+                      color=plt.cm.coolwarm(np.linspace(0, 1, len(top_closeness))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_closeness['node_id']])
+        ax.set_xlabel('Closeness Centrality', fontweight='bold')
+        ax.set_title('Top 10 Nodes by Closeness Centrality', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_closeness.iterrows()):
+            ax.text(row['closeness_centrality'] + 0.001, len(top_closeness) - 1 - i, f'{row["closeness_centrality"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_closeness.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    
+
+    def _plot_top_clustering
+        """Plot top 10 nodes by clustering coefficient."""
+        df = pd.DataFrame.from_dict(self.node_metrics, orient='index')
+        top_clustering = df.nlargest(10, 'clustering_coefficient')
+        
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Create horizontal bar plot with highest values at top
+        y_pos = np.arange(len(top_clustering))[::-1]  # Reverse to put highest at top
+        bars = ax.barh(y_pos, top_clustering['clustering_coefficient'],
+                      color=plt.cm.Set2(np.linspace(0, 1, len(top_clustering))),
+                      edgecolor='black', linewidth=1.5)
+        
+        # Customize axes
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels([self.node_names.get(node, node) for node in top_clustering['node_id']])
+        ax.set_xlabel('Clustering Coefficient', fontweight='bold')
+        ax.set_title('Top 10 Nodes by Clustering Coefficient', fontweight='bold')
+        
+        # Add value labels on bars
+        for i, (idx, row) in enumerate(top_clustering.iterrows()):
+            ax.text(row['clustering_coefficient'] + 0.001, len(top_clustering) - 1 - i, f'{row["clustering_coefficient"]:.3f}', 
+                   va='center', ha='left', fontweight='bold')
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        
+        plt.tight_layout()
+        plt.savefig('visualizations/top_10_clustering.svg', format='svg', dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    
+

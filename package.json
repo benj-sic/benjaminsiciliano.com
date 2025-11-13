@@ -1,0 +1,48 @@
+{
+  "name": "benjaminsiciliano-website",
+  "version": "1.0.0",
+  "description": "Personal website featuring Atlanta Biotech Network visualization",
+  "homepage": "https://benjaminsiciliano.com",
+  "private": true,
+  "dependencies": {
+    "d3": "^7.8.5",
+    "lucide-react": "^0.542.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.8.0",
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "node scripts/inject-git-date.js && node scripts/calculate-optimal-zoom.js && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "generate-social-card": "node scripts/generate-social-card.js",
+    "generate-all-social-images": "node scripts/generate-all-social-images.js",
+    "generate-powerpoint-backdrop": "node scripts/generate-powerpoint-backdrop.js",
+    "inject-git-date": "node scripts/inject-git-date.js",
+    "calculate-optimal-zoom": "node scripts/calculate-optimal-zoom.js",
+    "test-cache": "node scripts/test-cache.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "puppeteer": "^24.15.0"
+  }
+}

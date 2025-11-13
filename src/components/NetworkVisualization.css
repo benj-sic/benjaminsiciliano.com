@@ -1,0 +1,2314 @@
+/*
+ * Copyright (c) 2025 Benjamin Siciliano
+ * All rights reserved.
+ * 
+ * This file is part of the benjaminsiciliano.com project.
+ * Unauthorized copying, modification, distribution, or use is strictly prohibited.
+ * For licensing inquiries, contact: ben.siciliano@gmail.com
+ */
+
+/* CSS Custom Properties for theming */
+:root {
+  /* Dark theme (default) */
+  --network-bg-primary: rgba(15, 20, 25, 0.95);
+  --network-bg-secondary: rgba(255, 255, 255, 0.02);
+  --network-bg-tertiary: rgba(15, 20, 25, 0.9);
+  --network-text-primary: #ffffff;
+  --network-text-secondary: #b0b0b0;
+  --network-text-tertiary: #a0a0a0;
+  --network-text-accent: #10b981;
+  --network-border-primary: rgba(255, 255, 255, 0.1);
+  --network-border-secondary: rgba(255, 255, 255, 0.3);
+  --network-shadow: rgba(0, 0, 0, 0.3);
+  --network-hover-bg: rgba(255, 255, 255, 0.05);
+  --network-node-stroke: #ffffff;
+  --network-text-shadow: rgba(0, 0, 0, 0.8);
+  --network-link-color: #4ade80;
+  --network-link-hover: #22c55e;
+  --network-funding-color: #fbbf24;
+  --network-close-color: #666;
+  --network-close-hover: #ffffff;
+  --network-close-hover-bg: rgba(255, 255, 255, 0.1);
+  --network-control-bg: rgba(15, 20, 25, 0.8);
+  --network-control-border: rgba(255, 255, 255, 0.2);
+  --network-control-hover: rgba(255, 255, 255, 0.1);
+  --network-control-disabled: rgba(255, 255, 255, 0.3);
+  /* New highlight colors for better contrast */
+  --network-highlight-color: #ff6b6b;
+  --network-highlight-shadow: rgba(255, 107, 107, 0.6);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --network-bg-primary: rgba(255, 255, 255, 0.95);
+  --network-bg-secondary: rgba(0, 0, 0, 0.02);
+  --network-bg-tertiary: rgba(255, 255, 255, 0.9);
+  --network-text-primary: #1a202c;
+  --network-text-secondary: #4a5568;
+  --network-text-tertiary: #718096;
+  --network-text-accent: #059669;
+  --network-border-primary: rgba(0, 0, 0, 0.1);
+  --network-border-secondary: rgba(0, 0, 0, 0.3);
+  --network-shadow: rgba(0, 0, 0, 0.1);
+  --network-hover-bg: rgba(0, 0, 0, 0.05);
+  --network-node-stroke: #333333;
+  --network-text-shadow: rgba(255, 255, 255, 0.8);
+  --network-link-color: #059669;
+  --network-link-hover: #047857;
+  --network-funding-color: #d97706;
+  --network-close-color: #666;
+  --network-close-hover: #1a202c;
+  --network-close-hover-bg: rgba(0, 0, 0, 0.1);
+  --network-control-bg: rgba(255, 255, 255, 0.9);
+  --network-control-border: rgba(0, 0, 0, 0.2);
+  --network-control-hover: rgba(0, 0, 0, 0.05);
+  --network-control-disabled: rgba(0, 0, 0, 0.3);
+  /* Light theme highlight colors for better contrast */
+  --network-highlight-color: #ff6b6b;
+  --network-highlight-shadow: rgba(255, 107, 107, 0.6);
+}
+
+.network-visualization {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  color: var(--network-text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 80vh;
+  overflow: visible;
+}
+
+/* Network Header */
+.network-header {
+  padding: 2px 20px; /* Reduced padding from 3px to 2px */
+  text-align: center;
+  z-index: 20;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* When UI is hidden, make network take full height */
+.network-visualization.hide-ui {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+.network-visualization.hide-ui .network-layout {
+  min-height: 100vh !important;
+  height: 100vh !important;
+  max-height: none !important;
+}
+
+.network-visualization.hide-ui .network-main {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+.network-visualization.hide-ui .network-canvas {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+/* Override desktop height constraints when UI is hidden */
+@media (min-width: 1025px) {
+  .network-visualization.hide-ui .network-layout {
+    height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  .network-visualization.hide-ui .network-sidebar-left {
+    max-height: 100vh !important;
+  }
+}
+
+/* Ensure SVG takes full height when UI is hidden */
+.network-visualization.hide-ui .network-canvas svg {
+  height: 100vh !important;
+  min-height: 100vh !important;
+}
+
+.network-header h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: var(--text-accent);
+  transition: color 0.3s ease;
+  font-variant: small-caps;
+  text-transform: uppercase;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.network-header p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.network-header .last-updated {
+  color: var(--network-text-tertiary);
+  font-size: 0.8rem; /* Reduced from 0.9rem */
+  font-style: italic;
+  text-align: center;
+  margin-top: 8px; /* Reduced from 12px */
+  margin-bottom: 0;
+  opacity: 0.8;
+}
+
+/* Header spacer to maintain separation */
+.header-spacer {
+  height: 12px;
+  width: 100%;
+}
+
+/* Stats Display */
+.stats-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 15px 0 0 0;
+  padding: 0;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.stats-display .stats-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--network-text-secondary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.stats-display .stat-label {
+  font-weight: 500;
+  opacity: 0.8;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.stats-display .stat-value {
+  font-weight: 700;
+  color: #10b981 !important;
+  font-size: 0.9rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+
+
+/* Mobile responsive styling for stats */
+@media (max-width: 768px) {
+  .stats-display {
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 8px 0;
+  }
+  
+  .stats-display .stats-item {
+    font-size: 0.8rem;
+  }
+  
+  .stats-display .stat-value {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-display {
+    gap: 6px;
+    margin: 8px 0 6px 0;
+  }
+  
+  .stats-display .stats-item {
+    font-size: 0.75rem;
+  }
+  
+  .stats-display .stat-value {
+    font-size: 0.8rem;
+  }
+}
+
+/* Light theme override for stat values */
+[data-theme="light"] .stats-display .stat-value {
+  color: #059669 !important;
+}
+
+/* Last updated line positioned below network */
+.last-updated-line {
+  color: var(--network-text-tertiary);
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding: 0;
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+
+.network-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: left;
+}
+
+.network-features li {
+  color: var(--network-text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.network-features li:before {
+  content: "•";
+  color: var(--network-text-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Main Layout - Improved to use more space */
+.network-layout {
+  display: flex;
+  flex: 1;
+  height: auto;
+  min-height: 80vh;
+  width: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+/* Desktop only: Fixed height to prevent expansion when sidebar content grows */
+@media (min-width: 1025px) {
+  .network-layout {
+    height: 80vh; /* Fixed height to prevent expansion */
+    max-height: 80vh; /* Constrain maximum height */
+  }
+}
+
+/* Network Container - Takes most of the space */
+.network-main {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  min-width: 0;
+  min-height: 80vh;
+  height: auto; /* Allow height to expand */
+  background: var(--network-bg-secondary);
+  border: 1px solid #666;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  margin-left: 0;
+}
+
+/* Sidebar - Separate from network, smaller on desktop */
+.network-sidebar-left {
+  width: 280px;
+  height: auto;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid #666;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  margin-right: 0;
+}
+
+/* Desktop only: Constrain height to prevent expansion */
+@media (min-width: 1025px) {
+  .network-sidebar-left {
+    max-height: 80vh; /* Constrain height in desktop view */
+  }
+}
+
+/* Main Network Canvas - Enhanced to use more space */
+.network-canvas {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+  min-width: 0; /* Allow canvas to shrink if needed */
+  background: var(--network-bg-secondary);
+  /* Touch interaction improvements */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Prevent iOS Safari from interfering with touch events */
+  -webkit-overflow-scrolling: touch;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
+}
+
+/* Ensure network canvas background is properly themed immediately */
+[data-theme="light"] .network-canvas {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .network-canvas {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Hide plot during repositioning */
+.network-canvas.repositioning {
+  opacity: 0;
+  transition: none;
+}
+
+
+
+.network-canvas svg {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  /* Performance optimizations for mobile */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Touch interaction improvements */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Additional performance optimizations */
+  contain: layout style paint;
+  backface-visibility: hidden;
+}
+
+/* Enhanced label styling for better readability */
+.network-canvas text {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Enhanced contrast for better readability */
+  paint-order: stroke fill;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Light theme specific label improvements - optimized for performance */
+[data-theme="light"] .network-canvas text {
+  filter: drop-shadow(0 0px 1px rgba(255,255,255,0.8));
+  /* Hardware acceleration for better performance */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Optimize rendering */
+  contain: layout style paint;
+}
+
+/* Node highlighting styles */
+.node-highlighted .node-main {
+  filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.8)) !important;
+}
+
+.node-highlighted .node-glow {
+  opacity: 1 !important;
+  fill: rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Node hover styles - temporary size increase for better readability */
+.node-hovered .node-main {
+  transform: scale(1.5) !important;
+  transition: transform 0.2s ease !important;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 18px rgba(255, 255, 255, 0.6)) !important;
+}
+
+.node-hovered .node-glow {
+  transform: scale(1.5) !important;
+  transition: transform 0.2s ease !important;
+  opacity: 0.8 !important;
+  fill: rgba(255, 255, 255, 0.2) !important;
+}
+
+.label-hovered {
+  font-size: 42px !important; /* Increased from default 28px to 42px */
+  font-weight: 900 !important;
+  /* Keep original fill and stroke colors - no color change */
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.8)) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Mobile-specific hover adjustments */
+@media (max-width: 768px) {
+  .node-hovered .node-main {
+    transform: scale(1.35) !important; /* Increased scale on mobile */
+  }
+  
+  .node-hovered .node-glow {
+    transform: scale(1.35) !important;
+  }
+  
+  .label-hovered {
+    font-size: 28px !important; /* Increased from default 20px to 28px on mobile */
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* On touch devices, make hover effects more subtle */
+  .node-hovered .node-main {
+    transform: scale(1.25) !important;
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) 
+            drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)) !important;
+  }
+  
+  .node-hovered .node-glow {
+    transform: scale(1.25) !important;
+    opacity: 0.6 !important;
+  }
+  
+  .label-hovered {
+    font-size: 26px !important; /* Increased from default 20px to 26px on touch devices */
+    filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)) 
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)) !important;
+  }
+}
+
+/* Additional highlighting for NetworkOnly page */
+.node-group.highlighted .node-main {
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 30px rgba(255, 255, 255, 0.9)) !important;
+  transform: scale(1.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.node-group.highlighted .node-glow {
+  opacity: 1 !important;
+  fill: rgba(255, 107, 107, 0.5) !important;
+}
+
+.node-group.highlighted .label {
+  font-weight: 900 !important;
+  font-size: 32px !important;
+  /* Keep original fill and stroke colors - no color change */
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.8)) !important;
+}
+
+.label-highlighted {
+  font-weight: 900 !important;
+  font-size: 32px !important;
+  /* Keep original fill and stroke colors - no color change */
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6)) 
+          drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) !important;
+}
+
+/* Node dimming styles */
+.node-dimmed .node-main {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-dimmed .node-glow {
+  opacity: 0.1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.label-dimmed {
+  opacity: 0.3 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Explore mode node visibility styles */
+.node-hidden {
+  display: none !important;
+}
+
+.node-visible .node-main {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-visible .node-glow {
+  opacity: 0.2 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-visible .label {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-selected .node-main {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-selected .node-glow {
+  opacity: 0.6 !important;
+  transition: opacity 0.3s ease;
+}
+
+.node-selected .label {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Explore mode label visibility styles */
+.label-hidden {
+  display: none !important;
+}
+
+.label-visible {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.label-selected {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Explore mode link visibility styles */
+.link-hidden {
+  display: none !important;
+}
+
+.link-visible {
+  opacity: 0.5 !important;
+  transition: opacity 0.3s ease;
+}
+
+.link-selected {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Link highlighting and dimming styles */
+.link-highlighted {
+  stroke-width: 8px !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)) !important;
+  transition: all 0.3s ease;
+}
+
+.link-dimmed {
+  opacity: 0.1 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Edge hover effect for better interactivity */
+.network-canvas line:hover {
+  stroke-width: 8px !important;
+  opacity: 0.9 !important;
+  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.6)) !important;
+  transition: all 0.2s ease;
+}
+
+
+
+/* Improved node visibility with enhanced shadows - optimized for performance */
+.network-canvas .node-main {
+  filter: drop-shadow(0 3px 8px var(--network-shadow)) 
+          drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+  transition: all 0.2s ease;
+  /* Hardware acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Touch interaction improvements */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* No stroke for cleaner look */
+  stroke: none;
+  /* Optimize rendering */
+  contain: layout style paint;
+}
+
+.network-canvas .node-main:hover {
+  filter: drop-shadow(0 5px 15px var(--network-shadow)) 
+          drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+}
+
+/* Light theme specific node styling */
+[data-theme="light"] .network-canvas .node-main {
+  filter: drop-shadow(0 3px 8px var(--network-shadow)) 
+          drop-shadow(0 0 12px rgba(0, 0, 0, 0.1))
+          drop-shadow(0 0 6px rgba(0, 0, 0, 0.05));
+}
+
+[data-theme="light"] .network-canvas .node-main:hover {
+  filter: drop-shadow(0 5px 15px var(--network-shadow)) 
+          drop-shadow(0 0 20px rgba(0, 0, 0, 0.2))
+          drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+}
+
+/* Node glow styling */
+.network-canvas .node-glow {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.network-canvas .node-group:hover .node-glow {
+  opacity: 0.8;
+}
+
+/* Light theme glow styling */
+[data-theme="light"] .network-canvas .node-glow {
+  fill: rgba(0, 0, 0, 0.1);
+  opacity: 0.4;
+}
+
+[data-theme="light"] .network-canvas .node-group:hover .node-glow {
+  opacity: 0.6;
+}
+
+/* Enhanced link visibility */
+.network-canvas line {
+  transition: stroke-opacity 0.2s ease;
+}
+
+/* Add background highlight for better node visibility */
+.network-canvas circle::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+
+
+/* Loading and Performance States */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--network-bg-tertiary);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: background 0.3s ease;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--network-text-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+  transition: border-top-color 0.3s ease;
+}
+
+.loading-overlay p {
+  color: var(--network-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.processing-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--network-bg-tertiary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--network-border-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 50;
+  transition: all 0.3s ease;
+}
+
+.processing-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid var(--network-text-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transition: border-top-color 0.3s ease;
+}
+
+.processing-indicator span {
+  color: var(--network-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.website-link {
+  color: var(--network-text-accent);
+  text-decoration: none;
+  font-size: 12px;
+  word-break: break-all;
+  transition: color 0.2s ease;
+}
+
+.website-link:hover {
+  color: var(--network-text-accent);
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.personnel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.personnel-list li {
+  color: var(--network-text-secondary);
+  font-size: 0.8rem;
+  padding: 2px 0;
+  position: relative;
+  padding-left: 12px;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.linkedin-link {
+  font-size: 12px;
+  color: var(--network-text-accent);
+  text-decoration: none;
+  padding: 2px 6px;
+  border: 1px solid var(--network-text-accent);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.linkedin-link:hover {
+  background: var(--network-text-accent);
+  color: var(--network-bg-primary);
+}
+
+.personnel-list li:before {
+  content: "•";
+  color: var(--network-text-accent);
+  position: absolute;
+  left: 0;
+  transition: color 0.3s ease;
+}
+
+.funding-info {
+  color: var(--network-funding-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.connection-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.connection-list li {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  padding: 0;
+  position: relative;
+  padding-left: 16px;
+}
+
+.connection-list li:before {
+  content: '•';
+  color: var(--network-text-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.connection-list .connection-name {
+  font-weight: 600;
+  color: var(--network-text-primary);
+}
+
+.connection-list .connection-type {
+  font-style: italic;
+  color: var(--network-text-accent);
+  margin: 0 4px;
+}
+
+.connection-list .connection-description {
+  color: var(--network-text-secondary);
+}
+
+.recent-news {
+  color: var(--network-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+/* Network Controls */
+.network-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Filter Grid */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+/* Filter Checkbox Styles */
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.filter-checkbox:hover {
+  background: var(--network-hover-bg);
+}
+
+.filter-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--network-border-secondary);
+  border-radius: 4px;
+  background: transparent;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.filter-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+  background: var(--network-text-accent);
+  border-color: var(--network-text-accent);
+}
+
+.filter-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.checkbox-label {
+  color: var(--network-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.filter-checkbox:hover .checkbox-label {
+  color: var(--network-text-primary);
+}
+
+.filter-checkbox input[type="checkbox"]:checked + .checkbox-custom + .checkbox-label {
+  color: var(--network-text-accent);
+  font-weight: 600;
+}
+
+/* Legend Grid */
+.legend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.legend-grid .legend-section {
+  margin: 0;
+}
+
+.legend-grid .legend-section h5 {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--network-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.legend-grid .legend-item {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-grid .legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-grid .legend-line {
+  width: 20px;
+  height: 2px;
+  border-top: 2px solid;
+  flex-shrink: 0;
+}
+
+.legend-grid .legend-label {
+  font-size: 12px;
+  color: var(--network-text-secondary);
+}
+
+.zoom-level-display {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--network-text-primary);
+  min-width: 30px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+/* Control Buttons */
+.control-button {
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+  color: var(--network-text-primary);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  line-height: 1;
+  position: relative;
+  /* Touch improvements for mobile */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.control-button:hover:not(:disabled) {
+  background: var(--network-hover-bg);
+  border-color: var(--network-border-secondary);
+}
+
+.control-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  visibility: visible;
+  pointer-events: none;
+  background: var(--network-bg-tertiary);
+}
+
+
+.control-button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center-button {
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+}
+
+.zoom-button {
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+}
+
+
+
+/* Network Layout with Sidebars */
+.network-layout {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Left Sidebar - Controls */
+.network-sidebar-left {
+  width: 280px;
+  background: var(--network-bg-primary);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--network-border-primary);
+  overflow-y: auto;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.sidebar-section {
+  padding: 20px;
+  border-bottom: none;
+}
+
+.sidebar-section h4 {
+  color: var(--network-text-accent);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 0;
+  transition: color 0.3s ease;
+}
+
+/* Dropdown Containers */
+.dropdown-container {
+  margin-bottom: 0;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.dropdown-header .dropdown-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dropdown-header .dropdown-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 18px;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.dropdown-header .dropdown-close:hover {
+  color: var(--text-secondary);
+  background: none;
+}
+
+.dropdown-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+  border-radius: 6px;
+  color: var(--network-text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Unified hover effect for entire dropdown container */
+.dropdown-container:hover .dropdown-button {
+  background: var(--network-hover-bg);
+  border-color: var(--network-border-secondary);
+}
+
+.dropdown-container:hover .dropdown-content {
+  background: var(--network-hover-bg);
+  border-color: var(--network-border-secondary);
+}
+
+/* Expanded dropdown button - flat bottom edges */
+.dropdown-button.expanded {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+}
+
+.dropdown-arrow {
+  color: var(--network-text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  margin-top: 0;
+  padding: 4px;
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+  border-radius: 6px;
+  margin-bottom: 0;
+}
+
+/* Expanded dropdown content - flat top edges with connecting border */
+.dropdown-content.expanded {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 1px solid var(--network-border-primary);
+  margin-top: 0;
+}
+
+/* Control Groups */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.control-spacer {
+  width: 16px;
+  height: 36px;
+}
+
+/* Filter List */
+.filter-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.legend-section {
+  margin-bottom: 0;
+}
+
+.legend-section h5 {
+  color: var(--network-text-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-line {
+  width: 20px;
+  height: 2px;
+  border-top: 2px solid;
+  flex-shrink: 0;
+}
+
+.legend-label {
+  font-size: 12px;
+  color: var(--network-text-secondary);
+}
+
+/* Search Container */
+.search-container {
+  margin-bottom: 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+  border-radius: 6px;
+  color: var(--network-text-primary);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--network-text-accent);
+  background: var(--network-bg-tertiary);
+}
+
+.search-input::placeholder {
+  color: var(--network-text-tertiary);
+}
+
+/* Search Results */
+.search-results {
+  margin-bottom: 16px;
+}
+
+.no-results {
+  padding: 12px;
+  text-align: center;
+  color: var(--network-text-secondary);
+}
+
+.no-results p {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+}
+
+.no-results-hint {
+  font-size: 11px !important;
+  color: var(--network-text-tertiary) !important;
+  font-style: italic;
+}
+
+.search-results h5 {
+  color: var(--network-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-result-item:hover {
+  background: var(--network-hover-bg);
+  border-color: var(--network-border-secondary);
+}
+
+.result-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.result-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-name {
+  color: var(--network-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.result-type {
+  color: var(--network-text-tertiary);
+  font-size: 12px;
+}
+
+.result-status {
+  color: var(--network-text-tertiary);
+  font-size: 11px;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* Search result states for explore mode */
+.search-result-hidden {
+  opacity: 0.6;
+  background: var(--network-bg-secondary);
+  border-color: var(--network-border-primary);
+}
+
+.search-result-hidden:hover {
+  opacity: 0.8;
+  background: var(--network-hover-bg);
+}
+
+.search-result-selected {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--network-text-accent);
+}
+
+.search-result-visible {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Node Details */
+.node-details {
+  border-top: 1px solid var(--network-border-primary);
+  padding-top: 16px;
+}
+
+/* Edge Details */
+.edge-details {
+  border-top: 1px solid var(--network-border-primary);
+  padding-top: 16px;
+}
+
+.connected-organizations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.org-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.org-item:hover {
+  background-color: var(--network-hover-bg);
+  border-radius: 6px;
+}
+
+.org-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.org-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.org-name {
+  color: var(--network-text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.org-website-link {
+  color: var(--network-text-accent);
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.org-website-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.org-type {
+  color: var(--network-text-tertiary);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.relationship-type {
+  color: var(--network-text-accent);
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.relationship-description {
+  color: var(--network-text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile responsive styles for edge details */
+@media (max-width: 768px) {
+  .connected-organizations {
+    gap: 6px;
+  }
+  
+  .org-name {
+    font-size: 12px;
+  }
+  
+  .org-type {
+    font-size: 10px;
+  }
+  
+  .org-website-link {
+    font-size: 11px;
+  }
+  
+  .relationship-type {
+    font-size: 13px;
+  }
+  
+  .relationship-description {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .org-name {
+    font-size: 11px;
+  }
+  
+  .org-type {
+    font-size: 9px;
+  }
+  
+  .org-website-link {
+    font-size: 10px;
+  }
+  
+  .relationship-type {
+    font-size: 12px;
+  }
+  
+  .relationship-description {
+    font-size: 10px;
+  }
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.details-header h3 {
+  color: var(--network-text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.details-close {
+  background: none;
+  border: none;
+  color: var(--network-text-tertiary);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.details-close:hover {
+  color: var(--network-text-primary);
+  background: var(--network-hover-bg);
+}
+
+.details-content {
+  color: var(--network-text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.details-content .node-type {
+  color: var(--network-text-accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.details-content .node-description {
+  margin-bottom: 12px;
+}
+
+.details-section {
+  margin-bottom: 12px;
+}
+
+.details-section h4 {
+  color: var(--network-text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 0;
+}
+
+.details-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Main Network Area */
+.network-main {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--network-bg-secondary);
+}
+
+/* Responsive Design - Completely restructured */
+@media (max-width: 1200px) {
+  .network-sidebar-left {
+    width: 260px;
+  }
+}
+
+/* Tablet and Mobile Layout - Controls move below network */
+@media (max-width: 1024px) {
+  .network-visualization {
+    min-height: auto;
+    overflow: visible;
+  }
+  
+  .network-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    min-height: auto;
+  }
+  
+  .network-main {
+    flex: 1;
+    height: auto;
+    min-height: 50vh;
+    order: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-left: 0;
+    overflow: visible;
+  }
+  
+  .network-canvas {
+    flex: 1;
+    min-height: 40vh;
+  }
+  
+  .network-sidebar-left {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border: 1px solid #666;
+    border-radius: 8px;
+    order: 2;
+    background: var(--network-bg-primary);
+    backdrop-filter: blur(10px);
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-right: 0;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+  
+  /* Make all dropdowns always visible and in a row */
+  .dropdown-container {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 0;
+    display: block !important;
+  }
+  
+  .dropdown-button {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--network-bg-secondary);
+    border: 1px solid var(--network-border-primary);
+    border-radius: 8px;
+    display: flex !important;
+  }
+  
+  .dropdown-content {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none;
+    border: 1px solid var(--network-border-primary);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: 0;
+    padding: 8px;
+    display: block !important;
+  }
+  
+  /* Force all dropdowns to be visible on smaller screens */
+  .dropdown-content.control-dropdown,
+  .dropdown-content.filter-dropdown,
+  .dropdown-content.legend-dropdown,
+  .dropdown-content.search-dropdown {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* Control group layout for tablet */
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .control-button {
+    flex: 0 0 auto;
+    min-width: 44px;
+    height: 44px;
+    padding: 8px;
+  }
+  
+  /* Filter layout for tablet */
+  .filter-dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  /* Legend layout for tablet */
+  .legend-dropdown {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  /* Search layout for tablet - Increased max height and better spacing */
+.search-dropdown {
+  padding: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure search results don't overflow */
+.search-results-list {
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure node details don't overflow */
+.node-details {
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* When search dropdown is open, ensure proper spacing */
+.search-dropdown.expanded {
+  margin-bottom: 20px;
+}
+}
+
+@media (max-width: 768px) {
+  .network-visualization {
+    min-height: auto;
+    overflow: visible;
+  }
+  
+  .network-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    min-height: auto;
+  }
+  
+  .network-main {
+    flex: 1;
+    height: auto;
+    min-height: 60vh;
+    order: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-left: 0;
+    overflow: visible;
+  }
+  
+  .network-canvas {
+    flex: 1;
+    min-height: 50vh;
+  }
+  
+  .network-sidebar-left {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border: 1px solid #666;
+    border-radius: 8px;
+    order: 2;
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-right: 0;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+  
+  /* Make all dropdowns always visible */
+  .dropdown-container {
+    width: 100%;
+    margin-bottom: 0;
+    display: block !important;
+  }
+  
+  .dropdown-button {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    display: flex !important;
+  }
+  
+  .dropdown-content {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none;
+    border: 1px solid var(--border-primary);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: 0;
+    padding: 8px;
+    display: block !important;
+  }
+  
+  /* Force all dropdowns to be visible on mobile screens */
+  .dropdown-content.control-dropdown,
+  .dropdown-content.filter-dropdown,
+  .dropdown-content.legend-dropdown,
+  .dropdown-content.search-dropdown {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  /* Mobile-specific layout for controls */
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .control-button {
+    flex: 1;
+    min-width: 44px;
+    height: 44px;
+    /* Enhanced touch target for mobile */
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  /* Mobile filter grid */
+  .filter-dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 8px;
+  }
+  
+  /* Mobile legend layout */
+  .legend-dropdown {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 8px;
+  }
+  
+  /* Mobile search layout - Increased height and better spacing */
+.search-dropdown {
+  padding: 8px;
+  max-height: 350px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile-specific search results scrolling */
+.search-results-list {
+  max-height: 150px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile-specific node details scrolling */
+.node-details {
+  max-height: 250px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+  
+  .search-input {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  
+  /* Ensure network canvas is touch-friendly */
+  .network-canvas {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .network-canvas circle {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .network-canvas svg {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .network-visualization {
+    min-height: auto;
+    overflow: visible;
+  }
+  
+  .network-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    min-height: auto;
+  }
+  
+  .network-main {
+    flex: 1;
+    height: auto;
+    min-height: 50vh;
+    order: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-left: 0;
+    overflow: visible;
+  }
+  
+  .network-canvas {
+    flex: 1;
+    min-height: 40vh;
+    /* Touch interaction improvements for extra small screens */
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .network-header {
+    padding: 16px;
+  }
+  
+  .network-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .network-header p {
+    font-size: 0.8rem;
+  }
+  
+  .network-sidebar-left {
+    padding: 16px;
+    gap: 8px;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  
+  /* Extra small screen controls */
+  .control-group {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  
+  .control-button {
+    min-width: 40px;
+    height: 40px;
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  /* Extra small screen filters */
+  .filter-dropdown {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  .filter-checkbox {
+    font-size: 12px;
+  }
+  
+  /* Extra small screen legend */
+  .legend-dropdown {
+    padding: 8px;
+  }
+  
+  .legend-item {
+    font-size: 12px;
+  }
+  
+  /* Extra small screen search - Increased height for better usability */
+.search-dropdown {
+  padding: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Extra small screen search results scrolling */
+.search-results-list {
+  max-height: 120px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Extra small screen node details scrolling */
+.node-details {
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+  
+  .search-input {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  .search-result-item {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+} 
+
+/* Connection list styles */
+.connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.connection-item {
+  background: var(--network-bg-secondary);
+  border: 1px solid var(--network-border-primary);
+  border-radius: 6px;
+  padding: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.connection-item:hover {
+  background: var(--network-hover-bg);
+  border-color: var(--network-border-secondary);
+  box-shadow: 0 2px 8px var(--network-shadow);
+}
+
+.connection-item:active {
+  box-shadow: 0 1px 4px var(--network-shadow);
+}
+
+.connection-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.connection-node-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.connection-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.connection-name {
+  color: var(--network-text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.connection-website-link {
+  color: var(--network-text-accent);
+  text-decoration: none;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.connection-website-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.connection-type {
+  color: var(--network-text-tertiary);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.connection-relationship {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.relationship-label {
+  color: var(--network-text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.connection-relationship .relationship-type {
+  color: var(--network-text-accent);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.connection-description {
+  color: var(--network-text-secondary);
+  font-size: 11px;
+  line-height: 1.4;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.no-connections {
+  color: var(--network-text-tertiary);
+  font-size: 12px;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Mobile responsive styles for connections */
+@media (max-width: 768px) {
+  .connections-list {
+    gap: 8px;
+  }
+  
+  .connection-item {
+    padding: 10px;
+  }
+  
+  .connection-name {
+    font-size: 12px;
+  }
+  
+  .connection-type {
+    font-size: 10px;
+  }
+  
+  .connection-relationship .relationship-type {
+    font-size: 11px;
+  }
+  
+  .connection-description {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .connection-item {
+    padding: 8px;
+  }
+  
+  .connection-name {
+    font-size: 11px;
+  }
+  
+  .connection-type {
+    font-size: 9px;
+  }
+  
+  .connection-relationship .relationship-type {
+    font-size: 10px;
+  }
+  
+  .connection-description {
+    font-size: 9px;
+  }
+}
+
+ 

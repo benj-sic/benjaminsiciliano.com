@@ -1,0 +1,188 @@
+/*
+ * Copyright (c) 2025 Benjamin Siciliano
+ * All rights reserved.
+ * 
+ * This file is part of the benjaminsiciliano.com project.
+ * Unauthorized copying, modification, distribution, or use is strictly prohibited.
+ * For licensing inquiries, contact: ben.siciliano@gmail.com
+ */
+
+.theme-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-accent);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 11;
+  pointer-events: auto;
+}
+
+/* Override styles when used in NetworkOnly context - Remove all conflicts */
+.network-only .theme-toggle {
+  all: unset !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  background: var(--bg-tertiary) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid var(--border-primary) !important;
+  color: var(--text-primary) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+.network-only .theme-toggle:hover {
+  background: var(--bg-quinary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-accent) !important;
+  transform: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+.network-only .theme-icon {
+  width: 16px !important;
+  height: 16px !important;
+  transition: none !important;
+  color: currentColor !important;
+}
+
+.network-only .theme-toggle:hover .theme-icon {
+  color: var(--text-accent) !important;
+  transform: none !important;
+}
+
+/* Disabled state for theme toggle in NetworkOnly */
+.network-only .theme-toggle:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.network-only .theme-toggle:disabled:hover {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-primary) !important;
+  color: var(--text-primary) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.network-only .theme-toggle:disabled .theme-icon {
+  color: var(--text-primary) !important;
+  transform: none !important;
+}
+
+@media (max-width: 1200px) {
+  .theme-toggle {
+    right: 1rem;
+  }
+}
+
+.theme-toggle:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  transform: translateY(-50%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.theme-toggle:focus {
+  outline: none;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  color: var(--text-accent-hover);
+}
+
+@media (max-width: 768px) {
+  /* Hide desktop theme toggle on mobile */
+  .theme-toggle {
+    display: none;
+  }
+  
+  /* Show mobile theme toggle in header buttons */
+  .header-buttons .theme-toggle {
+    display: flex;
+    position: static;
+    width: 36px;
+    height: 36px;
+    transform: none;
+    z-index: 11;
+    pointer-events: auto;
+  }
+  
+  .header-buttons .theme-toggle:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    backdrop-filter: blur(10px);
+  }
+  
+  .header-buttons .theme-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* NetworkOnly responsive styles */
+  .network-only .theme-toggle {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  
+  .network-only .theme-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-buttons .theme-toggle {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .header-buttons .theme-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* NetworkOnly responsive styles */
+  .network-only .theme-toggle {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+  
+  .network-only .theme-icon {
+    width: 12px;
+    height: 12px;
+  }
+} 

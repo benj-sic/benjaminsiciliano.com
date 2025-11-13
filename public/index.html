@@ -1,0 +1,68 @@
+<!--
+  Copyright (c) 2025 Benjamin Siciliano
+  All rights reserved.
+  
+  This file is part of the benjaminsiciliano.com project.
+  Unauthorized copying, modification, distribution, or use is strictly prohibited.
+  For licensing inquiries, contact: ben.siciliano@gmail.com
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Benjamin Siciliano, PhD - Bridging science, software, and strategy to accelerate biotech innovation. Explore the interactive Atlanta Biotech Network visualization."
+    />
+    
+    <!-- Social Media Meta Tags -->
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://benjaminsiciliano.com/" />
+    <meta property="og:title" content="Benjamin Siciliano, PhD - Atlanta Biotech Network" />
+    <meta property="og:description" content="Benjamin Siciliano, PhD - Bridging science, software, and strategy to accelerate biotech innovation" />
+    <meta property="og:image" content="https://benjaminsiciliano.com/social-card.png?v=2" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Atlanta Biotech Network visualization showing interconnected biotech ecosystem" />
+    <meta property="og:site_name" content="Benjamin Siciliano, PhD" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- LinkedIn specific meta tags -->
+    <meta property="og:image:secure_url" content="https://benjaminsiciliano.com/social-card.png?v=2" />
+    
+    <!-- Additional LinkedIn meta tags -->
+    <meta property="og:updated_time" content="2024-07-29T08:36:00Z" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://benjaminsiciliano.com/" />
+    <meta property="twitter:title" content="Benjamin Siciliano, PhD - Atlanta Biotech Network" />
+    <meta property="twitter:description" content="Benjamin Siciliano, PhD - Bridging science, software, and strategy to accelerate biotech innovation" />
+    <meta property="twitter:image" content="https://benjaminsiciliano.com/social-card.png?v=2" />
+    <meta property="twitter:image:alt" content="Atlanta Biotech Network visualization showing interconnected biotech ecosystem" />
+    
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Benjamin Siciliano, PhD - Atlanta Biotech Network</title>
+    <script>
+      // Apply theme immediately to prevent flash
+      (function() {
+        const stored = localStorage.getItem('theme');
+        const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = stored || (systemPrefersLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html> 
